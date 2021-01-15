@@ -1,0 +1,10 @@
+{
+  "itemGroup.hexblades": "HexBlades",
+
+  "tooltip.HexSwordItem.test_tooltip": "test",
+
+  "item.hexblades.dev_sword": "First of his Kind",
+
+  "block.hexblades.dev_block": "A test Block",
+  "block.hexblades.dark_polished_planks": "Dark Polished Planks"
+}
