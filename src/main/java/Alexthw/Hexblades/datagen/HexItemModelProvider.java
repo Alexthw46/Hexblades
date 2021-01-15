@@ -3,7 +3,10 @@ package Alexthw.Hexblades.datagen;
 import Alexthw.Hexblades.Hexblades;
 import Alexthw.Hexblades.common.items.HexSwordItem;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.item.*;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.SwordItem;
+import net.minecraft.item.ToolItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
@@ -15,8 +18,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static Alexthw.Hexblades.core.init.ItemInit.ITEMS;
-import static Alexthw.Hexblades.core.util.HexUtils.takeAll;
-import static Alexthw.Hexblades.datagen.HexDataGen.prefix;
+import static Alexthw.Hexblades.core.util.HexUtils.*;
 
 
 public class HexItemModelProvider extends ItemModelProvider {

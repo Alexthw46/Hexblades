@@ -1,9 +1,18 @@
 package Alexthw.Hexblades.core.util;
 
+import Alexthw.Hexblades.Hexblades;
+import net.minecraft.util.ResourceLocation;
+
 import java.util.*;
 import java.util.function.Predicate;
 
 public class HexUtils {
+
+    public static ResourceLocation prefix(String path)
+    {
+        return new ResourceLocation(Hexblades.MOD_ID, path);
+    }
+
     public static <T> Collection<T> takeAll(Collection<? extends T> src, T... items)
     {
         List<T> ret = Arrays.asList(items);

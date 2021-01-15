@@ -15,7 +15,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import static Alexthw.Hexblades.datagen.HexDataGen.prefix;
+import static Alexthw.Hexblades.core.util.HexUtils.prefix;
 
 public class HexBlockStateProvider extends BlockStateProvider{
 
