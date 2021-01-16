@@ -8,23 +8,20 @@ import java.util.function.Predicate;
 
 public class HexUtils {
 
-    public static ResourceLocation prefix(String path)
-    {
+    public static ResourceLocation prefix(String path) {
         return new ResourceLocation(Hexblades.MOD_ID, path);
     }
 
-    public static <T> Collection<T> takeAll(Collection<? extends T> src, T... items)
-    {
+    @SafeVarargs
+    @SuppressWarnings("varargs")
+    public static <T> Collection<T> takeAll(Collection<? extends T> src, T... items) {
         List<T> ret = Arrays.asList(items);
-        for (T item : items)
-        {
-            if (!src.contains(item))
-            {
+        for (T item : items) {
+            if (!src.contains(item)) {
                 return Collections.emptyList();
             }
         }
-        if (!src.removeAll(ret))
-        {
+        if (!src.removeAll(ret)) {
             return Collections.emptyList();
         }
         return ret;

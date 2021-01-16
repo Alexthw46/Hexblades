@@ -9,6 +9,7 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
+import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -18,7 +19,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static Alexthw.Hexblades.core.init.ItemInit.ITEMS;
-import static Alexthw.Hexblades.core.util.HexUtils.*;
+import static Alexthw.Hexblades.core.util.HexUtils.prefix;
+import static Alexthw.Hexblades.core.util.HexUtils.takeAll;
 
 
 public class HexItemModelProvider extends ItemModelProvider {
@@ -39,16 +41,19 @@ public class HexItemModelProvider extends ItemModelProvider {
         takeAll(items, i -> i.get() instanceof SwordItem).forEach(this::handheldItem);
 
         items.forEach(this::generatedItem);
+
     }
 
-    private void handheldItem(RegistryObject<Item> i)
-    {
+    private ItemModelBuilder builder(ModelFile itemGenerated, String name) {
+        return getBuilder(name).parent(itemGenerated).texture("layer0", "item/" + name);
+    }
+
+    private void handheldItem(RegistryObject<Item> i) {
         String name = Registry.ITEM.getKey(i.get()).getPath();
         withExistingParent(name, HANDHELD).texture("layer0", prefix("item/" + name));
     }
 
-    private void generatedItem(RegistryObject<Item> i)
-    {
+    private void generatedItem(RegistryObject<Item> i) {
         String name = Registry.ITEM.getKey(i.get()).getPath();
         withExistingParent(name, GENERATED).texture("layer0", prefix("item/" + name));
     }

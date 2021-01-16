@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "hexblades:block/dev_block"
+    }
+  }
+}
