@@ -4,7 +4,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 
 public class Registry {
     public static void init(IEventBus hexbus) {
-        ItemInit.ITEMS.register(hexbus);
-        BlockInit.BLOCKS.register(hexbus);
+        HexItem.ITEMS.register(hexbus);
+        HexBlock.BLOCKS.register(hexbus);
     }
 }

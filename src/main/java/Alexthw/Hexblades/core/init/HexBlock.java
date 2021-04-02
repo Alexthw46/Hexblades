@@ -1,7 +1,6 @@
 package Alexthw.Hexblades.core.init;
 
 import Alexthw.Hexblades.Hexblades;
-
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -12,13 +11,12 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class BlockInit {
+public class HexBlock {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Hexblades.MOD_ID);
 
 
     public static final RegistryObject<Block> DEV_BLOCK;
     public static final RegistryObject<Block> DARK_POLISH_PLANKS;
-
 
 
     static {

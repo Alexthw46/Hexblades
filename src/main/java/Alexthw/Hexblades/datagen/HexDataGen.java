@@ -1,6 +1,7 @@
 package Alexthw.Hexblades.datagen;
 
 import Alexthw.Hexblades.Hexblades;
+import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -14,10 +15,17 @@ public final class HexDataGen {
     }
 
     @SubscribeEvent
-    public static void gatherData(GatherDataEvent event){
+    public static void gatherData(GatherDataEvent event) {
         DataGenerator gen = event.getGenerator();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
+
+        BlockTagsProvider BTprovider = new HexBlockTagsProvider(gen, existingFileHelper);
+
         gen.addProvider(new HexItemModelProvider(gen, existingFileHelper));
         gen.addProvider(new HexBlockStateProvider(gen, existingFileHelper));
+        gen.addProvider(new HexItemTagProvider(gen, BTprovider, existingFileHelper));
+        gen.addProvider(BTprovider);
+        gen.addProvider(new HexRecipeProvider(gen));
+        gen.addProvider(new HexLootTableProvider(gen));
     }
 }

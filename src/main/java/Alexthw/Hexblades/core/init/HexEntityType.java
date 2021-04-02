@@ -1,4 +1,4 @@
 package Alexthw.Hexblades.core.init;
 
-public class ContainerTypeInit {
+public class HexEntityType {
 }

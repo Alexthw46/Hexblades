@@ -1,7 +1,8 @@
 package Alexthw.Hexblades.datagen;
 
 import Alexthw.Hexblades.Hexblades;
-import Alexthw.Hexblades.core.init.BlockInit;
+import Alexthw.Hexblades.core.init.HexBlock;
+import Alexthw.Hexblades.core.util.HexUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.data.DataGenerator;
@@ -9,6 +10,10 @@ import net.minecraft.util.registry.Registry;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.fml.RegistryObject;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import static Alexthw.Hexblades.core.util.HexUtils.prefix;
 
@@ -20,15 +25,12 @@ public class HexBlockStateProvider extends BlockStateProvider{
 
     @Override
     protected void registerStatesAndModels() {
-        /*Set<RegistryObject<Block>> blocks = new HashSet<>(BlockInit.BLOCKS.getEntries());
+        Set<RegistryObject<Block>> blocks = new HashSet<>(HexBlock.BLOCKS.getEntries());
 
         Collection<RegistryObject<Block>> slabs = HexUtils.takeAll(blocks, b -> b.get() instanceof SlabBlock);
         blocks.forEach(this::basicBlock);
         slabs.forEach(this::slabBlock);
 
-         */
-        simpleBlock(BlockInit.DEV_BLOCK.get());
-        simpleBlock(BlockInit.DARK_POLISH_PLANKS.get());
     }
 
     public void slabBlock(RegistryObject<Block> blockRegistryObject)

@@ -1,7 +1,8 @@
 package Alexthw.Hexblades.datagen;
 
 import Alexthw.Hexblades.Hexblades;
-import Alexthw.Hexblades.common.items.HexSwordItem;
+import Alexthw.Hexblades.common.items.IceKatana;
+import Alexthw.Hexblades.core.util.Constants;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -18,12 +19,16 @@ import net.minecraftforge.fml.RegistryObject;
 import java.util.HashSet;
 import java.util.Set;
 
-import static Alexthw.Hexblades.core.init.ItemInit.ITEMS;
+import static Alexthw.Hexblades.core.init.HexItem.ITEMS;
 import static Alexthw.Hexblades.core.util.HexUtils.prefix;
 import static Alexthw.Hexblades.core.util.HexUtils.takeAll;
 
 
 public class HexItemModelProvider extends ItemModelProvider {
+
+    private static ResourceLocation rl(String name) {
+        return new ResourceLocation(Hexblades.MOD_ID, name);
+    }
 
     private static final ResourceLocation GENERATED = new ResourceLocation("item/generated");
     private static final ResourceLocation HANDHELD = new ResourceLocation("item/handheld");
@@ -35,22 +40,33 @@ public class HexItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         Set<RegistryObject<Item>> items = new HashSet<>(ITEMS.getEntries());
-        takeAll(items, i -> i.get() instanceof HexSwordItem);
         takeAll(items, i -> i.get() instanceof BlockItem).forEach(this::blockItem);
         takeAll(items, i -> i.get() instanceof ToolItem).forEach(this::handheldItem);
+        takeAll(items, i -> i.get() instanceof IceKatana).forEach(this::evolvableItem);
         takeAll(items, i -> i.get() instanceof SwordItem).forEach(this::handheldItem);
 
         items.forEach(this::generatedItem);
 
     }
 
-    private ItemModelBuilder builder(ModelFile itemGenerated, String name) {
-        return getBuilder(name).parent(itemGenerated).texture("layer0", "item/" + name);
-    }
 
     private void handheldItem(RegistryObject<Item> i) {
         String name = Registry.ITEM.getKey(i.get()).getPath();
         withExistingParent(name, HANDHELD).texture("layer0", prefix("item/" + name));
+    }
+
+    private void evolvableItem(RegistryObject<Item> it) {
+
+        String path = Registry.ITEM.getKey(it.get()).getPath();
+        ItemModelBuilder builder = getBuilder(path);
+        withExistingParent(path, HANDHELD).texture("layer0", prefix("item/" + path));
+
+        for (int i = 0; i <= 4; i++) {
+            String name = "_" + i;
+            ModelFile bladeFile = singleTexture("item/variants/" + path + name, mcLoc("item/handheld"), "layer0", modLoc("item/" + path + name));
+            builder = builder.override().predicate(rl(Constants.NBT.AW_Level), i).model(bladeFile).end();
+        }
+
     }
 
     private void generatedItem(RegistryObject<Item> i) {
@@ -58,8 +74,7 @@ public class HexItemModelProvider extends ItemModelProvider {
         withExistingParent(name, GENERATED).texture("layer0", prefix("item/" + name));
     }
 
-    private void blockGeneratedItem(RegistryObject<Item> i)
-    {
+    private void blockGeneratedItem(RegistryObject<Item> i) {
         String name = Registry.ITEM.getKey(i.get()).getPath();
         withExistingParent(name, GENERATED).texture("layer0", prefix("block/" + name));
     }

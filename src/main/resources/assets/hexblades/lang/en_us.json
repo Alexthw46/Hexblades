@@ -1,10 +1,10 @@
 {
   "itemGroup.hexblades": "HexBlades",
-
   "tooltip.HexSwordItem.test_tooltip": "test",
-
+  "tooltip.HexSwordItem.dev_sword": "Dev_only",
+  "tooltip.HexSwordItem.ice_katana": "Cool, indeed",
   "item.hexblades.dev_sword": "First of his Kind",
-
+  "item.hexblades.ice_katana": "Frost Razor",
   "block.hexblades.dev_block": "A test Block",
   "block.hexblades.dark_polished_planks": "Dark Polished Planks"
 }

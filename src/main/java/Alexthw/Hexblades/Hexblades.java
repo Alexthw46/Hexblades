@@ -1,9 +1,7 @@
 package Alexthw.Hexblades;
 
-import Alexthw.Hexblades.common.items.HexSwordItem;
-import Alexthw.Hexblades.core.init.ItemInit;
+import Alexthw.Hexblades.core.init.HexItem;
 import Alexthw.Hexblades.core.init.Registry;
-import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -23,7 +21,7 @@ public class Hexblades
     public static final ItemGroup TAB = new ItemGroup(MOD_ID) {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(ItemInit.DEV_SWORD.get());
+            return new ItemStack(HexItem.DEV_SWORD.get());
         }
     };
 
