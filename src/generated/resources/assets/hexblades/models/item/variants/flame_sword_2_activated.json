@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "hexblades:item/flame_sword_2_activated"
+  }
+}

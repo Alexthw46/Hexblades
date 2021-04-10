@@ -1,7 +1,7 @@
 package Alexthw.Hexblades.datagen;
 
 import Alexthw.Hexblades.Hexblades;
-import Alexthw.Hexblades.core.init.HexBlock;
+import Alexthw.Hexblades.core.registers.HexBlock;
 import Alexthw.Hexblades.core.util.HexUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.SlabBlock;

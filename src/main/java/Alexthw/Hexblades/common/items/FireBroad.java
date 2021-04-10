@@ -1,6 +1,6 @@
 package Alexthw.Hexblades.common.items;
 
-import Alexthw.Hexblades.core.init.Tiers;
+import Alexthw.Hexblades.core.registers.Tiers;
 
 public class FireBroad extends HexSwordItem {
 

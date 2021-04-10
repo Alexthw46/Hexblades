@@ -1,4 +1,4 @@
-package Alexthw.Hexblades.core.init;
+package Alexthw.Hexblades.core.registers;
 
 import net.minecraftforge.eventbus.api.IEventBus;
 

@@ -1,12 +1,14 @@
 package Alexthw.Hexblades;
 
-import Alexthw.Hexblades.core.init.HexItem;
-import Alexthw.Hexblades.core.init.Registry;
+import Alexthw.Hexblades.client.ClientEvents;
+import Alexthw.Hexblades.core.registers.HexItem;
+import Alexthw.Hexblades.core.registers.Registry;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
@@ -26,17 +28,31 @@ public class Hexblades
     };
 
         public Hexblades() {
-        IEventBus hexbus = FMLJavaModLoadingContext.get().getModEventBus();
+            IEventBus hexbus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        // Register the setup method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        Registry.init(hexbus);
-        // Register ourselves for server and other game events we are interested in
-        MinecraftForge.EVENT_BUS.register(this);
+            // Register the setup method for modloading
+            FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+            //Register all the things
+            Registry.init(hexbus);
+
+            //Client-side only
+            hexbus.addListener(this::doClientStuff);
+
+            // Register ourselves for server and other game events we are interested in
+            MinecraftForge.EVENT_BUS.register(this);
+
+        }
+
+    private void setup(final FMLCommonSetupEvent event) {
+
     }
 
-    private void setup(final FMLCommonSetupEvent event)
-    {
+    //	@OnlyIn(Dist.CLIENT)
+    private void doClientStuff(final FMLClientSetupEvent event) {
+
+        ClientEvents.initClientEvents(event);
+        MinecraftForge.EVENT_BUS.register(new ClientEvents());
+
 
     }
 

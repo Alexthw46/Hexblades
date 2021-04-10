@@ -1,8 +1,7 @@
 package Alexthw.Hexblades.datagen;
 
 import Alexthw.Hexblades.Hexblades;
-import Alexthw.Hexblades.common.items.IceKatana;
-import Alexthw.Hexblades.core.util.Constants;
+import Alexthw.Hexblades.common.items.HexSwordItem;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -19,14 +18,14 @@ import net.minecraftforge.fml.RegistryObject;
 import java.util.HashSet;
 import java.util.Set;
 
-import static Alexthw.Hexblades.core.init.HexItem.ITEMS;
+import static Alexthw.Hexblades.core.registers.HexItem.ITEMS;
 import static Alexthw.Hexblades.core.util.HexUtils.prefix;
 import static Alexthw.Hexblades.core.util.HexUtils.takeAll;
 
 
 public class HexItemModelProvider extends ItemModelProvider {
 
-    private static ResourceLocation rl(String name) {
+    public static ResourceLocation rl(String name) {
         return new ResourceLocation(Hexblades.MOD_ID, name);
     }
 
@@ -42,7 +41,7 @@ public class HexItemModelProvider extends ItemModelProvider {
         Set<RegistryObject<Item>> items = new HashSet<>(ITEMS.getEntries());
         takeAll(items, i -> i.get() instanceof BlockItem).forEach(this::blockItem);
         takeAll(items, i -> i.get() instanceof ToolItem).forEach(this::handheldItem);
-        takeAll(items, i -> i.get() instanceof IceKatana).forEach(this::evolvableItem);
+        takeAll(items, i -> i.get() instanceof HexSwordItem).forEach(this::awakenableItem);
         takeAll(items, i -> i.get() instanceof SwordItem).forEach(this::handheldItem);
 
         items.forEach(this::generatedItem);
@@ -55,17 +54,17 @@ public class HexItemModelProvider extends ItemModelProvider {
         withExistingParent(name, HANDHELD).texture("layer0", prefix("item/" + name));
     }
 
-    private void evolvableItem(RegistryObject<Item> it) {
+    private void awakenableItem(RegistryObject<Item> it) {
 
         String path = Registry.ITEM.getKey(it.get()).getPath();
         ItemModelBuilder builder = getBuilder(path);
         withExistingParent(path, HANDHELD).texture("layer0", prefix("item/" + path));
 
-        for (int i = 0; i <= 4; i++) {
-            String name = "_" + i;
-            ModelFile bladeFile = singleTexture("item/variants/" + path + name, mcLoc("item/handheld"), "layer0", modLoc("item/" + path + name));
-            builder = builder.override().predicate(rl(Constants.NBT.AW_Level), i).model(bladeFile).end();
-        }
+
+        ModelFile activatedFile = singleTexture("item/variants/" + path + "_activated", mcLoc("item/handheld"), "layer0", modLoc("item/" + path + "_activated"));
+        ModelFile deactivatedFile = singleTexture("item/variants/" + path + "_deactivated", mcLoc("item/handheld"), "layer0", modLoc("item/" + path));
+        builder.override().predicate(rl("awakened"), 0).model(deactivatedFile).end().override().predicate(rl("awakened"), 1).model(activatedFile).end();
+
 
     }
 

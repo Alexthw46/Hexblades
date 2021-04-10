@@ -5,7 +5,7 @@ public class Constants {
 
 
         public static final String AW_Level = "awakening_level";
-
+        public static final String AW_State = "awakened";
 
     }
 }

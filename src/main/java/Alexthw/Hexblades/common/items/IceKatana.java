@@ -1,6 +1,6 @@
 package Alexthw.Hexblades.common.items;
 
-import Alexthw.Hexblades.core.init.Tiers;
+import Alexthw.Hexblades.core.registers.Tiers;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;

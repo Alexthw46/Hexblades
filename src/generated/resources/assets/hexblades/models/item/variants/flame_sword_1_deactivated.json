@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "hexblades:item/dev_sword"
+    "layer0": "hexblades:item/flame_sword_1"
   }
 }

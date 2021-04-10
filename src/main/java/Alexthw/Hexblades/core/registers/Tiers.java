@@ -1,4 +1,4 @@
-package Alexthw.Hexblades.core.init;
+package Alexthw.Hexblades.core.registers;
 
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.crafting.Ingredient;

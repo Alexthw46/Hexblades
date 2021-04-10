@@ -1,8 +1,8 @@
 package Alexthw.Hexblades.datagen;
 
 import Alexthw.Hexblades.Hexblades;
-import Alexthw.Hexblades.core.init.HexItem;
-import Alexthw.Hexblades.core.init.HexTags;
+import Alexthw.Hexblades.core.registers.HexItem;
+import Alexthw.Hexblades.core.registers.HexTags;
 import Alexthw.Hexblades.core.util.HexUtils;
 import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;

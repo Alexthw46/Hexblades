@@ -7,7 +7,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
@@ -39,32 +38,48 @@ public class HexSwordItem extends SwordItem {
     }
 
     public void recalculatePowers(ItemStack heldItem, World world, PlayerEntity player) {
-        evolveweapon(heldItem);
+        awakenweapon(heldItem);
     }
 
-    public ItemStack evolveweapon(ItemStack stack) {
-        if (!stack.isEmpty()) {
-            CompoundNBT nbt = NBTHelper.checkNBT(stack).getTag();
+    public void awakenweapon(ItemStack stack) {
 
-            if (nbt.contains(Constants.NBT.AW_Level)) {
-                if (nbt.getFloat(Constants.NBT.AW_Level) < 4) {
-                    nbt.putFloat(Constants.NBT.AW_Level, nbt.getFloat(Constants.NBT.AW_Level) + 1);
-                } else {
-                    nbt.putFloat(Constants.NBT.AW_Level, 0f);
-                }
-            } else {
-                nbt.putFloat(Constants.NBT.AW_Level, 0f);
-            }
+        setAwakenedState(stack, !getAwakened(stack));
+
+    }
+
+    public ItemStack setAwakenedState(ItemStack stack, boolean aws) {
+        if (!stack.isEmpty()) {
+            NBTHelper.checkNBT(stack).getTag().putBoolean(Constants.NBT.AW_State, aws);
 
             return stack;
         }
-
         return stack;
     }
+
+    public boolean getAwakened(ItemStack stack) {
+        return !stack.isEmpty() && NBTHelper.checkNBT(stack).getTag().getBoolean(Constants.NBT.AW_State);
+    }
+
+    /*public float getAWLevel(ItemStack stack){
+
+        float level = 0;
+       if (!stack.isEmpty() && NBTHelper.checkNBT(stack).getTag().contains(Constants.NBT.AW_Level)){
+                level = stack.getTag().getFloat(Constants.NBT.AW_Level);
+        }
+
+        return level;
+    }*/
 
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
         tooltip.add(new TranslationTextComponent("tooltip.HexSwordItem." + "dev_sword"));
+        tooltip.add(new TranslationTextComponent("" + getAwakened(stack)));
+
+    }
+
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+        return oldStack.getItem() != newStack.getItem();
     }
 }

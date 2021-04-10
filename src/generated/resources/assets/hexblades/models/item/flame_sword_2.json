@@ -1,20 +1,20 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "hexblades:item/flame_sword_1"
+    "layer0": "hexblades:item/flame_sword_2"
   },
   "overrides": [
     {
       "predicate": {
         "hexblades:awakened": 0.0
       },
-      "model": "hexblades:item/variants/flame_sword_1_deactivated"
+      "model": "hexblades:item/variants/flame_sword_2_deactivated"
     },
     {
       "predicate": {
         "hexblades:awakened": 1.0
       },
-      "model": "hexblades:item/variants/flame_sword_1_activated"
+      "model": "hexblades:item/variants/flame_sword_2_activated"
     }
   ]
 }

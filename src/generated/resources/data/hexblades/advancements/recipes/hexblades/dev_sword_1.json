@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "hexblades:dev_sword"
+      "hexblades:dev_sword_1"
     ]
   },
   "criteria": {
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "hexblades:dev_sword"
+        "recipe": "hexblades:dev_sword_1"
       }
     }
   },
