@@ -2,6 +2,7 @@ package Alexthw.Hexblades;
 
 import Alexthw.Hexblades.client.ClientEvents;
 import Alexthw.Hexblades.core.registers.HexItem;
+import Alexthw.Hexblades.core.registers.HexRegistry;
 import Alexthw.Hexblades.core.registers.Registry;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -23,8 +24,9 @@ public class Hexblades
     public static final ItemGroup TAB = new ItemGroup(MOD_ID) {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(HexItem.DEV_SWORD.get());
+            return new ItemStack(HexItem.PATRON_SOUL.get());
         }
+
     };
 
         public Hexblades() {
@@ -32,8 +34,10 @@ public class Hexblades
 
             // Register the setup method for modloading
             FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+
             //Register all the things
             Registry.init(hexbus);
+            HexRegistry.init();
 
             //Client-side only
             hexbus.addListener(this::doClientStuff);

@@ -33,7 +33,7 @@ public class HexItemTagProvider extends ItemTagsProvider {
         */
 
         getOrCreateBuilder(HexTags.Items.HEX_BLADE).add(HexItem.DEV_SWORD.get());
-        getOrCreateBuilder(HexTags.Items.HEXIUM_INGOT).add(HexItem.SILVER_INGOT.get());
+        getOrCreateBuilder(HexTags.Items.HEXIUM_INGOT).add(HexItem.HEXIUM_INGOT.get());
         getOrCreateBuilder(Tags.Items.INGOTS).addTag(HexTags.Items.HEXIUM_INGOT);
     }
 }

@@ -17,7 +17,7 @@ public class HexRecipeProvider extends RecipeProvider {
 
     @Override
     protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
-        ShapedRecipeBuilder.shapedRecipe(HexItem.DEV_SWORD.get()).key('#', Items.STICK).key('X', HexItem.SILVER_INGOT.get()).patternLine("X").patternLine("X").patternLine("#").addCriterion("has_spirited_metal", hasItem(HexItem.SILVER_INGOT.get())).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(HexItem.DEV_SWORD.get()).key('#', Items.STICK).key('X', HexItem.HEXIUM_INGOT.get()).patternLine("X").patternLine("X").patternLine("#").addCriterion("has_spirited_metal", hasItem(HexItem.HEXIUM_INGOT.get())).build(consumer);
     }
 
 

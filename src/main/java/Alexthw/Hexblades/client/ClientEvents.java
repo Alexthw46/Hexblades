@@ -28,6 +28,9 @@ public class ClientEvents {
             registerToggleAnimation(HexItem.FROST_RAZOR.get());
             registerToggleAnimation(HexItem.FROST_RAZOR1.get());
             registerToggleAnimation(HexItem.FIRE_BRAND.get());
+            registerToggleAnimation(HexItem.FIRE_BRAND1.get());
+            registerToggleAnimation(HexItem.WATER_SABER.get());
+            registerToggleAnimation(HexItem.WATER_SABER1.get());
         });
 
     }
