@@ -31,6 +31,9 @@ public class ClientEvents {
             registerToggleAnimation(HexItem.FIRE_BRAND1.get());
             registerToggleAnimation(HexItem.WATER_SABER.get());
             registerToggleAnimation(HexItem.WATER_SABER1.get());
+            registerToggleAnimation(HexItem.EARTH_HAMMER.get());
+            //registerToggleAnimation(HexItem.EARTH_HAMMER1.get());
+
         });
 
     }

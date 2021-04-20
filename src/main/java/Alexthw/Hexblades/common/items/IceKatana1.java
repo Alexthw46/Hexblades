@@ -1,9 +1,11 @@
 package Alexthw.Hexblades.common.items;
 
-import Alexthw.Hexblades.core.registers.Tiers;
+import elucent.eidolon.Registry;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -14,21 +16,24 @@ import java.util.List;
 public class IceKatana1 extends HexSwordItem {
 
     public IceKatana1(Properties props) {
-        super(Tiers.HexiumTier.INSTANCE, 4, -2.4F, props);
+        super(4, -2.4F, props);
     }
 
     @Override
-    public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (target.hurtResistantTime > 0) {
-            target.hurtResistantTime = 0;
-            float before = target.getHealth();
-            target.attackEntityFrom(new EntityDamageSource("wither", attacker).setDamageBypassesArmor(), 2.0f);
-            float damaged = before - target.getHealth();
-
-        }
-        return super.hitEntity(stack, target, attacker);
+    public void applyHexEffects(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        target.attackEntityFrom(new EntityDamageSource(Registry.FROST_DAMAGE.getDamageType(), attacker).setDamageBypassesArmor(), 2.0f);
+        target.addPotionEffect(new EffectInstance(Registry.CHILLED_EFFECT.get(), 300, 0));
     }
 
+    @Override
+    public void recalculatePowers(ItemStack weapon, World world, PlayerEntity player) {
+        double devotion = getDevotion(player);
+
+        setAwakenedState(weapon, !getAwakened(weapon));
+
+        setAttackPower(weapon,devotion/20);
+        setAttackSpeed(weapon,devotion/30);
+    }
 
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
