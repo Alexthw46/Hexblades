@@ -11,8 +11,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class Earth_Hammer1 extends HexSwordItem{
-    public Earth_Hammer1(Properties props) {
+public class EarthHammer1 extends HexSwordItem{
+    public EarthHammer1(Properties props) {
         super(8, -3.4F, props);
     }
 

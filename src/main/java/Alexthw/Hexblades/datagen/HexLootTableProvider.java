@@ -1,7 +1,7 @@
 package Alexthw.Hexblades.datagen;
 
 import Alexthw.Hexblades.Hexblades;
-import Alexthw.Hexblades.core.registers.HexBlock;
+import Alexthw.Hexblades.registers.HexBlock;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.advancements.criterion.EnchantmentPredicate;
@@ -27,8 +27,8 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-import static Alexthw.Hexblades.core.registers.HexBlock.BLOCKS;
-import static Alexthw.Hexblades.core.util.HexUtils.takeAll;
+import static Alexthw.Hexblades.registers.HexBlock.BLOCKS;
+import static Alexthw.Hexblades.util.HexUtils.takeAll;
 
 public class HexLootTableProvider extends LootTableProvider {
     public HexLootTableProvider(DataGenerator dataGeneratorIn) {

@@ -2,8 +2,8 @@ package Alexthw.Hexblades.client;
 
 import Alexthw.Hexblades.Hexblades;
 import Alexthw.Hexblades.common.items.HexSwordItem;
-import Alexthw.Hexblades.core.registers.HexItem;
-import Alexthw.Hexblades.core.util.Constants;
+import Alexthw.Hexblades.registers.HexItem;
+import Alexthw.Hexblades.util.Constants;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.IItemPropertyGetter;
@@ -33,7 +33,6 @@ public class ClientEvents {
             registerToggleAnimation(HexItem.WATER_SABER1.get());
             registerToggleAnimation(HexItem.EARTH_HAMMER.get());
             //registerToggleAnimation(HexItem.EARTH_HAMMER1.get());
-
         });
 
     }

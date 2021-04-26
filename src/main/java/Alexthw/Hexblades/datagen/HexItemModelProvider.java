@@ -1,6 +1,8 @@
 package Alexthw.Hexblades.datagen;
 
 import Alexthw.Hexblades.Hexblades;
+import Alexthw.Hexblades.common.items.EarthHammer1;
+import Alexthw.Hexblades.common.items.Hammer_dull;
 import Alexthw.Hexblades.common.items.HexSwordItem;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.BlockItem;
@@ -18,9 +20,9 @@ import net.minecraftforge.fml.RegistryObject;
 import java.util.HashSet;
 import java.util.Set;
 
-import static Alexthw.Hexblades.core.registers.HexItem.ITEMS;
-import static Alexthw.Hexblades.core.util.HexUtils.prefix;
-import static Alexthw.Hexblades.core.util.HexUtils.takeAll;
+import static Alexthw.Hexblades.registers.HexItem.ITEMS;
+import static Alexthw.Hexblades.util.HexUtils.prefix;
+import static Alexthw.Hexblades.util.HexUtils.takeAll;
 
 
 public class HexItemModelProvider extends ItemModelProvider {
@@ -41,6 +43,8 @@ public class HexItemModelProvider extends ItemModelProvider {
         Set<RegistryObject<Item>> items = new HashSet<>(ITEMS.getEntries());
         takeAll(items, i -> i.get() instanceof BlockItem).forEach(this::blockItem);
         takeAll(items, i -> i.get() instanceof ToolItem).forEach(this::handheldItem);
+        takeAll(items, i -> i.get() instanceof Hammer_dull);
+        takeAll(items, i -> i.get() instanceof EarthHammer1);
         takeAll(items, i -> i.get() instanceof HexSwordItem).forEach(this::awakenableItem);
         takeAll(items, i -> i.get() instanceof SwordItem).forEach(this::handheldItem);
 
@@ -48,18 +52,17 @@ public class HexItemModelProvider extends ItemModelProvider {
 
     }
 
-
     private void handheldItem(RegistryObject<Item> i) {
         String name = Registry.ITEM.getKey(i.get()).getPath();
         withExistingParent(name, HANDHELD).texture("layer0", prefix("item/" + name));
     }
+
 
     private void awakenableItem(RegistryObject<Item> it) {
 
         String path = Registry.ITEM.getKey(it.get()).getPath();
         ItemModelBuilder builder = getBuilder(path);
         withExistingParent(path, HANDHELD).texture("layer0", prefix("item/" + path));
-
 
         ModelFile activatedFile = singleTexture("item/variants/" + path + "_activated", mcLoc("item/handheld"), "layer0", modLoc("item/" + path + "_activated"));
         ModelFile deactivatedFile = singleTexture("item/variants/" + path + "_deactivated", mcLoc("item/handheld"), "layer0", modLoc("item/" + path));

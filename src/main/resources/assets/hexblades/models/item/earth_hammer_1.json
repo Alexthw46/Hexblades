@@ -1,6 +1,5 @@
 {
-  "parent": "minecraft:item/handheld",
-  "textures": {
+ "textures": {
     "layer0": "hexblades:item/earth_hammer_1"
   },
   "overrides": [

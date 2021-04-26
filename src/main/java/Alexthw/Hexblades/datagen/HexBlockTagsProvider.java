@@ -1,7 +1,7 @@
 package Alexthw.Hexblades.datagen;
 
 import Alexthw.Hexblades.Hexblades;
-import Alexthw.Hexblades.core.registers.HexBlock;
+import Alexthw.Hexblades.registers.HexBlock;
 import net.minecraft.block.Block;
 import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
-import static Alexthw.Hexblades.core.registers.HexBlock.BLOCKS;
+import static Alexthw.Hexblades.registers.HexBlock.BLOCKS;
 import static net.minecraft.tags.BlockTags.PLANKS;
 
 public class HexBlockTagsProvider extends BlockTagsProvider {

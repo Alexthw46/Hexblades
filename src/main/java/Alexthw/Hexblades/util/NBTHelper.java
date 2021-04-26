@@ -1,4 +1,4 @@
-package Alexthw.Hexblades.core.util;
+package Alexthw.Hexblades.util;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;

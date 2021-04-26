@@ -1,4 +1,4 @@
-package Alexthw.Hexblades.core.util;
+package Alexthw.Hexblades.util;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;

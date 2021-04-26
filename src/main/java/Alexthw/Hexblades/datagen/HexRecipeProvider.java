@@ -1,6 +1,6 @@
 package Alexthw.Hexblades.datagen;
 
-import Alexthw.Hexblades.core.registers.HexItem;
+import Alexthw.Hexblades.registers.HexItem;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.RecipeProvider;

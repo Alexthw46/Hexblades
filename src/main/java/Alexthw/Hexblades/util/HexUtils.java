@@ -1,4 +1,4 @@
-package Alexthw.Hexblades.core.util;
+package Alexthw.Hexblades.util;
 
 import Alexthw.Hexblades.Hexblades;
 import net.minecraft.util.ResourceLocation;

@@ -1,4 +1,4 @@
-package Alexthw.Hexblades.core.registers;
+package Alexthw.Hexblades.registers;
 
 import Alexthw.Hexblades.Hexblades;
 import Alexthw.Hexblades.common.items.*;
@@ -12,6 +12,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class HexItem {
 
+
     private static Item.Properties addTabProp() {
         return new Item.Properties().group(Hexblades.TAB);
     }
@@ -23,6 +24,7 @@ public class HexItem {
     //Items
     public static final RegistryObject<Item> HEXIUM_INGOT;
     public static final RegistryObject<Item> PATRON_SOUL;
+    public static final RegistryObject<Item> DROWNED_HEART;
 
     //Sword/Tools
     public static final RegistryObject<Item> DEV_SWORD;
@@ -30,7 +32,7 @@ public class HexItem {
     public static final RegistryObject<Item> DULL_BROADSWORD;
     public static final RegistryObject<Item> DULL_SABER;
     public static final RegistryObject<Item> DULL_HAMMER;
-    //public static final RegistryObject<Item> DULL_DAGGER;
+    public static final RegistryObject<Item> DULL_DAGGER;
 
 
 
@@ -57,13 +59,13 @@ public class HexItem {
         //Items
         HEXIUM_INGOT = ITEMS.register("hexium_ingot", () -> new Item(addTabProp()));
         PATRON_SOUL = ITEMS.register("elemental_soul", () -> new PatronSoul(addTabProp()));
-
+        DROWNED_HEART = ITEMS.register("drowned_heart", ()-> new Item(addTabProp()));
         //Dull Sword/Tools
-        DULL_KATANA = ITEMS.register("katana_dull", () -> new Katana_dull(Tiers.HexiumTier.INSTANCE, 3, -2.5F, new Item.Properties().group(Hexblades.TAB).maxStackSize(1)));
-        DULL_BROADSWORD = ITEMS.register("sword_dull", () -> new BroadSword_dull(Tiers.HexiumTier.INSTANCE, 3, -2.7F, new Item.Properties().group(Hexblades.TAB).maxStackSize(1)));
-        DULL_SABER = ITEMS.register("saber_dull", () -> new Saber_dull(Tiers.HexiumTier.INSTANCE, 3, -2.6F, new Item.Properties().group(Hexblades.TAB).maxStackSize(1)));
+        DULL_KATANA = ITEMS.register("katana_dull", () -> new Katana_dull(Tiers.HexiumTier.INSTANCE, 2, -2.5F, new Item.Properties().group(Hexblades.TAB).maxStackSize(1)));
+        DULL_BROADSWORD = ITEMS.register("sword_dull", () -> new BroadSword_dull(Tiers.HexiumTier.INSTANCE, 2, -2.7F, new Item.Properties().group(Hexblades.TAB).maxStackSize(1)));
+        DULL_SABER = ITEMS.register("saber_dull", () -> new Saber_dull(Tiers.HexiumTier.INSTANCE, 2, -2.6F, new Item.Properties().group(Hexblades.TAB).maxStackSize(1)));
         DULL_HAMMER = ITEMS.register("hammer_dull",()-> new Hammer_dull(Tiers.HexiumTier.INSTANCE,4,-3.4F,new Item.Properties().group(Hexblades.TAB).maxStackSize(1)));
-        //DULL_DAGGER = ITEMS.register("knives_dull",()-> new Dagger_dull(Tiers.HexiumTier.INSTANCE, 2, 2.5F, new Item.Properties().group(Hexblades.TAB).maxStackSize(1)));
+        DULL_DAGGER = ITEMS.register("dagger_dull",()-> new Dagger_dull(Tiers.HexiumTier.INSTANCE, 0, -0.5F, new Item.Properties().group(Hexblades.TAB).maxStackSize(1)));
 
         //Hexblades
         DEV_SWORD = ITEMS.register("dev_sword_1", () -> new HexSwordItem(3, -1.6F, new Item.Properties().group(Hexblades.TAB).maxStackSize(1)));
@@ -74,7 +76,7 @@ public class HexItem {
         FIRE_BRAND1 = ITEMS.register("flame_sword_2", () -> new FireBroad2(addTabProp()));
         WATER_SABER = ITEMS.register("water_saber_1", () -> new WaterSaber1(addTabProp()));
         WATER_SABER1 = ITEMS.register("water_saber_2", () -> new WaterSaber2(addTabProp()));
-        EARTH_HAMMER = ITEMS.register("earth_hammer_1", () -> new Earth_Hammer1(addTabProp()));
+        EARTH_HAMMER = ITEMS.register("earth_hammer_1", () -> new EarthHammer1(addTabProp()));
         /*
         EARTH_HAMMER1 = ITEMS.register("earth_hammer_2", () -> new Earth_Hammer2(addTabProp()));
         LIGHTNING_KNIVES = ITEMS.register("thunder_knives_1", () -> new Lightning_Knives1(addTabProp()));

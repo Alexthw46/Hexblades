@@ -1,8 +1,8 @@
 package Alexthw.Hexblades.datagen;
 
 import Alexthw.Hexblades.Hexblades;
-import Alexthw.Hexblades.core.registers.HexBlock;
-import Alexthw.Hexblades.core.util.HexUtils;
+import Alexthw.Hexblades.registers.HexBlock;
+import Alexthw.Hexblades.util.HexUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.data.DataGenerator;
@@ -15,7 +15,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import static Alexthw.Hexblades.core.util.HexUtils.prefix;
+import static Alexthw.Hexblades.util.HexUtils.prefix;
 
 public class HexBlockStateProvider extends BlockStateProvider{
 

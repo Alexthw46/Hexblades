@@ -1,0 +1,12 @@
+{
+  "parent": "item/handheld",
+  "loader": "forge:separate-perspective",
+  "base": {
+    "parent": "hexblades:item/3dmodels/hammer_dull"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "hexblades:item/hammer_dull_gui"
+    }
+  }
+}

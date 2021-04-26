@@ -1,9 +1,9 @@
 package Alexthw.Hexblades;
 
 import Alexthw.Hexblades.client.ClientEvents;
-import Alexthw.Hexblades.core.registers.HexItem;
-import Alexthw.Hexblades.core.registers.HexRegistry;
-import Alexthw.Hexblades.core.registers.Registry;
+import Alexthw.Hexblades.registers.HexItem;
+import Alexthw.Hexblades.registers.HexRegistry;
+import Alexthw.Hexblades.registers.Registry;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -48,7 +48,9 @@ public class Hexblades
         }
 
     private void setup(final FMLCommonSetupEvent event) {
-
+        event.enqueueWork(() -> {
+            HexRegistry.post_init();
+        });
     }
 
     //	@OnlyIn(Dist.CLIENT)

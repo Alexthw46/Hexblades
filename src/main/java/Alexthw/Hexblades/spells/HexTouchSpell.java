@@ -1,6 +1,6 @@
 package Alexthw.Hexblades.spells;
 
-import Alexthw.Hexblades.core.registers.HexItem;
+import Alexthw.Hexblades.registers.HexItem;
 import elucent.eidolon.Registry;
 import elucent.eidolon.capability.ReputationProvider;
 import elucent.eidolon.deity.Deities;

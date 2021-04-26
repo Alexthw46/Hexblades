@@ -1,4 +1,4 @@
-package Alexthw.Hexblades.core.registers;
+package Alexthw.Hexblades.registers;
 
 import Alexthw.Hexblades.Hexblades;
 import net.minecraft.block.AbstractBlock;

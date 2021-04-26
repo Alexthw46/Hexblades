@@ -1,9 +1,6 @@
 package Alexthw.Hexblades.common.items;
 
-import Alexthw.Hexblades.core.util.Constants;
-import Alexthw.Hexblades.core.util.NBTHelper;
 import Alexthw.Hexblades.patrons.HexDeities;
-import com.google.common.collect.Lists;
 import elucent.eidolon.capability.ReputationProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.NewChatGui;

@@ -1,8 +1,8 @@
 package Alexthw.Hexblades.common.items;
 
-import Alexthw.Hexblades.core.registers.Tiers;
-import Alexthw.Hexblades.core.util.Constants;
-import Alexthw.Hexblades.core.util.NBTHelper;
+import Alexthw.Hexblades.registers.Tiers;
+import Alexthw.Hexblades.util.Constants;
+import Alexthw.Hexblades.util.NBTHelper;
 import Alexthw.Hexblades.patrons.HexDeities;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
