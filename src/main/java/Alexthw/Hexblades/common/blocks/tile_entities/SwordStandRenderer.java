@@ -23,10 +23,10 @@ public class SwordStandRenderer extends TileEntityRenderer<SwordStandTileEntity>
         Minecraft mc = Minecraft.getInstance();
         ItemRenderer ir = mc.getItemRenderer();
         ItemStack istack = tileEntityIn.stack;
-        if (istack.isEmpty()) {
+        if (!istack.isEmpty()) {
             matrixStackIn.push();
+            matrixStackIn.translate(0.6D, 0.5D, 0.5D);
             if (!((istack.getItem() instanceof EarthHammer1) || (istack.getItem() instanceof EarthHammer2))) {
-                matrixStackIn.translate(0.6D, 0.5D, 0.5D);
                 matrixStackIn.rotate(Vector3f.ZP.rotationDegrees(45.0F));
             }
             ir.renderItem(tileEntityIn.stack, ItemCameraTransforms.TransformType.GROUND, combinedLightIn, combinedOverlayIn, matrixStackIn, bufferIn);
