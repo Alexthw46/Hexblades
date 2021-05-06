@@ -68,15 +68,18 @@ public class HexSwordItem extends SwordItem {
 
     @Override
     public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (target.hurtResistantTime > 0) {
-            target.hurtResistantTime = 0;
-            applyHexEffects(stack,target,attacker);
+        if (attacker instanceof PlayerEntity) {
+            if (target.hurtResistantTime > 0) {
+                target.hurtResistantTime = 0;
+                applyHexEffects(stack, target, (PlayerEntity) attacker);
+            }
         }
         stack.setDamage(Math.max(stack.getDamage() - 6, 0));
         return super.hitEntity(stack, target, attacker);
     }
 
-    public void applyHexEffects(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+    //Only apply special effects if wielded by a Player
+    public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
         target.attackEntityFrom(new EntityDamageSource("wither", attacker).setDamageBypassesArmor(), 2.0f);
     }
 

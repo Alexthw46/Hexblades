@@ -21,7 +21,7 @@ public class IceKatana1 extends HexSwordItem {
     }
 
     @Override
-    public void applyHexEffects(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+    public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
         target.attackEntityFrom(new EntityDamageSource(Registry.FROST_DAMAGE.getDamageType(), attacker).setDamageBypassesArmor(), 2.0f);
         target.addPotionEffect(new EffectInstance(Registry.CHILLED_EFFECT.get(), 300, 0));
     }

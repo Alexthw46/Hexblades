@@ -17,7 +17,7 @@ public class WaterSaber1 extends HexSwordItem {
         super(2, -2.4F, props);
     }
     @Override
-    public void applyHexEffects(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+    public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
         target.attackEntityFrom(new EntityDamageSource("drown", attacker).setDamageBypassesArmor(), 3.0f);
     }
 

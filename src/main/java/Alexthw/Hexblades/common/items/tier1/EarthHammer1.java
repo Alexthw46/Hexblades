@@ -18,12 +18,12 @@ public class EarthHammer1 extends HexSwordItem {
     }
 
     @Override
-    public void applyHexEffects(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+    public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
         target.attackEntityFrom(new EntityDamageSource("anvil", attacker).setDamageBypassesArmor(), 2.0f);
         double X = attacker.getPosX() - target.getPosX();
         double Z = attacker.getPosZ() - target.getPosZ();
 
-        target.applyKnockback(0.8F,X,Z);
+        target.applyKnockback((float) (1.0F + getDevotion(attacker)/20),X,Z);
     }
 
     @Override
