@@ -1,7 +1,7 @@
 package Alexthw.Hexblades.spells;
 
 import Alexthw.Hexblades.Hexblades;
-import Alexthw.Hexblades.patrons.HexDeities;
+import Alexthw.Hexblades.deity.HexDeities;
 import elucent.eidolon.spell.PrayerSpell;
 import elucent.eidolon.spell.Signs;
 import elucent.eidolon.spell.Spell;

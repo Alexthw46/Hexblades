@@ -1,9 +1,8 @@
 package Alexthw.Hexblades.spells;
 
+import Alexthw.Hexblades.deity.HexDeities;
 import Alexthw.Hexblades.registers.HexItem;
-import elucent.eidolon.Registry;
 import elucent.eidolon.capability.ReputationProvider;
-import elucent.eidolon.deity.Deities;
 import elucent.eidolon.network.MagicBurstEffectPacket;
 import elucent.eidolon.network.Networking;
 import elucent.eidolon.spell.Sign;
@@ -12,6 +11,7 @@ import elucent.eidolon.spell.StaticSpell;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -32,7 +32,7 @@ public class HexTouchSpell extends StaticSpell {
     @Override
     public boolean canCast(World world, BlockPos pos, PlayerEntity player) {
         if (!world.getCapability(ReputationProvider.CAPABILITY).isPresent()) return false;
-        if (world.getCapability(ReputationProvider.CAPABILITY).resolve().get().getReputation(player, Deities.DARK_DEITY.getId()) < 4.0)
+        if (world.getCapability(ReputationProvider.CAPABILITY).resolve().get().getReputation(player, HexDeities.HEX_DEITY.getId()) < 4.0)
             return false;
 
         RayTraceResult ray = world.rayTraceBlocks(new RayTraceContext(player.getEyePosition(0), player.getEyePosition(0).add(player.getLookVec().scale(4)), RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, player));
@@ -64,12 +64,12 @@ public class HexTouchSpell extends StaticSpell {
     }
 
     boolean canTouch(ItemStack stack) {
-        return stack.getItem() == Registry.SILVER_INGOT.get();           // is silver
+        return stack.getItem() == Items.NETHER_STAR;           // is silver
     }
 
     ItemStack touchResult(ItemStack stack) { // assumes canTouch is true
         if (canTouch(stack))
-            return new ItemStack(HexItem.HEXIUM_INGOT.get());
+            return new ItemStack(HexItem.PATRON_SOUL.get());
         else return stack;
     }
 }

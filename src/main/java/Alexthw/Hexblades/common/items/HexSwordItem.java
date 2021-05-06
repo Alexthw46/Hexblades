@@ -1,13 +1,14 @@
 package Alexthw.Hexblades.common.items;
 
+import Alexthw.Hexblades.deity.HexDeities;
 import Alexthw.Hexblades.registers.Tiers;
 import Alexthw.Hexblades.util.Constants;
 import Alexthw.Hexblades.util.NBTHelper;
-import Alexthw.Hexblades.patrons.HexDeities;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import elucent.eidolon.capability.ReputationProvider;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -25,7 +26,6 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-//@SuppressWarnings("all")
 public class HexSwordItem extends SwordItem {
 
     public final double baseAttack;
@@ -39,6 +39,28 @@ public class HexSwordItem extends SwordItem {
 
 
     @Override
+    public boolean isDamageable() {
+        return super.isDamageable();
+    }
+
+    @Override
+    public void inventoryTick(ItemStack stack, World worldIn, Entity user, int itemSlot, boolean isSelected) {
+        if (user instanceof PlayerEntity) {
+            if (getAwakened(stack) && !((PlayerEntity) user).isCreative()) {
+                if ((getMaxDamage(stack) - stack.getDamage()) > 1) {
+                    stack.damageItem(1, (LivingEntity) user, (entity) -> {
+                        entity.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+                    });
+                } else {
+                    setAwakenedState(stack, false);
+                }
+            } else {
+                stack.setDamage(Math.max(stack.getDamage() - 1, 0));
+            }
+        }
+    }
+
+    @Override
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         recalculatePowers(player.getHeldItem(hand), world, player);
         return super.onItemRightClick(world, player, hand);
@@ -50,6 +72,7 @@ public class HexSwordItem extends SwordItem {
             target.hurtResistantTime = 0;
             applyHexEffects(stack,target,attacker);
         }
+        stack.setDamage(Math.max(stack.getDamage() - 6, 0));
         return super.hitEntity(stack, target, attacker);
     }
 
@@ -66,22 +89,22 @@ public class HexSwordItem extends SwordItem {
         setAttackSpeed(weapon,devotion);
     }
 
-    void setAttackPower(ItemStack weapon, double extradamage) {
+    public void setAttackPower(ItemStack weapon, double extradamage) {
 
         CompoundNBT tag = NBTHelper.checkNBT(weapon).getTag();
-        if (tag != null){
-        if (getAwakened(weapon)) {
-            tag.putDouble(Constants.NBT.EXTRA_DAMAGE, baseAttack + extradamage);
-        } else {
-            tag.putDouble(Constants.NBT.EXTRA_DAMAGE, baseAttack);
-        }
+        if (tag != null) {
+            if (getAwakened(weapon)) {
+                tag.putDouble(Constants.NBT.EXTRA_DAMAGE, baseAttack + extradamage);
+            } else {
+                tag.putDouble(Constants.NBT.EXTRA_DAMAGE, baseAttack);
+            }
         }
     }
 
-    void setAttackSpeed(ItemStack weapon, double extraspeed) {
+    public void setAttackSpeed(ItemStack weapon, double extraspeed) {
 
         CompoundNBT tag = NBTHelper.checkNBT(weapon).getTag();
-        if (tag != null){
+        if (tag != null) {
 
             if (getAwakened(weapon)) {
                 tag.putDouble(Constants.NBT.EXTRA_ATTACK_SPEED, baseSpeed + extraspeed);
@@ -98,19 +121,21 @@ public class HexSwordItem extends SwordItem {
         }
     }
 
-    private double getAttackPower(ItemStack weapon) {
+    public double getAttackPower(ItemStack weapon) {
         CompoundNBT tag = NBTHelper.checkNBT(weapon).getTag();
 
         if (tag != null) {
             double AP = NBTHelper.checkNBT(weapon).getTag().getDouble(Constants.NBT.EXTRA_DAMAGE);
+
             if (AP > 0) {
                 return AP;
             }
+
         }
             return baseAttack;
     }
 
-    private double getAttackSpeed(ItemStack weapon) {
+    public double getAttackSpeed(ItemStack weapon) {
         CompoundNBT tag = NBTHelper.checkNBT(weapon).getTag();
 
         if (tag != null) {
@@ -124,11 +149,11 @@ public class HexSwordItem extends SwordItem {
         return baseSpeed;
     }
 
-    double getDevotion(PlayerEntity player) {
-        if (player.getEntityWorld().getCapability(ReputationProvider.CAPABILITY).resolve().isPresent()){
-        return player.getEntityWorld().getCapability(ReputationProvider.CAPABILITY).resolve().get().getReputation(player, HexDeities.HEX_DEITY.getId());
-        }else
-        return 0;
+    public double getDevotion(PlayerEntity player) {
+        if (player.getEntityWorld().getCapability(ReputationProvider.CAPABILITY).resolve().isPresent()) {
+            return player.getEntityWorld().getCapability(ReputationProvider.CAPABILITY).resolve().get().getReputation(player, HexDeities.HEX_DEITY.getId());
+        } else
+            return 0;
     }
 
     public boolean getAwakened(ItemStack stack) {

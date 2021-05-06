@@ -6,17 +6,87 @@
 	},
 	"elements": [
 		{
-			"from": [7, 1, 7],
-			"to": [9, 10, 9],
-			"rotation": {"angle": 0, "axis": "y", "origin": [8, 5.5, 8]},
-			"faces": {
-				"north": {"uv": [8, 0, 16, 6], "rotation": 90, "texture": "#0"},
-				"east": {"uv": [8, 0, 16, 6], "rotation": 90, "texture": "#0"},
-				"south": {"uv": [8, 0, 16, 6], "rotation": 90, "texture": "#0"},
-				"west": {"uv": [8, 0, 16, 6], "rotation": 90, "texture": "#0"},
-				"up": {"uv": [8, 0, 16, 6], "rotation": 90, "texture": "#0"},
-				"down": {"uv": [8, 0, 16, 6], "rotation": 90, "texture": "#0"}
-			}
+          "from": [
+            7,
+            2,
+            7
+          ],
+          "to": [
+            9,
+            10,
+            9
+          ],
+          "rotation": {
+            "angle": 0,
+            "axis": "y",
+            "origin": [
+              8,
+              5.5,
+              8
+            ]
+          },
+          "faces": {
+            "north": {
+              "uv": [
+                4,
+                0,
+                13,
+                2
+              ],
+              "rotation": 90,
+              "texture": "#0"
+            },
+            "east": {
+              "uv": [
+                4,
+                0,
+                13,
+                2
+              ],
+              "rotation": 90,
+              "texture": "#0"
+            },
+            "south": {
+              "uv": [
+                4,
+                0,
+                13,
+                2
+              ],
+              "rotation": 90,
+              "texture": "#0"
+            },
+            "west": {
+              "uv": [
+                4,
+                0,
+                13,
+                2
+              ],
+              "rotation": 90,
+              "texture": "#0"
+            },
+            "up": {
+              "uv": [
+                4,
+                0,
+                13,
+                2
+              ],
+              "rotation": 90,
+              "texture": "#0"
+            },
+            "down": {
+              "uv": [
+                4,
+                0,
+                13,
+                2
+              ],
+              "rotation": 90,
+              "texture": "#0"
+            }
+          }
 		},
 		{
 			"from": [6, 10, 4],
@@ -56,27 +126,91 @@
 				"down": {"uv": [0, 0, 0.5, 0.5], "texture": "#0"}
 			}
 		},
-		{
-			"from": [7, 0, 7],
-			"to": [9, 1, 9],
-			"faces": {
-				"north": {"uv": [11, 13.5, 13, 14.5], "texture": "#0"},
-				"east": {"uv": [11, 13.5, 13, 14.5], "texture": "#0"},
-				"south": {"uv": [11, 13.5, 13, 14.5], "texture": "#0"},
-				"west": {"uv": [11, 13.5, 13, 14.5], "texture": "#0"},
-				"up": {"uv": [11, 13.5, 13, 14.5], "texture": "#0"},
-				"down": {"uv": [8.5, 8.5, 15, 15.5], "texture": "#0"}
-			}
-		}
+      {
+        "from": [
+          7,
+          0,
+          7
+        ],
+        "to": [
+          9,
+          2,
+          9
+        ],
+        "faces": {
+          "north": {
+            "uv": [
+              2,
+              0,
+              4,
+              2
+            ],
+            "texture": "#0"
+          },
+          "east": {
+            "uv": [
+              2,
+              0,
+              4,
+              2
+            ],
+            "texture": "#0"
+          },
+          "south": {
+            "uv": [
+              2,
+              0,
+              4,
+              2
+            ],
+            "texture": "#0"
+          },
+          "west": {
+            "uv": [
+              2,
+              0,
+              4,
+              2
+            ],
+            "texture": "#0"
+          },
+          "up": {
+            "uv": [
+              2,
+              0,
+              4,
+              2
+            ],
+            "texture": "#0"
+          },
+          "down": {
+            "uv": [
+              5.5,
+              11.5,
+              6.5,
+              12.5
+            ],
+            "texture": "#0"
+          }
+        }
+      }
 	],
 	"gui_light": "front",
 	"display": {
 		"thirdperson_righthand": {
-			"translation": [0, 4.75, 1]
-		},
+          "translation": [
+            0,
+            6.5,
+            1.1
+          ]
+        },
 		"thirdperson_lefthand": {
-			"translation": [0, 4.75, 1]
-		},
+          "translation": [
+            0,
+            6.5,
+            1.1
+          ]
+        },
 		"firstperson_righthand": {
 			"rotation": [0, 3, 0],
 			"translation": [0, 5, 0]

@@ -6,6 +6,8 @@ import Alexthw.Hexblades.registers.HexRegistry;
 import Alexthw.Hexblades.registers.Registry;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -22,6 +24,7 @@ public class Hexblades
     public static final Logger LOGGER = LogManager.getLogger();
     public static final String MOD_ID = "hexblades";
     public static final ItemGroup TAB = new ItemGroup(MOD_ID) {
+
         @Override
         public ItemStack createIcon() {
             return new ItemStack(HexItem.PATRON_SOUL.get());
@@ -39,6 +42,8 @@ public class Hexblades
             Registry.init(hexbus);
             HexRegistry.init();
 
+            MinecraftForge.EVENT_BUS.register(new Events());
+
             //Client-side only
             hexbus.addListener(this::doClientStuff);
 
@@ -48,12 +53,10 @@ public class Hexblades
         }
 
     private void setup(final FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> {
-            HexRegistry.post_init();
-        });
+        event.enqueueWork(HexRegistry::post_init);
     }
 
-    //	@OnlyIn(Dist.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     private void doClientStuff(final FMLClientSetupEvent event) {
 
         ClientEvents.initClientEvents(event);

@@ -27,13 +27,20 @@ public class HexItemTagProvider extends ItemTagsProvider {
 
     @Override
     protected void registerTags() {
-        copy(BlockTags.PLANKS, ItemTags.PLANKS);
-        /*
-        this.copy(BlockTags.STONE_BRICKS, ItemTags.STONE_BRICKS);
-        */
+        this.copy(BlockTags.PLANKS, ItemTags.PLANKS);
+        this.copy(BlockTags.STAIRS, ItemTags.STAIRS);
+        this.copy(BlockTags.SLABS, ItemTags.SLABS);
+        this.copy(BlockTags.WOODEN_STAIRS, ItemTags.WOODEN_STAIRS);
+        this.copy(BlockTags.WOODEN_SLABS, ItemTags.WOODEN_SLABS);
+        this.copy(BlockTags.WOODEN_FENCES, ItemTags.WOODEN_FENCES);
 
         getOrCreateBuilder(HexTags.Items.HEX_BLADE).add(HexItem.DEV_SWORD.get());
         getOrCreateBuilder(HexTags.Items.HEXIUM_INGOT).add(HexItem.HEXIUM_INGOT.get());
         getOrCreateBuilder(Tags.Items.INGOTS).addTag(HexTags.Items.HEXIUM_INGOT);
+    }
+
+    @Override
+    public String getName() {
+        return "HexBlades Block Tags";
     }
 }

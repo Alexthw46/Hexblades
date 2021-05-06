@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "hexblades:dagger_dull"
+    ]
+  },
+  "criteria": {
+    "has_spirited_metal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "hexblades:hexium_ingot"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "hexblades:dagger_dull"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_spirited_metal",
+      "has_the_recipe"
+    ]
+  ]
+}

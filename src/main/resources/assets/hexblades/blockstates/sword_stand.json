@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "hexblades:block/sword_stand"
+    },
+    "facing=south": {
+      "model": "hexblades:block/sword_stand",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "hexblades:block/sword_stand",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "hexblades:block/sword_stand",
+      "y": 90
+    }
+  }
+}

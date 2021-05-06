@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "hexblades:block/dark_polished_planks_slab_top"
+    },
+    "type=bottom": {
+      "model": "hexblades:block/dark_polished_planks_slab"
+    },
+    "type=double": {
+      "model": "hexblades:block/dark_polished_planks"
+    }
+  }
+}

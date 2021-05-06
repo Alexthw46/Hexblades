@@ -1,0 +1,20 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "hexblades:item/thunder_knives_right1"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "hexblades:awakened": 0.0
+      },
+      "model": "hexblades:item/variants/thunder_knives_right1_deactivated"
+    },
+    {
+      "predicate": {
+        "hexblades:awakened": 1.0
+      },
+      "model": "hexblades:item/variants/thunder_knives_right1_activated"
+    }
+  ]
+}

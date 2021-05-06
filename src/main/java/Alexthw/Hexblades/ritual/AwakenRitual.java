@@ -1,5 +1,6 @@
 package Alexthw.Hexblades.ritual;
 
+import Alexthw.Hexblades.registers.HexItem;
 import elucent.eidolon.ritual.Ritual;
 import elucent.eidolon.util.ColorUtil;
 import net.minecraft.entity.item.ItemEntity;
@@ -18,7 +19,10 @@ public class AwakenRitual extends Ritual {
 
     public RitualResult start(World world, BlockPos pos) {
         if (!world.isRemote) {
-            world.addEntity(new ItemEntity(world, (double)pos.getX() + 0.5D, (double)pos.getY() + 2.5D, (double)pos.getZ() + 0.5D, this.result.copy()));
+            world.addEntity(new ItemEntity(world, (double) pos.getX() + 0.5D, (double) pos.getY() + 2.5D, (double) pos.getZ() + 0.5D, this.result.copy()));
+            if (result.getItem() == HexItem.LIGHTNING_DAGGER_L.get()) {
+                world.addEntity(new ItemEntity(world, (double) pos.getX() + 0.5D, (double) pos.getY() + 2.5D, (double) pos.getZ() + 0.5D, new ItemStack(HexItem.LIGHTNING_DAGGER_R.get())));
+            }
         }
 
         return RitualResult.TERMINATE;
