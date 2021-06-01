@@ -19,7 +19,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class HexRegistry {
 
     static DeferredRegister<ParticleType<?>> PARTICLES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, Hexblades.MOD_ID);
-    ;
     public static RegistryObject<FulgorParticleType> FULGOR_PARTICLE;
 
 

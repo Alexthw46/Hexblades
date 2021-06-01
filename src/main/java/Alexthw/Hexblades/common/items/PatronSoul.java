@@ -7,6 +7,7 @@ import elucent.eidolon.spell.KnowledgeUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.NewChatGui;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -39,7 +40,6 @@ public class PatronSoul extends Item {
         return super.onItemRightClick(worldIn, player, handIn);
     }
 
-    /*
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean isSelected) {
         if (world.isRemote || !(entity instanceof PlayerEntity)) {
@@ -52,7 +52,7 @@ public class PatronSoul extends Item {
 
         KnowledgeUtil.grantFact(entity, HexFacts.EVOLVE_RITUAL);
     }
-*/
+
 
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {

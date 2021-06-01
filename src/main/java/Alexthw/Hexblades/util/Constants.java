@@ -9,9 +9,6 @@ public class Constants {
 
         public static final String EXTRA_DAMAGE = "hexSwordDamage";
         public static final String EXTRA_ATTACK_SPEED = "hexSwordAttackSpeed";
-        public static final String SABER_DAMAGE = "";
-        public static final String KNIFE_DAMAGE = "";
-
 
     }
 }

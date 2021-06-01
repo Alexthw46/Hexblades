@@ -30,7 +30,6 @@ public class HexBlockStateProvider extends BlockStateProvider{
         Set<RegistryObject<Block>> blocks = new HashSet<>(HexBlock.BLOCKS.getEntries());
 
         HexUtils.takeAll(blocks, b -> b.get() instanceof SlabBlock).forEach(this::slabBlock);
-        ;
         HexUtils.takeAll(blocks, b -> b.get() instanceof StairsBlock).forEach(this::stairsBlock);
         //HexUtils.takeAll(blocks, b -> b.get() instanceof RotatedPillarBlock).forEach(this::logBlock);
         //HexUtils.takeAll(blocks, b -> b.get() instanceof WallBlock).forEach(this::wallBlock);

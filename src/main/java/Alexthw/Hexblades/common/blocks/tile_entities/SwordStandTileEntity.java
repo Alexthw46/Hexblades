@@ -6,6 +6,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.SwordItem;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ActionResultType;
@@ -47,7 +48,7 @@ public class SwordStandTileEntity extends TileEntityBase {
                 return ActionResultType.SUCCESS;
             }
 
-            if (!player.getHeldItem(hand).isEmpty() && this.stack.isEmpty()) {
+            if (!player.getHeldItem(hand).isEmpty() && this.stack.isEmpty() && (player.getHeldItem(hand).getItem() instanceof SwordItem)) {
                 this.stack = player.getHeldItem(hand).copy();
                 this.stack.setCount(1);
                 player.getHeldItem(hand).shrink(1);
