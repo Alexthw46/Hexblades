@@ -5,6 +5,7 @@ import Alexthw.Hexblades.common.items.HexSwordItem;
 import Alexthw.Hexblades.common.items.dulls.Hammer_dull;
 import Alexthw.Hexblades.common.items.tier1.EarthHammer1;
 import Alexthw.Hexblades.common.items.tier1.Lightning_SSwordL1;
+import Alexthw.Hexblades.common.items.tier2.EarthHammer2;
 import net.minecraft.block.FenceBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.BlockItem;
@@ -48,6 +49,7 @@ public class HexItemModelProvider extends ItemModelProvider {
         takeAll(items, i -> i.get() instanceof ToolItem).forEach(this::handheldItem);
         takeAll(items, i -> i.get() instanceof Hammer_dull);
         takeAll(items, i -> i.get() instanceof EarthHammer1);
+        takeAll(items, i -> i.get() instanceof EarthHammer2);
         takeAll(items, i -> i.get() instanceof Lightning_SSwordL1).forEach(this::awakenthrowItem);
         takeAll(items, i -> i.get() instanceof HexSwordItem).forEach(this::awakenableItem);
         takeAll(items, i -> i.get() instanceof SwordItem).forEach(this::handheldItem);

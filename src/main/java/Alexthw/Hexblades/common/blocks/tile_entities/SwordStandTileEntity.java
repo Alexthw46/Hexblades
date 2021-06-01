@@ -15,6 +15,7 @@ import net.minecraft.util.math.BlockPos;
 public class SwordStandTileEntity extends TileEntityBase {
 
     ItemStack stack;
+    long previous = -1L;
 
     public SwordStandTileEntity() {
         this(HexTileEntityType.SWORD_STAND_TILE_ENTITY);
@@ -76,6 +77,18 @@ public class SwordStandTileEntity extends TileEntityBase {
         tag = super.write(tag);
         tag.put("stack", this.stack.write(new CompoundNBT()));
         return tag;
+    }
+
+    public boolean ready() {
+        return true;
+    }
+
+    public void pray() {
+        if (this.world != null && !this.world.isRemote) {
+            this.previous = this.world.getGameTime();
+            this.sync();
+        }
+
     }
 
     /*
