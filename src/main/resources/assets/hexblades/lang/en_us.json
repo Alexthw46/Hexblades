@@ -7,6 +7,7 @@
   "tooltip.HexSwordItem.thunder_knives": "Fast as light",
   "tooltip.HexSwordItem.water_saber": "Make them walk on the plank",
   "tooltip.HexSwordItem.earth_hammer": "Take aim or prepare your toes",
+
   "item.hexblades.dev_sword_1": "First of his Kind",
   "item.hexblades.hexium_ingot": "Hexmetal alloy",
   "item.hexblades.elemental_soul": "Soul of an Elemental",
@@ -27,11 +28,16 @@
   "item.hexblades.thunder_knives_left2": "Lightning Caller",
   "item.hexblades.thunder_knives_right2": "Lightning Slasher",
   "item.hexblades.earth_hammer_1": "Rockbane",
-  "item.hexblades.earth_hammer_2": "Earth Maul",
+  "item.hexblades.earth_hammer_2": "Earth Destroyer",
   "block.hexblades.dev_block": "A test Block",
   "block.hexblades.dark_polished_planks": "Dark Polished Planks",
   "block.hexblades.dark_polished_planks_stair": "Dark Polished Planks Stair",
   "block.hexblades.dark_polished_planks_slab": "Dark Polished Planks Slab",
   "block.hexblades.dark_polished_planks_fence": "Dark Polished Planks Fence",
-  "block.hexblades.dark_polished_planks_fence_gate": "Dark Polished Planks Fence Gate"
+  "block.hexblades.dark_polished_planks_fence_gate": "Dark Polished Planks Fence Gate",
+  "hexblades.codex.chapter.index": "Hexblades",
+  "hexblades.codex.chapter.hex_touch": "Magic metal",
+  "hexblades.codex.page.hex_touch.0": "Just slap some silver and curse it",
+  "hexblades.codex.page.hex_touch.1": "This is how you curse it",
+  "hexblades.codex.chapter.ice_katana": "The Frost Razor"
 }
