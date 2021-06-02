@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class HexDeity extends Deity {
 
-    ResourceLocation id;
+    ResourceLocation id = HexDeities.temp_id;
 
     public HexDeity(ResourceLocation id, int red, int green, int blue) {
         super(id, red, green, blue);
@@ -20,7 +20,7 @@ public class HexDeity extends Deity {
         if (lock.equals(DeityLocks.AWAKENED_WEAPON)) {
             KnowledgeUtil.grantFact(player, HexFacts.AWAKENING_RITUAL);
         } else if (lock.equals(DeityLocks.EVOLVED_WEAPON)) {
-            KnowledgeUtil.grantFact(player, HexFacts.STAR_INFUSION);
+            KnowledgeUtil.grantFact(player, HexFacts.EVOLVE_RITUAL);
         }
 
     }
@@ -31,7 +31,7 @@ public class HexDeity extends Deity {
             rep.setReputation(player, id, 10.0D);
             rep.lock(player, id, DeityLocks.AWAKENED_WEAPON);
         } else if (!KnowledgeUtil.knowsFact(player, HexFacts.EVOLVE_RITUAL) && current >= 30.0D) {
-            rep.setReputation(player, id, 50.0D);
+            rep.setReputation(player, id, 30.0D);
             rep.lock(player, id, DeityLocks.EVOLVED_WEAPON);
             KnowledgeUtil.grantFact(player, HexFacts.STAR_INFUSION);
         }

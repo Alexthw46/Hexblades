@@ -31,7 +31,7 @@ public class PatronSoul extends Item {
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand handIn) {
         if (!world.isRemote) {
             if (player.isSneaking()) {
-                if (!KnowledgeUtil.knowsFact(player, HexFacts.STAR_INFUSION)) {
+                if (!KnowledgeUtil.knowsFact(player, HexFacts.EVOLVE_RITUAL)) {
                     world.getCapability(ReputationProvider.CAPABILITY, null).ifPresent((rep) -> {
                         Deity deity = HexDeities.HEX_DEITY;
                         if (rep.unlock(player, deity.getId(), DeityLocks.EVOLVED_WEAPON)) {

@@ -9,8 +9,10 @@ import net.minecraft.util.ResourceLocation;
 public class HexDeities {
 
     public static Deity HEX_DEITY;
+    public static ResourceLocation temp_id;
 
     public static void registerDeity() {
-       HEX_DEITY = Deities.register(new HexDeity(new ResourceLocation(Hexblades.MOD_ID, "blade"), 0, 102, 255));
+        temp_id = new ResourceLocation(Hexblades.MOD_ID, "blade");
+        HEX_DEITY = Deities.register(new HexDeity(temp_id, 0, 102, 255));
     }
 }

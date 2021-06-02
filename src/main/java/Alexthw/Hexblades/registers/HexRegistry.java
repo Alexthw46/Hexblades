@@ -37,7 +37,6 @@ public class HexRegistry {
 
         HexRituals.init();
         CodexHexChapters.init();
-        //new DeityLocks();
 
     }
 
