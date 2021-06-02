@@ -1,13 +1,14 @@
 package Alexthw.Hexblades.common.items;
 
+import Alexthw.Hexblades.deity.DeityLocks;
 import Alexthw.Hexblades.deity.HexDeities;
 import Alexthw.Hexblades.deity.HexFacts;
 import elucent.eidolon.capability.ReputationProvider;
+import elucent.eidolon.deity.Deity;
 import elucent.eidolon.spell.KnowledgeUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.NewChatGui;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -27,32 +28,29 @@ public class PatronSoul extends Item {
     static double rep;
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand handIn) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand handIn) {
+        if (!world.isRemote) {
+            if (player.isSneaking()) {
+                if (!KnowledgeUtil.knowsFact(player, HexFacts.STAR_INFUSION)) {
+                    world.getCapability(ReputationProvider.CAPABILITY, null).ifPresent((rep) -> {
+                        Deity deity = HexDeities.HEX_DEITY;
+                        if (rep.unlock(player, deity.getId(), DeityLocks.EVOLVED_WEAPON)) {
+                            deity.onReputationUnlock(player, rep, DeityLocks.EVOLVED_WEAPON);
+                        }
+                    });
+                }
+            } else {
+                rep = player.getEntityWorld().getCapability(ReputationProvider.CAPABILITY).resolve().get().getReputation(player, HexDeities.HEX_DEITY.getId());
+                NewChatGui chat = Minecraft.getInstance().ingameGUI.getChatGUI();
+                chat.printChatMessage(new TranslationTextComponent("Current reputation: " + rep));
+                chat.printChatMessage(new TranslationTextComponent("Knows Awakening: " + KnowledgeUtil.knowsFact(player, HexFacts.AWAKENING_RITUAL)));
+                chat.printChatMessage(new TranslationTextComponent("Knows Evolving: " + KnowledgeUtil.knowsFact(player, HexFacts.EVOLVE_RITUAL)));
+                chat.printChatMessage(new TranslationTextComponent("Knows Infusion: " + KnowledgeUtil.knowsFact(player, HexFacts.STAR_INFUSION)));
 
-        if (!worldIn.isRemote) {
-            rep = player.getEntityWorld().getCapability(ReputationProvider.CAPABILITY).resolve().get().getReputation(player, HexDeities.HEX_DEITY.getId());
-            NewChatGui chat = Minecraft.getInstance().ingameGUI.getChatGUI();
-            chat.printChatMessage(new TranslationTextComponent("Current reputation: " + rep));
-            chat.printChatMessage(new TranslationTextComponent("Knows Awakening: " + KnowledgeUtil.knowsFact(player, HexFacts.AWAKENING_RITUAL)));
-            chat.printChatMessage(new TranslationTextComponent("Knows Evolving: " + KnowledgeUtil.knowsFact(player, HexFacts.EVOLVE_RITUAL)));
+            }
         }
-
-        return super.onItemRightClick(worldIn, player, handIn);
+        return super.onItemRightClick(world, player, handIn);
     }
-
-    @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean isSelected) {
-        if (world.isRemote || !(entity instanceof PlayerEntity)) {
-            return;
-        }
-
-        if (KnowledgeUtil.knowsFact((PlayerEntity) entity, HexFacts.EVOLVE_RITUAL)){
-            return;
-        }
-
-        KnowledgeUtil.grantFact(entity, HexFacts.EVOLVE_RITUAL);
-    }
-
 
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {

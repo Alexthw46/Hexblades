@@ -25,6 +25,7 @@ public class CodexHexChapters {
     static Chapter EARTH_HAMMER;
     static Chapter THUNDER_DUALS;
     static Chapter HEX_INFUSION;
+    static Chapter HEX_PRAY;
     static Chapter HEX_ALLOY;
     static Chapter DARK_WOOD;
     static Chapter HEXBLADES_INDEX;
@@ -40,6 +41,7 @@ public class CodexHexChapters {
                         new ItemStack(Registry.POLISHED_PLANKS.getBlock().asItem()), new ItemStack(Items.BLACK_DYE), new ItemStack(Registry.POLISHED_PLANKS.getBlock().asItem()),
                         new ItemStack(Registry.POLISHED_PLANKS.getBlock().asItem()), new ItemStack(Registry.POLISHED_PLANKS.getBlock().asItem()), new ItemStack(Registry.POLISHED_PLANKS.getBlock().asItem())
                 ));
+
         HEX_ALLOY = new Chapter("hexblades.codex.chapter.hex_metal", new TitlePage("hexblades.codex.page.hex_metal.0"),
                 //ingot
                 new CruciblePage(new ItemStack(HexItem.HEXIUM_INGOT.get()),
@@ -73,6 +75,9 @@ public class CodexHexChapters {
                         ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY));
 
         //Hex Spells
+
+        HEX_PRAY = new Chapter("hexblades.codex.chapter.hex_pray",
+                new ChantPage("hexblades.codex.page.hex_pray", Signs.WICKED_SIGN, Signs.SOUL_SIGN, Signs.WICKED_SIGN));
 
         HEX_INFUSION = new Chapter("hexblades.codex.chapter.hex_touch",
                 new ChantPage("hexblades.codex.page.hex_touch.0", Signs.MIND_SIGN, Signs.SOUL_SIGN, Signs.MIND_SIGN, Signs.SOUL_SIGN),
@@ -111,6 +116,7 @@ public class CodexHexChapters {
                         new RitualPage.RitualIngredient(new ItemStack(Registry.LEAD_BLOCK.get()), false),
                         new RitualPage.RitualIngredient(new ItemStack(Registry.LEAD_BLOCK.get()), false)
                 ));
+
         THUNDER_DUALS = new Chapter("hexblades.codex.chapter.thunder_duals",
                 new TitlePage("hexblades.codex.page.thunder_duals"),
                 new RitualPage(HexRituals.AWAKE_DAGGER, new ItemStack(HexItem.DULL_DAGGER.get()),
@@ -124,7 +130,8 @@ public class CodexHexChapters {
                 new TitledIndexPage("hexblades.codex.hex_index.0",
                         new IndexPage.IndexEntry(DARK_WOOD, new ItemStack(HexBlock.DARK_POLISH_PLANKS.getBlock().asItem())),
                         new IndexPage.IndexEntry(HEX_ALLOY, new ItemStack(HexItem.HEXIUM_INGOT.get())),
-                        new IndexPage.FactLockedEntry(HEX_INFUSION, new ItemStack(HexItem.PATRON_SOUL.get()), HexFacts.EVOLVE_RITUAL)
+                        new IndexPage.SignLockedEntry(HEX_PRAY, new ItemStack(HexItem.DEV_SWORD.get()), Signs.SOUL_SIGN),
+                        new IndexPage.FactLockedEntry(HEX_INFUSION, new ItemStack(HexItem.PATRON_SOUL.get()), HexFacts.STAR_INFUSION)
 
                 ),
                 new IndexPage(
@@ -136,7 +143,9 @@ public class CodexHexChapters {
 
                 ));
 
-        Ccategories.add(HEXBLADES = new Category("hexblades", new ItemStack(HexItem.PATRON_SOUL.get()), ColorUtil.packColor(255, 0, 0, 46), HEXBLADES_INDEX));
+        if (Ccategories != null) {
+            Ccategories.add(HEXBLADES = new Category("hexblades", new ItemStack(HexItem.PATRON_SOUL.get()), ColorUtil.packColor(255, 0, 0, 46), HEXBLADES_INDEX));
+        }
     }
 
 }

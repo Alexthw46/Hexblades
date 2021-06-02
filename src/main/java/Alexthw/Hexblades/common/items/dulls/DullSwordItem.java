@@ -1,8 +1,10 @@
 package Alexthw.Hexblades.common.items.dulls;
 
-import Alexthw.Hexblades.deity.HexFacts;
+import Alexthw.Hexblades.deity.DeityLocks;
+import Alexthw.Hexblades.deity.HexDeities;
 import Alexthw.Hexblades.registers.Tiers;
-import elucent.eidolon.spell.KnowledgeUtil;
+import elucent.eidolon.capability.ReputationProvider;
+import elucent.eidolon.deity.Deity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
@@ -15,9 +17,12 @@ public class DullSwordItem extends SwordItem {
 
     @Override
     public void onCreated(ItemStack stack, World worldIn, PlayerEntity player) {
-        if (!KnowledgeUtil.knowsFact(player, HexFacts.AWAKENING_RITUAL) && !worldIn.isRemote) {
-            KnowledgeUtil.grantFact(player, HexFacts.AWAKENING_RITUAL);
-        }
+        worldIn.getCapability(ReputationProvider.CAPABILITY, null).ifPresent((rep) -> {
+            Deity deity = HexDeities.HEX_DEITY;
+            if (rep.unlock(player, deity.getId(), DeityLocks.AWAKENED_WEAPON)) {
+                deity.onReputationUnlock(player, rep, DeityLocks.AWAKENED_WEAPON);
+            }
+        });
         super.onCreated(stack, worldIn, player);
     }
 }
