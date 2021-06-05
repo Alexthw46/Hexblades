@@ -2,28 +2,25 @@ package Alexthw.Hexblades.common.items.tier1;
 
 import Alexthw.Hexblades.common.items.HexSwordItem;
 import elucent.eidolon.Registry;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-
-import java.util.List;
 
 public class IceKatana1 extends HexSwordItem {
 
     public IceKatana1(Properties props) {
         super(4, -2.4F, props);
+        tooltipText = "tooltip.HexSwordItem.ice_katana";
     }
 
     @Override
     public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
         target.attackEntityFrom(new EntityDamageSource(Registry.FROST_DAMAGE.getDamageType(), attacker).setDamageBypassesArmor(), 2.0f);
-        target.addPotionEffect(new EffectInstance(Registry.CHILLED_EFFECT.get(), 300, 0));
+        target.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 400, 0));
     }
 
     @Override
@@ -34,12 +31,6 @@ public class IceKatana1 extends HexSwordItem {
 
         setAttackPower(weapon,devotion/20);
         setAttackSpeed(weapon,devotion/30);
-    }
-
-    @Override
-    public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent("tooltip.HexSwordItem." + "ice_katana"));
     }
 
 }

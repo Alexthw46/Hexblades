@@ -1,5 +1,6 @@
 package Alexthw.Hexblades.common.entity;
 
+
 import elucent.eidolon.Registry;
 import elucent.eidolon.entity.SpellProjectileEntity;
 import elucent.eidolon.network.MagicBurstEffectPacket;
@@ -22,6 +23,8 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 import java.util.UUID;
+
+import static Alexthw.Hexblades.registers.HexParticles.FULGOR_PARTICLE;
 
 public class FulgorProjectileEntity extends SpellProjectileEntity {
 
@@ -50,8 +53,8 @@ public class FulgorProjectileEntity extends SpellProjectileEntity {
             double lerpX = MathHelper.lerp((double) ((float) i / 8.0F), this.prevPosX, pos.x);
             double lerpY = MathHelper.lerp((double) ((float) i / 8.0F), this.prevPosY, pos.y);
             double lerpZ = MathHelper.lerp((double) ((float) i / 8.0F), this.prevPosZ, pos.z);
-            Particles.create(Registry.WISP_PARTICLE).addVelocity(-norm.x, -norm.y, -norm.z).setAlpha(0.0825F, 0.0F).setScale(0.625F, 0.0F).setColor(1.0F, 0.875F, 0.578F, 0.75F, 0.375F, 0.5F).setLifetime(5).spawn(this.world, lerpX, lerpY, lerpZ);
-            Particles.create(Registry.BUBBLE_PARTICLE).addVelocity(-norm.x, -norm.y, -norm.z).setAlpha(0.521F, 0.0F).setScale(0.25F, 0.125F).setColor(1.0F, 0.875F, 0.578F, 0.75F, 0.375F, 0.5F).setLifetime(20).spawn(this.world, lerpX, lerpY, lerpZ);
+            Particles.create(FULGOR_PARTICLE).addVelocity(-norm.x, -norm.y, -norm.z).setAlpha(0.0825F, 0.0F).setScale(0.625F, 0.0F).setColor(1.0F, 0.875F, 0.578F, 0.75F, 0.375F, 0.5F).setLifetime(5).spawn(this.world, lerpX, lerpY, lerpZ);
+            Particles.create(Registry.SPARKLE_PARTICLE).addVelocity(-norm.x, -norm.y, -norm.z).setAlpha(0.521F, 0.0F).setScale(0.25F, 0.125F).setColor(1.0F, 0.875F, 0.578F, 0.75F, 0.375F, 0.5F).setLifetime(20).spawn(this.world, lerpX, lerpY, lerpZ);
         }
 
     }

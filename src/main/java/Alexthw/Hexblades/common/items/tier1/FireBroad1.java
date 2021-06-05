@@ -12,6 +12,8 @@ public class FireBroad1 extends HexSwordItem {
 
     public FireBroad1(Properties props) {
         super(3, -2.7F, props);
+        tooltipText = "tooltip.HexSwordItem.flame_sword";
+
     }
 
     @Override

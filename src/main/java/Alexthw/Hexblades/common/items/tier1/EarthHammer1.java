@@ -1,20 +1,16 @@
 package Alexthw.Hexblades.common.items.tier1;
 
 import Alexthw.Hexblades.common.items.HexSwordItem;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-
-import java.util.List;
 
 public class EarthHammer1 extends HexSwordItem {
     public EarthHammer1(Properties props) {
         super(8, -3.4F, props);
+        tooltipText = "tooltip.HexSwordItem.earth_hammer";
     }
 
     @Override
@@ -32,12 +28,6 @@ public class EarthHammer1 extends HexSwordItem {
 
         setAwakenedState(weapon, !getAwakened(weapon));
         setAttackPower(weapon,devotion/20);
-    }
-
-    @Override
-    public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent("tooltip.HexSwordItem." + "earth_hammer"));
     }
 
 }

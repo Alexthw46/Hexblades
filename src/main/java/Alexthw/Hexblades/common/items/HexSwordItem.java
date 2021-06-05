@@ -22,6 +22,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class HexSwordItem extends SwordItem {
 
     public final double baseAttack;
     public final double baseSpeed;
+    protected static String tooltipText = " ";
     protected int rechargeTick = 1;
 
     public HexSwordItem(int attackDamage, float attackSpeed, Properties properties) {
@@ -43,9 +45,7 @@ public class HexSwordItem extends SwordItem {
         if (user instanceof PlayerEntity) {
             if (getAwakened(stack) && !((PlayerEntity) user).isCreative()) {
                 if ((getMaxDamage(stack) - stack.getDamage()) > 1) {
-                    stack.damageItem(1, (LivingEntity) user, (entity) -> {
-                        entity.sendBreakAnimation(EquipmentSlotType.MAINHAND);
-                    });
+                    stack.damageItem(1, (LivingEntity) user, (entity) -> entity.sendBreakAnimation(EquipmentSlotType.MAINHAND));
                 } else {
                     setAwakenedState(stack, false);
                 }
@@ -173,9 +173,7 @@ public class HexSwordItem extends SwordItem {
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
-        //tooltip.add(new TranslationTextComponent("tooltip.HexSwordItem." + "dev_sword"));
-        //tooltip.add(new TranslationTextComponent("" + getAwakened(stack)));
-
+        tooltip.add(new TranslationTextComponent(tooltipText));
     }
 
     @Override

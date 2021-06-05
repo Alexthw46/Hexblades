@@ -12,11 +12,12 @@ public class Registry {
 
     public static void init(IEventBus hexbus) {
         hexbus.register(new HexTileEntityType());
+        hexbus.register(new HexParticles());
 
         HexBlock.BLOCKS.register(hexbus);
         ITEMS.register(hexbus);
         HexEntityType.ENTITIES.register(hexbus);
         HexTileEntityType.TILE_ENTITIES.register(hexbus);
-        HexRegistry.PARTICLES.register(hexbus);
+        HexParticles.PARTICLES.register(hexbus);
     }
 }

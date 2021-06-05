@@ -1,24 +1,24 @@
 package Alexthw.Hexblades.common.items.tier1;
 
 import Alexthw.Hexblades.common.items.HexSwordItem;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-import java.util.List;
+import static net.minecraft.util.DamageSource.DROWN;
 
 public class WaterSaber1 extends HexSwordItem {
+    public float shield = 0;
     public WaterSaber1(Properties props) {
         super(2, -2.4F, props);
+        tooltipText = "tooltip.HexSwordItem.water_saber";
     }
+
     @Override
     public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
-        target.attackEntityFrom(new EntityDamageSource("drown", attacker).setDamageBypassesArmor(), 3.0f);
+        target.attackEntityFrom(new EntityDamageSource(DROWN.getDamageType(), attacker).setDamageBypassesArmor(), 3.0f);
     }
 
     @Override
@@ -27,14 +27,16 @@ public class WaterSaber1 extends HexSwordItem {
 
         setAwakenedState(weapon, !getAwakened(weapon));
 
-        setAttackPower(weapon,devotion/20);
-        setAttackSpeed(weapon,devotion/30);
+        setAttackPower(weapon, devotion / 20);
+        setShielding(weapon, (float) (devotion / 30));
     }
 
-    @Override
-    public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent("tooltip.HexSwordItem." + "water_saber"));
+    public void setShielding(ItemStack weapon, float dmgred) {
+        if (getAwakened(weapon)) {
+            shield = dmgred;
+            return;
+        }
+        shield = 0;
     }
 
 }
