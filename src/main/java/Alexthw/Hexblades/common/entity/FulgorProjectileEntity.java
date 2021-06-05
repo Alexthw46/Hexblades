@@ -10,8 +10,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.IndirectEntityDamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -49,16 +50,16 @@ public class FulgorProjectileEntity extends SpellProjectileEntity {
             double lerpX = MathHelper.lerp((double) ((float) i / 8.0F), this.prevPosX, pos.x);
             double lerpY = MathHelper.lerp((double) ((float) i / 8.0F), this.prevPosY, pos.y);
             double lerpZ = MathHelper.lerp((double) ((float) i / 8.0F), this.prevPosZ, pos.z);
-            Particles.create(Registry.WISP_PARTICLE).addVelocity(-norm.x, -norm.y, -norm.z).setAlpha(0.0625F, 0.0F).setScale(0.625F, 0.0F).setColor(0.875F, 1.0F, 1.0F, 0.375F, 0.5F, 0.75F).setLifetime(5).spawn(this.world, lerpX, lerpY, lerpZ);
-            Particles.create(Registry.BUBBLE_PARTICLE).addVelocity(-norm.x, -norm.y, -norm.z).setAlpha(0.125F, 0.0F).setScale(0.25F, 0.125F).setColor(1.0F, 0.75F, 0.875F, 0.375F, 0.5F, 0.75F).setLifetime(20).spawn(this.world, lerpX, lerpY, lerpZ);
+            Particles.create(Registry.WISP_PARTICLE).addVelocity(-norm.x, -norm.y, -norm.z).setAlpha(0.0825F, 0.0F).setScale(0.625F, 0.0F).setColor(1.0F, 0.875F, 0.578F, 0.75F, 0.375F, 0.5F).setLifetime(5).spawn(this.world, lerpX, lerpY, lerpZ);
+            Particles.create(Registry.BUBBLE_PARTICLE).addVelocity(-norm.x, -norm.y, -norm.z).setAlpha(0.521F, 0.0F).setScale(0.25F, 0.125F).setColor(1.0F, 0.875F, 0.578F, 0.75F, 0.375F, 0.5F).setLifetime(20).spawn(this.world, lerpX, lerpY, lerpZ);
         }
 
     }
 
     protected void onImpact(RayTraceResult ray, Entity target) {
-        target.attackEntityFrom(new IndirectEntityDamageSource(Registry.FROST_DAMAGE.getDamageType(), this, this.world.getPlayerByUuid(this.casterId)), 4.0F);
+        target.attackEntityFrom(new IndirectEntityDamageSource(DamageSource.LIGHTNING_BOLT.getDamageType(), this, this.world.getPlayerByUuid(this.casterId)), 4.0F);
         if (target instanceof LivingEntity) {
-            ((LivingEntity) target).addPotionEffect(new EffectInstance((Effect) Registry.CHILLED_EFFECT.get(), 300, 0));
+            ((LivingEntity) target).addPotionEffect(new EffectInstance(Effects.WITHER, 100, 0));
         }
 
         this.onImpact(ray);
@@ -68,8 +69,8 @@ public class FulgorProjectileEntity extends SpellProjectileEntity {
         this.setDead();
         if (!this.world.isRemote) {
             Vector3d pos = ray.getHitVec();
-            this.world.playSound((PlayerEntity) null, pos.x, pos.y, pos.z, (SoundEvent) Registry.SPLASH_BONECHILL_EVENT.get(), SoundCategory.NEUTRAL, 0.5F, this.rand.nextFloat() * 0.2F + 0.9F);
-            Networking.sendToTracking(this.world, this.getPosition(), new MagicBurstEffectPacket(pos.x, pos.y, pos.z, ColorUtil.packColor(255, 192, 224, 255), ColorUtil.packColor(255, 96, 128, 192)));
+            this.world.playSound((PlayerEntity) null, pos.x, pos.y, pos.z, (SoundEvent) Registry.SPLASH_SOULFIRE_EVENT.get(), SoundCategory.NEUTRAL, 0.5F, this.rand.nextFloat() * 0.2F + 0.9F);
+            Networking.sendToTracking(this.world, this.getPosition(), new MagicBurstEffectPacket(pos.x, pos.y, pos.z, ColorUtil.packColor(255, 255, 255, 72), ColorUtil.packColor(255, 255, 235, 102)));
         }
 
     }

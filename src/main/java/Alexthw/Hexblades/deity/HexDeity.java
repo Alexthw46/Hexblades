@@ -1,10 +1,14 @@
 package Alexthw.Hexblades.deity;
 
+import Alexthw.Hexblades.registers.HexItem;
 import elucent.eidolon.capability.IReputation;
 import elucent.eidolon.deity.Deity;
 import elucent.eidolon.spell.KnowledgeUtil;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 
 public class HexDeity extends Deity {
 
@@ -19,6 +23,8 @@ public class HexDeity extends Deity {
 
         if (lock.equals(DeityLocks.AWAKENED_WEAPON)) {
             KnowledgeUtil.grantFact(player, HexFacts.AWAKENING_RITUAL);
+            World world = player.getEntityWorld();
+            world.addEntity(new ItemEntity(world, player.getPosX() + 0.5D, player.getPosY() + 2.5D, player.getPosZ() + 0.5D, new ItemStack(HexItem.ELEMENTAL_CORE.get())));
         } else if (lock.equals(DeityLocks.EVOLVED_WEAPON)) {
             KnowledgeUtil.grantFact(player, HexFacts.EVOLVE_RITUAL);
         }

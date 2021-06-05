@@ -23,6 +23,8 @@ public class HexItem {
     //Items
     public static final RegistryObject<Item> HEXIUM_INGOT;
     public static final RegistryObject<Item> PATRON_SOUL;
+    public static final RegistryObject<Item> PATRON_SOUL2;
+    public static final RegistryObject<Item> ELEMENTAL_CORE;
     public static final RegistryObject<Item> DROWNED_HEART;
 
     //Hexblades
@@ -54,7 +56,9 @@ public class HexItem {
         //Items
         HEXIUM_INGOT = ITEMS.register("hexium_ingot", () -> new Item(addTabProp()));
         PATRON_SOUL = ITEMS.register("elemental_soul", () -> new PatronSoul(addTabProp()));
+        PATRON_SOUL2 = ITEMS.register("elemental_soul_2", () -> new PatronSoul(addTabProp()));
         DROWNED_HEART = ITEMS.register("drowned_heart", () -> new Item(addTabProp()));
+        ELEMENTAL_CORE = ITEMS.register("elemental_core", () -> new Item(addTabProp()));
 
         //Dull Sword/Tools
         DULL_KATANA = ITEMS.register("katana_dull", () -> new Katana_dull(2, -2.5F, addTabProp().maxStackSize(1)));

@@ -30,17 +30,12 @@ public class HexSwordItem extends SwordItem {
 
     public final double baseAttack;
     public final double baseSpeed;
+    protected int rechargeTick = 1;
 
     public HexSwordItem(int attackDamage, float attackSpeed, Properties properties) {
         super(Tiers.PatronWeaponTier.INSTANCE, attackDamage, attackSpeed, properties);
         baseAttack = attackDamage;
         baseSpeed = attackSpeed;
-    }
-
-
-    @Override
-    public boolean isDamageable() {
-        return super.isDamageable();
     }
 
     @Override
@@ -55,7 +50,7 @@ public class HexSwordItem extends SwordItem {
                     setAwakenedState(stack, false);
                 }
             } else {
-                stack.setDamage(Math.max(stack.getDamage() - 1, 0));
+                stack.setDamage(Math.max(stack.getDamage() - rechargeTick, 0));
             }
         }
     }
@@ -74,7 +69,7 @@ public class HexSwordItem extends SwordItem {
                 applyHexEffects(stack, target, (PlayerEntity) attacker);
             }
         }
-        stack.setDamage(Math.max(stack.getDamage() - 6, 0));
+        stack.setDamage(Math.max(stack.getDamage() - 10, 0));
         return super.hitEntity(stack, target, attacker);
     }
 
@@ -83,6 +78,7 @@ public class HexSwordItem extends SwordItem {
         target.attackEntityFrom(new EntityDamageSource("wither", attacker).setDamageBypassesArmor(), 2.0f);
     }
 
+    //set or reset awakened state & buffs
     public void recalculatePowers(ItemStack weapon, World world, PlayerEntity player) {
         double devotion = getDevotion(player);
 

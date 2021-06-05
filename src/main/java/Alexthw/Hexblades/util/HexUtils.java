@@ -1,6 +1,7 @@
 package Alexthw.Hexblades.util;
 
 import Alexthw.Hexblades.Hexblades;
+import elucent.eidolon.util.ColorUtil;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.*;
@@ -41,10 +42,15 @@ public class HexUtils {
             }
         }
 
-        if (ret.isEmpty())
-        {
+        if (ret.isEmpty()) {
             return Collections.emptyList();
         }
         return ret;
     }
+
+    public static final int fireColor = ColorUtil.packColor(255, 230, 30, 40);
+    public static final int iceColor = ColorUtil.packColor(255, 25, 140, 170);
+    public static final int waterColor = ColorUtil.packColor(255, 55, 51, 171);
+    public static final int earthColor = ColorUtil.packColor(255, 126, 70, 0);
+    public static final int thunderColor = ColorUtil.packColor(255, 255, 255, 65);
 }

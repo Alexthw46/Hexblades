@@ -2,7 +2,6 @@ package Alexthw.Hexblades.ritual;
 
 import Alexthw.Hexblades.registers.HexItem;
 import elucent.eidolon.ritual.Ritual;
-import elucent.eidolon.util.ColorUtil;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -13,9 +12,10 @@ public class AwakenRitual extends Ritual {
     public static final ResourceLocation SYMBOL = new ResourceLocation("eidolon", "particle/summon_ritual");
     ItemStack result;
 
-    public AwakenRitual(ItemStack result) {
-        super(SYMBOL, ColorUtil.packColor(255, 255, 51, 85));
-        this.result = result;    }
+    public AwakenRitual(ItemStack result, int color) {
+        super(SYMBOL, color);
+        this.result = result;
+    }
 
     public RitualResult start(World world, BlockPos pos) {
         if (!world.isRemote) {

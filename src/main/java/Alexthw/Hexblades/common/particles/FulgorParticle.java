@@ -19,6 +19,6 @@ public class FulgorParticle extends GenericParticle {
     }
 
     public void renderParticle(IVertexBuilder b, ActiveRenderInfo info, float pticks) {
-        super.renderParticle((Boolean) ClientConfig.BETTER_LAYERING.get() ? ClientEvents.getDelayedRender().getBuffer(RenderUtil.GLOWING_PARTICLE) : b, info, pticks);
+        super.renderParticle(ClientConfig.BETTER_LAYERING.get() ? ClientEvents.getDelayedRender().getBuffer(RenderUtil.GLOWING_PARTICLE) : b, info, pticks);
     }
 }

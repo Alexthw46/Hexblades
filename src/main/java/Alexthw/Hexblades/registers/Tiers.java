@@ -25,7 +25,7 @@ public class Tiers {
         }
 
         public int getEnchantability() {
-            return 20;
+            return 25;
         }
 
 
