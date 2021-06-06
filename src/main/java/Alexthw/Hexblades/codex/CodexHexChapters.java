@@ -90,30 +90,30 @@ public class CodexHexChapters {
                 new TextPage("hexblades.codex.page.hex_touch.1"),
                 //evolve katana
                 new TitlePage("hexblades.codex.page.evolve_ice_katana"),
-                new RitualPage(HexRituals.EVOLVE_KATANA, new ItemStack(HexItem.PATRON_SOUL.get()),
+                new RitualPage(HexRituals.EVOLVE_KATANA, new ItemStack(HexItem.FROST_RAZOR.get()),
                         new RitualPage.RitualIngredient(new ItemStack(Registry.WRAITH_HEART.get()), false),
-                        new RitualPage.RitualIngredient(new ItemStack(HexItem.FROST_RAZOR.get()), true),
+                        new RitualPage.RitualIngredient(new ItemStack(HexItem.PATRON_SOUL.get()), true),
                         new RitualPage.RitualIngredient(new ItemStack(Registry.WRAITH_HEART.get()), false)
                 ),
                 //evolve sword
                 new TitlePage("hexblades.codex.page.evolve_flame_sword"),
-                new RitualPage(HexRituals.EVOLVE_SWORD, new ItemStack(HexItem.PATRON_SOUL.get()),
+                new RitualPage(HexRituals.EVOLVE_SWORD, new ItemStack(HexItem.FIRE_BRAND.get()),
                         new RitualPage.RitualIngredient(new ItemStack(Items.MAGMA_BLOCK), false),
-                        new RitualPage.RitualIngredient(new ItemStack(HexItem.FIRE_BRAND.get()), true),
+                        new RitualPage.RitualIngredient(new ItemStack(HexItem.PATRON_SOUL.get()), true),
                         new RitualPage.RitualIngredient(new ItemStack(Registry.SHADOW_GEM.get()), false)
                 ),
                 //evolve saber
                 new TitlePage("hexblades.codex.page.evolve_water_saber"),
-                new RitualPage(HexRituals.EVOLVE_SABER, new ItemStack(HexItem.PATRON_SOUL.get()),
+                new RitualPage(HexRituals.EVOLVE_SABER, new ItemStack(HexItem.WATER_SABER.get()),
                         new RitualPage.RitualIngredient(new ItemStack(HexItem.DROWNED_HEART.get()), false),
-                        new RitualPage.RitualIngredient(new ItemStack(HexItem.WATER_SABER.get()), true),
+                        new RitualPage.RitualIngredient(new ItemStack(HexItem.PATRON_SOUL.get()), true),
                         new RitualPage.RitualIngredient(new ItemStack(Items.HEART_OF_THE_SEA), false
                         )
                 ),
                 //evolve hammer
                 new TitlePage("hexblades.codex.page.evolve_earth_hammer"),
-                new RitualPage(HexRituals.EVOLVE_HAMMER, new ItemStack(HexItem.PATRON_SOUL.get()),
-                        new RitualPage.RitualIngredient(new ItemStack(HexItem.EARTH_HAMMER.get()), true),
+                new RitualPage(HexRituals.EVOLVE_HAMMER, new ItemStack(HexItem.EARTH_HAMMER.get()),
+                        new RitualPage.RitualIngredient(new ItemStack(HexItem.PATRON_SOUL.get()), true),
                         new RitualPage.RitualIngredient(new ItemStack(Registry.ARCANE_GOLD_BLOCK.get()), false)
                 ),
                 //evolve dual

@@ -27,7 +27,7 @@ public class Hexblades
 
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(HexItem.PATRON_SOUL.get());
+            return new ItemStack(HexItem.PATRON_SOUL2.get());
         }
 
     };

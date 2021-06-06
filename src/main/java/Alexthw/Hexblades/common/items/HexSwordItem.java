@@ -29,8 +29,8 @@ import java.util.List;
 
 public class HexSwordItem extends SwordItem {
 
-    public final double baseAttack;
-    public final double baseSpeed;
+    protected double baseAttack;
+    protected double baseSpeed;
     protected String tooltipText = "The Dev Sword, you shouldn't read this";
     protected int rechargeTick = 1;
 
@@ -67,7 +67,9 @@ public class HexSwordItem extends SwordItem {
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        if (!world.isRemote()) recalculatePowers(player.getHeldItem(hand), world, player);
+        if (!world.isRemote()) {
+            recalculatePowers(player.getHeldItem(hand), world, player);
+        }
         return super.onItemRightClick(world, player, hand);
     }
 
@@ -168,7 +170,8 @@ public class HexSwordItem extends SwordItem {
     }
 
     public boolean getAwakened(ItemStack stack) {
-        return !stack.isEmpty() && NBTHelper.checkNBT(stack).getTag().getBoolean(Constants.NBT.AW_State);
+        CompoundNBT tag = NBTHelper.checkNBT(stack).getTag();
+        return tag != null && !stack.isEmpty() && tag.getBoolean(Constants.NBT.AW_State);
     }
 
     @Override

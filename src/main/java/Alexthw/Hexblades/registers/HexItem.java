@@ -1,6 +1,7 @@
 package Alexthw.Hexblades.registers;
 
 import Alexthw.Hexblades.Hexblades;
+import Alexthw.Hexblades.common.items.ElementalSoul;
 import Alexthw.Hexblades.common.items.HexSwordItem;
 import Alexthw.Hexblades.common.items.PatronSoul;
 import Alexthw.Hexblades.common.items.dulls.*;
@@ -55,7 +56,7 @@ public class HexItem {
     static {
         //Items
         HEXIUM_INGOT = ITEMS.register("hexium_ingot", () -> new Item(addTabProp()));
-        PATRON_SOUL = ITEMS.register("elemental_soul", () -> new PatronSoul(addTabProp()));
+        PATRON_SOUL = ITEMS.register("elemental_soul", () -> new ElementalSoul(addTabProp()));
         PATRON_SOUL2 = ITEMS.register("elemental_soul_2", () -> new PatronSoul(addTabProp()));
         DROWNED_HEART = ITEMS.register("drowned_heart", () -> new Item(addTabProp()));
         ELEMENTAL_CORE = ITEMS.register("elemental_core", () -> new Item(addTabProp()));
