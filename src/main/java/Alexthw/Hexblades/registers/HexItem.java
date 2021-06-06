@@ -62,9 +62,9 @@ public class HexItem {
 
         //Dull Sword/Tools
         DULL_KATANA = ITEMS.register("katana_dull", () -> new Katana_dull(2, -2.5F, addTabProp().maxStackSize(1)));
-        DULL_BROADSWORD = ITEMS.register("sword_dull", () -> new BroadSword_dull(2, -2.7F, addTabProp().maxStackSize(1)));
-        DULL_SABER = ITEMS.register("saber_dull", () -> new Saber_dull(2, -2.6F, addTabProp().maxStackSize(1)));
-        DULL_HAMMER = ITEMS.register("hammer_dull", () -> new Hammer_dull(4, -3.4F, addTabProp().maxStackSize(1)));
+        DULL_BROADSWORD = ITEMS.register("sword_dull", () -> new BroadSword_dull(2, -2.6F, addTabProp().maxStackSize(1)));
+        DULL_SABER = ITEMS.register("saber_dull", () -> new Saber_dull(2, -2.4F, addTabProp().maxStackSize(1)));
+        DULL_HAMMER = ITEMS.register("hammer_dull", () -> new Hammer_dull(3, -3.4F, addTabProp().maxStackSize(1)));
         DULL_DAGGER = ITEMS.register("dagger_dull", () -> new Dagger_dull(0, -0.5F, addTabProp().maxStackSize(1)));
 
         //Hexblades

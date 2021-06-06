@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 
 public class EarthHammer2 extends HexSwordItem {
     public EarthHammer2(Properties props) {
-        super(9, 0.9F, props);
+        super(9, -3.2F, props);
         tooltipText = "tooltip.HexSwordItem.earth_hammer2";
     }
 
@@ -31,7 +31,7 @@ public class EarthHammer2 extends HexSwordItem {
         double devotion = getDevotion(player);
 
         setAwakenedState(weapon, !getAwakened(weapon));
-        setAttackPower(weapon, devotion / 20);
+        setAttackPower(weapon, devotion / 15);
     }
 
 }

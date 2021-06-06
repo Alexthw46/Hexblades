@@ -31,7 +31,7 @@ public class HexSwordItem extends SwordItem {
 
     public final double baseAttack;
     public final double baseSpeed;
-    protected static String tooltipText = " ";
+    protected String tooltipText = "The Dev Sword, you shouldn't read this";
     protected int rechargeTick = 1;
 
     public HexSwordItem(int attackDamage, float attackSpeed, Properties properties) {
@@ -43,6 +43,9 @@ public class HexSwordItem extends SwordItem {
     @Override
     public void inventoryTick(ItemStack stack, World worldIn, Entity user, int itemSlot, boolean isSelected) {
         if (user instanceof PlayerEntity) {
+            if (hasBonus()) {
+                applyHexBonus((PlayerEntity) user, getAwakened(stack));
+            }
             if (getAwakened(stack) && !((PlayerEntity) user).isCreative()) {
                 if ((getMaxDamage(stack) - stack.getDamage()) > 1) {
                     stack.damageItem(1, (LivingEntity) user, (entity) -> entity.sendBreakAnimation(EquipmentSlotType.MAINHAND));
@@ -55,9 +58,16 @@ public class HexSwordItem extends SwordItem {
         }
     }
 
+    public void applyHexBonus(PlayerEntity user, boolean awakened) {
+    }
+
+    public boolean hasBonus() {
+        return false;
+    }
+
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        recalculatePowers(player.getHeldItem(hand), world, player);
+        if (!world.isRemote()) recalculatePowers(player.getHeldItem(hand), world, player);
         return super.onItemRightClick(world, player, hand);
     }
 
@@ -66,7 +76,7 @@ public class HexSwordItem extends SwordItem {
         if (attacker instanceof PlayerEntity) {
             if (target.hurtResistantTime > 0) {
                 target.hurtResistantTime = 0;
-                applyHexEffects(stack, target, (PlayerEntity) attacker);
+                if (getAwakened(stack)) applyHexEffects(stack, target, (PlayerEntity) attacker);
             }
         }
         stack.setDamage(Math.max(stack.getDamage() - 10, 0));
@@ -86,6 +96,7 @@ public class HexSwordItem extends SwordItem {
 
         setAttackPower(weapon,devotion);
         setAttackSpeed(weapon,devotion);
+
     }
 
     public void setAttackPower(ItemStack weapon, double extradamage) {
@@ -113,6 +124,7 @@ public class HexSwordItem extends SwordItem {
         }
     }
 
+
     public void setAwakenedState(ItemStack stack, boolean aws) {
         if (!stack.isEmpty()) {
             CompoundNBT tag = NBTHelper.checkNBT(stack).getTag();
@@ -124,7 +136,7 @@ public class HexSwordItem extends SwordItem {
         CompoundNBT tag = NBTHelper.checkNBT(weapon).getTag();
 
         if (tag != null) {
-            double AP = NBTHelper.checkNBT(weapon).getTag().getDouble(Constants.NBT.EXTRA_DAMAGE);
+            double AP = tag.getDouble(Constants.NBT.EXTRA_DAMAGE);
 
             if (AP > 0) {
                 return AP;
@@ -158,17 +170,6 @@ public class HexSwordItem extends SwordItem {
     public boolean getAwakened(ItemStack stack) {
         return !stack.isEmpty() && NBTHelper.checkNBT(stack).getTag().getBoolean(Constants.NBT.AW_State);
     }
-
-    /*
-    public float getCharge(ItemStack stack){
-
-        float level = 0;
-       if (!stack.isEmpty() && NBTHelper.checkNBT(stack).getTag().contains(Constants.NBT.CHARGE_LEVEL)){
-                level = stack.getTag().getFloat(Constants.NBT.CHARGE_LEVEL);
-        }
-
-        return level;
-    }*/
 
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {

@@ -6,18 +6,29 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.EntityDamageSource;
 import net.minecraft.world.World;
 
 public class IceKatana2 extends IceKatana1 {
     public IceKatana2(Properties props) {
-        super(props);
+        super(5, -2.2F, props);
         tooltipText = "tooltip.HexSwordItem.ice_katana2";
     }
 
     @Override
+    public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        if (attacker instanceof PlayerEntity) {
+            if (target.hurtResistantTime > 0) {
+                target.hurtResistantTime = 0;
+                super.applyHexEffects(stack, target, (PlayerEntity) attacker);
+                if (getAwakened(stack)) applyHexEffects(stack, target, (PlayerEntity) attacker);
+            }
+        }
+        stack.setDamage(Math.max(stack.getDamage() - 10, 0));
+        return true;
+    }
+
+    @Override
     public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
-        target.attackEntityFrom(new EntityDamageSource(Registry.FROST_DAMAGE.getDamageType(), attacker).setDamageBypassesArmor(), 2.0f);
         target.addPotionEffect(new EffectInstance(Registry.CHILLED_EFFECT.get(), 300, 0));
     }
 
@@ -27,7 +38,7 @@ public class IceKatana2 extends IceKatana1 {
 
         setAwakenedState(weapon, !getAwakened(weapon));
 
-        setAttackPower(weapon,devotion/10);
-        setAttackSpeed(weapon,devotion/15);
+        setAttackPower(weapon, devotion / 10);
+        setAttackSpeed(weapon, devotion / 30);
     }
 }

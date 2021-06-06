@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 public class Lightning_SSwordR1 extends HexSwordItem {
 
     public Lightning_SSwordR1(Properties props) {
-        super(1, -1.5F, props);
+        super(4, -1.5F, props);
         tooltipText = "tooltip.HexSwordItem.thunder_knives";
     }
 
@@ -22,8 +22,8 @@ public class Lightning_SSwordR1 extends HexSwordItem {
             if (!active) {
                 setAwakenedState(weapon, true);
 
-                setAttackPower(weapon, devotion / 20);
-                setAttackSpeed(weapon, devotion / 30);
+                setAttackPower(weapon, devotion / 30);
+                setAttackSpeed(weapon, devotion / 50);
             }
         } else {
             setAwakenedState(weapon, false);

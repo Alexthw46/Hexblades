@@ -21,11 +21,7 @@ public class HexDeity extends Deity {
     @Override
     public void onReputationUnlock(PlayerEntity player, IReputation rep, ResourceLocation lock) {
 
-        if (lock.equals(DeityLocks.AWAKENED_WEAPON)) {
-            KnowledgeUtil.grantFact(player, HexFacts.AWAKENING_RITUAL);
-            World world = player.getEntityWorld();
-            world.addEntity(new ItemEntity(world, player.getPosX() + 0.5D, player.getPosY() + 2.5D, player.getPosZ() + 0.5D, new ItemStack(HexItem.ELEMENTAL_CORE.get())));
-        } else if (lock.equals(DeityLocks.EVOLVED_WEAPON)) {
+        if (lock.equals(DeityLocks.EVOLVED_WEAPON)) {
             KnowledgeUtil.grantFact(player, HexFacts.EVOLVE_RITUAL);
         }
 
@@ -34,12 +30,16 @@ public class HexDeity extends Deity {
     @Override
     public void onReputationChange(PlayerEntity player, IReputation rep, double prev, double current) {
         if (!KnowledgeUtil.knowsFact(player, HexFacts.AWAKENING_RITUAL) && current >= 10.0D) {
-            rep.setReputation(player, id, 10.0D);
-            rep.lock(player, id, DeityLocks.AWAKENED_WEAPON);
+            KnowledgeUtil.grantFact(player, HexFacts.AWAKENING_RITUAL);
+            World world = player.getEntityWorld();
+            world.addEntity(new ItemEntity(world, player.getPosX() + 0.5D, player.getPosY() + 2.5D, player.getPosZ() + 0.5D, new ItemStack(HexItem.ELEMENTAL_CORE.get())));
         } else if (!KnowledgeUtil.knowsFact(player, HexFacts.EVOLVE_RITUAL) && current >= 30.0D) {
             rep.setReputation(player, id, 30.0D);
             rep.lock(player, id, DeityLocks.EVOLVED_WEAPON);
             KnowledgeUtil.grantFact(player, HexFacts.STAR_INFUSION);
+        } else if (current >= 60.0D) {
+            rep.setReputation(player, id, 60.0D);
+            rep.lock(player, id, DeityLocks.MAXDAMAGE);
         }
     }
 

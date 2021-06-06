@@ -4,9 +4,15 @@ import Alexthw.Hexblades.common.entity.FulgorProjectileEntity;
 import Alexthw.Hexblades.common.items.HexSwordItem;
 import Alexthw.Hexblades.registers.HexEntityType;
 import Alexthw.Hexblades.registers.HexItem;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import elucent.eidolon.Registry;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
@@ -21,7 +27,7 @@ import static java.lang.Math.min;
 
 public class Lightning_SSwordL1 extends HexSwordItem {
 
-    int projectileCost = 3000;
+    protected int projectileCost = 3000;
 
     public Lightning_SSwordL1(Item.Properties props) {
         super(1, -1.5F, props);
@@ -54,8 +60,8 @@ public class Lightning_SSwordL1 extends HexSwordItem {
         if (getAwakened(weapon)) {
             double devotion = getDevotion(player);
             rechargeTick = max(1, (int) devotion / 2);
-            setAttackPower(weapon, devotion / 20);
-            setAttackSpeed(weapon, devotion / 30);
+            setAttackPower(weapon, devotion / 30);
+            setAttackSpeed(weapon, devotion / 50);
         }
     }
 
@@ -76,6 +82,17 @@ public class Lightning_SSwordL1 extends HexSwordItem {
             }
         }
         setAwakenedState(stack, false);
+    }
+
+    @Override
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
+        Multimap<Attribute, AttributeModifier> multimap = HashMultimap.create();
+        if (slot == EquipmentSlotType.OFFHAND) {
+            multimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", getAttackPower(stack), AttributeModifier.Operation.ADDITION));
+            multimap.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", getAttackSpeed(stack), AttributeModifier.Operation.ADDITION));
+        }
+
+        return multimap;
     }
 
 }

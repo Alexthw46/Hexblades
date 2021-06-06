@@ -9,16 +9,15 @@ import net.minecraft.world.World;
 
 public class FireBroad1 extends HexSwordItem {
 
-
     public FireBroad1(Properties props) {
-        super(3, -2.7F, props);
+        super(6, -2.7F, props);
         tooltipText = "tooltip.HexSwordItem.flame_sword";
-
     }
 
     @Override
     public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
         target.attackEntityFrom(new EntityDamageSource("lava", attacker).setDamageBypassesArmor(), 2.0f);
+        target.setFire(1);
     }
 
     @Override
@@ -27,6 +26,6 @@ public class FireBroad1 extends HexSwordItem {
 
         setAwakenedState(weapon, !getAwakened(weapon));
 
-        setAttackPower(weapon,devotion/10);
+        setAttackPower(weapon, devotion / 20);
     }
 }

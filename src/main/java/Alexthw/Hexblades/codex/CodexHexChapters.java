@@ -25,6 +25,7 @@ public class CodexHexChapters {
     static Chapter EARTH_HAMMER;
     static Chapter THUNDER_DUALS;
     static Chapter HEX_INFUSION;
+    static Chapter HEX_CORE;
     static Chapter HEX_PRAY;
     static Chapter HEX_ALLOY;
     static Chapter DARK_WOOD;
@@ -79,6 +80,10 @@ public class CodexHexChapters {
         HEX_PRAY = new Chapter("hexblades.codex.chapter.hex_pray",
                 new ChantPage("hexblades.codex.page.hex_pray.0", Signs.WICKED_SIGN, Signs.SOUL_SIGN, Signs.WICKED_SIGN),
                 new TextPage("hexblades.codex.page.hex_pray.1"));
+
+        HEX_CORE = new Chapter("hexblades.codex.chapter.hex_core",
+                new TextPage("hexblades.codex.page.hex_core.0"),
+                new TextPage("hexblades.codex.page.hex_core.1"));
 
         HEX_INFUSION = new Chapter("hexblades.codex.chapter.hex_touch",
                 new ChantPage("hexblades.codex.page.hex_touch.0", Signs.MIND_SIGN, Signs.SOUL_SIGN, Signs.MIND_SIGN, Signs.SOUL_SIGN),
@@ -179,7 +184,8 @@ public class CodexHexChapters {
                         new IndexPage.IndexEntry(DARK_WOOD, new ItemStack(HexBlock.DARK_POLISH_PLANKS.getBlock().asItem())),
                         new IndexPage.IndexEntry(HEX_ALLOY, new ItemStack(HexItem.HEXIUM_INGOT.get())),
                         new IndexPage.SignLockedEntry(HEX_PRAY, new ItemStack(HexItem.DEV_SWORD.get()), Signs.SOUL_SIGN),
-                        new IndexPage.FactLockedEntry(HEX_INFUSION, new ItemStack(HexItem.PATRON_SOUL.get()), HexFacts.STAR_INFUSION)
+                        new IndexPage.FactLockedEntry(HEX_CORE, new ItemStack(HexItem.ELEMENTAL_CORE.get()), HexFacts.AWAKENING_RITUAL),
+                        new IndexPage.FactLockedEntry(HEX_INFUSION, new ItemStack(HexItem.PATRON_SOUL2.get()), HexFacts.STAR_INFUSION)
                 ),
                 new IndexPage(
                         new IndexPage.FactLockedEntry(ICE_KATANA, new ItemStack(HexItem.FROST_RAZOR.get()), HexFacts.AWAKENING_RITUAL),

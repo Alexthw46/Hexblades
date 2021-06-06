@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 
 public class EarthHammer1 extends HexSwordItem {
     public EarthHammer1(Properties props) {
-        super(8, -3.4F, props);
+        super(8, -3.6F, props);
         tooltipText = "tooltip.HexSwordItem.earth_hammer";
     }
 
