@@ -102,9 +102,9 @@ f2ddb02f8aa31ca50926709e368351fcc27110a4 data/hexblades/recipes/sword_dull.json
 5a5938f2eb27f5cf39b87db32f48bd343d772923 data/minecraft/tags/blocks/wooden_fences.json
 63a63609551b5f12f0132f8dd7027ede114cc727 data/minecraft/tags/blocks/wooden_slabs.json
 396aab1fede4654a7a95034ad9c1a02fc5a8bb81 data/minecraft/tags/blocks/wooden_stairs.json
-74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/minecraft/tags/items/planks.json
-74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/minecraft/tags/items/slabs.json
-74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/minecraft/tags/items/stairs.json
-74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/minecraft/tags/items/wooden_fences.json
-74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/minecraft/tags/items/wooden_slabs.json
-74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/minecraft/tags/items/wooden_stairs.json
+24745a6d48ae1f587e7868c4691713c2ea98b763 data/minecraft/tags/items/planks.json
+63a63609551b5f12f0132f8dd7027ede114cc727 data/minecraft/tags/items/slabs.json
+396aab1fede4654a7a95034ad9c1a02fc5a8bb81 data/minecraft/tags/items/stairs.json
+5a5938f2eb27f5cf39b87db32f48bd343d772923 data/minecraft/tags/items/wooden_fences.json
+63a63609551b5f12f0132f8dd7027ede114cc727 data/minecraft/tags/items/wooden_slabs.json
+396aab1fede4654a7a95034ad9c1a02fc5a8bb81 data/minecraft/tags/items/wooden_stairs.json
