@@ -1,5 +1,6 @@
 package Alexthw.Hexblades.spells;
 
+import Alexthw.Hexblades.common.items.dulls.DullSwordItem;
 import Alexthw.Hexblades.deity.HexDeities;
 import Alexthw.Hexblades.registers.HexItem;
 import elucent.eidolon.capability.ReputationProvider;
@@ -64,12 +65,21 @@ public class HexTouchSpell extends StaticSpell {
     }
 
     boolean canTouch(ItemStack stack) {
-        return stack.getItem() == Items.NETHER_STAR;           // is silver
+        return (stack.getItem() == Items.NETHER_STAR || stack.getItem() == Items.LAPIS_LAZULI || stack.getItem() == HexItem.DULL_BROADSWORD.get());
     }
 
     ItemStack touchResult(ItemStack stack) { // assumes canTouch is true
-        if (canTouch(stack))
+
+        if (stack.getItem() == Items.NETHER_STAR)
             return new ItemStack(HexItem.PATRON_SOUL.get());
-        else return stack;
+
+        if (stack.getItem() == Items.LAPIS_LAZULI)
+            return new ItemStack(HexItem.PATRON_SOUL2.get());
+
+        if (stack.getItem() instanceof DullSwordItem)
+            return new ItemStack(HexItem.DEV_SWORD.get());
+
+        return stack;
     }
+
 }

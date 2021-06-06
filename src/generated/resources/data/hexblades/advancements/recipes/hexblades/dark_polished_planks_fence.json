@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "hexblades:dark_polished_planks_fence"
+    ]
+  },
+  "criteria": {
+    "has_dark_polished_wood": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "hexblades:dark_polished_planks"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "hexblades:dark_polished_planks_fence"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_dark_polished_wood",
+      "has_the_recipe"
+    ]
+  ]
+}

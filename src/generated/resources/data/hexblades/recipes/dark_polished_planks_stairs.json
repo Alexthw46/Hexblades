@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "X  ",
+    "XX ",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "hexblades:dark_polished_planks"
+    }
+  },
+  "result": {
+    "item": "hexblades:dark_polished_planks_stairs"
+  }
+}
