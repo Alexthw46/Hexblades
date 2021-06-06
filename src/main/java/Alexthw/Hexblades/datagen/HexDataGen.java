@@ -23,8 +23,8 @@ public final class HexDataGen {
 
         gen.addProvider(new HexItemModelProvider(gen, existingFileHelper));
         gen.addProvider(new HexBlockStateProvider(gen, existingFileHelper));
-        gen.addProvider(new HexItemTagProvider(gen, BTprovider, existingFileHelper));
         gen.addProvider(BTprovider);
+        gen.addProvider(new HexItemTagProvider(gen, BTprovider, existingFileHelper));
         gen.addProvider(new HexRecipeProvider(gen));
         gen.addProvider(new HexLootTableProvider(gen));
     }
