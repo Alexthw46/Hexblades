@@ -32,6 +32,8 @@ public class HexRecipeProvider extends RecipeProvider {
         ShapedRecipeBuilder.shapedRecipe(HexBlock.DARK_POLISH_PLANKS.getFenceGate().asItem()).key('#', Items.STICK).key('X', HexBlock.DARK_POLISH_PLANKS.getBlock().asItem()).patternLine("   ").patternLine("#X#").patternLine("#X#").addCriterion("has_dark_polished_wood", hasItem(HexBlock.DARK_POLISH_PLANKS.getBlock().asItem())).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(HexBlock.DARK_POLISH_PLANKS.getFence().asItem()).key('#', Items.STICK).key('X', HexBlock.DARK_POLISH_PLANKS.getBlock().asItem()).patternLine("   ").patternLine("X#X").patternLine("X#X").addCriterion("has_dark_polished_wood", hasItem(HexBlock.DARK_POLISH_PLANKS.getBlock().asItem())).build(consumer);
 
+        ShapedRecipeBuilder.shapedRecipe(HexBlock.SWORD_STAND.get()).key('#', Items.ITEM_FRAME).key('X', Registry.STONE_HAND.get()).key('Y', HexBlock.DARK_POLISH_PLANKS.getBlock().asItem()).patternLine("   ").patternLine(" # ").patternLine("YXY");
+
     }
 
 

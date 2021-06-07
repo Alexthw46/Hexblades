@@ -65,7 +65,7 @@ public class HexTouchSpell extends StaticSpell {
     }
 
     boolean canTouch(ItemStack stack) {
-        return (stack.getItem() == Items.NETHER_STAR || stack.getItem() == Items.LAPIS_LAZULI || stack.getItem() == HexItem.DULL_BROADSWORD.get());
+        return (stack.getItem() == Items.NETHER_STAR || stack.getItem() == Items.LAPIS_LAZULI || stack.getItem() == Items.DIAMOND || stack.getItem() == HexItem.DULL_BROADSWORD.get());
     }
 
     ItemStack touchResult(ItemStack stack) { // assumes canTouch is true
@@ -75,6 +75,10 @@ public class HexTouchSpell extends StaticSpell {
 
         if (stack.getItem() == Items.LAPIS_LAZULI)
             return new ItemStack(HexItem.PATRON_SOUL2.get());
+
+        if (stack.getItem() == Items.LAPIS_LAZULI)
+            return new ItemStack(HexItem.ELEMENTAL_CORE.get());
+
 
         if (stack.getItem() instanceof DullSwordItem)
             return new ItemStack(HexItem.DEV_SWORD.get());

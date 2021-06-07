@@ -36,7 +36,7 @@ public class HexLootTableProvider extends LootTableProvider {
     }
 
     private final List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootParameterSet>> tables = new ArrayList<>();
-    private static final Set<Item> IMMUNE_TO_EXPLOSIONS = Stream.of(HexBlock.DEV_BLOCK).map(c -> c.get().asItem()).collect(ImmutableSet.toImmutableSet());
+    private static final Set<Item> IMMUNE_TO_EXPLOSIONS = Stream.of(HexBlock.SWORD_STAND).map(c -> c.get().asItem()).collect(ImmutableSet.toImmutableSet());
 
     private static final ILootCondition.IBuilder SILK_TOUCH = MatchTool.builder(ItemPredicate.Builder.create().enchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.IntBound.atLeast(1))));
     private static final ILootCondition.IBuilder SHEARS = MatchTool.builder(ItemPredicate.Builder.create().item(Items.SHEARS));
@@ -60,7 +60,7 @@ public class HexLootTableProvider extends LootTableProvider {
 
 
     protected static <T> T withSurvivesExplosion(IItemProvider item, ILootConditionConsumer<T> condition) {
-        return (T) (!IMMUNE_TO_EXPLOSIONS.contains(item.asItem()) ? condition.acceptCondition(SurvivesExplosion.builder()) : condition.cast());
+        return !IMMUNE_TO_EXPLOSIONS.contains(item.asItem()) ? condition.acceptCondition(SurvivesExplosion.builder()) : condition.cast();
     }
 
     protected static LootTable.Builder dropping(IItemProvider item) {

@@ -8,11 +8,6 @@
           "type": "minecraft:item",
           "name": "hexblades:sword_stand"
         }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
       ]
     }
   ]

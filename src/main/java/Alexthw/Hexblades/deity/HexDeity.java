@@ -29,7 +29,7 @@ public class HexDeity extends Deity {
 
     @Override
     public void onReputationChange(PlayerEntity player, IReputation rep, double prev, double current) {
-        if (!KnowledgeUtil.knowsFact(player, HexFacts.AWAKENING_RITUAL) && current >= 10.0D) {
+        if (!KnowledgeUtil.knowsFact(player, HexFacts.AWAKENING_RITUAL) && current >= 6.0D) {
             KnowledgeUtil.grantFact(player, HexFacts.AWAKENING_RITUAL);
             World world = player.getEntityWorld();
             world.addEntity(new ItemEntity(world, player.getPosX() + 0.5D, player.getPosY() + 2.5D, player.getPosZ() + 0.5D, new ItemStack(HexItem.ELEMENTAL_CORE.get())));

@@ -13,11 +13,12 @@ import net.minecraft.world.World;
 public class EarthHammer1 extends HexSwordItem {
 
     protected float baseMiningSpeed;
-    protected float newMiningSpeed = baseMiningSpeed;
+    protected float newMiningSpeed;
 
     public EarthHammer1(Properties props) {
         super(9, -3.2F, props, 6.0F);
         baseMiningSpeed = 6.0F;
+        newMiningSpeed = baseMiningSpeed;
         tooltipText = "tooltip.HexSwordItem.earth_hammer2";
     }
 
@@ -73,6 +74,10 @@ public class EarthHammer1 extends HexSwordItem {
         return material == Material.ROCK || material == Material.IRON || material == Material.ANVIL;
     }
 
+    public boolean canPlayerBreakBlockWhileHolding(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
+        return true;
+    }
+
     @Override
     public float getDestroySpeed(ItemStack stack, BlockState state) {
 
@@ -80,19 +85,14 @@ public class EarthHammer1 extends HexSwordItem {
 
         Material material = state.getMaterial();
 
-        if (getToolTypes(stack).stream().anyMatch(state::isToolEffective)) {
-            result = newMiningSpeed;
-        } else if (material != Material.IRON && material != Material.ANVIL && material != Material.ROCK) {
+        if ((material == Material.IRON || material == Material.ANVIL || material == Material.ROCK) && getAwakened(stack)) {
+            result = newMiningSpeed + 45;
+        } else if (getToolTypes(stack).stream().anyMatch(state::isToolEffective)) {
             result = newMiningSpeed;
         } else {
             result = 1.0F;
         }
         return result;
-    }
-
-    @Override
-    public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-        return true;
     }
 
 }

@@ -17,12 +17,13 @@ public class HexBlock {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Hexblades.MOD_ID);
 
 
-    public static final RegistryObject<Block> DEV_BLOCK;
+    //public static final RegistryObject<Block> DEV_BLOCK;
     public static final RegistryObject<Block> SWORD_STAND;
     public static DecoBlockPack DARK_POLISH_PLANKS;
 
 
     static {
+        /*
         DEV_BLOCK = addBlock("dev_block",
                 new Block(blockProps(Material.ROCK, MaterialColor.BLUE)
                         .sound(SoundType.STONE)
@@ -31,16 +32,16 @@ public class HexBlock {
                         .harvestLevel(1)
                         .setRequiresTool()
                 ));
+        */
+        SWORD_STAND = addBlock("sword_stand", new SwordStandBlock(blockProps(Material.ROCK, MaterialColor.RED)
+                .notSolid()
+        ));
 
         DARK_POLISH_PLANKS = (new DecoBlockPack(BLOCKS, "dark_polished_planks", blockProps(Material.WOOD, MaterialColor.BLACK).sound(SoundType.WOOD)
                 .harvestTool(ToolType.AXE)
                 .hardnessAndResistance(1.6F, 3.0F)))
                 .addFence();
 
-
-        SWORD_STAND = addBlock("sword_stand", new SwordStandBlock(blockProps(Material.ROCK, MaterialColor.RED)
-                .notSolid()
-        ));
     }
 
     static net.minecraft.block.AbstractBlock.Properties blockProps(Material mat, MaterialColor color) {
