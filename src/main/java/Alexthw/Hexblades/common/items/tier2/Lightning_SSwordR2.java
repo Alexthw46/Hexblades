@@ -46,10 +46,10 @@ public class Lightning_SSwordR2 extends Lightning_SSwordR1 {
     public void applyHexBonus(PlayerEntity user, boolean awakened) {
         if (hasTwin(user)) {
             if (awakened) {
-                user.addPotionEffect(new EffectInstance(Effects.JUMP_BOOST, 200));
-                user.addPotionEffect(new EffectInstance(Effects.SPEED, 200, 1));
+                user.addPotionEffect(new EffectInstance(Effects.JUMP_BOOST, 200, 0, false, false));
+                user.addPotionEffect(new EffectInstance(Effects.SPEED, 200, 1, false, false));
             } else {
-                user.addPotionEffect(new EffectInstance(Effects.SPEED, 200));
+                user.addPotionEffect(new EffectInstance(Effects.SPEED, 200, 0, false, false));
             }
         }
     }

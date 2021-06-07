@@ -26,7 +26,7 @@ public class WaterSaber2 extends WaterSaber1 {
     @Override
     public void applyHexBonus(PlayerEntity entity, boolean awakened) {
         if (awakened) {
-            entity.addPotionEffect(new EffectInstance(Effects.CONDUIT_POWER, 200));
+            entity.addPotionEffect(new EffectInstance(Effects.CONDUIT_POWER, 200, 0, false, false));
         } else {
             entity.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, 200));
         }

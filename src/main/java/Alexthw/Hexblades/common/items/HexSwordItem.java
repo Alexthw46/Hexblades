@@ -40,9 +40,18 @@ public class HexSwordItem extends SwordItem {
         baseSpeed = attackSpeed;
     }
 
+    public HexSwordItem(int attackDamage, float attackSpeed, Properties properties, float mining_speed) {
+        this(attackDamage, attackSpeed, properties.addToolType(net.minecraftforge.common.ToolType.PICKAXE, Tiers.PatronWeaponTier.INSTANCE.getHarvestLevel()));
+    }
+
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+        return oldStack.getItem() != newStack.getItem();
+    }
+
     @Override
     public void inventoryTick(ItemStack stack, World worldIn, Entity user, int itemSlot, boolean isSelected) {
-        if (user instanceof PlayerEntity) {
+        if (user instanceof PlayerEntity && !worldIn.isRemote()) {
             if (hasBonus()) {
                 applyHexBonus((PlayerEntity) user, getAwakened(stack));
             }
@@ -52,7 +61,7 @@ public class HexSwordItem extends SwordItem {
                 } else {
                     setAwakenedState(stack, false);
                 }
-            } else {
+            } else if (stack.getDamage() > 0) {
                 stack.setDamage(Math.max(stack.getDamage() - rechargeTick, 0));
             }
         }
@@ -78,11 +87,15 @@ public class HexSwordItem extends SwordItem {
         if (attacker instanceof PlayerEntity) {
             if (target.hurtResistantTime > 0) {
                 target.hurtResistantTime = 0;
-                if (getAwakened(stack)) applyHexEffects(stack, target, (PlayerEntity) attacker);
+                if (getAwakened(stack) || onHitEffects()) applyHexEffects(stack, target, (PlayerEntity) attacker);
             }
         }
         stack.setDamage(Math.max(stack.getDamage() - 10, 0));
         return super.hitEntity(stack, target, attacker);
+    }
+
+    protected boolean onHitEffects() {
+        return false;
     }
 
     //Only apply special effects if wielded by a Player
@@ -179,12 +192,6 @@ public class HexSwordItem extends SwordItem {
         super.addInformation(stack, worldIn, tooltip, flagIn);
         tooltip.add(new TranslationTextComponent(tooltipText));
     }
-
-    @Override
-    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-        return oldStack.getItem() != newStack.getItem();
-    }
-
 
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {

@@ -41,7 +41,7 @@ public class Tiers {
     public static class PatronWeaponTier implements IItemTier {
         @Override
         public int getMaxUses() {
-            return 10000;
+            return 1500;
         }
 
         @Override
@@ -54,11 +54,11 @@ public class Tiers {
         }
 
         public int getHarvestLevel() {
-            return 2;
+            return 4;
         }
 
         public int getEnchantability() {
-            return 20;
+            return 5;
         }
 
 

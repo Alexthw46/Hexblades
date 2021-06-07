@@ -24,7 +24,7 @@ public class FireBroad2 extends HexSwordItem {
 
     @Override
     public void applyHexBonus(PlayerEntity user, boolean awakened) {
-        user.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 200));
+        user.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 200, 0, false, false));
     }
 
     @Override
@@ -41,7 +41,7 @@ public class FireBroad2 extends HexSwordItem {
         if (attacker instanceof PlayerEntity) {
             if (target.hurtResistantTime > 0) {
                 target.hurtResistantTime = 0;
-                target.setFire(1);
+                target.setFire(3);
                 if (getAwakened(stack)) applyHexEffects(stack, target, (PlayerEntity) attacker);
             }
         }

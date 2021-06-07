@@ -1,6 +1,7 @@
 package Alexthw.Hexblades.common.entity;
 
 
+import Alexthw.Hexblades.registers.HexRegistry;
 import elucent.eidolon.Registry;
 import elucent.eidolon.entity.SpellProjectileEntity;
 import elucent.eidolon.network.MagicBurstEffectPacket;
@@ -12,7 +13,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.IndirectEntityDamageSource;
 import net.minecraft.util.SoundCategory;
@@ -60,9 +60,9 @@ public class FulgorProjectileEntity extends SpellProjectileEntity {
     }
 
     protected void onImpact(RayTraceResult ray, Entity target) {
-        target.attackEntityFrom(new IndirectEntityDamageSource(DamageSource.LIGHTNING_BOLT.getDamageType(), this, this.world.getPlayerByUuid(this.casterId)), 4.0F);
+        target.attackEntityFrom(new IndirectEntityDamageSource(DamageSource.LIGHTNING_BOLT.getDamageType(), this, this.world.getPlayerByUuid(this.casterId)), 3.0F);
         if (target instanceof LivingEntity) {
-            ((LivingEntity) target).addPotionEffect(new EffectInstance(Effects.WITHER, 100, 0));
+            ((LivingEntity) target).addPotionEffect(new EffectInstance(HexRegistry.CHARGED_EFFECT.get(), 100, 0));
         }
 
         this.onImpact(ray);

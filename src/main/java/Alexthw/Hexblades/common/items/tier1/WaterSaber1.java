@@ -28,7 +28,7 @@ public class WaterSaber1 extends HexSwordItem {
 
     @Override
     public void applyHexBonus(PlayerEntity entity, boolean awakened) {
-        if (awakened) entity.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, 200));
+        if (awakened) entity.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, 200, 0, false, false));
     }
 
     @Override

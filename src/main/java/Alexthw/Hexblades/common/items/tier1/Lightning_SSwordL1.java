@@ -4,6 +4,7 @@ import Alexthw.Hexblades.common.entity.FulgorProjectileEntity;
 import Alexthw.Hexblades.common.items.HexSwordItem;
 import Alexthw.Hexblades.registers.HexEntityType;
 import Alexthw.Hexblades.registers.HexItem;
+import Alexthw.Hexblades.registers.HexRegistry;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import elucent.eidolon.Registry;
@@ -16,6 +17,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
@@ -27,7 +29,7 @@ import static java.lang.Math.min;
 
 public class Lightning_SSwordL1 extends HexSwordItem {
 
-    protected int projectileCost = 3000;
+    protected int projectileCost = getMaxDamage() / 3;
 
     public Lightning_SSwordL1(Item.Properties props) {
         super(1, -1.5F, props);
@@ -82,6 +84,16 @@ public class Lightning_SSwordL1 extends HexSwordItem {
             }
         }
         setAwakenedState(stack, false);
+    }
+
+    @Override
+    protected boolean onHitEffects() {
+        return true;
+    }
+
+    @Override
+    public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
+        target.addPotionEffect(new EffectInstance(HexRegistry.CHARGED_EFFECT.get(), 100, 0));
     }
 
     @Override

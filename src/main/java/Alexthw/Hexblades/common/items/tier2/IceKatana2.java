@@ -15,21 +15,16 @@ public class IceKatana2 extends IceKatana1 {
     }
 
     @Override
-    public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (attacker instanceof PlayerEntity) {
-            if (target.hurtResistantTime > 0) {
-                target.hurtResistantTime = 0;
-                super.applyHexEffects(stack, target, (PlayerEntity) attacker);
-                if (getAwakened(stack)) applyHexEffects(stack, target, (PlayerEntity) attacker);
-            }
-        }
-        stack.setDamage(Math.max(stack.getDamage() - 10, 0));
+    protected boolean onHitEffects() {
         return true;
     }
 
     @Override
     public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
-        target.addPotionEffect(new EffectInstance(Registry.CHILLED_EFFECT.get(), 300, 0));
+        super.applyHexEffects(stack, target, attacker);
+        if (getAwakened(stack)) {
+            target.addPotionEffect(new EffectInstance(Registry.CHILLED_EFFECT.get(), 100, 0));
+        }
     }
 
     @Override

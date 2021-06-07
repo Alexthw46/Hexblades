@@ -17,7 +17,7 @@ public class FireBroad1 extends HexSwordItem {
     @Override
     public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
         target.attackEntityFrom(new EntityDamageSource("lava", attacker).setDamageBypassesArmor(), (float) (getDevotion(attacker) / 20));
-        target.setFire(1);
+        target.setFire(2);
     }
 
     @Override

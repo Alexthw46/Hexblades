@@ -1,6 +1,6 @@
 package Alexthw.Hexblades.common.items.tier2;
 
-import Alexthw.Hexblades.common.items.HexSwordItem;
+import Alexthw.Hexblades.common.items.tier1.EarthHammer1;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -9,20 +9,30 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.world.World;
 
-public class EarthHammer2 extends HexSwordItem {
+public class EarthHammer2 extends EarthHammer1 {
+
     public EarthHammer2(Properties props) {
-        super(9, -3.2F, props);
+        super(9, -3.2F, props, 7.0F);
+        baseMiningSpeed = 8.0F;
         tooltipText = "tooltip.HexSwordItem.earth_hammer2";
     }
 
     @Override
+    protected boolean onHitEffects() {
+        return true;
+    }
+
+    @Override
     public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
-        target.attackEntityFrom(new EntityDamageSource("anvil", attacker).setDamageBypassesArmor(), 2.0f);
+        float power = 1.5F;
+        if (getAwakened(stack)) {
+            target.attackEntityFrom(new EntityDamageSource("anvil", attacker).setDamageBypassesArmor(), 2.0f);
+            target.addPotionEffect(new EffectInstance(Effects.WEAKNESS, 300, 0));
+            power = (float) (2.0F + getDevotion(attacker) / 20);
+        }
         double X = attacker.getPosX() - target.getPosX();
         double Z = attacker.getPosZ() - target.getPosZ();
-
-        target.applyKnockback((float) (3.0F + getDevotion(attacker) / 20), X, Z);
-        target.addPotionEffect(new EffectInstance(Effects.WEAKNESS, 300, 0));
+        target.applyKnockback(power, X, Z);
 
     }
 
@@ -31,7 +41,9 @@ public class EarthHammer2 extends HexSwordItem {
         double devotion = getDevotion(player);
 
         setAwakenedState(weapon, !getAwakened(weapon));
+
         setAttackPower(weapon, devotion / 15);
+        setMining_speed(weapon, (float) (devotion / 20));
     }
 
 }
