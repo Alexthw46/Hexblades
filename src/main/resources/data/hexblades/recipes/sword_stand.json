@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    " F ",
+    "X#X"
+  ],
+  "key": {
+    "F": {
+      "item": "minecraft:item_frame"
+    },
+    "#": {
+      "item": "eidolon:stone_hand"
+    },
+    "X": {
+      "item": "hexblades:hexium_ingot"
+    }
+  },
+  "result": {
+    "item": "hexblades:sword_stand"
+  }
+}

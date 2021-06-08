@@ -4,10 +4,10 @@
     {
       "items": [
         {
-          "item": "eidolon:silver_ingot"
+          "tag": "forge:ingots/silver"
         },
         {
-          "item": "eidolon:lead_ingot"
+          "tag": "forge:ingots/lead"
         }
       ]
     },
