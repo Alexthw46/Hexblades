@@ -54,7 +54,7 @@ public class Tiers {
         }
 
         public int getHarvestLevel() {
-            return 4;
+            return 5;
         }
 
         public int getEnchantability() {

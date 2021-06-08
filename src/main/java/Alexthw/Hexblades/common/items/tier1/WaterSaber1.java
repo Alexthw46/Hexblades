@@ -10,11 +10,12 @@ import net.minecraft.world.World;
 
 public class WaterSaber1 extends HexSwordItem {
 
-    public float shield = 0;
+    public float shield;
 
     public WaterSaber1(Properties props) {
         super(5, -2.4F, props);
         tooltipText = "tooltip.HexSwordItem.water_saber";
+        shield = 0;
     }
 
     public WaterSaber1(int attackDamage, float attackSpeed, Properties props) {
@@ -46,11 +47,7 @@ public class WaterSaber1 extends HexSwordItem {
     }
 
     public void setShielding(ItemStack weapon, float dmgred) {
-        if (getAwakened(weapon)) {
-            shield = dmgred;
-            return;
-        }
-        shield = 0;
+        shield = isActivated ? dmgred : 0;
     }
 
 }

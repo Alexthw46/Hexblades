@@ -14,7 +14,9 @@ public class EarthHammer2 extends EarthHammer1 {
     public EarthHammer2(Properties props) {
         super(9, -3.2F, props, 7.0F);
         baseMiningSpeed = 8.0F;
+        newMiningSpeed = baseMiningSpeed;
         tooltipText = "tooltip.HexSwordItem.earth_hammer2";
+        mineSwitch = false;
     }
 
     @Override
@@ -25,7 +27,7 @@ public class EarthHammer2 extends EarthHammer1 {
     @Override
     public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
         float power = 1.5F;
-        if (getAwakened(stack)) {
+        if (isActivated) {
             target.attackEntityFrom(new EntityDamageSource("anvil", attacker).setDamageBypassesArmor(), 2.0f);
             target.addPotionEffect(new EffectInstance(Effects.WEAKNESS, 300, 0));
             power = (float) (2.0F + getDevotion(attacker) / 20);
@@ -40,10 +42,10 @@ public class EarthHammer2 extends EarthHammer1 {
     public void recalculatePowers(ItemStack weapon, World world, PlayerEntity player) {
         double devotion = getDevotion(player);
 
-        setAwakenedState(weapon, !getAwakened(weapon));
+        if (!mineSwitch) setAwakenedState(weapon, !getAwakened(weapon));
 
-        setAttackPower(weapon, devotion / 15);
-        setMining_speed(weapon, (float) (devotion / 20));
+        setAttackPower(weapon, mineSwitch ? -8 : (devotion / 15));
+        setMiningSpeed((float) (devotion));
     }
 
 }

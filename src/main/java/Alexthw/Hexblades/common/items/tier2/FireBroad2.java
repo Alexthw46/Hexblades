@@ -42,7 +42,7 @@ public class FireBroad2 extends HexSwordItem {
             if (target.hurtResistantTime > 0) {
                 target.hurtResistantTime = 0;
                 target.setFire(3);
-                if (getAwakened(stack)) applyHexEffects(stack, target, (PlayerEntity) attacker);
+                if (isActivated) applyHexEffects(stack, target, (PlayerEntity) attacker);
             }
         }
         stack.setDamage(Math.max(stack.getDamage() - 10, 0));
