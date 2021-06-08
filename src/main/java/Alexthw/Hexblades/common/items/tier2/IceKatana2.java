@@ -22,7 +22,7 @@ public class IceKatana2 extends IceKatana1 {
     @Override
     public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
         super.applyHexEffects(stack, target, attacker);
-        if (getAwakened(stack)) {
+        if (isActivated) {
             target.addPotionEffect(new EffectInstance(Registry.CHILLED_EFFECT.get(), 100, 0));
         }
     }

@@ -16,10 +16,9 @@ public class Lightning_SSwordR2 extends Lightning_SSwordR1 {
     @Override
     public void recalculatePowers(ItemStack weapon, World world, PlayerEntity player) {
         double devotion = getDevotion(player);
-        boolean active = getAwakened(weapon);
 
         if (hasTwin(player)) {
-            if (!active) {
+            if (!isActivated) {
                 setAwakenedState(weapon, true);
 
                 setAttackPower(weapon, devotion / 20);

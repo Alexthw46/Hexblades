@@ -16,7 +16,7 @@ public class Lightning_SSwordL2 extends Lightning_SSwordL1 {
 
     @Override
     public void recalculatePowers(ItemStack weapon, World world, PlayerEntity player) {
-        if (getAwakened(weapon)) {
+        if (isActivated) {
             double devotion = getDevotion(player);
             rechargeTick = max(1, (int) devotion / 2);
             setAttackPower(weapon, devotion / 20);
