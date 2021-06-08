@@ -1,6 +1,5 @@
 package Alexthw.Hexblades.spells;
 
-import Alexthw.Hexblades.common.items.dulls.DullSwordItem;
 import Alexthw.Hexblades.deity.HexDeities;
 import Alexthw.Hexblades.registers.HexItem;
 import elucent.eidolon.capability.ReputationProvider;
@@ -76,11 +75,11 @@ public class HexTouchSpell extends StaticSpell {
         if (stack.getItem() == Items.LAPIS_LAZULI)
             return new ItemStack(HexItem.PATRON_SOUL2.get());
 
-        if (stack.getItem() == Items.LAPIS_LAZULI)
+        if (stack.getItem() == Items.DIAMOND)
             return new ItemStack(HexItem.ELEMENTAL_CORE.get());
 
 
-        if (stack.getItem() instanceof DullSwordItem)
+        if (stack.getItem() == HexItem.DULL_BROADSWORD.get())
             return new ItemStack(HexItem.DEV_SWORD.get());
 
         return stack;
