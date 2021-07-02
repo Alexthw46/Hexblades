@@ -60,10 +60,10 @@ public class HexSwordItem extends SwordItem {
                 applyHexBonus((PlayerEntity) user, isActivated);
             }
             if (isActivated && !((PlayerEntity) user).isCreative()) {
-                if ((getMaxDamage(stack) - stack.getDamage()) > 10) {
-                    stack.damageItem(4, (LivingEntity) user, (entity) -> entity.sendBreakAnimation(EquipmentSlotType.MAINHAND));
+                if ((getMaxDamage(stack) - stack.getDamage()) > 5) {
+                    stack.damageItem(2, (LivingEntity) user, (entity) -> entity.sendBreakAnimation(EquipmentSlotType.MAINHAND));
                 } else {
-                    setAwakenedState(stack, false);
+                    recalculatePowers(((PlayerEntity) user).getHeldItem(Hand.MAIN_HAND), worldIn, (PlayerEntity) user);
                 }
             } else if (stack.getDamage() > 0) {
                 stack.setDamage(Math.max(stack.getDamage() - rechargeTick, 0));

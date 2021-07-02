@@ -70,7 +70,7 @@ public class Events {
             PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();
             Item item = player.getItemStackFromSlot(EquipmentSlotType.MAINHAND).getItem();
             if (item instanceof HexSwordItem && !player.world.isRemote()) {
-                if (HexUtils.chance(5, event.getEntity().getEntityWorld())) {
+                if (HexUtils.chance((int) (1 + (event.getEntityLiving().getMaxHealth() / 4)), event.getEntity().getEntityWorld())) {
                     Deity HexDeity = HexDeities.HEX_DEITY;
                     event.getEntity().getEntityWorld().getCapability(ReputationProvider.CAPABILITY, null).ifPresent((rep) -> {
                         double prev = rep.getReputation(player, HexDeity.getId());
