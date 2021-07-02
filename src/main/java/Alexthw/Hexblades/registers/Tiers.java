@@ -8,7 +8,7 @@ public class Tiers {
     public static class HexiumTier implements IItemTier {
         @Override
         public int getMaxUses() {
-            return 10000;
+            return 1000;
         }
 
         @Override
@@ -41,7 +41,7 @@ public class Tiers {
     public static class PatronWeaponTier implements IItemTier {
         @Override
         public int getMaxUses() {
-            return 1500;
+            return 1000;
         }
 
         @Override

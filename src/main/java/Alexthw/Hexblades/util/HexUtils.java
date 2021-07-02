@@ -3,6 +3,7 @@ package Alexthw.Hexblades.util;
 import Alexthw.Hexblades.Hexblades;
 import elucent.eidolon.util.ColorUtil;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -53,4 +54,8 @@ public class HexUtils {
     public static final int waterColor = ColorUtil.packColor(255, 55, 51, 171);
     public static final int earthColor = ColorUtil.packColor(255, 126, 70, 0);
     public static final int thunderColor = ColorUtil.packColor(255, 255, 255, 65);
+
+    public static boolean chance(int c, World world) {
+        return c >= world.rand.nextInt(100);
+    }
 }

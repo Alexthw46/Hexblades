@@ -22,7 +22,7 @@ public class Lightning_SSwordR1 extends HexSwordItem {
                 setAwakenedState(weapon, true);
 
                 setAttackPower(weapon, devotion / 30);
-                setAttackSpeed(weapon, devotion / 50);
+                setAttackSpeed(weapon, devotion / 60);
             }
         } else {
             setAwakenedState(weapon, false);

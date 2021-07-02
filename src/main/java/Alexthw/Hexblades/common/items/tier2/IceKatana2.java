@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 
 public class IceKatana2 extends IceKatana1 {
     public IceKatana2(Properties props) {
-        super(5, -2.2F, props);
+        super(5, -2.5F, props);
         tooltipText = "tooltip.HexSwordItem.ice_katana2";
     }
 
@@ -33,7 +33,7 @@ public class IceKatana2 extends IceKatana1 {
 
         setAwakenedState(weapon, !getAwakened(weapon));
 
-        setAttackPower(weapon, devotion / 10);
-        setAttackSpeed(weapon, devotion / 30);
+        setAttackPower(weapon, devotion / 15);
+        setAttackSpeed(weapon, devotion / 60);
     }
 }

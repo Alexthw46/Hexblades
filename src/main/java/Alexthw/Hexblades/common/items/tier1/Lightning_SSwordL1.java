@@ -63,7 +63,7 @@ public class Lightning_SSwordL1 extends HexSwordItem {
             double devotion = getDevotion(player);
             rechargeTick = max(1, (int) devotion / 2);
             setAttackPower(weapon, devotion / 30);
-            setAttackSpeed(weapon, devotion / 50);
+            setAttackSpeed(weapon, devotion / 60);
         }
     }
 

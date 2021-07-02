@@ -16,6 +16,7 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ShieldItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
@@ -34,7 +35,7 @@ public class HexSwordItem extends SwordItem {
     protected boolean isActivated;
 
     protected String tooltipText = "The Dev Sword, you shouldn't read this";
-    protected int rechargeTick = 1;
+    protected int rechargeTick = 5;
 
     public HexSwordItem(int attackDamage, float attackSpeed, Properties properties) {
         super(Tiers.PatronWeaponTier.INSTANCE, attackDamage, attackSpeed, properties);
@@ -59,8 +60,8 @@ public class HexSwordItem extends SwordItem {
                 applyHexBonus((PlayerEntity) user, isActivated);
             }
             if (isActivated && !((PlayerEntity) user).isCreative()) {
-                if ((getMaxDamage(stack) - stack.getDamage()) > 1) {
-                    stack.damageItem(1, (LivingEntity) user, (entity) -> entity.sendBreakAnimation(EquipmentSlotType.MAINHAND));
+                if ((getMaxDamage(stack) - stack.getDamage()) > 10) {
+                    stack.damageItem(4, (LivingEntity) user, (entity) -> entity.sendBreakAnimation(EquipmentSlotType.MAINHAND));
                 } else {
                     setAwakenedState(stack, false);
                 }
@@ -80,7 +81,9 @@ public class HexSwordItem extends SwordItem {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         if (!world.isRemote()) {
-            recalculatePowers(player.getHeldItem(hand), world, player);
+            if (!(isActivated && (player.getHeldItem(Hand.OFF_HAND).getItem() instanceof ShieldItem))) {
+                recalculatePowers(player.getHeldItem(hand), world, player);
+            }
         }
         return super.onItemRightClick(world, player, hand);
     }
@@ -170,10 +173,7 @@ public class HexSwordItem extends SwordItem {
 
         if (tag != null) {
             double AS = tag.getDouble(Constants.NBT.EXTRA_ATTACK_SPEED);
-
-            if (AS > 0) {
-                return AS;
-            }
+            if (AS != 0) return AS;
         }
 
         return baseSpeed;

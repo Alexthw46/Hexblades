@@ -35,7 +35,7 @@ public class Hexblades
         public Hexblades() {
             IEventBus hexbus = FMLJavaModLoadingContext.get().getModEventBus();
 
-            // Register the setup method for modloading
+            // Register the setup
             hexbus.addListener(this::setup);
 
             //Register all the things
@@ -64,5 +64,6 @@ public class Hexblades
 
 
     }
+
 
 }
