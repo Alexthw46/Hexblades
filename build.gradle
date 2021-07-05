@@ -113,6 +113,7 @@ repositories {
     maven {
         url = "https://maven.theillusivec4.top/"
     }
+    maven { url 'https://maven.blamejared.com' }
 
     maven {
         name 'JEI maven'
@@ -127,8 +128,13 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.16.5-36.1.25'
 
-    runtimeOnly fg.deobf("ignore:malum:1.16.5-0.2.2.3")
-    compileOnly fg.deobf("ignore:malum:1.16.5-0.2.2.3")
+    runtimeOnly fg.deobf("ignore:malum:1.16.5-0.3.0")
+    compileOnly fg.deobf("ignore:malum:1.16.5-0.3.0")
+
+    compileOnly fg.deobf("vazkii.botania:Botania:1.16.5-418")
+    runtimeOnly fg.deobf("vazkii.botania:Botania:1.16.5-418")
+
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-53.1")
 
     runtimeOnly fg.deobf("elucent:eidolon:0.3")
     compileOnly fg.deobf("elucent:eidolon:0.3")
@@ -137,7 +143,7 @@ dependencies {
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.1:api")
 
     //compileOnly fg.deobf('mezz.jei:jei-1.16.5:7.6.4.90')
-    //runtimeOnly fg.deobf('mezz.jei:jei-1.16.5:7.6.4.90')
+    runtimeOnly fg.deobf('mezz.jei:jei-1.16.5:7.6.4.90')
 
 
 }

@@ -2,7 +2,6 @@ package Alexthw.Hexblades.common.blocks.tile_entities;
 
 import Alexthw.Hexblades.common.items.dulls.Hammer_dull;
 import Alexthw.Hexblades.common.items.tier1.EarthHammer1;
-import Alexthw.Hexblades.common.items.tier2.EarthHammer2;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -26,10 +25,10 @@ public class SwordStandRenderer extends TileEntityRenderer<SwordStandTileEntity>
         Minecraft mc = Minecraft.getInstance();
         ItemRenderer ir = mc.getItemRenderer();
         ItemStack istack = tileEntityIn.stack;
-        if (!istack.isEmpty()) {
+        if (!istack.isEmpty() && mc.world != null) {
             matrixStackIn.push();
             Item item = istack.getItem();
-            if ((item instanceof EarthHammer2) || (item instanceof EarthHammer1) || (item instanceof Hammer_dull)) {
+            if ((item instanceof EarthHammer1) || (item instanceof Hammer_dull)) {
                 matrixStackIn.translate(0.5D, 0.5D, 0.5D);
                 //matrixStackIn.rotate(Vector3f.YP.rotationDegrees(90.0F));
             } else if (item instanceof SwordItem) {

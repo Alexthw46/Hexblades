@@ -2,6 +2,7 @@ package Alexthw.Hexblades.registers;
 
 import Alexthw.Hexblades.codex.CodexHexChapters;
 import Alexthw.Hexblades.common.particles.FlameEffectPacket;
+import Alexthw.Hexblades.common.particles.RefillEffectPacket;
 import Alexthw.Hexblades.common.potions.EChargedEffect;
 import Alexthw.Hexblades.compat.MalumCompat;
 import Alexthw.Hexblades.deity.HexDeities;
@@ -46,6 +47,8 @@ public class HexRegistry {
 
     private static void Network() {
         Networking.INSTANCE.registerMessage(99, FlameEffectPacket.class, FlameEffectPacket::encode, FlameEffectPacket::decode, FlameEffectPacket::consume);
+        Networking.INSTANCE.registerMessage(98, RefillEffectPacket.class, RefillEffectPacket::encode, RefillEffectPacket::decode, RefillEffectPacket::consume);
+
     }
 
 

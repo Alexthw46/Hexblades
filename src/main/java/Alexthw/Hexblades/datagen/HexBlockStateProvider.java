@@ -1,6 +1,7 @@
 package Alexthw.Hexblades.datagen;
 
 import Alexthw.Hexblades.Hexblades;
+import Alexthw.Hexblades.common.blocks.tile_entities.EverfullUrnBlock;
 import Alexthw.Hexblades.common.blocks.tile_entities.SwordStandBlock;
 import Alexthw.Hexblades.registers.HexBlock;
 import Alexthw.Hexblades.util.HexUtils;
@@ -36,6 +37,7 @@ public class HexBlockStateProvider extends BlockStateProvider{
         HexUtils.takeAll(blocks, b -> b.get() instanceof FenceBlock).forEach(this::fenceBlock);
         HexUtils.takeAll(blocks, b -> b.get() instanceof FenceGateBlock).forEach(this::fenceGateBlock);
         HexUtils.takeAll(blocks, b -> b.get() instanceof SwordStandBlock);
+        HexUtils.takeAll(blocks, b -> b.get() instanceof EverfullUrnBlock);
         blocks.forEach(this::basicBlock);
 
     }

@@ -1,6 +1,7 @@
 package Alexthw.Hexblades.registers;
 
 import Alexthw.Hexblades.Hexblades;
+import Alexthw.Hexblades.common.blocks.tile_entities.EverfullUrnBlock;
 import Alexthw.Hexblades.common.blocks.tile_entities.SwordStandBlock;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
@@ -19,6 +20,8 @@ public class HexBlock {
 
     //public static final RegistryObject<Block> DEV_BLOCK;
     public static final RegistryObject<Block> SWORD_STAND;
+    public static final RegistryObject<Block> EVERFULL_URN;
+
     public static DecoBlockPack DARK_POLISH_PLANKS;
 
 
@@ -34,6 +37,10 @@ public class HexBlock {
                 ));
         */
         SWORD_STAND = addBlock("sword_stand", new SwordStandBlock(blockProps(Material.ROCK, MaterialColor.RED)
+                .notSolid()
+        ));
+
+        EVERFULL_URN = addBlock("everfull_urn", new EverfullUrnBlock(blockProps(Material.ROCK, MaterialColor.RED)
                 .notSolid()
         ));
 

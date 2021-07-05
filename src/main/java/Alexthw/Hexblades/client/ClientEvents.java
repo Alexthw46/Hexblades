@@ -3,6 +3,7 @@ package Alexthw.Hexblades.client;
 import Alexthw.Hexblades.Hexblades;
 import Alexthw.Hexblades.common.blocks.tile_entities.SwordStandBlock;
 import Alexthw.Hexblades.common.blocks.tile_entities.SwordStandRenderer;
+import Alexthw.Hexblades.common.blocks.tile_entities.Urn_Renderer;
 import Alexthw.Hexblades.common.items.HexSwordItem;
 import Alexthw.Hexblades.registers.HexEntityType;
 import Alexthw.Hexblades.registers.HexItem;
@@ -41,6 +42,7 @@ public class ClientEvents {
     @SubscribeEvent
     public static void bindTERs(FMLClientSetupEvent event) {
         ClientRegistry.bindTileEntityRenderer(HexTileEntityType.SWORD_STAND_TILE_ENTITY, SwordStandRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(HexTileEntityType.EVERFULL_URN_TILE_ENTITY, Urn_Renderer::new);
     }
 
     public static void initClientEvents(FMLClientSetupEvent event) {

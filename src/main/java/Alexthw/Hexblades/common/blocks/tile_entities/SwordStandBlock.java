@@ -3,6 +3,7 @@ package Alexthw.Hexblades.common.blocks.tile_entities;
 import elucent.eidolon.block.HorizontalBlockBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.IWaterLoggable;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.IBooleanFunction;
@@ -14,17 +15,15 @@ import net.minecraft.world.IBlockReader;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SwordStandBlock extends HorizontalBlockBase {
-
+public class SwordStandBlock extends HorizontalBlockBase implements IWaterLoggable {
 
     public SwordStandBlock(Properties properties) {
         super(properties);
+        VoxelShape VSHAPE = VoxelShapes.combineAndSimplify(Block.makeCuboidShape(2, 0, 2, 14, 2, 14), Block.makeCuboidShape(4, 2, 4, 12, 3.5, 12), IBooleanFunction.OR);
         runCalculation(VSHAPE);
     }
 
     //Voxel Shaping
-
-    private final VoxelShape VSHAPE = VoxelShapes.combineAndSimplify(Block.makeCuboidShape(2, 0, 2, 14, 2, 14), Block.makeCuboidShape(4, 2, 4, 12, 3.5, 12), IBooleanFunction.OR);
 
     protected static final Map<Direction, VoxelShape> SHAPES = new HashMap<>();
 
