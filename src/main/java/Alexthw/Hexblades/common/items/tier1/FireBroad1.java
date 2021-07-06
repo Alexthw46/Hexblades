@@ -5,6 +5,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 public class FireBroad1 extends HexSwordItem {
@@ -12,6 +14,10 @@ public class FireBroad1 extends HexSwordItem {
     public FireBroad1(Properties props) {
         super(6, -2.7F, props);
         tooltipText = "tooltip.HexSwordItem.flame_sword";
+    }
+
+    public FireBroad1(int attackDamage, float attackSpeed, Properties props) {
+        super(attackDamage, attackSpeed, props);
     }
 
     @Override
@@ -28,4 +34,11 @@ public class FireBroad1 extends HexSwordItem {
 
         setAttackPower(weapon, devotion / 20);
     }
+
+    @Override
+    public void talk(PlayerEntity player) {
+        player.sendMessage(new TranslationTextComponent(TextFormatting.RED +
+                this.getTranslationKey() + ".dialogue." + player.world.getRandom().nextInt(dialogueLines)), player.getUniqueID());
+    }
+
 }

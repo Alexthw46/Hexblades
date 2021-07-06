@@ -107,4 +107,8 @@ public class Lightning_SSwordL1 extends HexSwordItem {
         return multimap;
     }
 
+    @Override
+    public void talk(PlayerEntity player) {
+    }
+
 }

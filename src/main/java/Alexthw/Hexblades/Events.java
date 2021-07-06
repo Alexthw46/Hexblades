@@ -70,7 +70,7 @@ public class Events {
             PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();
             Item item = player.getItemStackFromSlot(EquipmentSlotType.MAINHAND).getItem();
             if (item instanceof HexSwordItem && !player.world.isRemote()) {
-                if (HexUtils.chance((int) (1 + (event.getEntityLiving().getMaxHealth() / 4)), event.getEntity().getEntityWorld())) {
+                if (HexUtils.chance((int) (90 + (event.getEntityLiving().getMaxHealth() / 4)), event.getEntity().getEntityWorld())) {
                     Deity HexDeity = HexDeities.HEX_DEITY;
                     event.getEntity().getEntityWorld().getCapability(ReputationProvider.CAPABILITY, null).ifPresent((rep) -> {
                         double prev = rep.getReputation(player, HexDeity.getId());
@@ -80,7 +80,7 @@ public class Events {
                     //NewChatGui chat = Minecraft.getInstance().ingameGUI.getChatGUI();
                     //chat.printChatMessage(new TranslationTextComponent("devotion increased"));
                     Networking.sendToTracking(player.world, event.getEntity().getPosition(), new FlameEffectPacket(event.getEntity().getPosition()));
-
+                    ((HexSwordItem) item).talk(player);
                 }
             }
         }

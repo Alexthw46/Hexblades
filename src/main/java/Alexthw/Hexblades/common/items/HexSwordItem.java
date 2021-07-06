@@ -23,6 +23,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
@@ -36,6 +37,7 @@ public class HexSwordItem extends SwordItem {
 
     protected String tooltipText = "The Dev Sword, you shouldn't read this";
     protected int rechargeTick = 5;
+    protected int dialogueLines = 3;
 
     public HexSwordItem(int attackDamage, float attackSpeed, Properties properties) {
         super(Tiers.PatronWeaponTier.INSTANCE, attackDamage, attackSpeed, properties);
@@ -206,5 +208,9 @@ public class HexSwordItem extends SwordItem {
         }
 
         return multimap;
+    }
+
+    public void talk(PlayerEntity player) {
+        player.sendMessage(new TranslationTextComponent(TextFormatting.DARK_PURPLE + this.getTranslationKey() + ".dialogue." + player.world.getRandom().nextInt(dialogueLines)), player.getUniqueID());
     }
 }

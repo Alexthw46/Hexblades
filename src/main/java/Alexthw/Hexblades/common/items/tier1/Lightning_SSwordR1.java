@@ -4,6 +4,8 @@ import Alexthw.Hexblades.common.items.HexSwordItem;
 import Alexthw.Hexblades.registers.HexItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 public class Lightning_SSwordR1 extends HexSwordItem {
@@ -33,6 +35,12 @@ public class Lightning_SSwordR1 extends HexSwordItem {
 
     public boolean hasTwin(PlayerEntity player) {
         return player.getHeldItemOffhand().getItem() == HexItem.LIGHTNING_DAGGER_L.get();
+    }
+
+    @Override
+    public void talk(PlayerEntity player) {
+        player.sendMessage(new TranslationTextComponent(TextFormatting.GOLD +
+                this.getTranslationKey() + ".dialogue." + player.world.getRandom().nextInt(dialogueLines)), player.getUniqueID());
     }
 
 }

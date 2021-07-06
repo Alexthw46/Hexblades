@@ -1,6 +1,6 @@
 package Alexthw.Hexblades.common.items.tier2;
 
-import Alexthw.Hexblades.common.items.HexSwordItem;
+import Alexthw.Hexblades.common.items.tier1.FireBroad1;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -9,7 +9,7 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.world.World;
 
-public class FireBroad2 extends HexSwordItem {
+public class FireBroad2 extends FireBroad1 {
 
 
     public FireBroad2(Properties props) {

@@ -8,6 +8,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 public class IceKatana1 extends HexSwordItem {
@@ -35,6 +37,11 @@ public class IceKatana1 extends HexSwordItem {
 
         setAttackPower(weapon, devotion / 25);
         setAttackSpeed(weapon, devotion / 90);
+    }
+
+    @Override
+    public void talk(PlayerEntity player) {
+        player.sendMessage(new TranslationTextComponent(TextFormatting.AQUA + this.getTranslationKey() + ".dialogue." + player.world.getRandom().nextInt(dialogueLines)), player.getUniqueID());
     }
 
 }
