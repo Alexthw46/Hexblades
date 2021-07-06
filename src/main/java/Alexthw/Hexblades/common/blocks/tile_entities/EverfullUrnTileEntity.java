@@ -11,17 +11,15 @@ import elucent.eidolon.tile.TileEntityBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CauldronBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BucketItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.block.IBucketPickupHandler;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import vazkii.botania.common.block.tile.TileAltar;
 
@@ -33,7 +31,9 @@ import static Alexthw.Hexblades.util.HexUtils.getTilesWithinAABB;
 import static net.minecraftforge.fml.common.ObfuscationReflectionHelper.getPrivateValue;
 import static net.minecraftforge.fml.common.ObfuscationReflectionHelper.setPrivateValue;
 
-public class EverfullUrnTileEntity extends TileEntityBase implements ITickableTileEntity {
+public class EverfullUrnTileEntity extends TileEntityBase implements ITickableTileEntity, IBucketPickupHandler {
+
+    //Lists declared if shifting to subscribe scan is needed, do not access to them since they will be overwritten
 
     public List<CrucibleTileEntity> crucibles;
     public List<BlockPos> cauldrons;
@@ -52,31 +52,10 @@ public class EverfullUrnTileEntity extends TileEntityBase implements ITickableTi
         super(tileEntityTypeIn);
     }
 
-    public ActionResultType onActivated(BlockState state, BlockPos pos, PlayerEntity player, Hand hand) {
-        if (hand == Hand.MAIN_HAND && world != null) {
-            ItemStack itemstack = player.getHeldItem(hand);
-
-            if (!player.getHeldItem(hand).isEmpty() && (player.getHeldItem(hand).getItem() instanceof BucketItem)) {
-
-                if (!player.abilities.isCreativeMode) {
-                    itemstack.shrink(1);
-                    if (itemstack.isEmpty()) {
-                        player.setHeldItem(hand, new ItemStack(Items.WATER_BUCKET));
-                    } else if (!player.inventory.addItemStackToInventory(new ItemStack(Items.WATER_BUCKET))) {
-                        player.dropItem(new ItemStack(Items.WATER_BUCKET), false);
-                    }
-                }
-
-                if (!this.world.isRemote) {
-                    this.sync();
-                }
-
-                return ActionResultType.SUCCESS;
-            }
-        }
-        return ActionResultType.PASS;
+    @Override
+    public Fluid pickupFluid(IWorld worldIn, BlockPos pos, BlockState state) {
+        return Fluids.WATER;
     }
-
 
     @Override
     public void tick() {
