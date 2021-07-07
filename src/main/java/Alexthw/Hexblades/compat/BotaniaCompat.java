@@ -1,6 +1,6 @@
 package Alexthw.Hexblades.compat;
 
-import Alexthw.Hexblades.common.particles.RefillEffectPacket;
+import Alexthw.Hexblades.network.RefillEffectPacket;
 import Alexthw.Hexblades.util.HexUtils;
 import elucent.eidolon.network.Networking;
 import net.minecraft.util.math.AxisAlignedBB;

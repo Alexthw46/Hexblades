@@ -2,8 +2,8 @@ package Alexthw.Hexblades;
 
 import Alexthw.Hexblades.common.items.HexSwordItem;
 import Alexthw.Hexblades.common.items.tier1.WaterSaber1;
-import Alexthw.Hexblades.common.particles.FlameEffectPacket;
 import Alexthw.Hexblades.deity.HexDeities;
+import Alexthw.Hexblades.network.FlameEffectPacket;
 import Alexthw.Hexblades.registers.HexItem;
 import Alexthw.Hexblades.util.HexUtils;
 import elucent.eidolon.capability.ReputationProvider;
@@ -77,8 +77,6 @@ public class Events {
                         rep.addReputation(player, HexDeity.getId(), 0.5D);
                         HexDeity.onReputationChange(player, rep, prev, rep.getReputation(player, HexDeities.HEX_DEITY.getId()));
                     });
-                    //NewChatGui chat = Minecraft.getInstance().ingameGUI.getChatGUI();
-                    //chat.printChatMessage(new TranslationTextComponent("devotion increased"));
                     Networking.sendToTracking(player.world, event.getEntity().getPosition(), new FlameEffectPacket(event.getEntity().getPosition()));
                     ((HexSwordItem) item).talk(player);
                 }

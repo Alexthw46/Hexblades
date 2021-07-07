@@ -64,7 +64,7 @@ public class HexItem {
         PATRON_SOUL2 = ITEMS.register("elemental_soul_2", () -> new PatronSoul(addTabProp()));
         DROWNED_HEART = ITEMS.register("drowned_heart", () -> new Item(addTabProp()));
         ELEMENTAL_CORE = ITEMS.register("elemental_core", () -> new Item(addTabProp()));
-        SOUL_CANDY = ITEMS.register("soul_candy", () -> new Item(addTabProp().food(new Food.Builder().effect(() -> new EffectInstance(Effects.REGENERATION, 80, 0), 1.0F).fastToEat().hunger(1).saturation(0.1F).build())));
+        SOUL_CANDY = ITEMS.register("soul_candy", () -> new Item(addTabProp().food(new Food.Builder().effect(() -> new EffectInstance(Effects.REGENERATION, 40, 1), 1.0F).fastToEat().hunger(1).saturation(0.1F).build())));
 
         //Dull Sword/Tools
         DULL_KATANA = ITEMS.register("katana_dull", () -> new Katana_dull(2, -2.5F, addTabProp().maxStackSize(1)));

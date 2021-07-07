@@ -1,7 +1,7 @@
 package Alexthw.Hexblades.common.blocks.tile_entities;
 
-import Alexthw.Hexblades.common.particles.RefillEffectPacket;
 import Alexthw.Hexblades.compat.BotaniaCompat;
+import Alexthw.Hexblades.network.RefillEffectPacket;
 import Alexthw.Hexblades.registers.HexTileEntityType;
 import elucent.eidolon.Registry;
 import elucent.eidolon.network.Networking;

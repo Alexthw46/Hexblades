@@ -5,22 +5,23 @@ import Alexthw.Hexblades.common.blocks.tile_entities.SwordStandBlock;
 import Alexthw.Hexblades.common.blocks.tile_entities.SwordStandRenderer;
 import Alexthw.Hexblades.common.blocks.tile_entities.Urn_Renderer;
 import Alexthw.Hexblades.common.items.HexSwordItem;
+import Alexthw.Hexblades.network.WeaponAwakenPacket;
 import Alexthw.Hexblades.registers.HexEntityType;
 import Alexthw.Hexblades.registers.HexItem;
 import Alexthw.Hexblades.registers.HexTileEntityType;
 import Alexthw.Hexblades.util.Constants;
 import Alexthw.Hexblades.util.HexUtils;
 import elucent.eidolon.entity.EmptyRenderer;
+import elucent.eidolon.network.Networking;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.IItemPropertyGetter;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemModelsProperties;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.RegistryObject;
@@ -34,10 +35,28 @@ import java.util.Set;
 
 import static Alexthw.Hexblades.datagen.HexItemModelProvider.rl;
 import static Alexthw.Hexblades.registers.HexBlock.BLOCKS;
+import static Alexthw.Hexblades.registers.HexRegistry.HEXBLADE_KEYBINDING;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = Hexblades.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientEvents {
 
+    @SubscribeEvent
+    public static void registerKeybind(FMLClientSetupEvent event) {
+        ClientRegistry.registerKeyBinding(HEXBLADE_KEYBINDING);
+    }
+
+    @SubscribeEvent
+    public void onKeyPress(TickEvent.ClientTickEvent event) {
+
+        Minecraft minecraft = Minecraft.getInstance();
+        PlayerEntity playerEntity = minecraft.player;
+
+        if (HEXBLADE_KEYBINDING.isPressed() && playerEntity != null) {
+            WeaponAwakenPacket pkt = new WeaponAwakenPacket();
+            Networking.sendToServer(pkt);
+        }
+
+    }
 
     @SubscribeEvent
     public static void bindTERs(FMLClientSetupEvent event) {
@@ -68,12 +87,7 @@ public class ClientEvents {
     }
 
     public static void registerToggleAnimation(Item item) {
-        ItemModelsProperties.registerProperty(item, rl(Constants.NBT.AW_State), new IItemPropertyGetter() {
-            @Override
-            public float call(ItemStack stack, ClientWorld world, LivingEntity entity) {
-                return ((HexSwordItem) stack.getItem()).getAwakened(stack) ? 1.0F : 0.0F;
-            }
-        });
+        ItemModelsProperties.registerProperty(item, rl(Constants.NBT.AW_State), (stack, world, entity) -> ((HexSwordItem) stack.getItem()).getAwakened(stack) ? 1.0F : 0.0F);
     }
 
     @SubscribeEvent

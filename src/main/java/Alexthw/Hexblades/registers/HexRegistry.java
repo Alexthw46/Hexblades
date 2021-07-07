@@ -1,19 +1,22 @@
 package Alexthw.Hexblades.registers;
 
 import Alexthw.Hexblades.codex.CodexHexChapters;
-import Alexthw.Hexblades.common.particles.FlameEffectPacket;
-import Alexthw.Hexblades.common.particles.RefillEffectPacket;
 import Alexthw.Hexblades.common.potions.EChargedEffect;
 import Alexthw.Hexblades.compat.MalumCompat;
 import Alexthw.Hexblades.deity.HexDeities;
+import Alexthw.Hexblades.network.FlameEffectPacket;
+import Alexthw.Hexblades.network.RefillEffectPacket;
+import Alexthw.Hexblades.network.WeaponAwakenPacket;
 import Alexthw.Hexblades.ritual.HexRituals;
 import Alexthw.Hexblades.spells.HexSpells;
 import Alexthw.Hexblades.util.CompatUtil;
 import elucent.eidolon.network.Networking;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.fml.RegistryObject;
+import org.lwjgl.glfw.GLFW;
 
 import static Alexthw.Hexblades.registers.Registry.POTIONS;
 import static Alexthw.Hexblades.registers.Registry.POTION_TYPES;
@@ -24,6 +27,8 @@ public class HexRegistry {
 
     public static RegistryObject<Effect> CHARGED_EFFECT;
     public static RegistryObject<Potion> CHARGED_POTION;
+
+    public static final KeyBinding HEXBLADE_KEYBINDING = new KeyBinding("key.hexblades.awake", GLFW.GLFW_KEY_H, "key.categories.misc");
 
     static {
         CHARGED_EFFECT = POTIONS.register("electro_charged", EChargedEffect::new);
@@ -46,9 +51,9 @@ public class HexRegistry {
     }
 
     private static void Network() {
-        Networking.INSTANCE.registerMessage(99, FlameEffectPacket.class, FlameEffectPacket::encode, FlameEffectPacket::decode, FlameEffectPacket::consume);
-        Networking.INSTANCE.registerMessage(98, RefillEffectPacket.class, RefillEffectPacket::encode, RefillEffectPacket::decode, RefillEffectPacket::consume);
-
+        Networking.INSTANCE.registerMessage(90, FlameEffectPacket.class, FlameEffectPacket::encode, FlameEffectPacket::decode, FlameEffectPacket::consume);
+        Networking.INSTANCE.registerMessage(91, RefillEffectPacket.class, RefillEffectPacket::encode, RefillEffectPacket::decode, RefillEffectPacket::consume);
+        Networking.INSTANCE.registerMessage(99, WeaponAwakenPacket.class, WeaponAwakenPacket::encode, WeaponAwakenPacket::decode, WeaponAwakenPacket::consume);
     }
 
 

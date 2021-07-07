@@ -1,4 +1,4 @@
-package Alexthw.Hexblades.common.particles;
+package Alexthw.Hexblades.network;
 
 import Alexthw.Hexblades.deity.HexDeities;
 import elucent.eidolon.Eidolon;
