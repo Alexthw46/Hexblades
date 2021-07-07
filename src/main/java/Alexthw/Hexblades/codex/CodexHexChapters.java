@@ -36,17 +36,17 @@ public class CodexHexChapters {
         CodexChapters Cchapters = new CodexChapters();
         List<Category> Ccategories = getPrivateValue(elucent.eidolon.codex.CodexChapters.class, Cchapters, "categories");
 
-        MISC = new Chapter("hexblades.codex.chapter.misc", new TitlePage("hexblades.codex.page.dark_planks"),
+        MISC = new Chapter("hexblades.codex.chapter.misc", new TitlePage("hexblades.codex.page.misc.dark_planks"),
                 new CraftingPage(new ItemStack(HexBlock.DARK_POLISH_PLANKS.getBlock().asItem()),
                         new ItemStack(Registry.POLISHED_PLANKS.getBlock().asItem()), new ItemStack(Registry.POLISHED_PLANKS.getBlock().asItem()), new ItemStack(Registry.POLISHED_PLANKS.getBlock().asItem()),
                         new ItemStack(Registry.POLISHED_PLANKS.getBlock().asItem()), new ItemStack(Items.BLACK_DYE), new ItemStack(Registry.POLISHED_PLANKS.getBlock().asItem()),
                         new ItemStack(Registry.POLISHED_PLANKS.getBlock().asItem()), new ItemStack(Registry.POLISHED_PLANKS.getBlock().asItem()), new ItemStack(Registry.POLISHED_PLANKS.getBlock().asItem())
-                ), new TitlePage("hexblades.codex.page.everfull_urn"),
+                ), new TitlePage("hexblades.codex.page.misc.everfull_urn"),
                 new CraftingPage(new ItemStack(HexBlock.EVERFULL_URN.get()),
                         new ItemStack(Items.TERRACOTTA), new ItemStack(Items.BUCKET), new ItemStack(Items.TERRACOTTA),
                         new ItemStack(Registry.PEWTER_INGOT.get()), new ItemStack(Items.HEART_OF_THE_SEA), new ItemStack(Registry.PEWTER_INGOT.get()),
                         new ItemStack(Items.TERRACOTTA), new ItemStack(Items.TERRACOTTA), new ItemStack(Items.TERRACOTTA)
-                ), new TitlePage("hexblades.codex.page.soul_candy"),
+                ), new TitlePage("hexblades.codex.page.misc.soul_candy"),
                 new CruciblePage(new ItemStack(HexItem.SOUL_CANDY.get(), 4),
                         new CruciblePage.CrucibleStep(new ItemStack(Registry.SOUL_SHARD.get())),
                         new CruciblePage.CrucibleStep(1, new ItemStack(Items.SUGAR), new ItemStack(Items.HONEY_BOTTLE))
