@@ -35,8 +35,8 @@ public class HexRituals {
                         .addRequirement(new ItemRequirement(Items.NETHERITE_SCRAP))
                         .addRequirement(new ItemRequirement(Items.NETHERITE_SCRAP))
                         .addRequirement(new ItemRequirement(HexItem.ELEMENTAL_CORE.get()))
-                        .addRequirement(new ItemRequirement(CRIMSON_ESSENCE.get()))
-                        .addRequirement(new ItemRequirement(CRIMSON_ESSENCE.get()))
+                        .addRequirement(new ItemRequirement(Items.MAGMA_CREAM))
+
                 )
         );
 
@@ -89,8 +89,8 @@ public class HexRituals {
                         .setRegistryName("hexblades", "evolve_flame_sword")
                         .addRequirement(new ItemRequirement(Registry.SHADOW_GEM.get()))
                         .addRequirement(new ItemRequirement(HexItem.PATRON_SOUL.get()))
-                        .addRequirement(new ItemRequirement(Items.MAGMA_BLOCK))
-                )
+                        .addRequirement(new ItemRequirement(CRIMSON_ESSENCE.get()))
+                        .addRequirement(new ItemRequirement(CRIMSON_ESSENCE.get())))
         );
 
         EVOLVE_KATANA = RitualRegistry.register(new MultiItemSacrifice(HexItem.FROST_RAZOR.get(), HexItem.PATRON_SOUL.get()),

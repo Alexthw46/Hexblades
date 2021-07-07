@@ -1,6 +1,7 @@
 package Alexthw.Hexblades.common.items.tier1;
 
 import Alexthw.Hexblades.common.items.HexSwordItem;
+import Alexthw.Hexblades.util.HexUtils;
 import elucent.eidolon.Registry;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -8,7 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.Color;
+import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
@@ -41,7 +43,7 @@ public class IceKatana1 extends HexSwordItem {
 
     @Override
     public void talk(PlayerEntity player) {
-        player.sendMessage(new TranslationTextComponent(TextFormatting.AQUA + this.getTranslationKey() + ".dialogue." + player.world.getRandom().nextInt(dialogueLines)), player.getUniqueID());
+        player.sendMessage(new TranslationTextComponent(this.getTranslationKey() + ".dialogue." + player.world.getRandom().nextInt(dialogueLines)).setStyle(Style.EMPTY.setItalic(true).setColor(Color.fromInt(HexUtils.iceColor))), player.getUniqueID());
     }
 
 }

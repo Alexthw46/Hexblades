@@ -28,7 +28,7 @@ public class CodexHexChapters {
     static Chapter HEX_CORE;
     static Chapter HEX_PRAY;
     static Chapter HEX_ALLOY;
-    static Chapter DARK_WOOD;
+    static Chapter MISC;
     static Chapter HEXBLADES_INDEX;
 
 
@@ -36,12 +36,22 @@ public class CodexHexChapters {
         CodexChapters Cchapters = new CodexChapters();
         List<Category> Ccategories = getPrivateValue(elucent.eidolon.codex.CodexChapters.class, Cchapters, "categories");
 
-        DARK_WOOD = new Chapter("hexblades.codex.chapter.dark_wood", new TitlePage("hexblades.codex.page.dark_planks"),
+        MISC = new Chapter("hexblades.codex.chapter.misc", new TitlePage("hexblades.codex.page.dark_planks"),
                 new CraftingPage(new ItemStack(HexBlock.DARK_POLISH_PLANKS.getBlock().asItem()),
                         new ItemStack(Registry.POLISHED_PLANKS.getBlock().asItem()), new ItemStack(Registry.POLISHED_PLANKS.getBlock().asItem()), new ItemStack(Registry.POLISHED_PLANKS.getBlock().asItem()),
                         new ItemStack(Registry.POLISHED_PLANKS.getBlock().asItem()), new ItemStack(Items.BLACK_DYE), new ItemStack(Registry.POLISHED_PLANKS.getBlock().asItem()),
                         new ItemStack(Registry.POLISHED_PLANKS.getBlock().asItem()), new ItemStack(Registry.POLISHED_PLANKS.getBlock().asItem()), new ItemStack(Registry.POLISHED_PLANKS.getBlock().asItem())
-                ));
+                ), new TitlePage("hexblades.codex.page.everfull_urn"),
+                new CraftingPage(new ItemStack(HexBlock.EVERFULL_URN.get()),
+                        new ItemStack(Items.TERRACOTTA), new ItemStack(Items.BUCKET), new ItemStack(Items.TERRACOTTA),
+                        new ItemStack(Registry.PEWTER_INGOT.get()), new ItemStack(Items.HEART_OF_THE_SEA), new ItemStack(Registry.PEWTER_INGOT.get()),
+                        new ItemStack(Items.TERRACOTTA), new ItemStack(Items.TERRACOTTA), new ItemStack(Items.TERRACOTTA)
+                ), new TitlePage("hexblades.codex.page.soul_candy"),
+                new CruciblePage(new ItemStack(HexItem.SOUL_CANDY.get(), 4),
+                        new CruciblePage.CrucibleStep(new ItemStack(Registry.SOUL_SHARD.get())),
+                        new CruciblePage.CrucibleStep(1, new ItemStack(Items.SUGAR), new ItemStack(Items.HONEY_BOTTLE))
+                )
+        );
 
         HEX_ALLOY = new Chapter("hexblades.codex.chapter.hex_metal", new TitlePage("hexblades.codex.page.hex_metal.0"),
                 //ingot
@@ -98,7 +108,8 @@ public class CodexHexChapters {
                 //evolve sword
                 new TitlePage("hexblades.codex.page.evolve_flame_sword"),
                 new RitualPage(HexRituals.EVOLVE_SWORD, new ItemStack(HexItem.FIRE_BRAND.get()),
-                        new RitualPage.RitualIngredient(new ItemStack(Items.MAGMA_BLOCK), false),
+                        new RitualPage.RitualIngredient(new ItemStack(Registry.CRIMSON_ESSENCE.get()), false),
+                        new RitualPage.RitualIngredient(new ItemStack(Registry.CRIMSON_ESSENCE.get()), false),
                         new RitualPage.RitualIngredient(new ItemStack(HexItem.PATRON_SOUL.get()), true),
                         new RitualPage.RitualIngredient(new ItemStack(Registry.SHADOW_GEM.get()), false)
                 ),
@@ -119,8 +130,10 @@ public class CodexHexChapters {
                 //evolve dual
                 new TitlePage("hexblades.codex.page.evolve_duals"),
                 new RitualPage(HexRituals.EVOLVE_DAGGERS, new ItemStack(HexItem.PATRON_SOUL.get()),
+                        new RitualPage.RitualIngredient(new ItemStack(Items.REDSTONE), false),
                         new RitualPage.RitualIngredient(new ItemStack(HexItem.LIGHTNING_DAGGER_L.get()), true),
-                        new RitualPage.RitualIngredient(new ItemStack(HexItem.LIGHTNING_DAGGER_R.get()), true)
+                        new RitualPage.RitualIngredient(new ItemStack(HexItem.LIGHTNING_DAGGER_R.get()), true),
+                        new RitualPage.RitualIngredient(new ItemStack(Items.REDSTONE), false)
                 )
         );
 
@@ -142,8 +155,8 @@ public class CodexHexChapters {
                         new RitualPage.RitualIngredient(new ItemStack(Items.NETHERITE_SCRAP), false),
                         new RitualPage.RitualIngredient(new ItemStack(Items.NETHERITE_SCRAP), false),
                         new RitualPage.RitualIngredient(new ItemStack(HexItem.ELEMENTAL_CORE.get()), false),
-                        new RitualPage.RitualIngredient(new ItemStack(Registry.CRIMSON_ESSENCE.get()), false),
-                        new RitualPage.RitualIngredient(new ItemStack(Registry.CRIMSON_ESSENCE.get()), false)
+                        new RitualPage.RitualIngredient(new ItemStack(Items.MAGMA_CREAM), false),
+                        new RitualPage.RitualIngredient(new ItemStack(Items.MAGMA_CREAM), false)
                 ),
                 new TextPage("hexblades.codex.page.flame_sword.powers"));
         WATER_SABER = new Chapter("hexblades.codex.chapter.water_saber",
@@ -181,7 +194,7 @@ public class CodexHexChapters {
 
         HEXBLADES_INDEX = new Chapter("hexblades.codex.chapter.hex_index",
                 new TitledIndexPage("hexblades.codex.hex_index.0",
-                        new IndexPage.IndexEntry(DARK_WOOD, new ItemStack(HexBlock.DARK_POLISH_PLANKS.getBlock().asItem())),
+                        new IndexPage.IndexEntry(MISC, new ItemStack(HexBlock.EVERFULL_URN.get())),
                         new IndexPage.IndexEntry(HEX_ALLOY, new ItemStack(HexItem.HEXIUM_INGOT.get())),
                         new IndexPage.SignLockedEntry(HEX_PRAY, new ItemStack(HexItem.DEV_SWORD.get()), Signs.SOUL_SIGN),
                         new IndexPage.FactLockedEntry(HEX_CORE, new ItemStack(HexItem.ELEMENTAL_CORE.get()), HexFacts.AWAKENING_RITUAL),

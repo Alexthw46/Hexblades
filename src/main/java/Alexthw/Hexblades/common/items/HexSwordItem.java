@@ -23,7 +23,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
@@ -211,6 +211,6 @@ public class HexSwordItem extends SwordItem {
     }
 
     public void talk(PlayerEntity player) {
-        player.sendMessage(new TranslationTextComponent(TextFormatting.DARK_PURPLE + this.getTranslationKey() + ".dialogue." + player.world.getRandom().nextInt(dialogueLines)), player.getUniqueID());
+        player.sendMessage(new TranslationTextComponent(this.getTranslationKey() + ".dialogue." + player.world.getRandom().nextInt(dialogueLines)).setStyle(Style.EMPTY.setItalic(true)), player.getUniqueID());
     }
 }
