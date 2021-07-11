@@ -1,6 +1,9 @@
 package Alexthw.Hexblades.client;
 
 import Alexthw.Hexblades.Hexblades;
+import Alexthw.Hexblades.client.render.entity.ElementalEntityRender;
+import Alexthw.Hexblades.client.render.models.FireElementalModel;
+import Alexthw.Hexblades.common.blocks.tile_entities.EverfullUrnBlock;
 import Alexthw.Hexblades.common.blocks.tile_entities.SwordStandBlock;
 import Alexthw.Hexblades.common.blocks.tile_entities.SwordStandRenderer;
 import Alexthw.Hexblades.common.blocks.tile_entities.Urn_Renderer;
@@ -41,7 +44,7 @@ import static Alexthw.Hexblades.registers.HexRegistry.HEXBLADE_KEYBINDING;
 public class ClientEvents {
 
     @SubscribeEvent
-    public static void registerKeybind(FMLClientSetupEvent event) {
+    public static void registerKeybinding(FMLClientSetupEvent event) {
         ClientRegistry.registerKeyBinding(HEXBLADE_KEYBINDING);
     }
 
@@ -66,6 +69,8 @@ public class ClientEvents {
 
     public static void initClientEvents(FMLClientSetupEvent event) {
         RenderingRegistry.registerEntityRenderingHandler(HexEntityType.FULGOR_PROJECTILE.get(), EmptyRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(HexEntityType.TEST_ELEMENTAL.get(), (erm) -> new ElementalEntityRender(erm, new FireElementalModel(), 0.6F));
+        RenderingRegistry.registerEntityRenderingHandler(HexEntityType.FIRE_ELEMENTAL.get(), (erm) -> new ElementalEntityRender(erm, new FireElementalModel(), 0.6F));
 
         DeferredWorkQueue.runLater(() -> {
 
@@ -94,6 +99,8 @@ public class ClientEvents {
     public static void setRenderLayers(FMLClientSetupEvent event) {
         Set<RegistryObject<Block>> blocks = new HashSet<>(BLOCKS.getEntries());
         HexUtils.takeAll(blocks, b -> b.get() instanceof SwordStandBlock).forEach(ClientEvents::setCutout);
+        HexUtils.takeAll(blocks, b -> b.get() instanceof EverfullUrnBlock).forEach(ClientEvents::setCutout);
+
     }
 
     public static void setCutout(RegistryObject<Block> b) {

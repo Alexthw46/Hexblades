@@ -1,9 +1,14 @@
 package Alexthw.Hexblades;
 
 import Alexthw.Hexblades.client.ClientEvents;
+import Alexthw.Hexblades.common.entity.BaseElementalEntity;
+import Alexthw.Hexblades.registers.HexEntityType;
 import Alexthw.Hexblades.registers.HexItem;
 import Alexthw.Hexblades.registers.HexRegistry;
 import Alexthw.Hexblades.registers.Registry;
+import net.minecraft.entity.EntitySpawnPlacementRegistry;
+import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -54,6 +59,10 @@ public class Hexblades
 
     private void setup(final FMLCommonSetupEvent event) {
         event.enqueueWork(HexRegistry::post_init);
+        event.enqueueWork(this::defineAttributes);
+        EntitySpawnPlacementRegistry.register(HexEntityType.TEST_ELEMENTAL.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, net.minecraft.world.gen.Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawnInLight);
+        EntitySpawnPlacementRegistry.register(HexEntityType.FIRE_ELEMENTAL.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, net.minecraft.world.gen.Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawnInLight);
+
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -62,8 +71,12 @@ public class Hexblades
         ClientEvents.initClientEvents(event);
         MinecraftForge.EVENT_BUS.register(new ClientEvents());
 
-
     }
 
+    public void defineAttributes() {
+        GlobalEntityTypeAttributes.put(HexEntityType.TEST_ELEMENTAL.get(), BaseElementalEntity.createAttributes());
+        GlobalEntityTypeAttributes.put(HexEntityType.FIRE_ELEMENTAL.get(), BaseElementalEntity.createAttributes());
+
+    }
 
 }

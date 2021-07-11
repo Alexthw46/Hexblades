@@ -53,8 +53,8 @@ public class FulgorProjectileEntity extends SpellProjectileEntity {
             double lerpX = MathHelper.lerp((double) ((float) i / 8.0F), this.prevPosX, pos.x);
             double lerpY = MathHelper.lerp((double) ((float) i / 8.0F), this.prevPosY, pos.y);
             double lerpZ = MathHelper.lerp((double) ((float) i / 8.0F), this.prevPosZ, pos.z);
-            Particles.create(FULGOR_PARTICLE).addVelocity(-norm.x, -norm.y, -norm.z).setAlpha(0.0825F, 0.0F).setScale(0.625F, 0.0F).setColor(1.0F, 0.875F, 0.578F, 0.75F, 0.375F, 0.5F).setLifetime(5).spawn(this.world, lerpX, lerpY, lerpZ);
-            Particles.create(Registry.SPARKLE_PARTICLE).addVelocity(-norm.x, -norm.y, -norm.z).setAlpha(0.521F, 0.0F).setScale(0.25F, 0.125F).setColor(1.0F, 0.875F, 0.578F, 0.75F, 0.375F, 0.5F).setLifetime(20).spawn(this.world, lerpX, lerpY, lerpZ);
+            Particles.create(FULGOR_PARTICLE).addVelocity(-norm.x, -norm.y, -norm.z).setAlpha(0.0825F, 0.0F).setScale(0.5F, 0.0F).setColor(1.0F, 0.875F, 0.578F, 0.75F, 0.375F, 0.5F).setLifetime(5).spawn(this.world, lerpX, lerpY, lerpZ);
+            Particles.create(Registry.SPARKLE_PARTICLE).addVelocity(-norm.x, -norm.y, -norm.z).setAlpha(0.521F, 0.0F).setScale(0.20F).setColor(1.0F, 0.875F, 0.578F, 0.75F, 0.375F, 0.5F).setLifetime(10).spawn(this.world, lerpX, lerpY, lerpZ);
         }
 
     }

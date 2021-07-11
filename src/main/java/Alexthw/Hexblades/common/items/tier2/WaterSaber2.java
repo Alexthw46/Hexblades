@@ -1,6 +1,7 @@
 package Alexthw.Hexblades.common.items.tier2;
 
 import Alexthw.Hexblades.common.items.tier1.WaterSaber1;
+import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -10,6 +11,7 @@ import net.minecraft.util.EntityDamageSource;
 import net.minecraft.world.World;
 
 import static net.minecraft.util.DamageSource.DROWN;
+import static net.minecraft.util.DamageSource.MAGIC;
 
 public class WaterSaber2 extends WaterSaber1 {
 
@@ -20,7 +22,11 @@ public class WaterSaber2 extends WaterSaber1 {
 
     @Override
     public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
-        target.attackEntityFrom(new EntityDamageSource(DROWN.getDamageType(), attacker).setDamageBypassesArmor(), (float) (getDevotion(attacker) / 15));
+        if (target.getCreatureAttribute() == CreatureAttribute.WATER) {
+            target.attackEntityFrom(new EntityDamageSource(MAGIC.getDamageType(), attacker).setDamageBypassesArmor(), (float) (getDevotion(attacker) / 15));
+        } else {
+            target.attackEntityFrom(new EntityDamageSource(DROWN.getDamageType(), attacker).setDamageBypassesArmor(), (float) (getDevotion(attacker) / 15));
+        }
     }
 
     @Override

@@ -19,9 +19,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class Events {
@@ -55,12 +55,16 @@ public class Events {
     }
 
     @SubscribeEvent
-    public void onDamage(LivingHurtEvent event) {
-        if (event.getEntityLiving() instanceof PlayerEntity) {
-            Item item = event.getEntityLiving().getItemStackFromSlot(EquipmentSlotType.MAINHAND).getItem();
+    public void onDamage(LivingDamageEvent event) {
+        LivingEntity damaged = event.getEntityLiving();
+        if (damaged instanceof PlayerEntity) {
+            Item item = damaged.getItemStackFromSlot(EquipmentSlotType.MAINHAND).getItem();
+
             if (item instanceof WaterSaber1) {
-                event.setAmount(event.getAmount() - ((WaterSaber1) item).shield);
+                float shield = ((WaterSaber1) item).shield;
+                event.setAmount(Math.min(1, event.getAmount() - shield));
             }
+
         }
     }
 

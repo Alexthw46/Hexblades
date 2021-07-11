@@ -29,7 +29,7 @@ public class SwordStandRenderer extends TileEntityRenderer<SwordStandTileEntity>
             matrixStackIn.push();
             Item item = istack.getItem();
             if ((item instanceof EarthHammer1) || (item instanceof Hammer_dull)) {
-                matrixStackIn.translate(0.5D, 0.5D, 0.5D);
+                matrixStackIn.translate(0.5D, 0.3D, 0.5D);
                 //matrixStackIn.rotate(Vector3f.YP.rotationDegrees(90.0F));
             } else if (item instanceof SwordItem) {
                 matrixStackIn.translate(0.6D, 0.5D, 0.5D);
