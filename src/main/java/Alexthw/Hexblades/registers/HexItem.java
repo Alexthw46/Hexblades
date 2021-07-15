@@ -4,9 +4,11 @@ import Alexthw.Hexblades.Hexblades;
 import Alexthw.Hexblades.common.items.ElementalSoul;
 import Alexthw.Hexblades.common.items.HexSwordItem;
 import Alexthw.Hexblades.common.items.PatronSoul;
+import Alexthw.Hexblades.common.items.armors.TestArmor;
 import Alexthw.Hexblades.common.items.dulls.*;
 import Alexthw.Hexblades.common.items.tier1.*;
 import Alexthw.Hexblades.common.items.tier2.*;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.potion.EffectInstance;
@@ -31,6 +33,8 @@ public class HexItem {
     public static final RegistryObject<Item> ELEMENTAL_CORE;
     public static final RegistryObject<Item> DROWNED_HEART;
     public static final RegistryObject<Item> SOUL_CANDY;
+
+    public static final RegistryObject<Item> TEST_ARMOR;
 
     //Hexblades
 
@@ -65,6 +69,9 @@ public class HexItem {
         DROWNED_HEART = ITEMS.register("drowned_heart", () -> new Item(addTabProp()));
         ELEMENTAL_CORE = ITEMS.register("elemental_core", () -> new Item(addTabProp()));
         SOUL_CANDY = ITEMS.register("soul_candy", () -> new Item(addTabProp().food(new Food.Builder().effect(() -> new EffectInstance(Effects.REGENERATION, 40, 1), 1.0F).fastToEat().hunger(1).saturation(0.1F).build())));
+
+        TEST_ARMOR = ITEMS.register("test_chestplate", () -> new TestArmor(EquipmentSlotType.CHEST, addTabProp()));
+
 
         //Dull Sword/Tools
         DULL_KATANA = ITEMS.register("katana_dull", () -> new Katana_dull(2, -2.5F, addTabProp().maxStackSize(1)));

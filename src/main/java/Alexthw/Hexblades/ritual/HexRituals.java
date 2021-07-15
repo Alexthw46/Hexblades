@@ -1,11 +1,9 @@
 package Alexthw.Hexblades.ritual;
 
+import Alexthw.Hexblades.registers.HexEntityType;
 import Alexthw.Hexblades.registers.HexItem;
 import elucent.eidolon.Registry;
-import elucent.eidolon.ritual.ItemRequirement;
-import elucent.eidolon.ritual.MultiItemSacrifice;
-import elucent.eidolon.ritual.Ritual;
-import elucent.eidolon.ritual.RitualRegistry;
+import elucent.eidolon.ritual.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtils;
@@ -27,8 +25,14 @@ public class HexRituals {
     public static Ritual EVOLVE_HAMMER;
     public static Ritual EVOLVE_DAGGERS;
 
+    public static Ritual SUMMON_FIRE;
+    public static Ritual SUMMON_TEST;
+
+
 
     public static void init() {
+
+        //awake
         AWAKE_SWORD = RitualRegistry.register(HexItem.DULL_BROADSWORD.get(),
                 (new AwakenRitual(new ItemStack(HexItem.FIRE_BRAND.get()), fireColor)
                         .setRegistryName("hexblades", "awake_flame_sword")
@@ -84,6 +88,7 @@ public class HexRituals {
                 )
         );
 
+        //evolve
         EVOLVE_SWORD = RitualRegistry.register(new MultiItemSacrifice(HexItem.FIRE_BRAND.get(), HexItem.PATRON_SOUL.get()),
                 (new EvolveRitual(new ItemStack(HexItem.FIRE_BRAND1.get()), fireColor)
                         .setRegistryName("hexblades", "evolve_flame_sword")
@@ -129,6 +134,9 @@ public class HexRituals {
                 )
         );
 
+        //summon
+
+        SUMMON_FIRE = RitualRegistry.register(HexItem.SOUL_CANDY.get(), new SummonRitual(HexEntityType.FIRE_ELEMENTAL.get()));
     }
 
 }

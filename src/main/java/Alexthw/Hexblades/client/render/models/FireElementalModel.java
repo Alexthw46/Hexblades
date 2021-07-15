@@ -21,7 +21,7 @@ public class FireElementalModel extends EntityModel<BaseElementalEntity> {
         textureHeight = 32;
 
         master = new ModelRenderer(this);
-        master.setRotationPoint(0.0F, 24.0F, 0.0F);
+        master.setRotationPoint(0.0F, 16.0F, 0.0F);
         master.setTextureOffset(0, 0).addBox(-4.0F, -16.0F, -4.0F, 8.0F, 8.0F, 8.0F, 0.0F, false);
 
         head = new ModelRenderer(this);
@@ -39,6 +39,7 @@ public class FireElementalModel extends EntityModel<BaseElementalEntity> {
         master.addChild(right_arm);
         right_arm.setTextureOffset(0, 23).addBox(0.0F, -1.0F, -1.0F, 2.0F, 7.0F, 2.0F, 0.0F, false);
     }
+
 
     @Override
     public void setRotationAngles(BaseElementalEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
