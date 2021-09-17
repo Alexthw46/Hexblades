@@ -1,6 +1,6 @@
 package Alexthw.Hexblades.common.items.armors;
 
-import elucent.eidolon.item.model.ArmorModel;
+
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.inventory.EquipmentSlotType;
 
