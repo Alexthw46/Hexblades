@@ -29,7 +29,7 @@ public class HexTileEntityType {
     }
 
     static <T extends TileEntity> TileEntityType<T> addTileEntity(IForgeRegistry<TileEntityType<?>> registry, String name, Supplier<T> factory, BlockBase block) {
-        TileEntityType<T> type = TileEntityType.Builder.<T>create(factory, block).build(null);
+        TileEntityType<T> type = TileEntityType.Builder.create(factory, block).build(null);
         type.setRegistryName(Hexblades.MOD_ID, name);
         registry.register(type);
         block.setTile(type);

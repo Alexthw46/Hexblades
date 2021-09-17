@@ -1,5 +1,6 @@
 package Alexthw.Hexblades.common.items.armors;
 
+import elucent.eidolon.item.model.ArmorModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.inventory.EquipmentSlotType;
 
@@ -23,28 +24,28 @@ public class TestArmorModel extends ArmorModel {
             leftArm.setTextureOffset(40, 16).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 5.0F, 4.0F, size, false);
         }
 
-        if (slot == EquipmentSlotType.HEAD) {
-            ModelRenderer head = new ModelRenderer(this);
-            this.bipedHead.setRotationPoint(0.0F, -12.0F, 0.0F);
-            this.bipedHead.addChild(head);
-            head.setTextureOffset(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, size, false);
-            ModelRenderer guard = new ModelRenderer(this);
-            guard.setRotationPoint(0.0F, -3.0F, 0.0F);
-            this.bipedHead.addChild(guard);
-            this.setRotationAngle(guard, 0.0F, 0.7854F, 0.0F);
-            guard.setTextureOffset(6, 41).addBox(-5.0F, -6.0F, -5.5F, 10.0F, 10.0F, 10.0F, size, false);
-        }
+            if (slot == EquipmentSlotType.HEAD) {
+                ModelRenderer head = new ModelRenderer(this);
+                this.bipedHead.setRotationPoint(0.0F, -12.0F, 0.0F);
+                this.bipedHead.addChild(head);
+                head.setTextureOffset(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, size, false);
+                ModelRenderer guard = new ModelRenderer(this);
+                guard.setRotationPoint(0.0F, -3.0F, 0.0F);
+                this.bipedHead.addChild(guard);
+                this.setRotationAngle(guard, 0.0F, 0.7854F, 0.0F);
+                guard.setTextureOffset(6, 41).addBox(-5.0F, -6.0F, -5.5F, 10.0F, 10.0F, 10.0F, size, false);
+            }
 
-        if (slot == EquipmentSlotType.FEET) {
-            ModelRenderer leftBoot = new ModelRenderer(this);
-            leftBoot.setRotationPoint(0.0F, 0.0F, 0.0F);
-            this.bipedLeftLeg.addChild(leftBoot);
-            leftBoot.setTextureOffset(0, 22).addBox(-2.0F, 6.0F, -2.0F, 4.0F, 6.0F, 4.0F, size, true);
-            ModelRenderer rightBoot = new ModelRenderer(this);
-            rightBoot.setRotationPoint(0.0F, 0.0F, 0.0F);
-            this.bipedRightLeg.addChild(rightBoot);
-            rightBoot.setTextureOffset(0, 22).addBox(-2.0F, 6.0F, -2.0F, 4.0F, 6.0F, 4.0F, size, false);
-        }
+            if (slot == EquipmentSlotType.FEET) {
+                ModelRenderer leftBoot = new ModelRenderer(this);
+                leftBoot.setRotationPoint(0.0F, 0.0F, 0.0F);
+                this.bipedLeftLeg.addChild(leftBoot);
+                leftBoot.setTextureOffset(0, 22).addBox(-2.0F, 6.0F, -2.0F, 4.0F, 6.0F, 4.0F, size, true);
+                ModelRenderer rightBoot = new ModelRenderer(this);
+                rightBoot.setRotationPoint(0.0F, 0.0F, 0.0F);
+                this.bipedRightLeg.addChild(rightBoot);
+                rightBoot.setTextureOffset(0, 22).addBox(-2.0F, 6.0F, -2.0F, 4.0F, 6.0F, 4.0F, size, false);
+            }
 
             if (slot == EquipmentSlotType.LEGS) {
                 ModelRenderer leftLeg = new ModelRenderer(this);

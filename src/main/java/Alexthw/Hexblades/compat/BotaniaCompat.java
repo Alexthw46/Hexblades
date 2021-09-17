@@ -14,9 +14,9 @@ import static vazkii.botania.api.item.IPetalApothecary.State;
 
 public class BotaniaCompat {
 
-    public static void refillApotecaries(World world, BlockPos urn, List<TileAltar> apothecaries) {
+    public static void refillApotecaries(World world, BlockPos urn) {
 
-        apothecaries = HexUtils.getTilesWithinAABB(TileAltar.class, world, new AxisAlignedBB(urn.add(-2, -1, -2), urn.add(3, 2, 3)));
+        List<TileAltar> apothecaries = HexUtils.getTilesWithinAABB(TileAltar.class, world, new AxisAlignedBB(urn.add(-2, -1, -2), urn.add(3, 2, 3)));
 
         for (TileAltar fillable : apothecaries) {
             if (fillable.getFluid() == State.EMPTY) {
