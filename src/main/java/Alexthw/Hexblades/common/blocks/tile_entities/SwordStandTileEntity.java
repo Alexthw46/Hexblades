@@ -30,6 +30,7 @@ public class SwordStandTileEntity extends TileEntityBase {
     @Override
     public void onDestroyed(BlockState state, BlockPos pos) {
         if (!this.stack.isEmpty()) {
+            assert this.world != null;
             InventoryHelper.spawnItemStack(this.world, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, this.stack);
         }
 
@@ -41,6 +42,7 @@ public class SwordStandTileEntity extends TileEntityBase {
             if (player.getHeldItem(hand).isEmpty() && !this.stack.isEmpty()) {
                 player.addItemStackToInventory(this.stack);
                 this.stack = ItemStack.EMPTY;
+                assert this.world != null;
                 if (!this.world.isRemote) {
                     this.sync();
                 }
@@ -56,6 +58,7 @@ public class SwordStandTileEntity extends TileEntityBase {
                     player.setHeldItem(hand, ItemStack.EMPTY);
                 }
 
+                assert this.world != null;
                 if (!this.world.isRemote) {
                     this.sync();
                 }

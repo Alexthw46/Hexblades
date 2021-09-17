@@ -59,9 +59,9 @@ public class HexBlock {
         DeferredRegister<Block> registry;
         String basename;
         net.minecraft.block.AbstractBlock.Properties props;
-        RegistryObject<Block> full = null;
-        RegistryObject<Block> slab = null;
-        RegistryObject<Block> stair = null;
+        RegistryObject<Block> full;
+        RegistryObject<Block> slab;
+        RegistryObject<Block> stair;
         RegistryObject<Block> wall = null;
         RegistryObject<Block> fence = null;
         RegistryObject<Block> fence_gate = null;
