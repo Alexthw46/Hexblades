@@ -21,7 +21,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import vazkii.botania.common.block.tile.TileAltar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,15 +36,12 @@ public class EverfullUrnTileEntity extends TileEntityBase implements ITickableTi
 
     public List<CrucibleTileEntity> crucibles;
     public List<BlockPos> cauldrons;
-    public List<TileAltar> apothecaries;
 
 
     public EverfullUrnTileEntity() {
         this(HexTileEntityType.EVERFULL_URN_TILE_ENTITY);
         cauldrons = null;
         crucibles = null;
-        apothecaries = null;
-
     }
 
     public EverfullUrnTileEntity(TileEntityType<?> tileEntityTypeIn) {
@@ -69,7 +65,7 @@ public class EverfullUrnTileEntity extends TileEntityBase implements ITickableTi
             cauldrons = getCauldrons(getWorld(), new AxisAlignedBB(pos.add(-2, -1, -2), pos.add(3, 2, 3)));
 
             if (isBotaniaLoaded()) {
-                BotaniaCompat.refillApotecaries(getWorld(), pos, apothecaries);
+                BotaniaCompat.refillApotecaries(getWorld(), pos);
             }
 
             for (CrucibleTileEntity fillable : crucibles) {

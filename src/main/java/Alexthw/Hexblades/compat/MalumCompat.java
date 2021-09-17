@@ -1,6 +1,6 @@
 package Alexthw.Hexblades.compat;
 
-import com.sammy.malum.core.init.blocks.MalumBlocks;
+import com.sammy.malum.common.blocks.lighting.EtherBlock;
 import elucent.eidolon.spell.AltarEntries;
 import elucent.eidolon.spell.AltarEntry;
 import net.minecraft.block.BlockState;
@@ -32,18 +32,7 @@ public class MalumCompat {
                 (BlockState b) -> b.getBlock() == Blocks.LAVA,
                 (BlockState b) -> b.getBlock() == Blocks.CAMPFIRE && b.get(CampfireBlock.LIT),
                 (BlockState b) -> b.getBlock() == Blocks.SOUL_CAMPFIRE && b.get(CampfireBlock.LIT),
-                (BlockState b) -> b.getBlock() == MalumBlocks.RED_ETHER.get(),
-                (BlockState b) -> b.getBlock() == MalumBlocks.BLUE_ETHER.get(),
-                (BlockState b) -> b.getBlock() == MalumBlocks.BROWN_ETHER.get(),
-                (BlockState b) -> b.getBlock() == MalumBlocks.CYAN_ETHER.get(),
-                (BlockState b) -> b.getBlock() == MalumBlocks.GREEN_ETHER.get(),
-                (BlockState b) -> b.getBlock() == MalumBlocks.LIGHT_BLUE_ETHER.get(),
-                (BlockState b) -> b.getBlock() == MalumBlocks.LIME_ETHER.get(),
-                (BlockState b) -> b.getBlock() == MalumBlocks.MAGENTA_ETHER.get(),
-                (BlockState b) -> b.getBlock() == MalumBlocks.PINK_ETHER.get(),
-                (BlockState b) -> b.getBlock() == MalumBlocks.ORANGE_ETHER.get(),
-                (BlockState b) -> b.getBlock() == MalumBlocks.PURPLE_ETHER.get(),
-                (BlockState b) -> b.getBlock() == MalumBlocks.YELLOW_ETHER.get()
+                (BlockState b) -> b.getBlock() instanceof EtherBlock
         };
 
     }

@@ -25,7 +25,7 @@ public class HexEntityType {
 
     static {
         FULGOR_PROJECTILE = registerEntity("fulgor_projectile", 0.4F, 0.4F, FulgorProjectileEntity::new, EntityClassification.MISC);
-        TEST_ELEMENTAL = addEntity("test_elemental", 0, 0, 1.2f, 2.5f, BaseElementalEntity::new, EntityClassification.MONSTER);
+        TEST_ELEMENTAL = addEntity("test_elemental", 0, 0, 1.0f, 2.0f, BaseElementalEntity::new, EntityClassification.MONSTER);
         FIRE_ELEMENTAL = addEntity("fire_elemental", 500, 800, 1.5f, 2.4f, BaseElementalEntity::new, EntityClassification.MONSTER);
 
     }
