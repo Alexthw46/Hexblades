@@ -17,12 +17,21 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static Alexthw.Hexblades.util.Constants.NBT.*;
+import static net.minecraft.world.GameRules.KEEP_INVENTORY;
 
 public class Events {
     public Events() {
@@ -34,23 +43,83 @@ public class Events {
         LivingEntity entity = event.getEntityLiving();
         World world = entity.world;
 
-        if (entity instanceof DrownedEntity && !world.isRemote) {
-            LivingEntity source = (LivingEntity) event.getSource().getTrueSource();
+        if (!world.isRemote) {
+            if (entity instanceof DrownedEntity) {
+                LivingEntity source = (LivingEntity) event.getSource().getTrueSource();
 
-            int looting = ForgeHooks.getLootingLevel(entity, source, event.getSource());
-            boolean doDrop = false;
-            if (entity.world.rand.nextInt(10) == 1) doDrop = true;
-            else for (int i = 0; i < looting; i++) {
-                if (entity.world.rand.nextInt(20) == 1) {
-                    doDrop = true;
-                    break;
+                int looting = ForgeHooks.getLootingLevel(entity, source, event.getSource());
+                boolean doDrop = false;
+                if (entity.world.rand.nextInt(10) == 1) doDrop = true;
+                else for (int i = 0; i < looting; i++) {
+                    if (entity.world.rand.nextInt(20) == 1) {
+                        doDrop = true;
+                        break;
+                    }
+                }
+                if (doDrop) {
+                    ItemStack stack = new ItemStack(HexItem.DROWNED_HEART.get());
+                    ItemEntity drop = new ItemEntity(entity.world, entity.getPosX(), entity.getPosY(), entity.getPosZ(), stack);
+                    event.getDrops().add(drop);
+                }
+            } else if (entity instanceof PlayerEntity) {
+                PlayerEntity player = (PlayerEntity) entity;
+                if ((player instanceof FakePlayer) || player.world.getGameRules().getBoolean(KEEP_INVENTORY)) {
+                    return;
+                }
+                List<ItemEntity> keeps = new ArrayList<>();
+                for (ItemEntity item : event.getDrops()) {
+                    ItemStack stack = item.getItem();
+                    if (!stack.isEmpty() && stack.getItem() instanceof HexSwordItem) {
+                        keeps.add(item);
+                    }
+                }
+
+                if (keeps.size() > 0) {
+                    event.getDrops().removeAll(keeps);
+
+                    CompoundNBT cmp = new CompoundNBT();
+                    cmp.putInt(TAG_HW_DROP_COUNT, keeps.size());
+
+                    int i = 0;
+                    for (ItemEntity keep : keeps) {
+                        ItemStack stack = keep.getItem();
+                        CompoundNBT cmp1 = stack.write(new CompoundNBT());
+                        cmp.put(TAG_HW_DROP_PREFIX + i, cmp1);
+                        i++;
+                    }
+
+                    CompoundNBT data = player.getPersistentData();
+                    if (!data.contains(PlayerEntity.PERSISTED_NBT_TAG)) {
+                        data.put(PlayerEntity.PERSISTED_NBT_TAG, new CompoundNBT());
+                    }
+
+                    CompoundNBT persist = data.getCompound(PlayerEntity.PERSISTED_NBT_TAG);
+                    persist.put(TAG_HW_KEEP, cmp);
                 }
             }
-            if (doDrop) {
-                ItemStack stack = new ItemStack(HexItem.DROWNED_HEART.get());
-                ItemEntity drop = new ItemEntity(entity.world, entity.getPosX(), entity.getPosY(), entity.getPosZ(), stack);
-                event.getDrops().add(drop);
+        }
+    }
+
+    @SubscribeEvent
+    public void onPlayerRespawnHW(PlayerEvent.PlayerRespawnEvent event) {
+        CompoundNBT data = event.getPlayer().getPersistentData();
+        if (data.contains(PlayerEntity.PERSISTED_NBT_TAG)) {
+            CompoundNBT cmp = data.getCompound(PlayerEntity.PERSISTED_NBT_TAG);
+            CompoundNBT cmp1 = cmp.getCompound(TAG_HW_KEEP);
+
+            int count = cmp1.getInt(TAG_HW_DROP_COUNT);
+            for (int i = 0; i < count; i++) {
+                CompoundNBT cmp2 = cmp1.getCompound(TAG_HW_DROP_PREFIX + i);
+                ItemStack stack = ItemStack.read(cmp2);
+                if (!stack.isEmpty()) {
+                    ItemStack copy = stack.copy();
+                    if (!event.getPlayer().inventory.addItemStackToInventory(copy)) {
+                        event.getPlayer().entityDropItem(copy);
+                    }
+                }
             }
+
+            cmp.remove(TAG_HW_KEEP);
         }
     }
 

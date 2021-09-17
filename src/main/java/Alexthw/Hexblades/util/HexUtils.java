@@ -2,10 +2,14 @@ package Alexthw.Hexblades.util;
 
 import Alexthw.Hexblades.Hexblades;
 import elucent.eidolon.util.ColorUtil;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceContext;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunk;
 
@@ -69,6 +73,11 @@ public class HexUtils {
             }
         }
         return tileList;
+    }
+
+    public static Vector3d getVector(World world, PlayerEntity player) {
+        RayTraceResult ray = world.rayTraceBlocks(new RayTraceContext(player.getEyePosition(0), player.getEyePosition(0).add(player.getLookVec().scale(4)), RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, player));
+        return (ray.getType() == RayTraceResult.Type.BLOCK) ? ray.getHitVec() : player.getEyePosition(0).add(player.getLookVec().scale(4));
     }
 
 

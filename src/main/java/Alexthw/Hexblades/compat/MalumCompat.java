@@ -1,12 +1,20 @@
 package Alexthw.Hexblades.compat;
 
+import com.sammy.malum.common.blocks.lighting.EtherBlock;
+import com.sammy.malum.common.blocks.lighting.EtherBrazierBlock;
 import com.sammy.malum.core.init.blocks.MalumBlocks;
 import elucent.eidolon.spell.AltarEntries;
 import elucent.eidolon.spell.AltarEntry;
+import elucent.eidolon.spell.AltarKeys;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CampfireBlock;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.function.Predicate;
 
@@ -15,15 +23,7 @@ import static net.minecraftforge.fml.common.ObfuscationReflectionHelper.getPriva
 
 public class MalumCompat {
 
-    public static void start() {
-
-        AltarEntries tmp = new AltarEntries();
-
-        Map<BlockState, AltarEntry> entriesC = getPrivateValue(elucent.eidolon.spell.AltarEntries.class, tmp, "entries");
-
-        if (entriesC != null) {
-            // entriesC.put(Blocks.TORCH.getDefaultState(), (new AltarEntry(AltarKeys.LIGHT_KEY)).setPower(1.0D));
-        }
+    public static void start() throws InvocationTargetException, InstantiationException, IllegalAccessException {
 
         HOT_BLOCKS = new Predicate<?>[]{
                 (BlockState b) -> b.getBlock() == Blocks.MAGMA_BLOCK,
@@ -32,20 +32,25 @@ public class MalumCompat {
                 (BlockState b) -> b.getBlock() == Blocks.LAVA,
                 (BlockState b) -> b.getBlock() == Blocks.CAMPFIRE && b.get(CampfireBlock.LIT),
                 (BlockState b) -> b.getBlock() == Blocks.SOUL_CAMPFIRE && b.get(CampfireBlock.LIT),
-                (BlockState b) -> b.getBlock() == MalumBlocks.RED_ETHER.get(),
-                (BlockState b) -> b.getBlock() == MalumBlocks.BLUE_ETHER.get(),
-                (BlockState b) -> b.getBlock() == MalumBlocks.BROWN_ETHER.get(),
-                (BlockState b) -> b.getBlock() == MalumBlocks.CYAN_ETHER.get(),
-                (BlockState b) -> b.getBlock() == MalumBlocks.GREEN_ETHER.get(),
-                (BlockState b) -> b.getBlock() == MalumBlocks.LIGHT_BLUE_ETHER.get(),
-                (BlockState b) -> b.getBlock() == MalumBlocks.LIME_ETHER.get(),
-                (BlockState b) -> b.getBlock() == MalumBlocks.MAGENTA_ETHER.get(),
-                (BlockState b) -> b.getBlock() == MalumBlocks.PINK_ETHER.get(),
-                (BlockState b) -> b.getBlock() == MalumBlocks.ORANGE_ETHER.get(),
-                (BlockState b) -> b.getBlock() == MalumBlocks.PURPLE_ETHER.get(),
-                (BlockState b) -> b.getBlock() == MalumBlocks.YELLOW_ETHER.get()
+                (BlockState b) -> b.getBlock() instanceof EtherBlock,
+                (BlockState b) -> b.getBlock() instanceof EtherBrazierBlock
         };
 
+
+        Map<BlockState, AltarEntry> AltarEntriesCopy = getPrivateValue(elucent.eidolon.spell.AltarEntries.class, new AltarEntries(), "entries");
+
+        Constructor<AltarEntry> altarEntryConstructor = ObfuscationReflectionHelper.findConstructor(AltarEntry.class, ResourceLocation.class);
+        Method setPowerMethod = ObfuscationReflectionHelper.findMethod(AltarEntry.class, "setPower", double.class);
+        if (AltarEntriesCopy != null) {
+
+            AltarEntriesCopy.put(MalumBlocks.BLUE_ETHER_BRAZIER.get().getDefaultState(), (AltarEntry) setPowerMethod.invoke(altarEntryConstructor.newInstance(AltarKeys.LIGHT_KEY), 1.0D));
+            AltarEntriesCopy.put(MalumBlocks.RED_ETHER_BRAZIER.get().getDefaultState(), (AltarEntry) setPowerMethod.invoke(altarEntryConstructor.newInstance(AltarKeys.LIGHT_KEY), 1.0D));
+            AltarEntriesCopy.put(MalumBlocks.YELLOW_ETHER_BRAZIER.get().getDefaultState(), (AltarEntry) setPowerMethod.invoke(altarEntryConstructor.newInstance(AltarKeys.LIGHT_KEY), 1.0D));
+            AltarEntriesCopy.put(MalumBlocks.GREEN_ETHER_BRAZIER.get().getDefaultState(), (AltarEntry) setPowerMethod.invoke(altarEntryConstructor.newInstance(AltarKeys.LIGHT_KEY), 1.0D));
+            AltarEntriesCopy.put(MalumBlocks.LIGHT_BLUE_ETHER_BRAZIER.get().getDefaultState(), (AltarEntry) setPowerMethod.invoke(altarEntryConstructor.newInstance(AltarKeys.LIGHT_KEY), 1.0D));
+            AltarEntriesCopy.put(MalumBlocks.PINK_ETHER_BRAZIER.get().getDefaultState(), (AltarEntry) setPowerMethod.invoke(altarEntryConstructor.newInstance(AltarKeys.LIGHT_KEY), 1.0D));
+
+        }
     }
 
 

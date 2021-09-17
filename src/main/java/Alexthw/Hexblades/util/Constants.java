@@ -10,5 +10,10 @@ public class Constants {
         public static final String EXTRA_DAMAGE = "hexSwordDamage";
         public static final String EXTRA_ATTACK_SPEED = "hexSwordAttackSpeed";
 
+        //constants for keepInventory of Hexblades
+        public static final String TAG_HW_DROP_COUNT = "tagHexWeaponsDC";
+        public static final String TAG_HW_DROP_PREFIX = "tagHWDropP";
+        public static final String TAG_HW_KEEP = "tagNeverLoseThem";
+
     }
 }

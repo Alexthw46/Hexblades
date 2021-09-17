@@ -1,5 +1,6 @@
 package Alexthw.Hexblades.ritual;
 
+import Alexthw.Hexblades.Hexblades;
 import Alexthw.Hexblades.registers.HexEntityType;
 import Alexthw.Hexblades.registers.HexItem;
 import elucent.eidolon.Registry;
@@ -83,8 +84,8 @@ public class HexRituals {
                         .addRequirement(new ItemRequirement(Registry.ARCANE_GOLD_INGOT.get()))
                         .addRequirement(new ItemRequirement(Registry.ARCANE_GOLD_INGOT.get()))
                         .addRequirement(new ItemRequirement(HexItem.ELEMENTAL_CORE.get()))
-                        .addRequirement(new ItemRequirement(Registry.SILVER_INGOT.get()))
-                        .addRequirement(new ItemRequirement(Registry.SILVER_INGOT.get()))
+                        .addRequirement(new ItemRequirement(Registry.PEWTER_INGOT.get()))
+                        .addRequirement(new ItemRequirement(Registry.PEWTER_INGOT.get()))
                 )
         );
 
@@ -101,18 +102,24 @@ public class HexRituals {
         EVOLVE_KATANA = RitualRegistry.register(new MultiItemSacrifice(HexItem.FROST_RAZOR.get(), HexItem.PATRON_SOUL.get()),
                 (new EvolveRitual(new ItemStack(HexItem.FROST_RAZOR1.get()), iceColor)
                         .setRegistryName("hexblades", "evolve_ice_katana")
+                        .addRequirement(new ItemRequirement(Items.QUARTZ))
                         .addRequirement(new ItemRequirement(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Registry.CHILLED_POTION.get())))
                         .addRequirement(new ItemRequirement(HexItem.PATRON_SOUL.get()))
                         .addRequirement(new ItemRequirement(Registry.WRAITH_HEART.get()))
+                        .addRequirement(new ItemRequirement(Items.QUARTZ))
+
                 )
         );
 
         EVOLVE_SABER = RitualRegistry.register(new MultiItemSacrifice(HexItem.WATER_SABER.get(), HexItem.PATRON_SOUL.get()),
                 (new EvolveRitual(new ItemStack(HexItem.WATER_SABER1.get()), waterColor)
                         .setRegistryName("hexblades", "evolve_water_saber")
+                        .addRequirement(new ItemRequirement(Items.PRISMARINE_CRYSTALS))
                         .addRequirement(new ItemRequirement(Items.HEART_OF_THE_SEA))
                         .addRequirement(new ItemRequirement(HexItem.PATRON_SOUL.get()))
                         .addRequirement(new ItemRequirement(HexItem.DROWNED_HEART.get()))
+                        .addRequirement(new ItemRequirement(Items.PRISMARINE_CRYSTALS))
+
                 )
         );
 
@@ -121,6 +128,7 @@ public class HexRituals {
                         .setRegistryName("hexblades", "evolve_earth_hammer")
                         .addRequirement(new ItemRequirement(Registry.ARCANE_GOLD_BLOCK.get()))
                         .addRequirement(new ItemRequirement(HexItem.PATRON_SOUL.get()))
+                        .addRequirement(new ItemRequirement(Registry.ARCANE_GOLD_BLOCK.get()))
                 )
         );
 
@@ -128,15 +136,17 @@ public class HexRituals {
                 (new EvolveRitual(new ItemStack(HexItem.LIGHTNING_SSWORD_L.get()), thunderColor)
                         .setRegistryName("hexblades", "evolve_duals")
                         .addRequirement(new ItemRequirement(Items.REDSTONE))
+                        .addRequirement(new ItemRequirement(Items.PHANTOM_MEMBRANE))
                         .addRequirement(new ItemRequirement(HexItem.LIGHTNING_DAGGER_L.get()))
                         .addRequirement(new ItemRequirement(HexItem.LIGHTNING_DAGGER_R.get()))
+                        .addRequirement(new ItemRequirement(Items.PHANTOM_MEMBRANE))
                         .addRequirement(new ItemRequirement(Items.REDSTONE))
                 )
         );
 
         //summon
 
-        SUMMON_FIRE = RitualRegistry.register(HexItem.SOUL_CANDY.get(), new SummonRitual(HexEntityType.FIRE_ELEMENTAL.get()));
+        SUMMON_FIRE = RitualRegistry.register(HexItem.SOUL_CANDY.get(), new SummonRitual(HexEntityType.FIRE_ELEMENTAL.get()).setRegistryName(Hexblades.MOD_ID, "allure_elemental"));
     }
 
 }

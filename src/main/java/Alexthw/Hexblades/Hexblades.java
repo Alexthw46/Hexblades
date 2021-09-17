@@ -24,38 +24,36 @@ import org.apache.logging.log4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod("hexblades")
-public class Hexblades
-{
+public class Hexblades {
+
     public static final Logger LOGGER = LogManager.getLogger();
     public static final String MOD_ID = "hexblades";
     public static final ItemGroup TAB = new ItemGroup(MOD_ID) {
-
         @Override
         public ItemStack createIcon() {
             return new ItemStack(HexItem.PATRON_SOUL2.get());
         }
-
     };
 
-        public Hexblades() {
-            IEventBus hexbus = FMLJavaModLoadingContext.get().getModEventBus();
+    public Hexblades() {
+        IEventBus hexbus = FMLJavaModLoadingContext.get().getModEventBus();
 
-            // Register the setup
-            hexbus.addListener(this::setup);
+        // Register the setup
+        hexbus.addListener(this::setup);
 
-            //Register all the things
-            Registry.init(hexbus);
-            HexRegistry.init();
+        //Register all the things
+        Registry.init(hexbus);
+        HexRegistry.init();
 
-            MinecraftForge.EVENT_BUS.register(new Events());
+        MinecraftForge.EVENT_BUS.register(new Events());
 
-            //Client-side only
-            hexbus.addListener(this::doClientStuff);
+        //Client-side only
+        hexbus.addListener(this::doClientStuff);
 
-            // Register ourselves for server and other game events we are interested in
-            MinecraftForge.EVENT_BUS.register(this);
+        // Register ourselves for server and other game events we are interested in
+        MinecraftForge.EVENT_BUS.register(this);
 
-        }
+    }
 
     private void setup(final FMLCommonSetupEvent event) {
         event.enqueueWork(HexRegistry::post_init);

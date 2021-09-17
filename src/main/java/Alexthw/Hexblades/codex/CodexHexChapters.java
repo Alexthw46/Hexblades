@@ -34,7 +34,7 @@ public class CodexHexChapters {
 
     public static void init() {
         CodexChapters Cchapters = new CodexChapters();
-        List<Category> Ccategories = getPrivateValue(elucent.eidolon.codex.CodexChapters.class, Cchapters, "categories");
+        List<Category> Ccategories = getPrivateValue(CodexChapters.class, Cchapters, "categories");
 
         MISC = new Chapter("hexblades.codex.chapter.misc", new TitlePage("hexblades.codex.page.misc.dark_planks"),
                 new CraftingPage(new ItemStack(HexBlock.DARK_POLISH_PLANKS.getBlock().asItem()),
@@ -50,13 +50,13 @@ public class CodexHexChapters {
                 new CruciblePage(new ItemStack(HexItem.SOUL_CANDY.get(), 4),
                         new CruciblePage.CrucibleStep(new ItemStack(Registry.SOUL_SHARD.get())),
                         new CruciblePage.CrucibleStep(1, new ItemStack(Items.SUGAR), new ItemStack(Items.HONEY_BOTTLE))
-                )
+                ), new ChantPage("hexblades.codex.page.misc.fire_touch", Signs.SACRED_SIGN, Signs.SACRED_SIGN, Signs.SACRED_SIGN)
         );
 
         HEX_ALLOY = new Chapter("hexblades.codex.chapter.hex_metal", new TitlePage("hexblades.codex.page.hex_metal.0"),
                 //ingot
                 new CruciblePage(new ItemStack(HexItem.HEXIUM_INGOT.get()),
-                        new CruciblePage.CrucibleStep(new ItemStack(Registry.SILVER_INGOT.get()), new ItemStack(Registry.LEAD_INGOT.get())),
+                        new CruciblePage.CrucibleStep(new ItemStack(Items.GOLD_INGOT), new ItemStack(Registry.LEAD_INGOT.get())),
                         new CruciblePage.CrucibleStep(1, new ItemStack(Registry.ENCHANTED_ASH.get()), new ItemStack(Registry.SOUL_SHARD.get()))),
                 new TextPage("hexblades.codex.page.hex_metal.1"),
                 //katana
@@ -101,9 +101,11 @@ public class CodexHexChapters {
                 //evolve katana
                 new TitlePage("hexblades.codex.page.evolve_ice_katana"),
                 new RitualPage(HexRituals.EVOLVE_KATANA, new ItemStack(HexItem.FROST_RAZOR.get()),
+                        new RitualPage.RitualIngredient(new ItemStack(Items.QUARTZ), false),
                         new RitualPage.RitualIngredient(new ItemStack(Registry.WRAITH_HEART.get()), false),
                         new RitualPage.RitualIngredient(new ItemStack(HexItem.PATRON_SOUL.get()), true),
-                        new RitualPage.RitualIngredient(new ItemStack(Registry.WRAITH_HEART.get()), false)
+                        new RitualPage.RitualIngredient(new ItemStack(Registry.WRAITH_HEART.get()), false),
+                        new RitualPage.RitualIngredient(new ItemStack(Items.QUARTZ), false)
                 ),
                 //evolve sword
                 new TitlePage("hexblades.codex.page.evolve_flame_sword"),
@@ -116,24 +118,28 @@ public class CodexHexChapters {
                 //evolve saber
                 new TitlePage("hexblades.codex.page.evolve_water_saber"),
                 new RitualPage(HexRituals.EVOLVE_SABER, new ItemStack(HexItem.WATER_SABER.get()),
+                        new RitualPage.RitualIngredient(new ItemStack(Items.PRISMARINE_CRYSTALS), false),
                         new RitualPage.RitualIngredient(new ItemStack(HexItem.DROWNED_HEART.get()), false),
                         new RitualPage.RitualIngredient(new ItemStack(HexItem.PATRON_SOUL.get()), true),
-                        new RitualPage.RitualIngredient(new ItemStack(Items.HEART_OF_THE_SEA), false
-                        )
+                        new RitualPage.RitualIngredient(new ItemStack(Items.HEART_OF_THE_SEA), false),
+                        new RitualPage.RitualIngredient(new ItemStack(Items.PRISMARINE_CRYSTALS), false)
                 ),
                 //evolve hammer
                 new TitlePage("hexblades.codex.page.evolve_earth_hammer"),
                 new RitualPage(HexRituals.EVOLVE_HAMMER, new ItemStack(HexItem.EARTH_HAMMER.get()),
+                        new RitualPage.RitualIngredient(new ItemStack(Registry.ARCANE_GOLD_BLOCK.get()), false),
                         new RitualPage.RitualIngredient(new ItemStack(HexItem.PATRON_SOUL.get()), true),
                         new RitualPage.RitualIngredient(new ItemStack(Registry.ARCANE_GOLD_BLOCK.get()), false)
                 ),
                 //evolve dual
                 new TitlePage("hexblades.codex.page.evolve_duals"),
                 new RitualPage(HexRituals.EVOLVE_DAGGERS, new ItemStack(HexItem.PATRON_SOUL.get()),
+                        new RitualPage.RitualIngredient(new ItemStack(Items.PHANTOM_MEMBRANE), false),
                         new RitualPage.RitualIngredient(new ItemStack(Items.REDSTONE), false),
                         new RitualPage.RitualIngredient(new ItemStack(HexItem.LIGHTNING_DAGGER_L.get()), true),
                         new RitualPage.RitualIngredient(new ItemStack(HexItem.LIGHTNING_DAGGER_R.get()), true),
-                        new RitualPage.RitualIngredient(new ItemStack(Items.REDSTONE), false)
+                        new RitualPage.RitualIngredient(new ItemStack(Items.REDSTONE), false),
+                        new RitualPage.RitualIngredient(new ItemStack(Items.PHANTOM_MEMBRANE), false)
                 )
         );
 
@@ -187,8 +193,8 @@ public class CodexHexChapters {
                         new RitualPage.RitualIngredient(new ItemStack(Registry.ARCANE_GOLD_INGOT.get()), false),
                         new RitualPage.RitualIngredient(new ItemStack(Registry.ARCANE_GOLD_INGOT.get()), false),
                         new RitualPage.RitualIngredient(new ItemStack(HexItem.ELEMENTAL_CORE.get()), false),
-                        new RitualPage.RitualIngredient(new ItemStack(Registry.SILVER_INGOT.get()), false),
-                        new RitualPage.RitualIngredient(new ItemStack(Registry.SILVER_INGOT.get()), false)
+                        new RitualPage.RitualIngredient(new ItemStack(Registry.PEWTER_INGOT.get()), false),
+                        new RitualPage.RitualIngredient(new ItemStack(Registry.PEWTER_INGOT.get()), false)
                 ),
                 new TextPage("hexblades.codex.page.thunder_duals.powers"));
 

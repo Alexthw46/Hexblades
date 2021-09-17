@@ -2,6 +2,7 @@ package Alexthw.Hexblades.client;
 
 import Alexthw.Hexblades.Hexblades;
 import Alexthw.Hexblades.client.render.entity.ElementalEntityRender;
+import Alexthw.Hexblades.client.render.entity.FireElementalER;
 import Alexthw.Hexblades.client.render.models.FireElementalModel;
 import Alexthw.Hexblades.common.blocks.tile_entities.EverfullUrnBlock;
 import Alexthw.Hexblades.common.blocks.tile_entities.SwordStandBlock;
@@ -70,7 +71,7 @@ public class ClientEvents {
     public static void initClientEvents(FMLClientSetupEvent event) {
         RenderingRegistry.registerEntityRenderingHandler(HexEntityType.FULGOR_PROJECTILE.get(), EmptyRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(HexEntityType.TEST_ELEMENTAL.get(), (erm) -> new ElementalEntityRender(erm, new FireElementalModel(), 0.6F));
-        RenderingRegistry.registerEntityRenderingHandler(HexEntityType.FIRE_ELEMENTAL.get(), (erm) -> new ElementalEntityRender(erm, new FireElementalModel(), 0.6F));
+        RenderingRegistry.registerEntityRenderingHandler(HexEntityType.FIRE_ELEMENTAL.get(), (erm) -> new FireElementalER(erm, new FireElementalModel(), 0.6F));
 
         DeferredWorkQueue.runLater(() -> {
 

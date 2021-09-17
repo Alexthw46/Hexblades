@@ -17,12 +17,12 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 import java.util.List;
+
+import static Alexthw.Hexblades.util.HexUtils.getVector;
 
 public class HexTouchSpell extends StaticSpell {
     public HexTouchSpell(ResourceLocation name, Sign... signs) {
@@ -35,8 +35,7 @@ public class HexTouchSpell extends StaticSpell {
         if (world.getCapability(ReputationProvider.CAPABILITY).resolve().get().getReputation(player, HexDeities.HEX_DEITY.getId()) < 4.0)
             return false;
 
-        RayTraceResult ray = world.rayTraceBlocks(new RayTraceContext(player.getEyePosition(0), player.getEyePosition(0).add(player.getLookVec().scale(4)), RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, player));
-        Vector3d v = ray.getType() == RayTraceResult.Type.BLOCK ? ray.getHitVec() : player.getEyePosition(0).add(player.getLookVec().scale(4));
+        Vector3d v = getVector(world, player);
         List<ItemEntity> items = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(v.x - 1.5, v.y - 1.5, v.z - 1.5, v.x + 1.5, v.y + 1.5, v.z + 1.5));
         if (items.size() != 1) return false;
         ItemStack stack = items.get(0).getItem();
@@ -45,8 +44,8 @@ public class HexTouchSpell extends StaticSpell {
 
     @Override
     public void cast(World world, BlockPos pos, PlayerEntity player) {
-        RayTraceResult ray = world.rayTraceBlocks(new RayTraceContext(player.getEyePosition(0), player.getEyePosition(0).add(player.getLookVec().scale(4)), RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, player));
-        Vector3d v = ray.getType() == RayTraceResult.Type.BLOCK ? ray.getHitVec() : player.getEyePosition(0).add(player.getLookVec().scale(4));
+
+        Vector3d v = getVector(world, player);
         List<ItemEntity> items = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(v.x - 1.5, v.y - 1.5, v.z - 1.5, v.x + 1.5, v.y + 1.5, v.z + 1.5));
         if (items.size() == 1) {
             if (!world.isRemote) {
@@ -64,7 +63,7 @@ public class HexTouchSpell extends StaticSpell {
     }
 
     boolean canTouch(ItemStack stack) {
-        return (stack.getItem() == Items.NETHER_STAR || stack.getItem() == Items.LAPIS_LAZULI || stack.getItem() == Items.DIAMOND || stack.getItem() == HexItem.DULL_BROADSWORD.get());
+        return (stack.getItem() == Items.NETHER_STAR || stack.getItem() == Items.LAPIS_LAZULI || stack.getItem() == Items.DIAMOND);
     }
 
     ItemStack touchResult(ItemStack stack) { // assumes canTouch is true
@@ -77,10 +76,6 @@ public class HexTouchSpell extends StaticSpell {
 
         if (stack.getItem() == Items.DIAMOND)
             return new ItemStack(HexItem.ELEMENTAL_CORE.get());
-
-
-        if (stack.getItem() == HexItem.DULL_BROADSWORD.get())
-            return new ItemStack(HexItem.DEV_SWORD.get());
 
         return stack;
     }

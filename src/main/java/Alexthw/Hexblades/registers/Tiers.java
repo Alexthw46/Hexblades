@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 
 public class Tiers {
+
     public static class HexiumTier implements IItemTier {
         @Override
         public int getMaxUses() {
@@ -32,7 +33,6 @@ public class Tiers {
         @Override
         public Ingredient getRepairMaterial() {
             return Ingredient.fromStacks(new ItemStack(HexItem.HEXIUM_INGOT.get()));
-
         }
 
         public static HexiumTier INSTANCE = new HexiumTier();
@@ -41,7 +41,7 @@ public class Tiers {
     public static class PatronWeaponTier implements IItemTier {
         @Override
         public int getMaxUses() {
-            return 1000;
+            return 1250;
         }
 
         @Override

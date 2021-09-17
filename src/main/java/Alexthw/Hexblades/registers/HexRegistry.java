@@ -9,6 +9,7 @@ import Alexthw.Hexblades.network.RefillEffectPacket;
 import Alexthw.Hexblades.network.WeaponAwakenPacket;
 import Alexthw.Hexblades.ritual.HexRituals;
 import Alexthw.Hexblades.spells.HexSpells;
+import Alexthw.Hexblades.temp.TempRecipes;
 import Alexthw.Hexblades.util.CompatUtil;
 import elucent.eidolon.network.Networking;
 import net.minecraft.client.settings.KeyBinding;
@@ -17,6 +18,8 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.fml.RegistryObject;
 import org.lwjgl.glfw.GLFW;
+
+import java.lang.reflect.InvocationTargetException;
 
 import static Alexthw.Hexblades.registers.Registry.POTIONS;
 import static Alexthw.Hexblades.registers.Registry.POTION_TYPES;
@@ -42,11 +45,16 @@ public class HexRegistry {
 
     public static void post_init() {
         Network();
+        TempRecipes.init();
         HexRituals.init();
         CodexHexChapters.init();
         CompatUtil.check();
         if (isMalumLoaded()) {
-            MalumCompat.start();
+            try {
+                MalumCompat.start();
+            } catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
         }
     }
 
