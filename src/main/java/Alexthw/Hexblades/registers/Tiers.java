@@ -9,7 +9,7 @@ public class Tiers {
     public static class HexiumTier implements IItemTier {
         @Override
         public int getMaxUses() {
-            return 1000;
+            return 750;
         }
 
         @Override

@@ -14,6 +14,8 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
+import static Alexthw.Hexblades.ConfigHandler.COMMON;
+
 public class IceKatana1 extends HexSwordItem {
 
     public IceKatana1(Properties props) {
@@ -27,7 +29,7 @@ public class IceKatana1 extends HexSwordItem {
 
     @Override
     public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
-        target.attackEntityFrom(new EntityDamageSource(Registry.FROST_DAMAGE.getDamageType(), attacker).setDamageBypassesArmor(), (float) (getDevotion(attacker) / 20));
+        target.attackEntityFrom(new EntityDamageSource(Registry.FROST_DAMAGE.getDamageType(), attacker).setDamageBypassesArmor(), (float) (getDevotion(attacker) / COMMON.KatanaED.get()));
         target.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 200, 0));
     }
 
@@ -37,8 +39,8 @@ public class IceKatana1 extends HexSwordItem {
 
         setAwakenedState(weapon, !getAwakened(weapon));
 
-        setAttackPower(weapon, devotion / 25);
-        setAttackSpeed(weapon, devotion / 90);
+        setAttackPower(weapon, devotion / COMMON.KatanaDS1.get());
+        setAttackSpeed(weapon, devotion / 100);
     }
 
     @Override

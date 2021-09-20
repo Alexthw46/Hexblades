@@ -11,6 +11,8 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
+import static Alexthw.Hexblades.ConfigHandler.COMMON;
+
 public class FireBroad1 extends HexSwordItem {
 
     public FireBroad1(Properties props) {
@@ -24,7 +26,7 @@ public class FireBroad1 extends HexSwordItem {
 
     @Override
     public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
-        target.attackEntityFrom(new EntityDamageSource("lava", attacker).setDamageBypassesArmor(), (float) (getDevotion(attacker) / 20));
+        target.attackEntityFrom(new EntityDamageSource("lava", attacker).setDamageBypassesArmor(), (float) (getDevotion(attacker) / COMMON.SwordED1.get()));
         target.setFire(2);
     }
 
@@ -34,7 +36,7 @@ public class FireBroad1 extends HexSwordItem {
 
         setAwakenedState(weapon, !getAwakened(weapon));
 
-        setAttackPower(weapon, devotion / 20);
+        setAttackPower(weapon, devotion / COMMON.SwordDS1.get());
     }
 
     @Override

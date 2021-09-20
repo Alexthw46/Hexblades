@@ -4,6 +4,8 @@ import Alexthw.Hexblades.deity.HexFacts;
 import Alexthw.Hexblades.registers.HexBlock;
 import Alexthw.Hexblades.registers.HexItem;
 import Alexthw.Hexblades.ritual.HexRituals;
+import Alexthw.Hexblades.util.CompatUtil;
+import com.sammy.malum.core.init.items.MalumItems;
 import elucent.eidolon.Registry;
 import elucent.eidolon.codex.*;
 import elucent.eidolon.spell.Signs;
@@ -29,6 +31,7 @@ public class CodexHexChapters {
     static Chapter HEX_PRAY;
     static Chapter HEX_ALLOY;
     static Chapter MISC;
+    static Chapter MALUM;
     static Chapter HEXBLADES_INDEX;
 
 
@@ -143,6 +146,8 @@ public class CodexHexChapters {
                 )
         );
 
+        MALUM = new Chapter("hexblades.codex.chapter.malum", new TitlePage("hexblades.codex.page.malum"));
+
         //HexBlades
         ICE_KATANA = new Chapter("hexblades.codex.chapter.ice_katana",
                 new TitlePage("hexblades.codex.page.ice_katana"),
@@ -198,23 +203,42 @@ public class CodexHexChapters {
                 ),
                 new TextPage("hexblades.codex.page.thunder_duals.powers"));
 
-        HEXBLADES_INDEX = new Chapter("hexblades.codex.chapter.hex_index",
-                new TitledIndexPage("hexblades.codex.hex_index.0",
-                        new IndexPage.IndexEntry(MISC, new ItemStack(HexBlock.EVERFULL_URN.get())),
-                        new IndexPage.IndexEntry(HEX_ALLOY, new ItemStack(HexItem.HEXIUM_INGOT.get())),
-                        new IndexPage.SignLockedEntry(HEX_PRAY, new ItemStack(HexItem.DEV_SWORD.get()), Signs.SOUL_SIGN),
-                        new IndexPage.FactLockedEntry(HEX_CORE, new ItemStack(HexItem.ELEMENTAL_CORE.get()), HexFacts.AWAKENING_RITUAL),
-                        new IndexPage.FactLockedEntry(HEX_INFUSION, new ItemStack(HexItem.PATRON_SOUL2.get()), HexFacts.STAR_INFUSION)
-                ),
-                new IndexPage(
-                        new IndexPage.FactLockedEntry(ICE_KATANA, new ItemStack(HexItem.FROST_RAZOR.get()), HexFacts.AWAKENING_RITUAL),
-                        new IndexPage.FactLockedEntry(FLAME_SWORD, new ItemStack(HexItem.FIRE_BRAND.get()), HexFacts.AWAKENING_RITUAL),
-                        new IndexPage.FactLockedEntry(WATER_SABER, new ItemStack(HexItem.WATER_SABER.get()), HexFacts.AWAKENING_RITUAL),
-                        new IndexPage.FactLockedEntry(EARTH_HAMMER, new ItemStack(HexItem.EARTH_HAMMER.get()), HexFacts.AWAKENING_RITUAL),
-                        new IndexPage.FactLockedEntry(THUNDER_DUALS, new ItemStack(HexItem.LIGHTNING_DAGGER_L.get()), HexFacts.AWAKENING_RITUAL)
+        if (CompatUtil.isMalumLoaded()) {
+            HEXBLADES_INDEX = new Chapter("hexblades.codex.chapter.hex_index",
+                    new TitledIndexPage("hexblades.codex.hex_index.0",
+                            new IndexPage.IndexEntry(MISC, new ItemStack(HexBlock.EVERFULL_URN.get())),
+                            new IndexPage.IndexEntry(MALUM, new ItemStack(MalumItems.BLUE_ETHER.get())),
+                            new IndexPage.IndexEntry(HEX_ALLOY, new ItemStack(HexItem.HEXIUM_INGOT.get())),
+                            new IndexPage.SignLockedEntry(HEX_PRAY, new ItemStack(HexItem.DEV_SWORD.get()), Signs.SOUL_SIGN),
+                            new IndexPage.FactLockedEntry(HEX_CORE, new ItemStack(HexItem.ELEMENTAL_CORE.get()), HexFacts.AWAKENING_RITUAL),
+                            new IndexPage.FactLockedEntry(HEX_INFUSION, new ItemStack(HexItem.PATRON_SOUL2.get()), HexFacts.STAR_INFUSION)
+                    ),
+                    new IndexPage(
+                            new IndexPage.FactLockedEntry(ICE_KATANA, new ItemStack(HexItem.FROST_RAZOR.get()), HexFacts.AWAKENING_RITUAL),
+                            new IndexPage.FactLockedEntry(FLAME_SWORD, new ItemStack(HexItem.FIRE_BRAND.get()), HexFacts.AWAKENING_RITUAL),
+                            new IndexPage.FactLockedEntry(WATER_SABER, new ItemStack(HexItem.WATER_SABER.get()), HexFacts.AWAKENING_RITUAL),
+                            new IndexPage.FactLockedEntry(EARTH_HAMMER, new ItemStack(HexItem.EARTH_HAMMER.get()), HexFacts.AWAKENING_RITUAL),
+                            new IndexPage.FactLockedEntry(THUNDER_DUALS, new ItemStack(HexItem.LIGHTNING_DAGGER_L.get()), HexFacts.AWAKENING_RITUAL)
 
-                ));
+                    ));
+        } else {
+            HEXBLADES_INDEX = new Chapter("hexblades.codex.chapter.hex_index",
+                    new TitledIndexPage("hexblades.codex.hex_index.0",
+                            new IndexPage.IndexEntry(MISC, new ItemStack(HexBlock.EVERFULL_URN.get())),
+                            new IndexPage.IndexEntry(HEX_ALLOY, new ItemStack(HexItem.HEXIUM_INGOT.get())),
+                            new IndexPage.SignLockedEntry(HEX_PRAY, new ItemStack(HexItem.DEV_SWORD.get()), Signs.SOUL_SIGN),
+                            new IndexPage.FactLockedEntry(HEX_CORE, new ItemStack(HexItem.ELEMENTAL_CORE.get()), HexFacts.AWAKENING_RITUAL),
+                            new IndexPage.FactLockedEntry(HEX_INFUSION, new ItemStack(HexItem.PATRON_SOUL2.get()), HexFacts.STAR_INFUSION)
+                    ),
+                    new IndexPage(
+                            new IndexPage.FactLockedEntry(ICE_KATANA, new ItemStack(HexItem.FROST_RAZOR.get()), HexFacts.AWAKENING_RITUAL),
+                            new IndexPage.FactLockedEntry(FLAME_SWORD, new ItemStack(HexItem.FIRE_BRAND.get()), HexFacts.AWAKENING_RITUAL),
+                            new IndexPage.FactLockedEntry(WATER_SABER, new ItemStack(HexItem.WATER_SABER.get()), HexFacts.AWAKENING_RITUAL),
+                            new IndexPage.FactLockedEntry(EARTH_HAMMER, new ItemStack(HexItem.EARTH_HAMMER.get()), HexFacts.AWAKENING_RITUAL),
+                            new IndexPage.FactLockedEntry(THUNDER_DUALS, new ItemStack(HexItem.LIGHTNING_DAGGER_L.get()), HexFacts.AWAKENING_RITUAL)
 
+                    ));
+        }
         if (Ccategories != null) {
             Ccategories.add(HEXBLADES = new Category("hexblades", new ItemStack(HexItem.PATRON_SOUL.get()), ColorUtil.packColor(255, 0, 0, 46), HEXBLADES_INDEX));
         }

@@ -10,6 +10,8 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
+import static Alexthw.Hexblades.ConfigHandler.COMMON;
+
 public class Lightning_SSwordR1 extends HexSwordItem {
 
     public Lightning_SSwordR1(Properties props) {
@@ -25,8 +27,8 @@ public class Lightning_SSwordR1 extends HexSwordItem {
             if (!isActivated) {
                 setAwakenedState(weapon, true);
 
-                setAttackPower(weapon, devotion / 30);
-                setAttackSpeed(weapon, devotion / 60);
+                setAttackPower(weapon, devotion / COMMON.DualsDS1.get());
+                setAttackSpeed(weapon, devotion / COMMON.DualsAS1.get());
             }
         } else {
             setAwakenedState(weapon, false);

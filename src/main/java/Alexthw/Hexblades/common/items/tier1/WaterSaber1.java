@@ -12,6 +12,8 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
+import static Alexthw.Hexblades.ConfigHandler.COMMON;
+
 public class WaterSaber1 extends HexSwordItem {
 
     public float shield;
@@ -46,12 +48,12 @@ public class WaterSaber1 extends HexSwordItem {
 
         setAwakenedState(weapon, !getAwakened(weapon));
 
-        setAttackPower(weapon, devotion / 25);
-        setShielding(weapon, (float) (devotion / 20));
+        setAttackPower(weapon, devotion / COMMON.SaberDS1.get());
+        setShielding(weapon, (float) (devotion / COMMON.SaberSH1.get()));
     }
 
-    public void setShielding(ItemStack weapon, float dmgred) {
-        shield = isActivated ? dmgred : 0;
+    public void setShielding(ItemStack weapon, float damageReduction) {
+        shield = isActivated ? damageReduction : 0;
     }
 
     @Override

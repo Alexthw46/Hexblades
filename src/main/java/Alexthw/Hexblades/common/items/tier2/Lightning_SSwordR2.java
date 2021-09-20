@@ -8,6 +8,8 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.world.World;
 
+import static Alexthw.Hexblades.ConfigHandler.COMMON;
+
 public class Lightning_SSwordR2 extends Lightning_SSwordR1 {
     public Lightning_SSwordR2(Properties props) {
         super(props);
@@ -21,8 +23,8 @@ public class Lightning_SSwordR2 extends Lightning_SSwordR1 {
             if (!isActivated) {
                 setAwakenedState(weapon, true);
 
-                setAttackPower(weapon, devotion / 20);
-                setAttackSpeed(weapon, devotion / 40);
+                setAttackPower(weapon, devotion / COMMON.DualsDS2.get());
+                setAttackSpeed(weapon, devotion / COMMON.DualsAS2.get());
             }
         } else {
             setAwakenedState(weapon, false);

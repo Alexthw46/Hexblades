@@ -24,6 +24,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
+import static Alexthw.Hexblades.ConfigHandler.COMMON;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
@@ -61,9 +62,9 @@ public class Lightning_SSwordL1 extends HexSwordItem {
     public void recalculatePowers(ItemStack weapon, World world, PlayerEntity player) {
         if (isActivated) {
             double devotion = getDevotion(player);
-            rechargeTick = max(1, (int) devotion / 2);
-            setAttackPower(weapon, devotion / 30);
-            setAttackSpeed(weapon, devotion / 60);
+            rechargeTick = max(1, (int) devotion / COMMON.DualsRR.get());
+            setAttackPower(weapon, devotion / COMMON.DualsDS1.get());
+            setAttackSpeed(weapon, devotion / COMMON.DualsAS1.get());
         }
     }
 

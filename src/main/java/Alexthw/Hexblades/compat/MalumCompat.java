@@ -43,12 +43,18 @@ public class MalumCompat {
         Method setPowerMethod = ObfuscationReflectionHelper.findMethod(AltarEntry.class, "setPower", double.class);
         if (AltarEntriesCopy != null) {
 
-            AltarEntriesCopy.put(MalumBlocks.BLUE_ETHER_BRAZIER.get().getDefaultState(), (AltarEntry) setPowerMethod.invoke(altarEntryConstructor.newInstance(AltarKeys.LIGHT_KEY), 1.0D));
-            AltarEntriesCopy.put(MalumBlocks.RED_ETHER_BRAZIER.get().getDefaultState(), (AltarEntry) setPowerMethod.invoke(altarEntryConstructor.newInstance(AltarKeys.LIGHT_KEY), 1.0D));
-            AltarEntriesCopy.put(MalumBlocks.YELLOW_ETHER_BRAZIER.get().getDefaultState(), (AltarEntry) setPowerMethod.invoke(altarEntryConstructor.newInstance(AltarKeys.LIGHT_KEY), 1.0D));
-            AltarEntriesCopy.put(MalumBlocks.GREEN_ETHER_BRAZIER.get().getDefaultState(), (AltarEntry) setPowerMethod.invoke(altarEntryConstructor.newInstance(AltarKeys.LIGHT_KEY), 1.0D));
-            AltarEntriesCopy.put(MalumBlocks.LIGHT_BLUE_ETHER_BRAZIER.get().getDefaultState(), (AltarEntry) setPowerMethod.invoke(altarEntryConstructor.newInstance(AltarKeys.LIGHT_KEY), 1.0D));
-            AltarEntriesCopy.put(MalumBlocks.PINK_ETHER_BRAZIER.get().getDefaultState(), (AltarEntry) setPowerMethod.invoke(altarEntryConstructor.newInstance(AltarKeys.LIGHT_KEY), 1.0D));
+            AltarEntriesCopy.put(MalumBlocks.BLUE_ETHER_BRAZIER.get().getDefaultState(), (AltarEntry) setPowerMethod.invoke(altarEntryConstructor.newInstance(AltarKeys.LIGHT_KEY), 1.5D));
+            AltarEntriesCopy.put(MalumBlocks.RED_ETHER_BRAZIER.get().getDefaultState(), (AltarEntry) setPowerMethod.invoke(altarEntryConstructor.newInstance(AltarKeys.LIGHT_KEY), 1.5D));
+            AltarEntriesCopy.put(MalumBlocks.YELLOW_ETHER_BRAZIER.get().getDefaultState(), (AltarEntry) setPowerMethod.invoke(altarEntryConstructor.newInstance(AltarKeys.LIGHT_KEY), 1.5D));
+            AltarEntriesCopy.put(MalumBlocks.GREEN_ETHER_BRAZIER.get().getDefaultState(), (AltarEntry) setPowerMethod.invoke(altarEntryConstructor.newInstance(AltarKeys.LIGHT_KEY), 1.5D));
+            AltarEntriesCopy.put(MalumBlocks.LIGHT_BLUE_ETHER_BRAZIER.get().getDefaultState(), (AltarEntry) setPowerMethod.invoke(altarEntryConstructor.newInstance(AltarKeys.LIGHT_KEY), 1.5D));
+            AltarEntriesCopy.put(MalumBlocks.PINK_ETHER_BRAZIER.get().getDefaultState(), (AltarEntry) setPowerMethod.invoke(altarEntryConstructor.newInstance(AltarKeys.LIGHT_KEY), 1.5D));
+            AltarEntriesCopy.put(MalumBlocks.LIME_ETHER_BRAZIER.get().getDefaultState(), (AltarEntry) setPowerMethod.invoke(altarEntryConstructor.newInstance(AltarKeys.LIGHT_KEY), 1.5D));
+            AltarEntriesCopy.put(MalumBlocks.CYAN_ETHER_BRAZIER.get().getDefaultState(), (AltarEntry) setPowerMethod.invoke(altarEntryConstructor.newInstance(AltarKeys.LIGHT_KEY), 1.5D));
+            AltarEntriesCopy.put(MalumBlocks.PURPLE_ETHER_BRAZIER.get().getDefaultState(), (AltarEntry) setPowerMethod.invoke(altarEntryConstructor.newInstance(AltarKeys.LIGHT_KEY), 1.5D));
+            AltarEntriesCopy.put(MalumBlocks.ORANGE_ETHER_BRAZIER.get().getDefaultState(), (AltarEntry) setPowerMethod.invoke(altarEntryConstructor.newInstance(AltarKeys.LIGHT_KEY), 1.5D));
+            AltarEntriesCopy.put(MalumBlocks.MAGENTA_ETHER_BRAZIER.get().getDefaultState(), (AltarEntry) setPowerMethod.invoke(altarEntryConstructor.newInstance(AltarKeys.LIGHT_KEY), 1.5D));
+            AltarEntriesCopy.put(MalumBlocks.BROWN_ETHER_BRAZIER.get().getDefaultState(), (AltarEntry) setPowerMethod.invoke(altarEntryConstructor.newInstance(AltarKeys.LIGHT_KEY), 1.5D));
 
         }
     }

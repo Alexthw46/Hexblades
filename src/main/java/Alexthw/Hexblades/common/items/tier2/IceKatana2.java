@@ -8,6 +8,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.world.World;
 
+import static Alexthw.Hexblades.ConfigHandler.COMMON;
+
 public class IceKatana2 extends IceKatana1 {
     public IceKatana2(Properties props) {
         super(5, -2.5F, props);
@@ -33,7 +35,7 @@ public class IceKatana2 extends IceKatana1 {
 
         setAwakenedState(weapon, !getAwakened(weapon));
 
-        setAttackPower(weapon, devotion / 15);
+        setAttackPower(weapon, devotion / COMMON.KatanaDS2.get());
         setAttackSpeed(weapon, devotion / 60);
     }
 }

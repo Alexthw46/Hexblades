@@ -22,6 +22,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
+import static Alexthw.Hexblades.ConfigHandler.COMMON;
+
 public class EarthHammer1 extends HexSwordItem {
 
     protected float baseMiningSpeed;
@@ -79,8 +81,8 @@ public class EarthHammer1 extends HexSwordItem {
         double devotion = getDevotion(player);
 
         if (!mineSwitch) setAwakenedState(weapon, !getAwakened(weapon));
-        setAttackPower(weapon, mineSwitch ? -6 : (devotion / 10));
-        setMiningSpeed((float) (devotion / 20));
+        setAttackPower(weapon, mineSwitch ? -6 : (devotion / COMMON.HammerDS1.get()));
+        setMiningSpeed((float) (devotion / COMMON.HammerMS1.get()));
 
     }
 

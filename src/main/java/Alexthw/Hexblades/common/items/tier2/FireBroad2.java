@@ -9,6 +9,8 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.world.World;
 
+import static Alexthw.Hexblades.ConfigHandler.COMMON;
+
 public class FireBroad2 extends FireBroad1 {
 
 
@@ -33,7 +35,7 @@ public class FireBroad2 extends FireBroad1 {
 
         setAwakenedState(weapon, !getAwakened(weapon));
 
-        setAttackPower(weapon, devotion / 15);
+        setAttackPower(weapon, devotion / COMMON.SwordDS2.get());
     }
 
     @Override
@@ -51,7 +53,7 @@ public class FireBroad2 extends FireBroad1 {
 
     @Override
     public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
-        target.attackEntityFrom(new EntityDamageSource("magic", attacker).setDamageBypassesArmor(), (float) (getDevotion(attacker) / 15));
+        target.attackEntityFrom(new EntityDamageSource("magic", attacker).setDamageBypassesArmor(), (float) (getDevotion(attacker) / COMMON.SwordED2.get()));
     }
 
 }

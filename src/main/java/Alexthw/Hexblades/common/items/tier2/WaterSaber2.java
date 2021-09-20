@@ -10,6 +10,7 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.world.World;
 
+import static Alexthw.Hexblades.ConfigHandler.COMMON;
 import static net.minecraft.util.DamageSource.DROWN;
 import static net.minecraft.util.DamageSource.MAGIC;
 
@@ -22,10 +23,11 @@ public class WaterSaber2 extends WaterSaber1 {
 
     @Override
     public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
+        float bonus_dmg = (float) (getDevotion(attacker) / COMMON.SaberED2.get());
         if (target.getCreatureAttribute() == CreatureAttribute.WATER) {
-            target.attackEntityFrom(new EntityDamageSource(MAGIC.getDamageType(), attacker).setDamageBypassesArmor(), (float) (getDevotion(attacker) / 15));
+            target.attackEntityFrom(new EntityDamageSource(MAGIC.getDamageType(), attacker).setDamageBypassesArmor(), bonus_dmg);
         } else {
-            target.attackEntityFrom(new EntityDamageSource(DROWN.getDamageType(), attacker).setDamageBypassesArmor(), (float) (getDevotion(attacker) / 15));
+            target.attackEntityFrom(new EntityDamageSource(DROWN.getDamageType(), attacker).setDamageBypassesArmor(), bonus_dmg);
         }
     }
 
@@ -45,8 +47,8 @@ public class WaterSaber2 extends WaterSaber1 {
 
         setAwakenedState(weapon, !getAwakened(weapon));
 
-        setAttackPower(weapon, devotion / 15);
-        setShielding(weapon, (float) (devotion / 15));
+        setAttackPower(weapon, devotion / COMMON.SaberDS2.get());
+        setShielding(weapon, (float) (devotion / COMMON.SaberSH2.get()));
     }
 
 

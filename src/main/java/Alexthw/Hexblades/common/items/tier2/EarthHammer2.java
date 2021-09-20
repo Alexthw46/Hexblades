@@ -9,6 +9,8 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.world.World;
 
+import static Alexthw.Hexblades.ConfigHandler.COMMON;
+
 public class EarthHammer2 extends EarthHammer1 {
 
     public EarthHammer2(Properties props) {
@@ -44,8 +46,8 @@ public class EarthHammer2 extends EarthHammer1 {
 
         if (!mineSwitch) setAwakenedState(weapon, !getAwakened(weapon));
 
-        setAttackPower(weapon, mineSwitch ? -8 : (devotion / 15));
-        setMiningSpeed((float) (devotion));
+        setAttackPower(weapon, mineSwitch ? -8 : (devotion / COMMON.HammerDS2.get()));
+        setMiningSpeed((float) (devotion / COMMON.HammerMS2.get()));
     }
 
 }

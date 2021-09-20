@@ -47,7 +47,6 @@ public class HexRegistry {
         Network();
         TempRecipes.init();
         HexRituals.init();
-        CodexHexChapters.init();
         CompatUtil.check();
         if (isMalumLoaded()) {
             try {
@@ -56,6 +55,7 @@ public class HexRegistry {
                 e.printStackTrace();
             }
         }
+        CodexHexChapters.init();
     }
 
     private static void Network() {

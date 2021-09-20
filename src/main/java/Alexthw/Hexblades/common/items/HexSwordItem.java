@@ -31,8 +31,8 @@ import java.util.List;
 
 public class HexSwordItem extends SwordItem {
 
-    protected double baseAttack;
-    protected double baseSpeed;
+    protected final double baseAttack;
+    protected final double baseSpeed;
     protected boolean isActivated;
 
     protected String tooltipText = "The Dev Sword, you shouldn't read this";
