@@ -40,7 +40,7 @@ public class IceKatana1 extends HexSwordItem {
         setAwakenedState(weapon, !getAwakened(weapon));
 
         setAttackPower(weapon, devotion / COMMON.KatanaDS1.get());
-        setAttackSpeed(weapon, devotion / 100);
+        setAttackSpeed(weapon, devotion / COMMON.KatanaAS1.get());
     }
 
     @Override

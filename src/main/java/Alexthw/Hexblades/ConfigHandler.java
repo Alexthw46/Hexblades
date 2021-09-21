@@ -14,6 +14,8 @@ public class ConfigHandler {
 
         public final ForgeConfigSpec.ConfigValue<Integer> KatanaDS1;
         public final ForgeConfigSpec.ConfigValue<Integer> KatanaDS2;
+        public final ForgeConfigSpec.ConfigValue<Integer> KatanaAS1;
+        public final ForgeConfigSpec.ConfigValue<Integer> KatanaAS2;
         public final ForgeConfigSpec.ConfigValue<Integer> KatanaED;
 
         public final ForgeConfigSpec.ConfigValue<Integer> SaberDS1;
@@ -31,96 +33,113 @@ public class ConfigHandler {
 
 
         public final ForgeConfigSpec.ConfigValue<Integer> HammerDS1;
-        public final ForgeConfigSpec.ConfigValue<Integer> HammerED1;
+        public final ForgeConfigSpec.ConfigValue<Float> HammerED1;
         public final ForgeConfigSpec.ConfigValue<Integer> HammerMS1;
+        public final ForgeConfigSpec.ConfigValue<Integer> HammerKB1;
         public final ForgeConfigSpec.ConfigValue<Integer> HammerDS2;
-        public final ForgeConfigSpec.ConfigValue<Integer> HammerED2;
+        public final ForgeConfigSpec.ConfigValue<Float> HammerED2;
         public final ForgeConfigSpec.ConfigValue<Integer> HammerMS2;
+        public final ForgeConfigSpec.ConfigValue<Integer> HammerKB2;
 
 
         public Common(ForgeConfigSpec.Builder builder) {
-            builder.push("Weapon scaling - Sword");
+
+            builder.comment("Adjust these values to balance the bonus from devotion an Hexblade gets while awakened. Max devotion : 60")
+                    .push("Weapon scaling - Sword");
+
             SwordDS1 = builder
                     .comment("Set the ratio of devotion -> attack power of the fire sword Tier 1.")
-                    .define("divide by", 20);
+                    .define("SwDS1 divide by", 20);
             SwordDS2 = builder
                     .comment("Set the ratio of devotion -> attack power of the fire sword Tier 2.")
-                    .define("divide by", 15);
+                    .define("SwDS2 divide by", 15);
             SwordED1 = builder
                     .comment("Set the ratio of devotion -> elemental damage of the fire sword Tier 1.")
-                    .define("divide by", 20);
+                    .define("SwED1 divide by", 20);
             SwordED2 = builder
                     .comment("Set the ratio of devotion -> elemental damage of the fire sword Tier 2.")
-                    .define("divide by", 15);
+                    .define("SwED2 divide by", 15);
             builder.pop();
 
             builder.push("Weapon scaling - Katana");
             KatanaDS1 = builder
                     .comment("Set the ratio of devotion -> attack power of the ice katana Tier 1.")
-                    .define("divide by", 25);
+                    .define("KDS1 divide by", 25);
             KatanaDS2 = builder
                     .comment("Set the ratio of devotion -> attack power of the ice katana Tier 2.")
-                    .define("divide by", 15);
+                    .define("KDS2 divide by", 15);
+            KatanaAS1 = builder
+                    .comment("Set the ratio of devotion -> attack speed of the ice katana Tier 1.")
+                    .define("KAS1 divide by", 120);
+            KatanaAS2 = builder
+                    .comment("Set the ratio of devotion -> attack speed of the ice katana Tier 2.")
+                    .define("KAS2 divide by", 80);
             KatanaED = builder
                     .comment("Set the ratio of devotion -> elemental damage of the ice katana Tier 1.")
-                    .define("divide by", 20);
+                    .define("KED divide by", 20);
             builder.pop();
 
             builder.push("Weapon scaling - Saber");
             SaberDS1 = builder
                     .comment("Set the ratio of devotion -> attack power of the water saber Tier 1.")
-                    .define("divide by", 25);
+                    .define("SaDS1 divide by", 25);
             SaberSH1 = builder
                     .comment("Set the ratio of devotion -> damage reduction of the water saber Tier 1.")
-                    .define("divide by", 20);
+                    .define("SaSH1 divide by", 20);
             SaberDS2 = builder
                     .comment("Set the ratio of devotion -> attack power of the water saber Tier 2.")
-                    .define("divide by", 15);
+                    .define("SaDS2 divide by", 15);
             SaberSH2 = builder
                     .comment("Set the ratio of devotion -> damage reduction of the water saber Tier 2.")
-                    .define("divide by", 15);
+                    .define("SaSH2 divide by", 15);
             SaberED2 = builder
                     .comment("Set the ratio of devotion -> elemental damage of the water saber Tier 2.")
-                    .define("divide by", 15);
+                    .define("SaED2 divide by", 15);
             builder.pop();
 
             builder.push("Weapon scaling - Dual");
             DualsDS1 = builder
                     .comment("Set the ratio of devotion -> attack power of the thunder duals Tier 1.")
-                    .define("divide by", 30);
+                    .define("DDS1 divide by", 30);
             DualsAS1 = builder
                     .comment("Set the ratio of devotion -> attack speed of the thunder duals Tier 1.")
-                    .define("divide by", 60);
+                    .define("DAS1 divide by", 60);
             DualsDS2 = builder
                     .comment("Set the ratio of devotion -> attack power of the fire sword Tier 2.")
-                    .define("divide by", 20);
+                    .define("DDS2 divide by", 20);
             DualsAS2 = builder
                     .comment("Set the ratio of devotion -> attack speed of the thunder duals Tier 2.")
-                    .define("divide by", 40);
+                    .define("DAS2 divide by", 40);
             DualsRR = builder
                     .comment("Set the ratio of devotion -> recharge rate of the left thunder dual.")
-                    .define("divide by", 2);
+                    .define("DRR divide by", 2);
             builder.pop();
 
             builder.push("Weapon scaling - Hammer");
             HammerDS1 = builder
                     .comment("Set the ratio of devotion -> attack power of the earth hammer Tier 1.")
-                    .define("divide by", 20);
+                    .define("HDS1 divide by", 20);
             HammerED1 = builder
                     .comment("Set the ratio of devotion -> elemental damage of the earth hammer Tier 1.")
-                    .define("divide by", 20);
+                    .define("HED1 fixed damage", 2.0F);
             HammerMS1 = builder
                     .comment("Set the ratio of devotion -> mining speed of the earth hammer Tier 1.")
-                    .define("divide by", 20);
+                    .define("HMS1 divide by", 20);
+            HammerKB1 = builder
+                    .comment("Set the ratio of devotion -> knockback of the earth hammer Tier 1.")
+                    .define("HKB1 divide by", 30);
             HammerDS2 = builder
                     .comment("Set the ratio of devotion -> attack power of the earth hammer Tier 2.")
-                    .define("divide by", 15);
+                    .define("HDS2 divide by", 15);
             HammerED2 = builder
                     .comment("Set the ratio of devotion -> elemental damage of the earth hammer Tier 2.")
-                    .define("divide by", 20);
+                    .define("HED2 fixed damage", 2.0F);
             HammerMS2 = builder
                     .comment("Set the ratio of devotion -> mining speed of the earth hammer Tier 2.")
-                    .define("divide by", 10);
+                    .define("HMS2 divide by", 10);
+            HammerKB2 = builder
+                    .comment("Set the ratio of devotion -> knockback of the earth hammer Tier 2.")
+                    .define("HKB2 divide by", 20);
             builder.pop();
 
         }

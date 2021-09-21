@@ -30,7 +30,7 @@ public class EarthHammer2 extends EarthHammer1 {
     public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
         float power = 1.5F;
         if (isActivated) {
-            target.attackEntityFrom(new EntityDamageSource("anvil", attacker).setDamageBypassesArmor(), 2.0f);
+            target.attackEntityFrom(new EntityDamageSource("anvil", attacker).setDamageBypassesArmor(), COMMON.HammerED2.get());
             target.addPotionEffect(new EffectInstance(Effects.WEAKNESS, 300, 0));
             power = (float) (2.0F + getDevotion(attacker) / 20);
         }

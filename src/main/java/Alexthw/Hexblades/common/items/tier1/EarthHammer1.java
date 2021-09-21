@@ -51,7 +51,7 @@ public class EarthHammer1 extends HexSwordItem {
     public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
         float power = 1.0F;
         if (isActivated) {
-            target.attackEntityFrom(new EntityDamageSource("anvil", attacker).setDamageBypassesArmor(), 2.0f);
+            target.attackEntityFrom(new EntityDamageSource("anvil", attacker).setDamageBypassesArmor(), COMMON.HammerED1.get());
             power = (float) (1.0F + getDevotion(attacker) / 30);
         }
         double X = attacker.getPosX() - target.getPosX();
