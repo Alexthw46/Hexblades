@@ -36,6 +36,6 @@ public class IceKatana2 extends IceKatana1 {
         setAwakenedState(weapon, !getAwakened(weapon));
 
         setAttackPower(weapon, devotion / COMMON.KatanaDS2.get());
-        setAttackSpeed(weapon, devotion / 60);
+        setAttackSpeed(weapon, devotion / COMMON.KatanaAS2.get());
     }
 }
