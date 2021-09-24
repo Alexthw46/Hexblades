@@ -1,9 +1,12 @@
 package Alexthw.Hexblades.client;
 
 import Alexthw.Hexblades.Hexblades;
+import Alexthw.Hexblades.client.render.entity.EarthElementalER;
 import Alexthw.Hexblades.client.render.entity.ElementalEntityRender;
 import Alexthw.Hexblades.client.render.entity.FireElementalER;
+import Alexthw.Hexblades.client.render.models.EarthElementalModel;
 import Alexthw.Hexblades.client.render.models.FireElementalModel;
+import Alexthw.Hexblades.client.render.models.MinionElementalModel;
 import Alexthw.Hexblades.common.blocks.tile_entities.EverfullUrnBlock;
 import Alexthw.Hexblades.common.blocks.tile_entities.SwordStandBlock;
 import Alexthw.Hexblades.common.blocks.tile_entities.SwordStandRenderer;
@@ -69,9 +72,11 @@ public class ClientEvents {
     }
 
     public static void initClientEvents(FMLClientSetupEvent event) {
+
         RenderingRegistry.registerEntityRenderingHandler(HexEntityType.FULGOR_PROJECTILE.get(), EmptyRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(HexEntityType.TEST_ELEMENTAL.get(), (erm) -> new ElementalEntityRender(erm, new FireElementalModel(), 0.6F));
-        RenderingRegistry.registerEntityRenderingHandler(HexEntityType.FIRE_ELEMENTAL.get(), (erm) -> new FireElementalER(erm, new FireElementalModel(), 0.6F));
+        RenderingRegistry.registerEntityRenderingHandler(HexEntityType.TEST_ELEMENTAL.get(), (erm) -> new ElementalEntityRender(erm, new MinionElementalModel(), 0.6F));
+        RenderingRegistry.registerEntityRenderingHandler(HexEntityType.FIRE_ELEMENTAL.get(), (erm) -> new FireElementalER(erm, new FireElementalModel(), 1.0F));
+        RenderingRegistry.registerEntityRenderingHandler(HexEntityType.EARTH_ELEMENTAL.get(), (erm) -> new EarthElementalER(erm, new EarthElementalModel(), 1.0F));
 
         DeferredWorkQueue.runLater(() -> {
 

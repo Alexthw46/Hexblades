@@ -1,6 +1,7 @@
 package Alexthw.Hexblades.common.items.tier1;
 
 import Alexthw.Hexblades.common.items.HexSwordItem;
+import Alexthw.Hexblades.registers.Tiers;
 import Alexthw.Hexblades.util.HexUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
@@ -31,15 +32,16 @@ public class EarthHammer1 extends HexSwordItem {
     protected boolean mineSwitch;
 
     public EarthHammer1(Properties props) {
-        super(8, -3.2F, props, 6.0F);
+        this(8, -3.2F,
+                props.addToolType(net.minecraftforge.common.ToolType.PICKAXE, Tiers.PatronWeaponTier.INSTANCE.getHarvestLevel()));
         baseMiningSpeed = 6.0F;
         newMiningSpeed = baseMiningSpeed;
         tooltipText = "tooltip.HexSwordItem.earth_hammer";
         mineSwitch = false;
     }
 
-    public EarthHammer1(int attackDamage, float attackSpeed, Properties props, float mining_speed) {
-        super(attackDamage, attackSpeed, props, mining_speed);
+    public EarthHammer1(int attack, float speed, Properties props) {
+        super(attack, speed, props);
     }
 
     @Override
@@ -117,6 +119,7 @@ public class EarthHammer1 extends HexSwordItem {
         return material == Material.ROCK || material == Material.IRON || material == Material.ANVIL;
     }
 
+    @Override
     public boolean canPlayerBreakBlockWhileHolding(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
         return true;
     }
@@ -146,10 +149,10 @@ public class EarthHammer1 extends HexSwordItem {
 
     @Override
     public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-        if (!worldIn.isRemote && state.getBlockHardness(worldIn, pos) != 0.0F) {
+        if (!worldIn.isRemote && (state.getBlockHardness(worldIn, pos) != 0.0F) && entityLiving instanceof PlayerEntity) {
             if (stack.getMaxDamage() - stack.getDamage() < 101) {
                 mineSwitch = false;
-                setAwakenedState(stack, false);
+                recalculatePowers(stack, worldIn, (PlayerEntity) entityLiving);
             } else {
                 stack.damageItem(100, entityLiving, (entity) -> entity.sendBreakAnimation(EquipmentSlotType.MAINHAND));
             }

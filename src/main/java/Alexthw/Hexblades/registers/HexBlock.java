@@ -17,8 +17,6 @@ import static Alexthw.Hexblades.registers.HexItem.addTabProp;
 public class HexBlock {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Hexblades.MOD_ID);
 
-
-    //public static final RegistryObject<Block> DEV_BLOCK;
     public static final RegistryObject<Block> SWORD_STAND;
     public static final RegistryObject<Block> EVERFULL_URN;
 
@@ -26,16 +24,6 @@ public class HexBlock {
 
 
     static {
-        /*
-        DEV_BLOCK = addBlock("dev_block",
-                new Block(blockProps(Material.ROCK, MaterialColor.BLUE)
-                        .sound(SoundType.STONE)
-                        .hardnessAndResistance(1.5f, 3.0f)
-                        .harvestTool(ToolType.PICKAXE)
-                        .harvestLevel(1)
-                        .setRequiresTool()
-                ));
-        */
         SWORD_STAND = addBlock("sword_stand", new SwordStandBlock(blockProps(Material.ROCK, MaterialColor.RED)
                 .notSolid()
         ));

@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 
 public class HexDeity extends Deity {
 
-    ResourceLocation id = HexDeities.temp_id;
+    final ResourceLocation id = HexDeities.temp_id;
 
     public HexDeity(ResourceLocation id, int red, int green, int blue) {
         super(id, red, green, blue);

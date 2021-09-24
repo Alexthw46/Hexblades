@@ -95,17 +95,17 @@ public class SwordStandTileEntity extends TileEntityBase {
 
     }
 
-    /*
+
     public ItemStack provide() {
         return this.stack.copy();
     }
 
     public void take() {
         this.stack = ItemStack.EMPTY;
-        if (!this.world.isRemote) {
+        if (this.world != null && !this.world.isRemote) {
             this.sync();
         }
 
     }
- */
+
 }

@@ -14,9 +14,8 @@ import static Alexthw.Hexblades.ConfigHandler.COMMON;
 public class EarthHammer2 extends EarthHammer1 {
 
     public EarthHammer2(Properties props) {
-        super(9, -3.2F, props, 7.0F);
-        baseMiningSpeed = 8.0F;
-        newMiningSpeed = baseMiningSpeed;
+        super(9, -3.2F, props);
+        baseMiningSpeed = newMiningSpeed = 8.0F;
         tooltipText = "tooltip.HexSwordItem.earth_hammer2";
         mineSwitch = false;
     }

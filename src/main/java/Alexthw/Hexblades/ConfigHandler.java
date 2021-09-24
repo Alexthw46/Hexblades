@@ -41,6 +41,7 @@ public class ConfigHandler {
         public final ForgeConfigSpec.ConfigValue<Integer> HammerMS2;
         public final ForgeConfigSpec.ConfigValue<Integer> HammerKB2;
 
+        public final ForgeConfigSpec.ConfigValue<Integer> UrnTickRate;
 
         public Common(ForgeConfigSpec.Builder builder) {
 
@@ -142,6 +143,10 @@ public class ConfigHandler {
                     .define("HKB2 divide by", 20);
             builder.pop();
 
+            builder.push("MISC Configs");
+            UrnTickRate = builder.
+                    comment("Set the cooldown of the Urn of Endless Waters")
+                    .define("Refill every x ticks", 100);
         }
     }
 

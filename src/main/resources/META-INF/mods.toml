@@ -4,19 +4,19 @@ license="All rights reserved"
 # A URL to refer people to when problems occur with this mod
 #issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
 [[mods]] #mandatory
-modId="hexblades"
-version="0.1"
-displayName="Hexblades"
+modId = "hexblades"
+version = "0.0.7"
+displayName = "Hexblades"
 # A URL to query for updates for this mod. See the JSON update specification https://mcforge.readthedocs.io/en/latest/gettingstarted/autoupdate/
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
-logoFile="examplemod.png" #optional
-credits="Alexthw"
-authors="Alexthw"
-description='''
-Descrizione
+logoFile = "hexblades.png" #optional
+credits = "Alexthw"
+authors = "Alexthw"
+description = '''
+WIP
 '''
 
 [[dependencies.hexblades]] #optional

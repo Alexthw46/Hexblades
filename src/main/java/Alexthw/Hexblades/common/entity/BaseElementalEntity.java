@@ -12,18 +12,18 @@ import net.minecraft.world.World;
 
 public class BaseElementalEntity extends MonsterEntity {
 
-    public BaseElementalEntity(EntityType<BaseElementalEntity> type, World worldIn) {
+    public BaseElementalEntity(EntityType<? extends BaseElementalEntity> type, World worldIn) {
         super(type, worldIn);
-        this.registerGoals();
     }
 
+    @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new SwimGoal(this));
         this.applyEntityAI();
     }
 
     public static AttributeModifierMap createAttributes() {
-        return MonsterEntity.func_234295_eP_().createMutableAttribute(Attributes.MAX_HEALTH, 100.0D).createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.2800000011920929D).createMutableAttribute(Attributes.ATTACK_DAMAGE, 5.0D).createMutableAttribute(Attributes.ARMOR, 10.0D).create();
+        return MonsterEntity.func_234295_eP_().createMutableAttribute(Attributes.MAX_HEALTH, 100.0D).createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.28D).createMutableAttribute(Attributes.ATTACK_DAMAGE, 5.0D).createMutableAttribute(Attributes.ARMOR, 10.0D).create();
     }
 
     protected void applyEntityAI() {
@@ -32,7 +32,7 @@ public class BaseElementalEntity extends MonsterEntity {
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal(this, PlayerEntity.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
     }
 
     public int getExperiencePoints(PlayerEntity player) {

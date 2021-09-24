@@ -25,6 +25,7 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
+import static Alexthw.Hexblades.ConfigHandler.COMMON;
 import static Alexthw.Hexblades.util.CompatUtil.isBotaniaLoaded;
 import static Alexthw.Hexblades.util.HexUtils.getTilesWithinAABB;
 import static net.minecraftforge.fml.common.ObfuscationReflectionHelper.getPrivateValue;
@@ -59,7 +60,7 @@ public class EverfullUrnTileEntity extends TileEntityBase implements ITickableTi
 
         if (world.isRemote() && (world.getGameTime() % 2 == 0)) {
             Particles.create(Registry.BUBBLE_PARTICLE).setScale(0.05F).setLifetime(10).randomOffset(0.125D, 0.0D).addVelocity(0, 0.05, 0).randomVelocity(0.0D, 0.15D).setColor(0.25F, 0.5F, 1).setAlpha(1.0F, 0.75F).setSpin(0.05F).spawn(this.world, (double) this.pos.getX() + 0.5, (double) this.pos.getY() + 0.9D, (double) this.pos.getZ() + 0.5);
-        } else if (world.getGameTime() % 100 == 0) {
+        } else if (world.getGameTime() % COMMON.UrnTickRate.get() == 0) {
 
             crucibles = getTilesWithinAABB(CrucibleTileEntity.class, getWorld(), new AxisAlignedBB(pos.add(-2, -1, -2), pos.add(3, 2, 3)));
             cauldrons = getCauldrons(getWorld(), new AxisAlignedBB(pos.add(-2, -1, -2), pos.add(3, 2, 3)));

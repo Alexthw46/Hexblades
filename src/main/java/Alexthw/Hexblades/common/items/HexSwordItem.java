@@ -37,17 +37,13 @@ public class HexSwordItem extends SwordItem {
 
     protected String tooltipText = "The Dev Sword, you shouldn't read this";
     protected int rechargeTick = 5;
-    protected int dialogueLines = 3;
+    protected final int dialogueLines = 3;
 
     public HexSwordItem(int attackDamage, float attackSpeed, Properties properties) {
         super(Tiers.PatronWeaponTier.INSTANCE, attackDamage, attackSpeed, properties);
         baseAttack = attackDamage;
         baseSpeed = attackSpeed;
         isActivated = false;
-    }
-
-    public HexSwordItem(int attackDamage, float attackSpeed, Properties properties, float mining_speed) {
-        this(attackDamage, attackSpeed, properties.addToolType(net.minecraftforge.common.ToolType.PICKAXE, Tiers.PatronWeaponTier.INSTANCE.getHarvestLevel()));
     }
 
     @Override
@@ -95,11 +91,11 @@ public class HexSwordItem extends SwordItem {
         if (attacker instanceof PlayerEntity) {
             if (target.hurtResistantTime > 0) {
                 target.hurtResistantTime = 0;
-                if (isActivated || onHitEffects()) applyHexEffects(stack, target, (PlayerEntity) attacker);
             }
+            if (isActivated || onHitEffects()) applyHexEffects(stack, target, (PlayerEntity) attacker);
+            stack.setDamage(Math.max(stack.getDamage() - 10, 0));
         }
-        stack.setDamage(Math.max(stack.getDamage() - 10, 0));
-        return super.hitEntity(stack, target, attacker);
+        return true;
     }
 
     protected boolean onHitEffects() {

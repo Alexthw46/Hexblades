@@ -20,6 +20,7 @@ import java.util.Set;
 
 import static Alexthw.Hexblades.util.HexUtils.prefix;
 
+@SuppressWarnings("CommentedOutCode")
 public class HexBlockStateProvider extends BlockStateProvider{
 
     public HexBlockStateProvider(DataGenerator gen, ExistingFileHelper exFileHelper) {
