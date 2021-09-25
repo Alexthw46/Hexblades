@@ -1,18 +1,24 @@
 package Alexthw.Hexblades.client.render.models;
 
+import Alexthw.Hexblades.Hexblades;
 import Alexthw.Hexblades.common.entity.BaseElementalEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.util.ResourceLocation;
+import software.bernie.geckolib3.model.AnimatedGeoModel;
 
-public class BaseElementalModel extends EntityModel<BaseElementalEntity> {
+public abstract class BaseElementalModel extends AnimatedGeoModel<BaseElementalEntity> {
+
     @Override
-    public void setRotationAngles(BaseElementalEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
+    public ResourceLocation getModelLocation(BaseElementalEntity baseElementalEntity) {
+        return new ResourceLocation(Hexblades.MOD_ID, "geo/" + ".geo.json");
     }
 
     @Override
-    public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
+    public ResourceLocation getTextureLocation(BaseElementalEntity baseElementalEntity) {
+        return new ResourceLocation(Hexblades.MOD_ID, "textures/entity/" + ".png");
+    }
 
+    @Override
+    public ResourceLocation getAnimationFileLocation(BaseElementalEntity baseElementalEntity) {
+        return new ResourceLocation(Hexblades.MOD_ID, "animations/" + "hexblades." + ".animation.json");
     }
 }

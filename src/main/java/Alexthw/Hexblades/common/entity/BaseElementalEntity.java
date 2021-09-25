@@ -9,12 +9,21 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class BaseElementalEntity extends MonsterEntity {
+public class BaseElementalEntity extends MonsterEntity implements IAnimatable {
 
     public BaseElementalEntity(EntityType<? extends BaseElementalEntity> type, World worldIn) {
         super(type, worldIn);
     }
+
+    protected AnimationFactory factory = new AnimationFactory(this);
+
 
     @Override
     protected void registerGoals() {
@@ -68,4 +77,17 @@ public class BaseElementalEntity extends MonsterEntity {
     }
 
 
+    protected <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        return PlayState.CONTINUE;
+    }
+
+    @Override
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController<>(this, "walk_controller", 20, this::predicate));
+    }
+
+    @Override
+    public AnimationFactory getFactory() {
+        return this.factory;
+    }
 }

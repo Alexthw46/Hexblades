@@ -12,11 +12,18 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.SmallFireballEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import java.util.EnumSet;
 
 public class FireElementalEntity extends BaseElementalEntity {
     private boolean isLit;
+    private boolean loadCannon;
 
     public FireElementalEntity(EntityType<FireElementalEntity> type, World worldIn) {
         super(type, worldIn);
@@ -24,7 +31,15 @@ public class FireElementalEntity extends BaseElementalEntity {
     }
 
     public float getBrightness() {
-        return 1.5F;
+        return 5.0F;
+    }
+
+    public int getExperiencePoints(PlayerEntity player) {
+        return 80;
+    }
+
+    private void setOnFire(boolean b) {
+        this.isLit = b;
     }
 
     @Override
@@ -39,24 +54,63 @@ public class FireElementalEntity extends BaseElementalEntity {
 
     @Override
     protected void applyEntityAI() {
-        this.goalSelector.addGoal(3, new FireballAttackGoal(this));
+        //target - no attacks
         this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-        this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
-        this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.0D, false));
         this.goalSelector.addGoal(6, new MoveTowardsTargetGoal(this, 1.0D, 6));
+        //attacks
+        this.goalSelector.addGoal(3, new FireballAttackGoal(this));
+        this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.0D, false));
+        this.goalSelector.addGoal(4, new SpinAttackGoal(this, 1.0D, false));
+        //no target
         this.goalSelector.addGoal(7, new RandomWalkingGoal(this, 1.0D));
+        this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
+        //target selectors
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, SpiderEntity.class, true));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PhantomEntity.class, true));
 
     }
 
-    public int getExperiencePoints(PlayerEntity player) {
-        return 80;
+    @Override
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController<>(this, "attack_controller", 10, this::attackPredicate));
+        data.addAnimationController(new AnimationController<>(this, "idle", 0, this::idleP));
+        super.registerControllers(data);
     }
 
-    private void setOnFire(boolean b) {
-        this.isLit = b;
+    private <T extends IAnimatable> PlayState idleP(AnimationEvent<T> event) {
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.hexblades.fe.idle.body"));
+        return PlayState.CONTINUE;
+    }
+
+    private <T extends IAnimatable> PlayState attackPredicate(AnimationEvent<T> event) {
+
+        if (this.isShooting()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.hexblades.fe.attacks.shoot"));
+        } else if (this.isSwingInProgress) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.hexblades.fe.attacks.melee"));
+        } else if (this.isLit) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.hexblades.fe.attacks.spin"));
+        } else {
+            return PlayState.STOP;
+        }
+        return PlayState.CONTINUE;
+    }
+
+    private boolean isShooting() {
+        return loadCannon;
+    }
+
+    @Override
+    protected <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+
+        if (event.isMoving()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.hexblades.fe.idle.arms"));
+            return PlayState.CONTINUE;
+        } else {
+            return PlayState.STOP;
+        }
+
     }
 
     static class FireballAttackGoal extends Goal {
@@ -91,6 +145,7 @@ public class FireElementalEntity extends BaseElementalEntity {
          */
         public void resetTask() {
             this.Firenando.setOnFire(false);
+            this.Firenando.loadCannon = false;
             this.firedRecentlyTimer = 0;
         }
 
@@ -162,5 +217,12 @@ public class FireElementalEntity extends BaseElementalEntity {
         }
     }
 
+    static class SpinAttackGoal extends MeleeAttackGoal {
+
+        public SpinAttackGoal(FireElementalEntity fireElementalEntity, double v, boolean b) {
+            super(fireElementalEntity, v, b);
+        }
+
+    }
 
 }

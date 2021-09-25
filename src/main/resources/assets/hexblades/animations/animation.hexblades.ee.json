@@ -1,0 +1,184 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.hexblades.fe.idle.arms": {
+      "loop": true,
+      "animation_length": 2,
+      "bones": {
+        "master": {
+          "scale": {
+            "vector": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        "r_arm": {
+          "rotation": {
+            "0.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            },
+            "0.52": {
+              "vector": [
+                0,
+                90,
+                0
+              ],
+              "easing": "linear"
+            },
+            "1.04": {
+              "vector": [
+                0,
+                180,
+                0
+              ]
+            },
+            "1.52": {
+              "vector": [
+                0,
+                270,
+                0
+              ]
+            },
+            "2.0": {
+              "vector": [
+                0,
+                360,
+                0
+              ]
+            }
+          }
+        },
+        "l_arm": {
+          "rotation": {
+            "0.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            },
+            "0.52": {
+              "vector": [
+                0,
+                90,
+                0
+              ]
+            },
+            "1.04": {
+              "vector": [
+                0,
+                180,
+                0
+              ]
+            },
+            "1.52": {
+              "vector": [
+                0,
+                270,
+                0
+              ]
+            },
+            "2.0": {
+              "vector": [
+                0,
+                360,
+                0
+              ]
+            }
+          }
+        }
+      }
+    },
+    "animation.hexblades.fe.idle": {
+      "loop": true,
+      "animation_length": 2,
+      "bones": {
+        "torso": {
+          "position": {
+            "0.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            },
+            "1.0": {
+              "vector": [
+                0,
+                -1,
+                0
+              ]
+            },
+            "2.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            }
+          }
+        },
+        "head": {
+          "position": {
+            "0.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            },
+            "1.0": {
+              "vector": [
+                0,
+                0.5,
+                0
+              ],
+              "easing": "linear"
+            },
+            "2.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            }
+          }
+        },
+        "flame_bott": {
+          "rotation": {
+            "0.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            },
+            "2.0": {
+              "vector": [
+                0,
+                360,
+                0
+              ]
+            }
+          }
+        },
+        "master": {
+          "scale": {
+            "vector": [
+              1.5,
+              1.5,
+              1.5
+            ]
+          }
+        }
+      }
+    }
+  },
+  "geckolib_format_version": 2
+}
