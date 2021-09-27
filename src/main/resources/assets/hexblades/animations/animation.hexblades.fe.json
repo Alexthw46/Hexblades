@@ -17,7 +17,7 @@
     },
     "animation.hexblades.fe.idle.arms": {
       "loop": true,
-      "animation_length": 2,
+      "animation_length": 1.04,
       "bones": {
         "r_arm": {
           "rotation": {
@@ -28,29 +28,7 @@
                 0
               ]
             },
-            "0.52": {
-              "vector": [
-                0,
-                90,
-                0
-              ],
-              "easing": "linear"
-            },
-            "1.04": {
-              "vector": [
-                0,
-                180,
-                0
-              ]
-            },
-            "1.52": {
-              "vector": [
-                0,
-                270,
-                0
-              ]
-            },
-            "2.0": {
+            "1.0": {
               "vector": [
                 0,
                 360,
@@ -68,28 +46,7 @@
                 0
               ]
             },
-            "0.52": {
-              "vector": [
-                0,
-                90,
-                0
-              ]
-            },
-            "1.04": {
-              "vector": [
-                0,
-                180,
-                0
-              ]
-            },
-            "1.52": {
-              "vector": [
-                0,
-                270,
-                0
-              ]
-            },
-            "2.0": {
+            "1.0": {
               "vector": [
                 0,
                 360,
@@ -585,7 +542,7 @@
     },
     "animation.hexblades.fe.attacks.melee": {
       "loop": true,
-      "animation_length": 2,
+      "animation_length": 1.32,
       "bones": {
         "arms": {
           "rotation": {
@@ -596,7 +553,7 @@
                 0
               ]
             },
-            "1.0": {
+            "0.68": {
               "vector": [
                 -150,
                 0,
@@ -607,12 +564,13 @@
                 1
               ]
             },
-            "2.0": {
+            "1.32": {
               "vector": [
                 0,
                 0,
                 0
-              ]
+              ],
+              "easing": "linear"
             }
           }
         }

@@ -149,5 +149,6 @@
   "item.hexblades.earth_hammer_2.dialogue.1": "The name is Terra Destroyer, but it was already taken",
   "item.hexblades.earth_hammer_2.dialogue.2": "I am better when it comes to destroy things",
   "item.hexblades.earth_hammer_2.dialogue.3": "Drilled like a cobblestone wall",
-  "key.hexblades.awake": "Awaken Hexblade in hand"
+  "entity.hexblades.fire_elemental": "Elemental of Flames",
+  "key.hexblades.awake": "Awaken held Hexblade"
 }

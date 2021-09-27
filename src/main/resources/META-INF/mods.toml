@@ -13,8 +13,8 @@ displayName = "Hexblades"
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
 logoFile = "hexblades.png" #optional
-credits = "Alexthw"
-authors = "Alexthw"
+credits = "alexthw"
+authors = "alexthw"
 description = '''
 WIP
 '''

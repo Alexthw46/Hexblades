@@ -1,21 +1,22 @@
 buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
-        jcenter()
+        maven { url = 'https://maven.parchmentmc.org' }
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
-
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath 'org.parchmentmc:librarian:1.+'
     }
 
 }
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.parchmentmc.librarian.forgegradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.16.5-0.0.6'
+version = '1.16.5-0.0.7'
 group = 'Alexthw46.hexblades'
 archivesBaseName = 'Hexblades'
 
@@ -27,12 +28,11 @@ sourceSets{
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
-    // The mappings can be changed at any time, and must be in the following format.
-    // snapshot_YYYYMMDD   Snapshot are built nightly.
-    // stable_#            Stables are built at the discretion of the MCP team.
-    // Use non-default mappings at your own risk. they may not always work.
+
     // Simply re-run your setup task after changing the mappings to update your workspace.
-    mappings channel: 'snapshot', version: '20201028-1.16.3'
+    mappings channel: 'parchment', version: '2021.08.29-1.16.5'
+
+    //mappings channel: 'snapshot', version: '20201028-1.16.3'
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
     
     // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
@@ -67,6 +67,9 @@ minecraft {
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+
 
             mods {
                 hexblades {
@@ -129,23 +132,22 @@ dependencies {
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.0'
-    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.16.5:3.0.45')
 
     //compats
     compileOnly fg.deobf("ignore:malum:1.16.5-0.3.0")
     compileOnly fg.deobf("vazkii.botania:Botania:1.16.5-418")
+    compileOnly fg.deobf("vulp:druidcraft:1.16.5-0.4.53")
 
     //dependencies
-    runtimeOnly fg.deobf("elucent:eidolon:0.2.7")
-    compileOnly fg.deobf("elucent:eidolon:0.2.7")
-
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.1")
-    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.1:api")
+    implementation fg.deobf("elucent:eidolon:0.2.7")
+    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.16.5:3.0.45')
+    implementation fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.1")
 
     //compileOnly fg.deobf('mezz.jei:jei-1.16.5:7.6.4.90')
-    runtimeOnly fg.deobf('mezz.jei:jei-1.16.5:7.6.4.90')
 
     //testers
+    //runtimeOnly fg.deobf('mezz.jei:jei-1.16.5:7.6.4.90')
+    //runtimeOnly fg.deobf("vulp:druidcraft:1.16.5-0.4.53")
     //runtimeOnly fg.deobf("ignore:malum:1.16.5-0.3.0")
     //runtimeOnly fg.deobf("vazkii.botania:Botania:1.16.5-418")
     //runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-53.1")
