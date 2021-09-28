@@ -27,6 +27,7 @@ public class CodexHexChapters {
     static Chapter EARTH_HAMMER;
     static Chapter THUNDER_DUALS;
     static Chapter HEX_INFUSION;
+    static Chapter HEX_EVOLUTION;
     static Chapter HEX_CORE;
     static Chapter HEX_PRAY;
     static Chapter HEX_ALLOY;
@@ -99,8 +100,16 @@ public class CodexHexChapters {
                 new TextPage("hexblades.codex.page.hex_core.1"));
 
         HEX_INFUSION = new Chapter("hexblades.codex.chapter.hex_touch",
-                new ChantPage("hexblades.codex.page.hex_touch.0", Signs.MIND_SIGN, Signs.SOUL_SIGN, Signs.MIND_SIGN, Signs.SOUL_SIGN),
-                new TextPage("hexblades.codex.page.hex_touch.1"),
+                new TextPage("hexblades.codex.page.hex_touch.0"),
+                new ChantPage("hexblades.codex.page.hex_touch.1", Signs.MIND_SIGN, Signs.SOUL_SIGN, Signs.MIND_SIGN, Signs.SOUL_SIGN),
+
+                new TextPage("hexblades.codex.page.elemental"),
+                new RitualPage(HexRituals.SUMMON_FIRE, new ItemStack(HexItem.SOUL_BAIT.get()),
+                        new RitualPage.RitualIngredient(new ItemStack(HexItem.SOUL_BAIT.get()), false)
+                )
+        );
+
+        HEX_EVOLUTION = new Chapter("hexblades.codex.chapter.evolution",
                 //evolve katana
                 new TitlePage("hexblades.codex.page.evolve_ice_katana"),
                 new RitualPage(HexRituals.EVOLVE_KATANA, new ItemStack(HexItem.FROST_RAZOR.get()),
@@ -211,7 +220,8 @@ public class CodexHexChapters {
                             new IndexPage.IndexEntry(HEX_ALLOY, new ItemStack(HexItem.HEXIUM_INGOT.get())),
                             new IndexPage.SignLockedEntry(HEX_PRAY, new ItemStack(HexItem.DEV_SWORD.get()), Signs.SOUL_SIGN),
                             new IndexPage.FactLockedEntry(HEX_CORE, new ItemStack(HexItem.ELEMENTAL_CORE.get()), HexFacts.AWAKENING_RITUAL),
-                            new IndexPage.FactLockedEntry(HEX_INFUSION, new ItemStack(HexItem.PATRON_SOUL2.get()), HexFacts.STAR_INFUSION)
+                            new IndexPage.FactLockedEntry(HEX_INFUSION, new ItemStack(HexItem.PATRON_SOUL.get()), HexFacts.STAR_INFUSION),
+                            new IndexPage.FactLockedEntry(HEX_EVOLUTION, new ItemStack(HexItem.PATRON_SOUL2.get()), HexFacts.EVOLVE_RITUAL)
                     ),
                     new IndexPage(
                             new IndexPage.FactLockedEntry(ICE_KATANA, new ItemStack(HexItem.FROST_RAZOR.get()), HexFacts.AWAKENING_RITUAL),
@@ -219,8 +229,8 @@ public class CodexHexChapters {
                             new IndexPage.FactLockedEntry(WATER_SABER, new ItemStack(HexItem.WATER_SABER.get()), HexFacts.AWAKENING_RITUAL),
                             new IndexPage.FactLockedEntry(EARTH_HAMMER, new ItemStack(HexItem.EARTH_HAMMER.get()), HexFacts.AWAKENING_RITUAL),
                             new IndexPage.FactLockedEntry(THUNDER_DUALS, new ItemStack(HexItem.LIGHTNING_DAGGER_L.get()), HexFacts.AWAKENING_RITUAL)
-
-                    ));
+                    )
+            );
         } else {
             HEXBLADES_INDEX = new Chapter("hexblades.codex.chapter.hex_index",
                     new TitledIndexPage("hexblades.codex.hex_index.0",
@@ -228,7 +238,8 @@ public class CodexHexChapters {
                             new IndexPage.IndexEntry(HEX_ALLOY, new ItemStack(HexItem.HEXIUM_INGOT.get())),
                             new IndexPage.SignLockedEntry(HEX_PRAY, new ItemStack(HexItem.DEV_SWORD.get()), Signs.SOUL_SIGN),
                             new IndexPage.FactLockedEntry(HEX_CORE, new ItemStack(HexItem.ELEMENTAL_CORE.get()), HexFacts.AWAKENING_RITUAL),
-                            new IndexPage.FactLockedEntry(HEX_INFUSION, new ItemStack(HexItem.PATRON_SOUL2.get()), HexFacts.STAR_INFUSION)
+                            new IndexPage.FactLockedEntry(HEX_INFUSION, new ItemStack(HexItem.PATRON_SOUL.get()), HexFacts.STAR_INFUSION),
+                            new IndexPage.FactLockedEntry(HEX_EVOLUTION, new ItemStack(HexItem.PATRON_SOUL2.get()), HexFacts.EVOLVE_RITUAL)
                     ),
                     new IndexPage(
                             new IndexPage.FactLockedEntry(ICE_KATANA, new ItemStack(HexItem.FROST_RAZOR.get()), HexFacts.AWAKENING_RITUAL),
@@ -236,11 +247,11 @@ public class CodexHexChapters {
                             new IndexPage.FactLockedEntry(WATER_SABER, new ItemStack(HexItem.WATER_SABER.get()), HexFacts.AWAKENING_RITUAL),
                             new IndexPage.FactLockedEntry(EARTH_HAMMER, new ItemStack(HexItem.EARTH_HAMMER.get()), HexFacts.AWAKENING_RITUAL),
                             new IndexPage.FactLockedEntry(THUNDER_DUALS, new ItemStack(HexItem.LIGHTNING_DAGGER_L.get()), HexFacts.AWAKENING_RITUAL)
-
-                    ));
+                    )
+            );
         }
         if (Ccategories != null) {
-            Ccategories.add(HEXBLADES = new Category("hexblades", new ItemStack(HexItem.PATRON_SOUL.get()), ColorUtil.packColor(255, 0, 0, 46), HEXBLADES_INDEX));
+            Ccategories.add(HEXBLADES = new Category("hexblades", new ItemStack(HexItem.DEV_SWORD.get()), ColorUtil.packColor(220, 0, 0, 46), HEXBLADES_INDEX));
         }
     }
 

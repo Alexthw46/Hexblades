@@ -12,24 +12,31 @@ displayName = "Hexblades"
 # A URL for the "homepage" for this mod, displayed in the mod UI
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
-logoFile = "hexblades.png" #optional
-credits = "alexthw"
-authors = "alexthw"
+logoFile = "hexblades_logo.png" #optional
+credits = "Alexthw"
+authors = "Alexthw"
 description = '''
-WIP
+This mod adds Hexblades to Eidolon, few magic gadgets and compatibility patches with other mods.
 '''
 
 [[dependencies.hexblades]] #optional
     modId="forge" #mandatory
     # Does this dependency have to exist - if not, ordering below must be specified
     mandatory=true #mandatory
-    versionRange="[35,)" #mandatory
-    # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
-    ordering="NONE"
-    side="BOTH"
+versionRange = "[35,)" #mandatory
+# An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
+ordering = "NONE"
+side = "BOTH"
 [[dependencies.hexblades]]
-    modId="minecraft"
-    mandatory=true
-    versionRange="[1.16.4,1.17)"
-    ordering="NONE"
-    side="BOTH"
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.16.4,1.17)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.hexblades]]
+modId = "eidolon"
+mandatory = true
+versionRange = "[0.2.7,)"
+ordering = "NONE"
+side = "BOTH"

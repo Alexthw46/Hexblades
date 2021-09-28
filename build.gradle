@@ -137,6 +137,7 @@ dependencies {
     compileOnly fg.deobf("ignore:malum:1.16.5-0.3.0")
     compileOnly fg.deobf("vazkii.botania:Botania:1.16.5-418")
     compileOnly fg.deobf("vulp:druidcraft:1.16.5-0.4.53")
+    compileOnly fg.deobf("klikli_dev:occultism:1.16.5-1.15.0")
 
     //dependencies
     implementation fg.deobf("elucent:eidolon:0.2.7")
@@ -148,9 +149,11 @@ dependencies {
     //testers
     //runtimeOnly fg.deobf('mezz.jei:jei-1.16.5:7.6.4.90')
     //runtimeOnly fg.deobf("vulp:druidcraft:1.16.5-0.4.53")
+    //runtimeOnly fg.deobf("klikli_dev:occultism:1.16.5-1.15.0")
     //runtimeOnly fg.deobf("ignore:malum:1.16.5-0.3.0")
     //runtimeOnly fg.deobf("vazkii.botania:Botania:1.16.5-418")
     //runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-53.1")
+
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

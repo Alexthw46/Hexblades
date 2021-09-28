@@ -10,6 +10,7 @@ import elucent.eidolon.spell.Signs;
 import elucent.eidolon.spell.StaticSpell;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
@@ -63,7 +64,8 @@ public class HexTouchSpell extends StaticSpell {
     }
 
     boolean canTouch(ItemStack stack) {
-        return (stack.getItem() == Items.NETHER_STAR || stack.getItem() == Items.LAPIS_LAZULI || stack.getItem() == Items.DIAMOND);
+        Item stackItem = stack.getItem();
+        return stackItem == Items.NETHER_STAR || stackItem == Items.LAPIS_LAZULI || stackItem == Items.DIAMOND || stackItem == HexItem.SOUL_CANDY.get();
     }
 
     ItemStack touchResult(ItemStack stack) { // assumes canTouch is true
@@ -77,6 +79,8 @@ public class HexTouchSpell extends StaticSpell {
         if (stack.getItem() == Items.DIAMOND)
             return new ItemStack(HexItem.ELEMENTAL_CORE.get());
 
+        if (stack.getItem() == HexItem.SOUL_CANDY.get())
+            return new ItemStack(HexItem.SOUL_BAIT.get());
         return stack;
     }
 

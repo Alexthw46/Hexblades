@@ -16,7 +16,11 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import software.bernie.geckolib3.core.AnimationState;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -39,8 +43,31 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
         state = AnimationState.Stopped;
     }
 
+    @Override
+    public void checkDespawn() {
+        if (this.level.getDifficulty() == Difficulty.PEACEFUL && this.shouldDespawnInPeaceful()) {
+            this.remove();
+        } else {
+            this.noActionTime = 0;
+        }
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource p_184601_1_) {
+        return SoundEvents.BLAZE_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.BLAZE_DEATH;
+    }
+
     public float getBrightness() {
-        return 5.0F;
+        return 10.0F;
+    }
+
+    public boolean causeFallDamage(float p_225503_1_, float p_225503_2_) {
+        return false;
     }
 
     public int getExperienceReward(PlayerEntity player) {
@@ -54,12 +81,18 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
         //target selectors
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, FireElementalEntity.class, true));
+        //this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, FireElementalEntity.class, true));
 
     }
 
     public static AttributeModifierMap createAttributes() {
-        return MonsterEntity.createMonsterAttributes().add(Attributes.MAX_HEALTH, 100.0D).add(Attributes.MOVEMENT_SPEED, 0.2800000011920929D).add(Attributes.ATTACK_DAMAGE, 5.0D).add(Attributes.ARMOR, 10.0D).build();
+        return MonsterEntity.createMonsterAttributes().
+                add(Attributes.MAX_HEALTH, 120.0D).
+                add(Attributes.MOVEMENT_SPEED, 0.3D).
+                add(Attributes.ATTACK_DAMAGE, 5.0D).
+                add(Attributes.ARMOR, 15.0D).
+                add(Attributes.KNOCKBACK_RESISTANCE, 0.8D)
+                .build();
     }
 
     protected void applyEntityAI() {

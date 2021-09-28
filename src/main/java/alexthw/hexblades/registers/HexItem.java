@@ -29,6 +29,9 @@ public class HexItem {
     public static final RegistryObject<Item> ELEMENTAL_CORE;
     public static final RegistryObject<Item> DROWNED_HEART;
     public static final RegistryObject<Item> SOUL_CANDY;
+    public static final RegistryObject<Item> SOUL_BAIT;
+    //public static final RegistryObject<Item> FIRE_BAIT;
+
 
     //public static final RegistryObject<Item> TEST_ARMOR;
 
@@ -65,7 +68,8 @@ public class HexItem {
         DROWNED_HEART = ITEMS.register("drowned_heart", () -> new Item(addTabProp()));
         ELEMENTAL_CORE = ITEMS.register("elemental_core", () -> new Item(addTabProp().fireResistant()));
         SOUL_CANDY = ITEMS.register("soul_candy", () -> new Item(addTabProp().food(new Food.Builder().effect(() -> new EffectInstance(Effects.REGENERATION, 40, 1), 1.0F).fast().nutrition(1).saturationMod(0.1F).build())));
-
+        SOUL_BAIT = ITEMS.register("soul_bait", () -> new Item(addTabProp()));
+        //FIRE_BAIT = ITEMS.register("fire_bait", () -> new Item(addTabProp()));
         //TEST_ARMOR = ITEMS.register("test_chestplate", () -> new TestArmor(EquipmentSlotType.CHEST, addTabProp()));
 
 

@@ -60,7 +60,7 @@ public class FulgorProjectileEntity extends SpellProjectileEntity {
     }
 
     protected void onImpact(RayTraceResult ray, Entity target) {
-        target.hurt(new IndirectEntityDamageSource(DamageSource.LIGHTNING_BOLT.getMsgId(), this, this.level.getPlayerByUUID(this.casterId)), 3.0F);
+        target.hurt(new IndirectEntityDamageSource(DamageSource.LIGHTNING_BOLT.getMsgId(), this, this.level.getPlayerByUUID(this.casterId)).bypassArmor(), 3.0F);
         if (target instanceof LivingEntity) {
             ((LivingEntity) target).addEffect(new EffectInstance(HexRegistry.CHARGED_EFFECT.get(), 100, 0));
         }

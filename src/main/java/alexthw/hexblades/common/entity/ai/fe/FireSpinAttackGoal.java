@@ -48,6 +48,7 @@ public class FireSpinAttackGoal extends MeleeAttackGoal {
 
         if (cooldown == 25 && this.Firenando.getAnimationState() == 3) {
             this.mob.doHurtTarget(livingentity);
+            livingentity.setSecondsOnFire(2);
         }
         if (cooldown == 15 && this.Firenando.getAnimationState() == 3) {
             this.mob.doHurtTarget(livingentity);

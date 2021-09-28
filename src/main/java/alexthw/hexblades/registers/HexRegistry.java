@@ -2,7 +2,7 @@ package alexthw.hexblades.registers;
 
 import alexthw.hexblades.codex.CodexHexChapters;
 import alexthw.hexblades.common.potions.EChargedEffect;
-import alexthw.hexblades.compat.CrucibleHandler;
+import alexthw.hexblades.compat.CrucibleCompatHandler;
 import alexthw.hexblades.compat.MalumCompat;
 import alexthw.hexblades.deity.HexDeities;
 import alexthw.hexblades.network.FlameEffectPacket;
@@ -22,7 +22,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import static alexthw.hexblades.registers.Registry.POTIONS;
 import static alexthw.hexblades.registers.Registry.POTION_TYPES;
-import static alexthw.hexblades.util.CompatUtil.isDruidLoaded;
 import static alexthw.hexblades.util.CompatUtil.isMalumLoaded;
 
 public class HexRegistry {
@@ -46,9 +45,7 @@ public class HexRegistry {
         TempRecipes.init();
         HexRituals.init();
         CompatUtil.check();
-        if (isMalumLoaded() || isDruidLoaded()) {
-            CrucibleHandler.start();
-        }
+        CrucibleCompatHandler.start();
         if (isMalumLoaded()) {
             try {
                 MalumCompat.altar();

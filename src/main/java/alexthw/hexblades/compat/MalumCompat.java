@@ -52,8 +52,7 @@ public class MalumCompat {
                 (BlockState b) -> b.getBlock() == Blocks.FIRE,
                 (BlockState b) -> b.getBlock() == Blocks.SOUL_FIRE,
                 (BlockState b) -> b.getBlock() == Blocks.LAVA,
-                (BlockState b) -> b.getBlock() == Blocks.CAMPFIRE && b.getValue(CampfireBlock.LIT),
-                (BlockState b) -> b.getBlock() == Blocks.SOUL_CAMPFIRE && b.getValue(CampfireBlock.LIT),
+                (BlockState b) -> b.getBlock() instanceof CampfireBlock && b.getValue(CampfireBlock.LIT),
                 (BlockState b) -> b.getBlock() instanceof EtherBlock,
                 (BlockState b) -> b.getBlock() instanceof EtherBrazierBlock
         };
