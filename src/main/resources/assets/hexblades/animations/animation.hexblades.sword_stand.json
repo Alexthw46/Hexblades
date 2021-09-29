@@ -1,0 +1,84 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.sword_stand.cubes": {
+      "loop": true,
+      "animation_length": 3.6,
+      "bones": {
+        "yellow": {
+          "position": {
+            "vector": [
+              "math.sin(query.anim_time/2 * 200)*10",
+              "math.sin(query.anim_time/2 * 500)",
+              "math.cos(query.anim_time/2 * 200)*10"
+            ]
+          },
+          "scale": {
+            "vector": [
+              0.8,
+              0.8,
+              0.8
+            ]
+          }
+        },
+        "green": {
+          "position": {
+            "vector": [
+              "math.sin((query.anim_time/2-10) * 200)*10",
+              "math.sin((query.anim_time/2-10) * 500)",
+              "math.cos((query.anim_time/2-10) * 200)*10"
+            ]
+          },
+          "scale": {
+            "vector": [
+              0.8,
+              0.8,
+              0.8
+            ]
+          }
+        },
+        "red": {
+          "position": {
+            "vector": [
+              "math.sin((query.anim_time/2+50) * 200)*8",
+              "math.sin((query.anim_time/2+50) * 500)",
+              "math.cos((query.anim_time/2+50) * 200)*8"
+            ]
+          },
+          "scale": {
+            "vector": [
+              0.8,
+              0.8,
+              0.8
+            ]
+          }
+        },
+        "blue": {
+          "position": {
+            "vector": [
+              "math.sin((query.anim_time/2-5) * 200)*10",
+              "math.sin((query.anim_time/2-5) * 500)",
+              "math.cos((query.anim_time/2-5) * 200)*10"
+            ]
+          },
+          "scale": {
+            "vector": [
+              0.8,
+              0.8,
+              0.8
+            ]
+          }
+        },
+        "cubes": {
+          "position": {
+            "vector": [
+              -10,
+              0,
+              3
+            ]
+          }
+        }
+      }
+    }
+  }
+}

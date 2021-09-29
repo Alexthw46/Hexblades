@@ -1,8 +1,8 @@
 package alexthw.hexblades.registers;
 
 import alexthw.hexblades.Hexblades;
-import alexthw.hexblades.common.blocks.tile_entities.EverfullUrnBlock;
-import alexthw.hexblades.common.blocks.tile_entities.SwordStandBlock;
+import alexthw.hexblades.common.blocks.EverfullUrnBlock;
+import alexthw.hexblades.common.blocks.SwordStandBlock;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;

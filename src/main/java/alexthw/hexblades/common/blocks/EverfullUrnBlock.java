@@ -1,4 +1,4 @@
-package alexthw.hexblades.common.blocks.tile_entities;
+package alexthw.hexblades.common.blocks;
 
 import elucent.eidolon.block.HorizontalWaterloggableBlock;
 import net.minecraft.block.Block;

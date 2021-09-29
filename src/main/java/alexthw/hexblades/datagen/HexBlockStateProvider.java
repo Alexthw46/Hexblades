@@ -1,8 +1,8 @@
 package alexthw.hexblades.datagen;
 
 import alexthw.hexblades.Hexblades;
-import alexthw.hexblades.common.blocks.tile_entities.EverfullUrnBlock;
-import alexthw.hexblades.common.blocks.tile_entities.SwordStandBlock;
+import alexthw.hexblades.common.blocks.EverfullUrnBlock;
+import alexthw.hexblades.common.blocks.SwordStandBlock;
 import alexthw.hexblades.registers.HexBlock;
 import alexthw.hexblades.util.HexUtils;
 import net.minecraft.block.*;

@@ -1,5 +1,6 @@
-package alexthw.hexblades.common.blocks.tile_entities;
+package alexthw.hexblades.client.render.tile;
 
+import alexthw.hexblades.common.blocks.tile_entities.EverfullUrnTileEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;

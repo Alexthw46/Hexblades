@@ -12,11 +12,20 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class SwordStandTileEntity extends TileEntityBase {
+public class SwordStandTileEntity extends TileEntityBase implements IAnimatable {
 
-    ItemStack stack;
+    public ItemStack stack;
     long previous = -1L;
+    private final AnimationFactory factory = new AnimationFactory(this);
+
 
     public SwordStandTileEntity() {
         this(HexTileEntityType.SWORD_STAND_TILE_ENTITY);
@@ -108,4 +117,18 @@ public class SwordStandTileEntity extends TileEntityBase {
 
     }
 
+    @Override
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController<>(this, "controller", 0, this::predicate));
+    }
+
+    private <E extends TileEntityBase & IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.sword_stand.cubes", true));
+        return PlayState.CONTINUE;
+    }
+
+    @Override
+    public AnimationFactory getFactory() {
+        return factory;
+    }
 }

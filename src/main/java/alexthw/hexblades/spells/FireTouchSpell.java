@@ -20,6 +20,7 @@ import net.minecraft.world.World;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Comparator;
 import java.util.List;
 
 import static alexthw.hexblades.util.HexUtils.getTilesWithinAABB;
@@ -50,8 +51,9 @@ public class FireTouchSpell extends StaticSpell {
             List<BrazierTileEntity> braziers = getTilesWithinAABB(BrazierTileEntity.class, world, new AxisAlignedBB(v.x - 1.5, v.y - 1.5, v.z - 1.5, v.x + 1.5, v.y + 1.5, v.z + 1.5));
             List<CampfireTileEntity> campfires = getTilesWithinAABB(CampfireTileEntity.class, world, new AxisAlignedBB(v.x - 1.5, v.y - 1.5, v.z - 1.5, v.x + 1.5, v.y + 1.5, v.z + 1.5));
 
-            for (BrazierTileEntity b : braziers) {
+            if (braziers.size() > 0) {
 
+                BrazierTileEntity b = braziers.stream().min(Comparator.comparingDouble((e) -> e.getBlockPos().distSqr(blockPos))).get();
                 Method burn = findMethod(BrazierTileEntity.class, "startBurning");
 
                 try {
@@ -60,17 +62,19 @@ public class FireTouchSpell extends StaticSpell {
                 } catch (IllegalAccessException | InvocationTargetException e) {
                     e.printStackTrace();
                 }
+            } else if (campfires.size() > 0) {
 
-            }
-            for (CampfireTileEntity c : campfires) {
+                CampfireTileEntity c = campfires.stream().min(Comparator.comparingDouble((e) -> e.getBlockPos().distSqr(blockPos))).get();
                 BlockPos cPos = c.getBlockPos();
                 BlockState campfire = world.getBlockState(cPos);
+
                 if (CampfireBlock.canLight(campfire)) {
                     Networking.sendToTracking(world, cPos, new IgniteEffectPacket(cPos, 1.0F, 0.5F, 0.25F));
                     world.setBlock(c.getBlockPos(), campfire.setValue(BlockStateProperties.LIT, Boolean.TRUE), 11);
                 }
-
             }
         }
+
     }
+
 }

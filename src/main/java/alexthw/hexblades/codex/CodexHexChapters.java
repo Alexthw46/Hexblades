@@ -12,6 +12,7 @@ import elucent.eidolon.spell.Signs;
 import elucent.eidolon.util.ColorUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.potion.PotionUtils;
 
 import java.util.List;
 
@@ -116,7 +117,7 @@ public class CodexHexChapters {
                         new RitualPage.RitualIngredient(new ItemStack(Items.QUARTZ), false),
                         new RitualPage.RitualIngredient(new ItemStack(Registry.WRAITH_HEART.get()), false),
                         new RitualPage.RitualIngredient(new ItemStack(HexItem.PATRON_SOUL.get()), true),
-                        new RitualPage.RitualIngredient(new ItemStack(Registry.WRAITH_HEART.get()), false),
+                        new RitualPage.RitualIngredient(PotionUtils.setPotion(new ItemStack(Items.POTION), Registry.CHILLED_POTION.get()), false),
                         new RitualPage.RitualIngredient(new ItemStack(Items.QUARTZ), false)
                 ),
                 //evolve sword

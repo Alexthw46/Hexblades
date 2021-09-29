@@ -1,7 +1,8 @@
-package alexthw.hexblades.common.blocks.tile_entities;
+package alexthw.hexblades.common.blocks;
 
 import elucent.eidolon.block.HorizontalBlockBase;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
 import net.minecraft.util.Direction;
@@ -59,4 +60,10 @@ public class SwordStandBlock extends HorizontalBlockBase implements IWaterLoggab
         this.setShape(SHAPES.get(state.getValue(HORIZONTAL_FACING)));
         return this.getInteractionShape(state, world, pos);
     }
+
+    @Override
+    public BlockRenderType getRenderShape(BlockState state) {
+        return BlockRenderType.ENTITYBLOCK_ANIMATED;
+    }
+
 }

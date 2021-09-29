@@ -2,8 +2,8 @@ package alexthw.hexblades.client;
 
 import alexthw.hexblades.Hexblades;
 import alexthw.hexblades.client.render.entity.FireElementalER;
-import alexthw.hexblades.common.blocks.tile_entities.SwordStandRenderer;
-import alexthw.hexblades.common.blocks.tile_entities.Urn_Renderer;
+import alexthw.hexblades.client.render.tile.SwordStandRenderer;
+import alexthw.hexblades.client.render.tile.Urn_Renderer;
 import alexthw.hexblades.common.items.HexSwordItem;
 import alexthw.hexblades.network.WeaponAwakenPacket;
 import alexthw.hexblades.registers.HexEntityType;
