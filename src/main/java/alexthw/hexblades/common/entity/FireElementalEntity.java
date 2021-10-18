@@ -5,6 +5,7 @@ import alexthw.hexblades.common.entity.ai.fe.FireSpinAttackGoal;
 import elucent.eidolon.Registry;
 import elucent.eidolon.entity.SoulfireProjectileEntity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.IChargeableMob;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -20,8 +21,10 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.BossInfo;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerBossInfo;
 import software.bernie.geckolib3.core.AnimationState;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -30,16 +33,18 @@ import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
-public class FireElementalEntity extends BaseElementalEntity implements IRangedAttackMob {
+public class FireElementalEntity extends BaseElementalEntity implements IRangedAttackMob, IChargeableMob {
     private static final DataParameter<Integer> ANIMATIONSTATE = EntityDataManager.defineId(FireElementalEntity.class, DataSerializers.INT);
     private static final DataParameter<Integer> FIRECHARGE = EntityDataManager.defineId(FireElementalEntity.class, DataSerializers.INT);
     private static final DataParameter<Boolean> LOADING = EntityDataManager.defineId(FireElementalEntity.class, DataSerializers.BOOLEAN);
-
     AnimationState state;
 
     public FireElementalEntity(EntityType<FireElementalEntity> type, World worldIn) {
         super(type, worldIn);
+        bossEvent = (ServerBossInfo) (new ServerBossInfo(this.getDisplayName(), BossInfo.Color.RED, BossInfo.Overlay.PROGRESS)).setDarkenScreen(true);
+
         this.registerGoals();
+        this.navigation.canFloat();
         state = AnimationState.Stopped;
     }
 
@@ -81,18 +86,47 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
         //target selectors
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
-        //this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, FireElementalEntity.class, true));
+        //this.targetSelector.addGoal(8, new NearestAttackableTargetGoal<>(this, MonsterEntity.class, true));
 
     }
 
     public static AttributeModifierMap createAttributes() {
         return MonsterEntity.createMonsterAttributes().
-                add(Attributes.MAX_HEALTH, 120.0D).
+                add(Attributes.MAX_HEALTH, 200.0D).
+                add(Attributes.FOLLOW_RANGE, 40.0D).
                 add(Attributes.MOVEMENT_SPEED, 0.3D).
                 add(Attributes.ATTACK_DAMAGE, 5.0D).
-                add(Attributes.ARMOR, 15.0D).
+                add(Attributes.ARMOR, 10.0D).
                 add(Attributes.KNOCKBACK_RESISTANCE, 0.8D)
                 .build();
+    }
+
+    public void aiStep() {
+
+        FluidState below = this.level.getBlockState(this.getBlockPosBelowThatAffectsMyMovement()).getFluidState();
+        Vector3d motion;
+        if (!below.isEmpty()) {
+            motion = this.getDeltaMovement();
+            this.setOnGround(true);
+            if (this.getY() + motion.y < (double) ((float) this.getBlockPosBelowThatAffectsMyMovement().getY() + below.getOwnHeight())) {
+                this.setNoGravity(true);
+                if (motion.y < 0.0D) {
+                    this.setDeltaMovement(motion.multiply(1.0D, 0.0D, 1.0D));
+                }
+
+                this.setPos(this.getX(), (float) this.getBlockPosBelowThatAffectsMyMovement().getY() + below.getOwnHeight(), this.getZ());
+            }
+        } else {
+            this.setNoGravity(false);
+        }
+
+        this.fallDistance = 0.0F;
+        motion = this.getDeltaMovement();
+        if (!this.onGround && motion.y < 0.0D) {
+            this.setDeltaMovement(motion.multiply(1.0D, 0.6D, 1.0D));
+        }
+
+        super.aiStep();
     }
 
     protected void applyEntityAI() {
@@ -198,35 +232,13 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
         }*/
 
         level.addFreshEntity((new SoulfireProjectileEntity(Registry.SOULFIRE_PROJECTILE.get(), level)).shoot(pos.x, pos.y, pos.z, vx, vy, vz, this.getUUID()));
+        level.addFreshEntity((new SoulfireProjectileEntity(Registry.SOULFIRE_PROJECTILE.get(), level)).shoot(pos.x + 0.1, pos.y, pos.z + 0.1, vx, vy, vz, this.getUUID()));
 
     }
 
-    public void aiStep() {
-
-        FluidState below = this.level.getBlockState(this.getBlockPosBelowThatAffectsMyMovement()).getFluidState();
-        Vector3d motion;
-        if (!below.isEmpty()) {
-            motion = this.getDeltaMovement();
-            this.setOnGround(true);
-            if (this.getY() + motion.y < (double) ((float) this.getBlockPosBelowThatAffectsMyMovement().getY() + below.getOwnHeight())) {
-                this.setNoGravity(true);
-                if (motion.y < 0.0D) {
-                    this.setDeltaMovement(motion.multiply(1.0D, 0.0D, 1.0D));
-                }
-
-                this.setPos(this.getX(), (float) this.getBlockPosBelowThatAffectsMyMovement().getY() + below.getOwnHeight(), this.getZ());
-            }
-        } else {
-            this.setNoGravity(false);
-        }
-
-        this.fallDistance = 0.0F;
-        motion = this.getDeltaMovement();
-        if (!this.onGround && motion.y < 0.0D) {
-            this.setDeltaMovement(motion.multiply(1.0D, 0.6D, 1.0D));
-        }
-
-        super.aiStep();
+    @Override
+    public boolean isPowered() {
+        return this.getHealth() <= this.getMaxHealth() / 2.0F;
     }
 
     static class FEMeleeGoal extends MeleeAttackGoal {

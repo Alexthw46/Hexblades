@@ -9,16 +9,16 @@ public abstract class BaseElementalModel extends AnimatedGeoModel<BaseElementalE
 
     @Override
     public ResourceLocation getModelLocation(BaseElementalEntity baseElementalEntity) {
-        return new ResourceLocation(Hexblades.MOD_ID, "geo/" + ".geo.json");
+        return new ResourceLocation(Hexblades.MODID, "geo/" + ".geo.json");
     }
 
     @Override
     public ResourceLocation getTextureLocation(BaseElementalEntity baseElementalEntity) {
-        return new ResourceLocation(Hexblades.MOD_ID, "textures/entity/" + ".png");
+        return new ResourceLocation(Hexblades.MODID, "textures/entity/" + ".png");
     }
 
     @Override
     public ResourceLocation getAnimationFileLocation(BaseElementalEntity baseElementalEntity) {
-        return new ResourceLocation(Hexblades.MOD_ID, "animations/" + "hexblades." + ".animation.json");
+        return new ResourceLocation(Hexblades.MODID, "animations/" + "hexblades." + ".animation.json");
     }
 }

@@ -38,6 +38,7 @@ public class HexItem {
     //Hexblades
 
     public static final RegistryObject<Item> DEV_SWORD;
+    public static final RegistryObject<Item> BLOOD_SWORD;
 
     //DULLS
     public static final RegistryObject<Item> DULL_KATANA;
@@ -82,6 +83,7 @@ public class HexItem {
 
         //Hexblades
         DEV_SWORD = ITEMS.register("dev_sword_1", () -> new HexSwordItem(3, -1.6F, addTabProp().stacksTo(1)));
+        BLOOD_SWORD = ITEMS.register("blood_sword", () -> new SanguineSword(addTabProp().fireResistant().stacksTo(1)));
 
         FROST_RAZOR = ITEMS.register("ice_katana_1", () -> new IceKatana1(addTabProp().stacksTo(1).fireResistant()));
         FROST_RAZOR1 = ITEMS.register("ice_katana_2", () -> new IceKatana2(addTabProp().stacksTo(1).fireResistant()));

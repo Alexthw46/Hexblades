@@ -19,7 +19,7 @@ import java.util.function.Predicate;
 public class HexUtils {
 
     public static ResourceLocation prefix(String path) {
-        return new ResourceLocation(Hexblades.MOD_ID, path);
+        return new ResourceLocation(Hexblades.MODID, path);
     }
 
     @SafeVarargs

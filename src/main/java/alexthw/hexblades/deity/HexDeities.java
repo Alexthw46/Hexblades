@@ -12,7 +12,7 @@ public class HexDeities {
     public static ResourceLocation temp_id;
 
     public static void registerDeity() {
-        temp_id = new ResourceLocation(Hexblades.MOD_ID, "blade");
+        temp_id = new ResourceLocation(Hexblades.MODID, "blade");
         HEX_DEITY = Deities.register(new HexDeity(temp_id, 0, 102, 255));
     }
 }

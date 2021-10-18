@@ -8,7 +8,9 @@ import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerBossInfo;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.controller.AnimationController;
@@ -23,7 +25,7 @@ public class BaseElementalEntity extends MonsterEntity implements IAnimatable {
     }
 
     protected AnimationFactory factory = new AnimationFactory(this);
-
+    protected ServerBossInfo bossEvent;
 
     @Override
     protected void registerGoals() {
@@ -34,6 +36,15 @@ public class BaseElementalEntity extends MonsterEntity implements IAnimatable {
 
     public static AttributeModifierMap createAttributes() {
         return MonsterEntity.createMonsterAttributes().add(Attributes.MAX_HEALTH, 100.0D).add(Attributes.MOVEMENT_SPEED, 0.28D).add(Attributes.ATTACK_DAMAGE, 5.0D).add(Attributes.ARMOR, 10.0D).build();
+    }
+
+    @Override
+    protected void customServerAiStep() {
+        super.customServerAiStep();
+        if (this.tickCount % 20 == 0) {
+            this.heal(1.0F);
+        }
+        this.bossEvent.setPercent(this.getHealth() / this.getMaxHealth());
     }
 
     public int getExperienceReward(PlayerEntity player) {
@@ -47,6 +58,18 @@ public class BaseElementalEntity extends MonsterEntity implements IAnimatable {
     @Override
     public void registerControllers(AnimationData data) {
         data.addAnimationController(new AnimationController<>(this, "walk_controller", 20, this::predicate));
+    }
+
+    @Override
+    public void stopSeenByPlayer(ServerPlayerEntity pPlayer) {
+        super.stopSeenByPlayer(pPlayer);
+        this.bossEvent.removePlayer(pPlayer);
+    }
+
+    @Override
+    public void startSeenByPlayer(ServerPlayerEntity pPlayer) {
+        super.startSeenByPlayer(pPlayer);
+        this.bossEvent.addPlayer(pPlayer);
     }
 
     @Override

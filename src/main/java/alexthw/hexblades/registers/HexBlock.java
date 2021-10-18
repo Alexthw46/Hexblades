@@ -1,6 +1,7 @@
 package alexthw.hexblades.registers;
 
 import alexthw.hexblades.Hexblades;
+import alexthw.hexblades.common.blocks.DecoBlock;
 import alexthw.hexblades.common.blocks.EverfullUrnBlock;
 import alexthw.hexblades.common.blocks.SwordStandBlock;
 import net.minecraft.block.*;
@@ -15,11 +16,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 import static alexthw.hexblades.registers.HexItem.addTabProp;
 
 public class HexBlock {
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Hexblades.MOD_ID);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Hexblades.MODID);
 
     public static final RegistryObject<Block> SWORD_STAND;
     public static final RegistryObject<Block> EVERFULL_URN;
-
+    public static final RegistryObject<Block> MAGMA_BRICKS;
     public static DecoBlockPack DARK_POLISH_PLANKS;
 
 
@@ -31,6 +32,12 @@ public class HexBlock {
         EVERFULL_URN = addBlock("everfull_urn", new EverfullUrnBlock(blockProps(Material.STONE, MaterialColor.COLOR_RED)
                 .noOcclusion()
         ));
+
+        MAGMA_BRICKS = addBlock("nether_magma_bricks", new Block(blockProps(Material.STONE, MaterialColor.NETHER)
+                .lightLevel((p_235452_0_) -> 3)
+                .requiresCorrectToolForDrops()
+                .strength(2.0F, 6.0F)
+                .sound(SoundType.NETHER_BRICKS)));
 
         DARK_POLISH_PLANKS = (new DecoBlockPack(BLOCKS, "dark_polished_planks", blockProps(Material.WOOD, MaterialColor.COLOR_BLACK).sound(SoundType.WOOD)
                 .harvestTool(ToolType.AXE)
@@ -58,7 +65,7 @@ public class HexBlock {
             this.registry = blocks;
             this.basename = basename;
             this.props = props;
-            this.full = addBlock(basename, new Block(props));
+            this.full = addBlock(basename, new DecoBlock(props));
             this.slab = addBlock(basename + "_slab", new SlabBlock(props));
             this.stair = addBlock(basename + "_stairs", new StairsBlock(
                     () -> this.full.get().defaultBlockState(), props));

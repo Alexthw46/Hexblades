@@ -20,7 +20,7 @@ import static net.minecraft.tags.BlockTags.*;
 public class HexBlockTagsProvider extends BlockTagsProvider {
 
     public HexBlockTagsProvider(DataGenerator generatorIn, ExistingFileHelper existingFileHelper) {
-        super(generatorIn, Hexblades.MOD_ID, existingFileHelper);
+        super(generatorIn, Hexblades.MODID, existingFileHelper);
     }
 
     @Override

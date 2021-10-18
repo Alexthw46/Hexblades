@@ -20,7 +20,7 @@ public class HexTileEntityType {
 
     public static TileEntityType<SwordStandTileEntity> SWORD_STAND_TILE_ENTITY;
     public static TileEntityType<EverfullUrnTileEntity> EVERFULL_URN_TILE_ENTITY;
-    public static final DeferredRegister<TileEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, Hexblades.MOD_ID);
+    public static final DeferredRegister<TileEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, Hexblades.MODID);
 
     @SubscribeEvent
     public void registerTiles(RegistryEvent.Register<TileEntityType<?>> evt) {
@@ -30,7 +30,7 @@ public class HexTileEntityType {
 
     static <T extends TileEntity> TileEntityType<T> addTileEntity(IForgeRegistry<TileEntityType<?>> registry, String name, Supplier<T> factory, BlockBase block) {
         TileEntityType<T> type = TileEntityType.Builder.of(factory, block).build(null);
-        type.setRegistryName(Hexblades.MOD_ID, name);
+        type.setRegistryName(Hexblades.MODID, name);
         registry.register(type);
         block.setTile(type);
         return type;

@@ -26,17 +26,17 @@ public class SwordStandRenderer extends GeoBlockRenderer<SwordStandTileEntity> {
         super(rendererDispatcherIn, new AnimatedGeoModel<SwordStandTileEntity>() {
             @Override
             public ResourceLocation getModelLocation(SwordStandTileEntity object) {
-                return new ResourceLocation(Hexblades.MOD_ID, "geo/" + "sword_stand.geo.json");
+                return new ResourceLocation(Hexblades.MODID, "geo/" + "sword_stand.geo.json");
             }
 
             @Override
             public ResourceLocation getTextureLocation(SwordStandTileEntity object) {
-                return new ResourceLocation(Hexblades.MOD_ID, "textures/custom_models/" + "sword_stand.png");
+                return new ResourceLocation(Hexblades.MODID, "textures/custom_models/" + "sword_stand.png");
             }
 
             @Override
             public ResourceLocation getAnimationFileLocation(SwordStandTileEntity animatable) {
-                return new ResourceLocation(Hexblades.MOD_ID, "animations/animation.hexblades.sword_stand.json");
+                return new ResourceLocation(Hexblades.MODID, "animations/animation.hexblades.sword_stand.json");
             }
         });
     }

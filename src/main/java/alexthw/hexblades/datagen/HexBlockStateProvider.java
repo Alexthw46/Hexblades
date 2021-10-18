@@ -1,6 +1,7 @@
 package alexthw.hexblades.datagen;
 
 import alexthw.hexblades.Hexblades;
+import alexthw.hexblades.common.blocks.DecoBlock;
 import alexthw.hexblades.common.blocks.EverfullUrnBlock;
 import alexthw.hexblades.common.blocks.SwordStandBlock;
 import alexthw.hexblades.registers.HexBlock;
@@ -24,13 +25,13 @@ import static alexthw.hexblades.util.HexUtils.prefix;
 public class HexBlockStateProvider extends BlockStateProvider{
 
     public HexBlockStateProvider(DataGenerator gen, ExistingFileHelper exFileHelper) {
-        super(gen, Hexblades.MOD_ID , exFileHelper);
+        super(gen, Hexblades.MODID, exFileHelper);
     }
 
     @Override
     protected void registerStatesAndModels() {
         Set<RegistryObject<Block>> blocks = new HashSet<>(HexBlock.BLOCKS.getEntries());
-
+        HexUtils.takeAll(blocks, b -> b.get() instanceof DecoBlock).forEach(this::basicBlock);
         HexUtils.takeAll(blocks, b -> b.get() instanceof SlabBlock).forEach(this::slabBlock);
         HexUtils.takeAll(blocks, b -> b.get() instanceof StairsBlock).forEach(this::stairsBlock);
         //HexUtils.takeAll(blocks, b -> b.get() instanceof RotatedPillarBlock).forEach(this::logBlock);

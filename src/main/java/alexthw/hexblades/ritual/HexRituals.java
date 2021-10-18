@@ -148,7 +148,7 @@ public class HexRituals {
 
         SUMMON_FIRE = RitualRegistry.register(HexItem.SOUL_BAIT.get(),
                 (new SummonRitual(HexEntityType.FIRE_ELEMENTAL.get())
-                        .setRegistryName(Hexblades.MOD_ID, "allure_elemental")
+                        .setRegistryName(Hexblades.MODID, "allure_elemental")
                         .addRequirement(new ItemRequirement(HexItem.SOUL_BAIT.get()))
                         .addRequirement(new HealthRequirement(10))
                 )

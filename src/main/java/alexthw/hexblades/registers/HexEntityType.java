@@ -49,13 +49,13 @@ public class HexEntityType {
                     .setUpdateInterval(1)
                     .sized(width, height)
                     .fireImmune()
-                    .build(Hexblades.MOD_ID + ":" + name);
+                    .build(Hexblades.MODID + ":" + name);
         } else {
             type = EntityType.Builder.of(factory, kind)
                     .setTrackingRange(64)
                     .setUpdateInterval(1)
                     .sized(width, height)
-                    .build(Hexblades.MOD_ID + ":" + name);
+                    .build(Hexblades.MODID + ":" + name);
         }
         ITEMS.register("spawn_" + name, () -> new SpawnEggItem(type, color1, color2, addTabProp()));
         return ENTITIES.register(name, () -> type);

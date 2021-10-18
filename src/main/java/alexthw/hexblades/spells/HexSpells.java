@@ -16,11 +16,11 @@ public class HexSpells {
 
     public static void RegisterSpells() {
 
-        HEX_TOUCH = Spells.register(new HexTouchSpell(new ResourceLocation(Hexblades.MOD_ID, "hex_conversion"),
+        HEX_TOUCH = Spells.register(new HexTouchSpell(new ResourceLocation(Hexblades.MODID, "hex_conversion"),
                 Signs.MIND_SIGN, Signs.SOUL_SIGN, Signs.MIND_SIGN, Signs.SOUL_SIGN));
-        HEX_PRAY = Spells.register(new PrayerSpell(new ResourceLocation(Hexblades.MOD_ID, "hex_pray"), HexDeities.HEX_DEITY,
+        HEX_PRAY = Spells.register(new PrayerSpell(new ResourceLocation(Hexblades.MODID, "hex_pray"), HexDeities.HEX_DEITY,
                 Signs.WICKED_SIGN, Signs.SOUL_SIGN, Signs.WICKED_SIGN));
-        FIRE_TOUCH = Spells.register(new FireTouchSpell(new ResourceLocation(Hexblades.MOD_ID, "fire_touch"),
+        FIRE_TOUCH = Spells.register(new FireTouchSpell(new ResourceLocation(Hexblades.MODID, "fire_touch"),
                 Signs.SACRED_SIGN, Signs.SACRED_SIGN, Signs.SACRED_SIGN));
 
     }

@@ -1,6 +1,7 @@
 package alexthw.hexblades.network;
 
 import alexthw.hexblades.common.items.HexSwordItem;
+import alexthw.hexblades.common.items.IHexblade;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
@@ -33,6 +34,9 @@ public class WeaponAwakenPacket {
                 ItemStack IStack = player.getItemInHand(Hand.MAIN_HAND);
                 if (IStack.getItem() instanceof HexSwordItem) {
                     HexSwordItem hexblade = (HexSwordItem) IStack.getItem();
+                    hexblade.recalculatePowers(IStack, player.level, player);
+                } else if (IStack.getItem() instanceof IHexblade) {
+                    IHexblade hexblade = (IHexblade) IStack.getItem();
                     hexblade.recalculatePowers(IStack, player.level, player);
                 }
             }

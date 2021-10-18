@@ -26,7 +26,7 @@ public class HexTags {
         }
 
         private static ITag.INamedTag<Item> mod(String path) {
-            return ItemTags.bind(new ResourceLocation(Hexblades.MOD_ID, path).toString());
+            return ItemTags.bind(new ResourceLocation(Hexblades.MODID, path).toString());
         }
     }
 

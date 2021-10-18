@@ -2,6 +2,7 @@ package alexthw.hexblades.datagen;
 
 import alexthw.hexblades.Hexblades;
 import alexthw.hexblades.common.items.HexSwordItem;
+import alexthw.hexblades.common.items.IHexblade;
 import alexthw.hexblades.common.items.dulls.Hammer_dull;
 import alexthw.hexblades.common.items.tier1.EarthHammer1;
 import alexthw.hexblades.common.items.tier1.Lightning_SSwordL1;
@@ -27,7 +28,7 @@ import static alexthw.hexblades.util.HexUtils.takeAll;
 public class HexItemModelProvider extends ItemModelProvider {
 
     public static ResourceLocation rl(String name) {
-        return new ResourceLocation(Hexblades.MOD_ID, name);
+        return new ResourceLocation(Hexblades.MODID, name);
     }
 
     private static final ResourceLocation GENERATED = new ResourceLocation("item/generated");
@@ -35,7 +36,7 @@ public class HexItemModelProvider extends ItemModelProvider {
     private static final ResourceLocation SPAWN_EGG = new ResourceLocation("item/template_spawn_egg");
 
     public HexItemModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-        super(generator, Hexblades.MOD_ID, existingFileHelper);
+        super(generator, Hexblades.MODID, existingFileHelper);
     }
 
     @Override
@@ -46,8 +47,9 @@ public class HexItemModelProvider extends ItemModelProvider {
         takeAll(items, i -> i.get() instanceof ToolItem).forEach(this::handheldItem);
         takeAll(items, i -> i.get() instanceof Hammer_dull);
         takeAll(items, i -> i.get() instanceof EarthHammer1);
-        takeAll(items, i -> i.get() instanceof Lightning_SSwordL1).forEach(this::awakenthrowItem);
+        takeAll(items, i -> i.get() instanceof Lightning_SSwordL1).forEach(this::awakenThrowItem);
         takeAll(items, i -> i.get() instanceof HexSwordItem).forEach(this::awakenableItem);
+        takeAll(items, i -> i.get() instanceof IHexblade).forEach(this::awakenableItem);
         takeAll(items, i -> i.get() instanceof SwordItem).forEach(this::handheldItem);
         takeAll(items, i -> i.get() instanceof SpawnEggItem).forEach(this::spawnEgg);
 
@@ -79,7 +81,7 @@ public class HexItemModelProvider extends ItemModelProvider {
 
     }
 
-    private void awakenthrowItem(RegistryObject<Item> it) {
+    private void awakenThrowItem(RegistryObject<Item> it) {
 
         String path = Registry.ITEM.getKey(it.get()).getPath();
         ItemModelBuilder builder = getBuilder(path);

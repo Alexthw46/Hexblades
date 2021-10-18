@@ -27,7 +27,7 @@ public class EChargedEffect extends Effect implements IForgeEffect {
         MinecraftForge.EVENT_BUS.addListener(this::shock);
     }
 
-    protected static final ResourceLocation EFFECT_TEXTURE = new ResourceLocation(Hexblades.MOD_ID, "textures/mob_effect/electro_charged.png");
+    protected static final ResourceLocation EFFECT_TEXTURE = new ResourceLocation(Hexblades.MODID, "textures/mob_effect/electro_charged.png");
 
     public void shock(LivingHurtEvent event) {
         if (event.getSource().getEntity() instanceof LivingEntity && event.getSource() != DamageSource.LIGHTNING_BOLT) {

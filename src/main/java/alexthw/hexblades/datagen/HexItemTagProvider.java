@@ -17,7 +17,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 public class HexItemTagProvider extends ItemTagsProvider {
 
     public HexItemTagProvider(DataGenerator dataGenerator, BlockTagsProvider blockTagProvider, ExistingFileHelper existingFileHelper) {
-        super(dataGenerator, blockTagProvider, Hexblades.MOD_ID, existingFileHelper);
+        super(dataGenerator, blockTagProvider, Hexblades.MODID, existingFileHelper);
     }
 
 

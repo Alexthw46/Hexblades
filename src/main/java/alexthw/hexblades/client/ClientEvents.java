@@ -5,6 +5,7 @@ import alexthw.hexblades.client.render.entity.FireElementalER;
 import alexthw.hexblades.client.render.tile.SwordStandRenderer;
 import alexthw.hexblades.client.render.tile.Urn_Renderer;
 import alexthw.hexblades.common.items.HexSwordItem;
+import alexthw.hexblades.common.items.IHexblade;
 import alexthw.hexblades.network.WeaponAwakenPacket;
 import alexthw.hexblades.registers.HexEntityType;
 import alexthw.hexblades.registers.HexItem;
@@ -29,7 +30,7 @@ import org.lwjgl.glfw.GLFW;
 
 import static alexthw.hexblades.datagen.HexItemModelProvider.rl;
 
-@Mod.EventBusSubscriber(value = Dist.CLIENT, modid = Hexblades.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(value = Dist.CLIENT, modid = Hexblades.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientEvents {
 
     public static final KeyBinding HEXBLADE_KEYBINDING = new KeyBinding("key.hexblades.awake", GLFW.GLFW_KEY_H, "key.categories.misc");
@@ -81,6 +82,7 @@ public class ClientEvents {
             registerToggleAnimation(HexItem.LIGHTNING_DAGGER_R.get());
             registerToggleAnimation(HexItem.LIGHTNING_SSWORD_L.get());
             registerToggleAnimation(HexItem.LIGHTNING_SSWORD_R.get());
+            registerToggleAnimation2(HexItem.BLOOD_SWORD.get());
 
         });
 
@@ -88,6 +90,10 @@ public class ClientEvents {
 
     public static void registerToggleAnimation(Item item) {
         ItemModelsProperties.register(item, rl(Constants.NBT.AW_State), (stack, world, entity) -> ((HexSwordItem) stack.getItem()).getAwakened(stack) ? 1.0F : 0.0F);
+    }
+
+    public static void registerToggleAnimation2(Item item) {
+        ItemModelsProperties.register(item, rl(Constants.NBT.AW_State), (stack, world, entity) -> ((IHexblade) stack.getItem()).getAwakened(stack) ? 1.0F : 0.0F);
     }
 
 }

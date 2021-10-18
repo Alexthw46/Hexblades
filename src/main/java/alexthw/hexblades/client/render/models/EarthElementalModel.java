@@ -10,17 +10,17 @@ public class EarthElementalModel extends AnimatedGeoModel<EarthElementalEntity> 
 
     @Override
     public ResourceLocation getModelLocation(EarthElementalEntity earthElementalEntity) {
-        return new ResourceLocation(Hexblades.MOD_ID, "geo/" + "earth_elemental.geo.json");
+        return new ResourceLocation(Hexblades.MODID, "geo/" + "earth_elemental.geo.json");
 
     }
 
     @Override
     public ResourceLocation getTextureLocation(EarthElementalEntity earthElementalEntity) {
-        return new ResourceLocation(Hexblades.MOD_ID, "textures/entity/" + "earth_elemental.png");
+        return new ResourceLocation(Hexblades.MODID, "textures/entity/" + "earth_elemental.png");
     }
 
     @Override
     public ResourceLocation getAnimationFileLocation(EarthElementalEntity earthElementalEntity) {
-        return new ResourceLocation(Hexblades.MOD_ID, "animations/animation.hexblades." + "ee.idle.json");
+        return new ResourceLocation(Hexblades.MODID, "animations/animation.hexblades." + "ee.idle.json");
     }
 }
