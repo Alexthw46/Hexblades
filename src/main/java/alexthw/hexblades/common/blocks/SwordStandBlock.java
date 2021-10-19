@@ -4,7 +4,6 @@ import elucent.eidolon.block.HorizontalBlockBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.IWaterLoggable;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.IBooleanFunction;
@@ -17,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
-public class SwordStandBlock extends HorizontalBlockBase implements IWaterLoggable {
+public class SwordStandBlock extends HorizontalBlockBase {
 
     public SwordStandBlock(Properties properties) {
         super(properties);

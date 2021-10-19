@@ -20,15 +20,15 @@ public class HexStructures {
 
     public static final DeferredRegister<Structure<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, Hexblades.MODID);
 
-    public static final RegistryObject<Structure<NoFeatureConfig>> FIRE_TEMPLE = STRUCTURES.register("fire_temple", () -> new FireTempleStructure(NoFeatureConfig.CODEC));
+    public static final RegistryObject<Structure<NoFeatureConfig>> FIRE_TEMPLE = STRUCTURES.register("fire_temple", () -> new FireTempleStructure(NoFeatureConfig.CODEC, 32, 32, 1, false));
 
     public static void setupStructures() {
         setupMapSpacingAndLand(
                 FIRE_TEMPLE.get(), /* The instance of the structure */
-                new StructureSeparationSettings(10 /* average distance apart in chunks between spawn attempts */,
-                        5 /* minimum distance apart in chunks between spawn attempts. MUST BE LESS THAN ABOVE VALUE*/,
-                        1234567890 /* this modifies the seed of the structure so no two structures always spawn over each-other. Make this large and unique. */),
-                true);
+                new StructureSeparationSettings(70 /* average distance apart in chunks between spawn attempts */,
+                        45 /* minimum distance apart in chunks between spawn attempts. MUST BE LESS THAN ABOVE VALUE*/,
+                        499602286 /* this modifies the seed of the structure so no two structures always spawn over each-other. Make this large and unique. */),
+                false);
 
 
         // Add more structures here and so on

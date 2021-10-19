@@ -7,14 +7,11 @@ import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 public class FireSpinAttackGoal extends MeleeAttackGoal {
 
 
-    private int cooldown;
-
     FireElementalEntity Firenando;
 
     public FireSpinAttackGoal(FireElementalEntity fireElementalEntity, double v, boolean b) {
         super(fireElementalEntity, v, b);
         Firenando = (FireElementalEntity) this.mob;
-        cooldown = 0;
     }
 
     @Override
@@ -30,31 +27,26 @@ public class FireSpinAttackGoal extends MeleeAttackGoal {
 
     @Override
     protected void resetAttackCooldown() {
-        this.cooldown = 40;
-    }
-
-    @Override
-    protected boolean isTimeToAttack() {
-        return this.cooldown <= 0;
+        this.ticksUntilNextAttack = 40;
     }
 
     @Override
     public void tick() {
         super.tick();
+
         LivingEntity livingentity = this.mob.getTarget();
+
         if (livingentity == null) return;
 
-        this.cooldown = Math.max(cooldown - 1, 0);
-
-        if (cooldown == 25 && this.Firenando.getAnimationState() == 3) {
+        if (ticksUntilNextAttack == 25 && this.Firenando.getAnimationState() == 3) {
             this.mob.doHurtTarget(livingentity);
             livingentity.setSecondsOnFire(2);
         }
-        if (cooldown == 15 && this.Firenando.getAnimationState() == 3) {
+        if (ticksUntilNextAttack == 15 && this.Firenando.getAnimationState() == 3) {
             this.mob.doHurtTarget(livingentity);
         }
 
-        if (cooldown == 1) {
+        if (ticksUntilNextAttack == 1) {
             Firenando.setAnimationState(0);
             this.Firenando.addFireCharge(-4);
         }

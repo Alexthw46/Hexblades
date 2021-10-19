@@ -243,14 +243,11 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
 
     static class FEMeleeGoal extends MeleeAttackGoal {
 
-        private int cooldown;
-
         FireElementalEntity Firenando;
 
         public FEMeleeGoal(FireElementalEntity creature, double speedIn, boolean useLongMemory) {
             super(creature, speedIn, useLongMemory);
             Firenando = (FireElementalEntity) this.mob;
-            cooldown = 0;
         }
 
         @Override
@@ -260,12 +257,7 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
 
         @Override
         protected void resetAttackCooldown() {
-            this.cooldown = 40;
-        }
-
-        @Override
-        protected boolean isTimeToAttack() {
-            return this.cooldown <= 0;
+            this.ticksUntilNextAttack = 40;
         }
 
         @Override
@@ -274,14 +266,12 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
             LivingEntity livingentity = this.mob.getTarget();
             if (livingentity == null) return;
 
-            this.cooldown = Math.max(cooldown - 1, 0);
-
-            if (cooldown == 20 && this.Firenando.getAnimationState() == 2) {
+            if (ticksUntilNextAttack == 20 && this.Firenando.getAnimationState() == 2) {
                 this.mob.doHurtTarget(livingentity);
                 livingentity.knockback(1.0F, mob.getX() - livingentity.getX(), mob.getZ() - livingentity.getZ());
             }
 
-            if (cooldown == 1) {
+            if (ticksUntilNextAttack == 1) {
                 Firenando.setAnimationState(0);
                 this.Firenando.addFireCharge(1);
             }

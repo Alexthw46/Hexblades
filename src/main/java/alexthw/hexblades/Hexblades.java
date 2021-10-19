@@ -40,7 +40,6 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-// The value here should match an entry in the META-INF/mods.toml file
 @Mod(Hexblades.MODID)
 public class Hexblades {
 
@@ -65,7 +64,7 @@ public class Hexblades {
         Registry.init(hexbus);
         HexRegistry.init();
 
-        // For events that happen after initialization. This is probably going to be use a lot.
+        // For events that happen after initialization.
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
 
         forgeBus.register(new Events());
