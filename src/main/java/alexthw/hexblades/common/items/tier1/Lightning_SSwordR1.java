@@ -16,7 +16,7 @@ public class Lightning_SSwordR1 extends HexSwordItem {
 
     public Lightning_SSwordR1(Properties props) {
         super(4, -1.5F, props);
-        tooltipText = "tooltip.HexSwordItem.thunder_knives";
+        tooltipText = new TranslationTextComponent("tooltip.HexSwordItem.thunder_knives");
     }
 
     @Override

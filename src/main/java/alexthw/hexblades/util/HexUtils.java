@@ -23,7 +23,7 @@ public class HexUtils {
     }
 
     @SafeVarargs
-    @SuppressWarnings("varargs")
+    @SuppressWarnings({"varargs", "SuspiciousMethodCalls"})
     public static <T> Collection<T> takeAll(Collection<? extends T> src, T... items) {
         List<T> ret = Arrays.asList(items);
         for (T item : items) {
@@ -31,9 +31,12 @@ public class HexUtils {
                 return Collections.emptyList();
             }
         }
+
         if (!src.removeAll(ret)) {
             return Collections.emptyList();
         }
+
+
         return ret;
     }
     public static <T> Collection<T> takeAll(Collection<T> src, Predicate<T> pred)

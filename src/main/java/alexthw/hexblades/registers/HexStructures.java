@@ -25,10 +25,10 @@ public class HexStructures {
     public static void setupStructures() {
         setupMapSpacingAndLand(
                 FIRE_TEMPLE.get(), /* The instance of the structure */
-                new StructureSeparationSettings(70 /* average distance apart in chunks between spawn attempts */,
-                        45 /* minimum distance apart in chunks between spawn attempts. MUST BE LESS THAN ABOVE VALUE*/,
+                new StructureSeparationSettings(40 /* average distance apart in chunks between spawn attempts */,
+                        15 /* minimum distance apart in chunks between spawn attempts. MUST BE LESS THAN ABOVE VALUE*/,
                         499602286 /* this modifies the seed of the structure so no two structures always spawn over each-other. Make this large and unique. */),
-                false);
+                true);
 
 
         // Add more structures here and so on

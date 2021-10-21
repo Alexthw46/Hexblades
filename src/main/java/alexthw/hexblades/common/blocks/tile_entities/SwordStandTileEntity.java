@@ -1,5 +1,6 @@
 package alexthw.hexblades.common.blocks.tile_entities;
 
+import alexthw.hexblades.common.items.IHexblade;
 import alexthw.hexblades.registers.HexTileEntityType;
 import elucent.eidolon.tile.TileEntityBase;
 import net.minecraft.block.BlockState;
@@ -48,7 +49,8 @@ public class SwordStandTileEntity extends TileEntityBase implements IAnimatable 
     @Override
     public ActionResultType onActivated(BlockState state, BlockPos pos, PlayerEntity player, Hand hand) {
         if (hand == Hand.MAIN_HAND) {
-            if (player.getItemInHand(hand).isEmpty() && !this.stack.isEmpty()) {
+            ItemStack itemHand = player.getItemInHand(hand);
+            if (itemHand.isEmpty() && !this.stack.isEmpty()) {
                 player.addItem(this.stack);
                 this.stack = ItemStack.EMPTY;
                 assert this.level != null;
@@ -59,10 +61,10 @@ public class SwordStandTileEntity extends TileEntityBase implements IAnimatable 
                 return ActionResultType.SUCCESS;
             }
 
-            if (!player.getItemInHand(hand).isEmpty() && this.stack.isEmpty() && (player.getItemInHand(hand).getItem() instanceof SwordItem)) {
-                this.stack = player.getItemInHand(hand).copy();
+            if (!itemHand.isEmpty() && this.stack.isEmpty() && (itemHand.getItem() instanceof IHexblade || (itemHand.getItem() instanceof SwordItem))) {
+                this.stack = itemHand.copy();
                 this.stack.setCount(1);
-                player.getItemInHand(hand).shrink(1);
+                itemHand.shrink(1);
                 if (player.getItemInHand(hand).isEmpty()) {
                     player.setItemInHand(hand, ItemStack.EMPTY);
                 }

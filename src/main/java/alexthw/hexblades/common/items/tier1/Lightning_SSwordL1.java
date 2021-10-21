@@ -22,6 +22,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
@@ -34,7 +35,7 @@ public class Lightning_SSwordL1 extends HexSwordItem {
 
     public Lightning_SSwordL1(Item.Properties props) {
         super(1, -1.5F, props);
-        tooltipText = "tooltip.HexSwordItem.thunder_knives";
+        tooltipText = new TranslationTextComponent("tooltip.HexSwordItem.thunder_knives");
     }
 
     @Override
@@ -88,7 +89,7 @@ public class Lightning_SSwordL1 extends HexSwordItem {
     }
 
     @Override
-    protected boolean onHitEffects() {
+    public boolean onHitEffects() {
         return true;
     }
 

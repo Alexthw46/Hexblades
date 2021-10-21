@@ -3,7 +3,6 @@ package alexthw.hexblades.registers;
 import alexthw.hexblades.Hexblades;
 import alexthw.hexblades.common.items.ElementalSoul;
 import alexthw.hexblades.common.items.HexSwordItem;
-import alexthw.hexblades.common.items.PatronSoul;
 import alexthw.hexblades.common.items.dulls.*;
 import alexthw.hexblades.common.items.tier1.*;
 import alexthw.hexblades.common.items.tier2.*;
@@ -30,7 +29,7 @@ public class HexItem {
     public static final RegistryObject<Item> DROWNED_HEART;
     public static final RegistryObject<Item> SOUL_CANDY;
     public static final RegistryObject<Item> SOUL_BAIT;
-    //public static final RegistryObject<Item> FIRE_BAIT;
+    public static final RegistryObject<Item> FIRE_CORE;
 
 
     //public static final RegistryObject<Item> TEST_ARMOR;
@@ -65,12 +64,12 @@ public class HexItem {
         //Items
         HEXIUM_INGOT = ITEMS.register("hexium_ingot", () -> new Item(addTabProp()));
         PATRON_SOUL = ITEMS.register("elemental_soul", () -> new ElementalSoul(addTabProp().fireResistant()));
-        PATRON_SOUL2 = ITEMS.register("elemental_soul_2", () -> new PatronSoul(addTabProp()));
+        PATRON_SOUL2 = ITEMS.register("elemental_soul_2", () -> new Item(addTabProp()));
         DROWNED_HEART = ITEMS.register("drowned_heart", () -> new Item(addTabProp()));
         ELEMENTAL_CORE = ITEMS.register("elemental_core", () -> new Item(addTabProp().fireResistant()));
         SOUL_CANDY = ITEMS.register("soul_candy", () -> new Item(addTabProp().food(new Food.Builder().effect(() -> new EffectInstance(Effects.REGENERATION, 40, 1), 1.0F).fast().nutrition(1).saturationMod(0.1F).build())));
         SOUL_BAIT = ITEMS.register("soul_bait", () -> new Item(addTabProp()));
-        //FIRE_BAIT = ITEMS.register("fire_bait", () -> new Item(addTabProp()));
+        FIRE_CORE = ITEMS.register("fire_core", () -> new Item(addTabProp()));
         //TEST_ARMOR = ITEMS.register("test_chestplate", () -> new TestArmor(EquipmentSlotType.CHEST, addTabProp()));
 
 
@@ -83,7 +82,7 @@ public class HexItem {
 
         //Hexblades
         DEV_SWORD = ITEMS.register("dev_sword_1", () -> new HexSwordItem(3, -1.6F, addTabProp().stacksTo(1)));
-        BLOOD_SWORD = ITEMS.register("blood_sword", () -> new SanguineSword(addTabProp().fireResistant().stacksTo(1)));
+        BLOOD_SWORD = ITEMS.register("blood_sword", () -> new SanguineSword(addTabProp().stacksTo(1).fireResistant()));
 
         FROST_RAZOR = ITEMS.register("ice_katana_1", () -> new IceKatana1(addTabProp().stacksTo(1).fireResistant()));
         FROST_RAZOR1 = ITEMS.register("ice_katana_2", () -> new IceKatana2(addTabProp().stacksTo(1).fireResistant()));

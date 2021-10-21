@@ -25,7 +25,6 @@ import net.minecraft.world.BossInfo;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerBossInfo;
-import software.bernie.geckolib3.core.AnimationState;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -37,7 +36,6 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
     private static final DataParameter<Integer> ANIMATIONSTATE = EntityDataManager.defineId(FireElementalEntity.class, DataSerializers.INT);
     private static final DataParameter<Integer> FIRECHARGE = EntityDataManager.defineId(FireElementalEntity.class, DataSerializers.INT);
     private static final DataParameter<Boolean> LOADING = EntityDataManager.defineId(FireElementalEntity.class, DataSerializers.BOOLEAN);
-    AnimationState state;
 
     public FireElementalEntity(EntityType<FireElementalEntity> type, World worldIn) {
         super(type, worldIn);
@@ -45,7 +43,6 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
 
         this.registerGoals();
         this.navigation.canFloat();
-        state = AnimationState.Stopped;
     }
 
     @Override
@@ -188,7 +185,6 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
 
     private <T extends IAnimatable> PlayState attackPredicate(AnimationEvent<T> event) {
         AnimationController<FireElementalEntity> controller = event.getController();
-        state = controller.getAnimationState();
         switch (this.getAnimationState()) {
             case 0:
                 controller.setAnimation(new AnimationBuilder().addAnimation("animation.hexblades.fe.idle.arms"));

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BBB",
+    "BMB",
+    "BBB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:nether_brick"
+    },
+    "M": {
+      "item": "minecraft:magma_block"
+    }
+  },
+  "result": {
+    "item": "hexblades:nether_magma_bricks",
+    "count": 4
+  }
+}

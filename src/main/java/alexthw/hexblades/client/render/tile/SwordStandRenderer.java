@@ -2,6 +2,7 @@ package alexthw.hexblades.client.render.tile;
 
 import alexthw.hexblades.Hexblades;
 import alexthw.hexblades.common.blocks.tile_entities.SwordStandTileEntity;
+import alexthw.hexblades.common.items.IHexblade;
 import alexthw.hexblades.common.items.dulls.Hammer_dull;
 import alexthw.hexblades.common.items.tier1.EarthHammer1;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -54,7 +55,7 @@ public class SwordStandRenderer extends GeoBlockRenderer<SwordStandTileEntity> {
             if ((item instanceof EarthHammer1) || (item instanceof Hammer_dull)) {
                 matrixStack.translate(0.5D, 0.3D, 0.5D);
                 //matrixStackIn.rotate(Vector3f.YP.rotationDegrees(90.0F));
-            } else if (item instanceof SwordItem) {
+            } else if (item instanceof SwordItem || item instanceof IHexblade) {
                 matrixStack.translate(0.6D, 0.5D, 0.5D);
                 matrixStack.mulPose(Vector3f.ZP.rotationDegrees(45.0F));
             }

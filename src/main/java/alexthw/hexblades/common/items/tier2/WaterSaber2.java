@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
@@ -18,7 +19,7 @@ public class WaterSaber2 extends WaterSaber1 {
 
     public WaterSaber2(Properties props) {
         super(6, -2.4F, props);
-        tooltipText = "tooltip.HexSwordItem.water_saber2";
+        tooltipText = new TranslationTextComponent("tooltip.HexSwordItem.water_saber2");
     }
 
     @Override

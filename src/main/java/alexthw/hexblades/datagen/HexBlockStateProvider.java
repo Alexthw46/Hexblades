@@ -8,7 +8,6 @@ import alexthw.hexblades.registers.HexBlock;
 import alexthw.hexblades.util.HexUtils;
 import net.minecraft.block.*;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
@@ -70,12 +69,6 @@ public class HexBlockStateProvider extends BlockStateProvider{
 
     private void basicBlock(RegistryObject<Block> blockRegistryObject) {
         simpleBlock(blockRegistryObject.get());
-    }
-
-
-    public void emptyBlock(RegistryObject<Block> blockRegistryObject) {
-        ModelFile empty = models().getExistingFile(new ResourceLocation("block/air"));
-        getVariantBuilder(blockRegistryObject.get()).forAllStates(s -> ConfiguredModel.builder().modelFile(empty).build());
     }
 
     public void glowingBlock(RegistryObject<Block> blockRegistryObject) {

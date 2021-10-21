@@ -1,12 +1,10 @@
 package alexthw.hexblades.common.items;
 
-import alexthw.hexblades.deity.HexDeities;
 import alexthw.hexblades.registers.Tiers;
 import alexthw.hexblades.util.Constants;
 import alexthw.hexblades.util.NBTHelper;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import elucent.eidolon.capability.ReputationProvider;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -31,13 +29,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 
-public class HexSwordItem extends SwordItem {
+public class HexSwordItem extends SwordItem implements IHexblade {
 
     protected final double baseAttack;
     protected final double baseSpeed;
     protected boolean isActivated;
 
-    protected String tooltipText = "The Dev Sword, you shouldn't read this";
+    protected TranslationTextComponent tooltipText = new TranslationTextComponent("The Dev Sword, you shouldn't read this");
     protected int rechargeTick = 5;
     protected final int dialogueLines = 3;
 
@@ -50,32 +48,17 @@ public class HexSwordItem extends SwordItem {
 
     @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-        return oldStack.getItem() != newStack.getItem();
+        return shouldCauseReequipAnimation(oldStack, newStack);
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, World worldIn, Entity user, int itemSlot, boolean isSelected) {
-        if (user instanceof PlayerEntity && !worldIn.isClientSide()) {
-            if (hasBonus()) {
-                applyHexBonus((PlayerEntity) user, isActivated);
-            }
-            if (isActivated && !((PlayerEntity) user).isCreative()) {
-                if ((getMaxDamage(stack) - stack.getDamageValue()) > 5) {
-                    stack.hurtAndBreak(2, (LivingEntity) user, (entity) -> entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
-                } else {
-                    recalculatePowers(((PlayerEntity) user).getItemInHand(Hand.MAIN_HAND), worldIn, (PlayerEntity) user);
-                }
-            } else if (stack.getDamageValue() > 0) {
-                stack.setDamageValue(Math.max(stack.getDamageValue() - rechargeTick, 0));
-            }
-        }
+    public void inventoryTick(ItemStack pStack, World pLevel, Entity pEntity, int pItemSlot, boolean pIsSelected) {
+        this.inventoryTick(pStack, pLevel, pEntity);
     }
 
-    public void applyHexBonus(PlayerEntity user, boolean awakened) {
-    }
-
-    public boolean hasBonus() {
-        return false;
+    @Override
+    public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker) {
+        return this.hurtEnemy(pStack, pTarget, pAttacker, true);
     }
 
     @Override
@@ -88,25 +71,24 @@ public class HexSwordItem extends SwordItem {
         return super.use(world, player, hand);
     }
 
-    @Override
-    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (attacker instanceof PlayerEntity) {
-            if (target.invulnerableTime > 0) {
-                target.invulnerableTime = 0;
-            }
-            if (isActivated || onHitEffects()) applyHexEffects(stack, target, (PlayerEntity) attacker);
-            stack.setDamageValue(Math.max(stack.getDamageValue() - 10, 0));
-        }
-        return true;
-    }
-
-    protected boolean onHitEffects() {
-        return false;
-    }
-
     //Only apply special effects if wielded by a Player
     public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
         target.hurt(new EntityDamageSource("wither", attacker).bypassArmor(), 2.0f);
+    }
+
+    //data getters
+
+    public boolean isActivated() {
+        return isActivated;
+    }
+
+
+    public int getRechargeTicks() {
+        return rechargeTick;
+    }
+
+    public int getEnergyLeft(ItemStack stack) {
+        return (getMaxDamage(stack) - stack.getDamageValue());
     }
 
     //set or reset awakened state & buffs
@@ -115,8 +97,8 @@ public class HexSwordItem extends SwordItem {
 
         setAwakenedState(weapon, !getAwakened(weapon));
 
-        setAttackPower(weapon,devotion);
-        setAttackSpeed(weapon,devotion);
+        setAttackPower(weapon, devotion);
+        setAttackSpeed(weapon, devotion);
 
     }
 
@@ -179,23 +161,11 @@ public class HexSwordItem extends SwordItem {
         return baseSpeed;
     }
 
-    public double getDevotion(PlayerEntity player) {
-        if (player.getCommandSenderWorld().getCapability(ReputationProvider.CAPABILITY).resolve().isPresent()) {
-            return player.getCommandSenderWorld().getCapability(ReputationProvider.CAPABILITY).resolve().get().getReputation(player, HexDeities.HEX_DEITY.getId());
-        } else
-            return 0;
-    }
-
-    public boolean getAwakened(ItemStack stack) {
-        CompoundNBT tag = NBTHelper.checkNBT(stack).getTag();
-        return tag != null && !stack.isEmpty() && tag.getBoolean(Constants.NBT.AW_State);
-    }
-
     @Override
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent(tooltipText));
+        tooltip.add(tooltipText);
     }
 
     @Override

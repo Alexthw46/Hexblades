@@ -6,6 +6,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
@@ -13,11 +14,11 @@ import static alexthw.hexblades.ConfigHandler.COMMON;
 public class IceKatana2 extends IceKatana1 {
     public IceKatana2(Properties props) {
         super(5, -2.5F, props);
-        tooltipText = "tooltip.HexSwordItem.ice_katana2";
+        tooltipText = new TranslationTextComponent("tooltip.HexSwordItem.ice_katana2");
     }
 
     @Override
-    protected boolean onHitEffects() {
+    public boolean onHitEffects() {
         return true;
     }
 

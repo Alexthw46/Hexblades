@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
@@ -16,7 +17,7 @@ public class FireBroad2 extends FireBroad1 {
 
     public FireBroad2(Properties props) {
         super(7, -2.7F, props);
-        tooltipText = "tooltip.HexSwordItem.flame_sword2";
+        tooltipText = new TranslationTextComponent("tooltip.HexSwordItem.flame_sword2");
     }
 
     @Override

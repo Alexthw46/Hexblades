@@ -14,15 +14,6 @@
     {
       "weight": 1,
       "element": {
-        "location": "hexblades:ft_corridor2",
-        "processors": "minecraft:empty",
-        "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
-      }
-    },
-    {
-      "weight": 1,
-      "element": {
         "location": "hexblades:ft_corridor_alt",
         "processors": "minecraft:empty",
         "projection": "rigid",

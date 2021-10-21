@@ -41,6 +41,10 @@ public class ConfigHandler {
         public final ForgeConfigSpec.ConfigValue<Integer> HammerMS2;
         public final ForgeConfigSpec.ConfigValue<Integer> HammerKB2;
 
+
+        public final ForgeConfigSpec.ConfigValue<Integer> BloodDS;
+        public final ForgeConfigSpec.ConfigValue<Integer> BloodED;
+
         public final ForgeConfigSpec.ConfigValue<Integer> UrnTickRate;
 
         public Common(ForgeConfigSpec.Builder builder) {
@@ -106,7 +110,7 @@ public class ConfigHandler {
                     .comment("Set the ratio of devotion -> attack speed of the thunder duals Tier 1.")
                     .define("DAS1 divide by", 60);
             DualsDS2 = builder
-                    .comment("Set the ratio of devotion -> attack power of the fire sword Tier 2.")
+                    .comment("Set the ratio of devotion -> attack power of the thunder duals Tier 2.")
                     .define("DDS2 divide by", 20);
             DualsAS2 = builder
                     .comment("Set the ratio of devotion -> attack speed of the thunder duals Tier 2.")
@@ -143,10 +147,24 @@ public class ConfigHandler {
                     .define("HKB2 divide by", 20);
             builder.pop();
 
+            builder.push("Weapon Scaling - Sapping");
+
+            BloodDS = builder.comment("Set the ratio of devotion -> attack power of the Sapping sword upgrade")
+                    .define("BSWS divide by", 30);
+            BloodED = builder.comment("Set the ratio of devotion -> wither damage of the Sapping sword upgrade")
+                    .define("BSED divide by", 30);
+
+            builder.pop();
+
             builder.push("MISC Configs");
             UrnTickRate = builder.
                     comment("Set the cooldown of the Urn of Endless Waters")
                     .define("Refill every x ticks", 100);
+            builder.pop();
+
+            builder.push("WorldGen Configs");
+
+            builder.pop();
         }
     }
 

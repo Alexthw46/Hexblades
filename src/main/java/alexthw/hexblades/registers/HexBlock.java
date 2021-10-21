@@ -34,10 +34,11 @@ public class HexBlock {
         ));
 
         MAGMA_BRICKS = addBlock("nether_magma_bricks", new Block(blockProps(Material.STONE, MaterialColor.NETHER)
-                .lightLevel((p_235452_0_) -> 3)
+                .lightLevel((litBlockEmission) -> 6)
                 .requiresCorrectToolForDrops()
                 .strength(2.0F, 6.0F)
-                .sound(SoundType.NETHER_BRICKS)));
+                .sound(SoundType.NETHER_BRICKS)) {
+        });
 
         DARK_POLISH_PLANKS = (new DecoBlockPack(BLOCKS, "dark_polished_planks", blockProps(Material.WOOD, MaterialColor.COLOR_BLACK).sound(SoundType.WOOD)
                 .harvestTool(ToolType.AXE)

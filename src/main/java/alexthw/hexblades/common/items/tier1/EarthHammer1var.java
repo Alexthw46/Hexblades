@@ -164,6 +164,21 @@ public class EarthHammer1var extends PickaxeItem implements IHexblade {
     }
 
     @Override
+    public int getRechargeTicks() {
+        return rechargeTick;
+    }
+
+    @Override
+    public int getEnergyLeft(ItemStack stack) {
+        return getMaxDamage(stack) - stack.getDamageValue();
+    }
+
+    @Override
+    public double getDevotion(PlayerEntity player) {
+        return IHexblade.super.getDevotion(player);
+    }
+
+    @Override
     public void recalculatePowers(ItemStack weapon, World world, PlayerEntity player) {
         double devotion = getDevotion(player);
 
@@ -175,14 +190,12 @@ public class EarthHammer1var extends PickaxeItem implements IHexblade {
 
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (attacker instanceof PlayerEntity) {
-            if (target.invulnerableTime > 0) {
-                target.invulnerableTime = 0;
-            }
-            if (isActivated || onHitEffects()) applyHexEffects(stack, target, (PlayerEntity) attacker);
-            stack.setDamageValue(Math.max(stack.getDamageValue() - 10, 0));
-        }
-        return true;
+        return this.hurtEnemy(stack, target, attacker, true);
+    }
+
+    @Override
+    public boolean isActivated() {
+        return isActivated;
     }
 
     @Override
@@ -224,7 +237,7 @@ public class EarthHammer1var extends PickaxeItem implements IHexblade {
 
     @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-        return oldStack.getItem() != newStack.getItem();
+        return this.shouldCauseReequipAnimation(oldStack, newStack);
     }
 
     @Override

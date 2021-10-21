@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
@@ -16,12 +17,12 @@ public class EarthHammer2 extends EarthHammer1 {
     public EarthHammer2(Properties props) {
         super(9, -3.2F, props);
         baseMiningSpeed = newMiningSpeed = 8.0F;
-        tooltipText = "tooltip.HexSwordItem.earth_hammer2";
+        tooltipText = new TranslationTextComponent("tooltip.HexSwordItem.earth_hammer2");
         mineSwitch = false;
     }
 
     @Override
-    protected boolean onHitEffects() {
+    public boolean onHitEffects() {
         return true;
     }
 

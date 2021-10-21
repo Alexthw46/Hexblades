@@ -1,7 +1,6 @@
 package alexthw.hexblades.datagen;
 
 import alexthw.hexblades.Hexblades;
-import alexthw.hexblades.common.items.HexSwordItem;
 import alexthw.hexblades.common.items.IHexblade;
 import alexthw.hexblades.common.items.dulls.Hammer_dull;
 import alexthw.hexblades.common.items.tier1.EarthHammer1;
@@ -48,7 +47,6 @@ public class HexItemModelProvider extends ItemModelProvider {
         takeAll(items, i -> i.get() instanceof Hammer_dull);
         takeAll(items, i -> i.get() instanceof EarthHammer1);
         takeAll(items, i -> i.get() instanceof Lightning_SSwordL1).forEach(this::awakenThrowItem);
-        takeAll(items, i -> i.get() instanceof HexSwordItem).forEach(this::awakenableItem);
         takeAll(items, i -> i.get() instanceof IHexblade).forEach(this::awakenableItem);
         takeAll(items, i -> i.get() instanceof SwordItem).forEach(this::handheldItem);
         takeAll(items, i -> i.get() instanceof SpawnEggItem).forEach(this::spawnEgg);

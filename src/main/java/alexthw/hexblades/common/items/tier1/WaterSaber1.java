@@ -20,7 +20,7 @@ public class WaterSaber1 extends HexSwordItem {
 
     public WaterSaber1(Properties props) {
         super(5, -2.4F, props);
-        tooltipText = "tooltip.HexSwordItem.water_saber";
+        tooltipText = new TranslationTextComponent("tooltip.HexSwordItem.water_saber");
         shield = 0;
     }
 

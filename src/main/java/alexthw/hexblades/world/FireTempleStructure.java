@@ -89,7 +89,7 @@ public class FireTempleStructure extends AbstractJigsawStructure {
 
             // Definitely keep this false when placing structures in the nether as otherwise, heightmap placing will put the structure on the Bedrock roof.
 
-            this.pieces.forEach(piece -> piece.move(0, -8, 0));
+            this.pieces.forEach(piece -> piece.move(0, -11, 0));
 
             // Since by default, the start piece of a structure spawns with it's corner at centerPos
             // and will randomly rotate around that corner, we will center the piece on centerPos instead.
