@@ -13,7 +13,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerBossInfo;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
@@ -57,7 +56,6 @@ public class BaseElementalEntity extends MonsterEntity implements IAnimatable {
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "walk_controller", 20, this::predicate));
     }
 
     @Override

@@ -11,7 +11,7 @@ public class FireCannonAttackGoal extends Goal {
     FireElementalEntity Firenando;
 
     private LivingEntity target;
-    private int attackTime = -1;
+    private int attackTime = 0;
     private final double speedModifier;
     private int seeTime;
     private final int attackInterval;
@@ -32,7 +32,7 @@ public class FireCannonAttackGoal extends Goal {
         LivingEntity livingentity = this.Firenando.getTarget();
         if ((livingentity != null && this.Firenando.canAttack(livingentity) && livingentity.isAlive())) {
             double distance = this.Firenando.distanceToSqr(livingentity);
-            if (distance > 64.0F) {
+            if (distance > 48.0F) {
                 this.target = livingentity;
                 return true;
             }
@@ -49,7 +49,7 @@ public class FireCannonAttackGoal extends Goal {
     public void stop() {
         this.target = null;
         this.seeTime = 0;
-        this.attackTime = -1;
+        this.attackTime = 0;
         this.Firenando.setAnimationState(0);
     }
 

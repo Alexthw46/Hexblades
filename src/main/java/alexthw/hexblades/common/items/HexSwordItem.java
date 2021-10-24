@@ -82,7 +82,6 @@ public class HexSwordItem extends SwordItem implements IHexblade {
         return isActivated;
     }
 
-
     public int getRechargeTicks() {
         return rechargeTick;
     }

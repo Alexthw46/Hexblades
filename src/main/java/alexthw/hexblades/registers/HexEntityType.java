@@ -1,10 +1,7 @@
 package alexthw.hexblades.registers;
 
 import alexthw.hexblades.Hexblades;
-import alexthw.hexblades.common.entity.BaseElementalEntity;
-import alexthw.hexblades.common.entity.EarthElementalEntity;
-import alexthw.hexblades.common.entity.FireElementalEntity;
-import alexthw.hexblades.common.entity.FulgorProjectileEntity;
+import alexthw.hexblades.common.entity.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -20,12 +17,14 @@ public class HexEntityType {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, "hexblades");
 
     public static RegistryObject<EntityType<FulgorProjectileEntity>> FULGOR_PROJECTILE;
+    public static RegistryObject<EntityType<MagmaProjectileEntity>> MAGMA_PROJECTILE;
     public static RegistryObject<EntityType<BaseElementalEntity>> TEST_ELEMENTAL;
     public static RegistryObject<EntityType<FireElementalEntity>> FIRE_ELEMENTAL;
     public static RegistryObject<EntityType<EarthElementalEntity>> EARTH_ELEMENTAL;
 
     static {
-        FULGOR_PROJECTILE = registerEntity("fulgor_projectile", 0.4F, 0.4F, FulgorProjectileEntity::new, EntityClassification.MISC);
+        FULGOR_PROJECTILE = registerEntity("fulgor_projectile", 0.45F, 0.2F, FulgorProjectileEntity::new, EntityClassification.MISC);
+        MAGMA_PROJECTILE = registerEntity("magma_projectile", 0.4F, 0.4F, MagmaProjectileEntity::new, EntityClassification.MISC);
         //TEST_ELEMENTAL = addEntity("test_elemental", 0, 0, 1.0f, 2.0f, BaseElementalEntity::new, EntityClassification.MONSTER);
         FIRE_ELEMENTAL = addEntity("fire_elemental", 16167425, 800, 1.8f, 3.6f, true, FireElementalEntity::new, EntityClassification.MONSTER);
         //EARTH_ELEMENTAL = addEntity("earth_elemental", 500, 800, 1.0f, 2.8f, EarthElementalEntity::new, EntityClassification.MONSTER);

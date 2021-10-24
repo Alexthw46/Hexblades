@@ -27,7 +27,7 @@ public class FireTempleStructure extends AbstractJigsawStructure {
 
     @Override
     public GenerationStage.Decoration step() {
-        return GenerationStage.Decoration.UNDERGROUND_STRUCTURES;
+        return GenerationStage.Decoration.UNDERGROUND_DECORATION;
     }
 
     @Override

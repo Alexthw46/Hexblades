@@ -59,59 +59,8 @@
     },
     "animation.hexblades.fe.idle.body": {
       "loop": true,
-      "animation_length": 2,
+      "animation_length": 1.5,
       "bones": {
-        "torso": {
-          "position": {
-            "0.0": {
-              "vector": [
-                0,
-                0,
-                0
-              ]
-            },
-            "1.0": {
-              "vector": [
-                0,
-                -1,
-                0
-              ]
-            },
-            "2.0": {
-              "vector": [
-                0,
-                0,
-                0
-              ]
-            }
-          }
-        },
-        "head": {
-          "position": {
-            "0.0": {
-              "vector": [
-                0,
-                0,
-                0
-              ]
-            },
-            "1.0": {
-              "vector": [
-                0,
-                0.5,
-                0
-              ],
-              "easing": "linear"
-            },
-            "2.0": {
-              "vector": [
-                0,
-                0,
-                0
-              ]
-            }
-          }
-        },
         "flame_bott": {
           "rotation": {
             "0.0": {
@@ -121,7 +70,7 @@
                 0
               ]
             },
-            "2.0": {
+            "1.5": {
               "vector": [
                 0,
                 360,
@@ -132,18 +81,28 @@
         },
         "master": {
           "position": {
-            "vector": [
-              0,
-              3,
-              0
-            ]
-          },
-          "scale": {
-            "vector": [
-              1.5,
-              1.5,
-              1.5
-            ]
+            "0.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            },
+            "0.8": {
+              "vector": [
+                0,
+                -1.5,
+                0
+              ]
+            },
+            "1.5": {
+              "vector": [
+                0,
+                0,
+                0
+              ],
+              "easing": "linear"
+            }
           }
         }
       }
@@ -542,7 +501,7 @@
     },
     "animation.hexblades.fe.attacks.melee": {
       "loop": true,
-      "animation_length": 1.32,
+      "animation_length": 1,
       "bones": {
         "arms": {
           "rotation": {
@@ -553,7 +512,7 @@
                 0
               ]
             },
-            "0.68": {
+            "0.52": {
               "vector": [
                 -150,
                 0,
@@ -564,7 +523,7 @@
                 1
               ]
             },
-            "1.32": {
+            "1.0": {
               "vector": [
                 0,
                 0,

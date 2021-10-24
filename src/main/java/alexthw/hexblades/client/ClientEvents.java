@@ -2,9 +2,9 @@ package alexthw.hexblades.client;
 
 import alexthw.hexblades.Hexblades;
 import alexthw.hexblades.client.render.entity.FireElementalER;
+import alexthw.hexblades.client.render.entity.MagmaProjectileRenderer;
 import alexthw.hexblades.client.render.tile.SwordStandRenderer;
 import alexthw.hexblades.client.render.tile.Urn_Renderer;
-import alexthw.hexblades.common.items.HexSwordItem;
 import alexthw.hexblades.common.items.IHexblade;
 import alexthw.hexblades.network.WeaponAwakenPacket;
 import alexthw.hexblades.registers.HexEntityType;
@@ -63,6 +63,7 @@ public class ClientEvents {
     public static void initClientEvents(FMLClientSetupEvent event) {
 
         RenderingRegistry.registerEntityRenderingHandler(HexEntityType.FULGOR_PROJECTILE.get(), EmptyRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(HexEntityType.MAGMA_PROJECTILE.get(), MagmaProjectileRenderer::new);
         //RenderingRegistry.registerEntityRenderingHandler(HexEntityType.TEST_ELEMENTAL.get(), (erm) -> new ElementalEntityRender(erm, new MinionElementalModel(), 0.6F));
         RenderingRegistry.registerEntityRenderingHandler(HexEntityType.FIRE_ELEMENTAL.get(), FireElementalER::new);
         //RenderingRegistry.registerEntityRenderingHandler(HexEntityType.EARTH_ELEMENTAL.get(), EarthElementalER::new);
@@ -82,17 +83,13 @@ public class ClientEvents {
             registerToggleAnimation(HexItem.LIGHTNING_DAGGER_R.get());
             registerToggleAnimation(HexItem.LIGHTNING_SSWORD_L.get());
             registerToggleAnimation(HexItem.LIGHTNING_SSWORD_R.get());
-            registerToggleAnimation2(HexItem.BLOOD_SWORD.get());
+            registerToggleAnimation(HexItem.BLOOD_SWORD.get());
 
         });
 
     }
 
     public static void registerToggleAnimation(Item item) {
-        ItemModelsProperties.register(item, rl(Constants.NBT.AW_State), (stack, world, entity) -> ((HexSwordItem) stack.getItem()).getAwakened(stack) ? 1.0F : 0.0F);
-    }
-
-    public static void registerToggleAnimation2(Item item) {
         ItemModelsProperties.register(item, rl(Constants.NBT.AW_State), (stack, world, entity) -> ((IHexblade) stack.getItem()).getAwakened(stack) ? 1.0F : 0.0F);
     }
 

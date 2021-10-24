@@ -17,12 +17,12 @@ public class FireElementalModel extends AnimatedGeoModel<FireElementalEntity> {
 
     @Override
     public ResourceLocation getModelLocation(FireElementalEntity ElementalEntity) {
-        return new ResourceLocation(Hexblades.MODID, "geo/" + "fire_elemental.geo.json");
+        return new ResourceLocation(Hexblades.MODID, "geo/" + "fire_elemental_v2.geo.json");
     }
 
     @Override
     public ResourceLocation getTextureLocation(FireElementalEntity ElementalEntity) {
-        return new ResourceLocation(Hexblades.MODID, "textures/entity/" + "fire_elemental.png");
+        return new ResourceLocation(Hexblades.MODID, "textures/entity/" + "fire_elemental_v2.png");
     }
 
     @Override

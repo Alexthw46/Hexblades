@@ -1,6 +1,7 @@
 package alexthw.hexblades;
 
 import alexthw.hexblades.common.items.HexSwordItem;
+import alexthw.hexblades.common.items.IHexblade;
 import alexthw.hexblades.common.items.tier1.WaterSaber1;
 import alexthw.hexblades.deity.HexDeities;
 import alexthw.hexblades.network.FlameEffectPacket;
@@ -69,7 +70,7 @@ public class Events {
                 List<ItemEntity> keeps = new ArrayList<>();
                 for (ItemEntity item : event.getDrops()) {
                     ItemStack stack = item.getItem();
-                    if (!stack.isEmpty() && stack.getItem() instanceof HexSwordItem) {
+                    if (!stack.isEmpty() && stack.getItem() instanceof IHexblade) {
                         keeps.add(item);
                     }
                 }

@@ -1,13 +1,12 @@
 package alexthw.hexblades.common.entity;
 
+import alexthw.hexblades.common.entity.ai.fe.FEMeleeGoal;
 import alexthw.hexblades.common.entity.ai.fe.FireCannonAttackGoal;
 import alexthw.hexblades.common.entity.ai.fe.FireSpinAttackGoal;
+import alexthw.hexblades.registers.HexEntityType;
 import elucent.eidolon.Registry;
-import elucent.eidolon.entity.SoulfireProjectileEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IChargeableMob;
-import net.minecraft.entity.IRangedAttackMob;
-import net.minecraft.entity.LivingEntity;
+import elucent.eidolon.particle.Particles;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
@@ -18,6 +17,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.vector.Vector3d;
@@ -29,6 +29,7 @@ import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.ParticleKeyFrameEvent;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
@@ -83,14 +84,12 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
         //target selectors
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
-        //this.targetSelector.addGoal(8, new NearestAttackableTargetGoal<>(this, MonsterEntity.class, true));
-
     }
 
     public static AttributeModifierMap createAttributes() {
         return MonsterEntity.createMonsterAttributes().
                 add(Attributes.MAX_HEALTH, 200.0D).
-                add(Attributes.FOLLOW_RANGE, 40.0D).
+                add(Attributes.FOLLOW_RANGE, 35.0D).
                 add(Attributes.MOVEMENT_SPEED, 0.3D).
                 add(Attributes.ATTACK_DAMAGE, 5.0D).
                 add(Attributes.ARMOR, 10.0D).
@@ -132,7 +131,7 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
         //attacks
         this.goalSelector.addGoal(2, new FireCannonAttackGoal(this, 1.0D, 50, 20.0F));
         this.goalSelector.addGoal(4, new FEMeleeGoal(this, 1.0D, false));
-        this.goalSelector.addGoal(3, new FireSpinAttackGoal(this, 1.0D, false));
+        this.goalSelector.addGoal(3, new FireSpinAttackGoal(this, 1.0D, true));
         //no target
         this.goalSelector.addGoal(7, new RandomWalkingGoal(this, 1.0D));
         this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
@@ -156,7 +155,7 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
     }
 
     public void addFireCharge(int charge) {
-        this.entityData.set(FIRECHARGE, getFireCharge() + charge);
+        this.entityData.set(FIRECHARGE, Math.max(0, getFireCharge() + charge));
     }
 
     public void loadCannon(boolean b) {
@@ -173,9 +172,17 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "attack_controller", 5, this::attackPredicate));
+        AnimationController<FireElementalEntity> combat = new AnimationController<>(this, "attack_controller", 5, this::attackPredicate);
+        data.addAnimationController(combat);
         data.addAnimationController(new AnimationController<>(this, "idle", 0, this::idleP));
+        combat.registerParticleListener(this::particleListener);
         super.registerControllers(data);
+    }
+
+    private void particleListener(ParticleKeyFrameEvent<FireElementalEntity> particleKeyFrameEvent) {
+        if (isCannonLoaded()) {
+            Particles.create(Registry.FLAME_PARTICLE).setAlpha(0.7F, 0.0F).setScale(0.25F, 0.0F).setLifetime(10).randomOffset(0.3D, 0.3D).randomVelocity(0, -0.15F).setColor(1.5F, 0.875F, 0.5F, 0.5F, 0.25F, 1.0F).spawn(this.getCommandSenderWorld(), this.getX(), this.getY() + 5.75F, this.getZ());
+        }
     }
 
     private <T extends IAnimatable> PlayState idleP(AnimationEvent<T> event) {
@@ -206,8 +213,8 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
     }
 
     @Override
-    protected <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        return PlayState.CONTINUE;
+    public boolean isPowered() {
+        return this.getHealth() <= this.getMaxHealth() / 2.0F;
     }
 
     /**
@@ -216,76 +223,31 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
     @Override
     public void performRangedAttack(LivingEntity Target, float pDistanceFactor) {
 
-        Vector3d pos = this.position().add(this.getLookAngle().scale(0.5D)).add(0.5D * Math.sin(Math.toRadians(225.0F - this.yHeadRot)), this.getBbHeight() * 2.0F / 3.0F, 0.5D * Math.cos(Math.toRadians(225.0F - this.yHeadRot)));
+        Vector3d pos = this.position().add(this.getLookAngle().scale(0.7)).add(0.5D * Math.sin(Math.toRadians(225.0F - this.yHeadRot)), this.getBbHeight() * 2 / 3, 0.5D * Math.cos(Math.toRadians(225.0F - this.yHeadRot)));
         double vx = Target.getX() - pos.x;
-        double vy = Target.getY() - pos.y + 2;
+        double vy = Target.getY() - pos.y;
         double vz = Target.getZ() - pos.z;
         loadCannon(false);
 
-        /*for (int i = 0; i < 3; ++i) {
-        SpellProjectileEntity spellProjectile = new SoulfireProjectileEntity(Registry.SOULFIRE_PROJECTILE.get(),this.level);
-        this.level.addFreshEntity(spellProjectile.shoot(this.getX(), this.getY()+1.5,this.getZ(),vx,vy,vz,this.getUUID()));
-        }*/
-
-        level.addFreshEntity((new SoulfireProjectileEntity(Registry.SOULFIRE_PROJECTILE.get(), level)).shoot(pos.x, pos.y, pos.z, vx, vy, vz, this.getUUID()));
-        level.addFreshEntity((new SoulfireProjectileEntity(Registry.SOULFIRE_PROJECTILE.get(), level)).shoot(pos.x + 0.1, pos.y, pos.z + 0.1, vx, vy, vz, this.getUUID()));
+        level.addFreshEntity((new MagmaProjectileEntity(HexEntityType.MAGMA_PROJECTILE.get(), level)).shoot(pos.x, pos.y + 0.5, pos.z, vx * 0.9, vy, vz * 0.9, this.getUUID(), this));
 
     }
 
     @Override
-    public boolean isPowered() {
-        return this.getHealth() <= this.getMaxHealth() / 2.0F;
-    }
+    public boolean doHurtTarget(Entity target) {
+        float f = (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE);
 
-    static class FEMeleeGoal extends MeleeAttackGoal {
-
-        FireElementalEntity Firenando;
-
-        public FEMeleeGoal(FireElementalEntity creature, double speedIn, boolean useLongMemory) {
-            super(creature, speedIn, useLongMemory);
-            Firenando = (FireElementalEntity) this.mob;
-        }
-
-        @Override
-        public boolean canUse() {
-            return super.canUse() && (this.Firenando.getFireCharge() < 4);
-        }
-
-        @Override
-        protected void resetAttackCooldown() {
-            this.ticksUntilNextAttack = 40;
-        }
-
-        @Override
-        public void tick() {
-            super.tick();
-            LivingEntity livingentity = this.mob.getTarget();
-            if (livingentity == null) return;
-
-            if (ticksUntilNextAttack == 20 && this.Firenando.getAnimationState() == 2) {
-                this.mob.doHurtTarget(livingentity);
-                livingentity.knockback(1.0F, mob.getX() - livingentity.getX(), mob.getZ() - livingentity.getZ());
+        boolean flag = target.hurt(DamageSource.mobAttack(this), f);
+        if (flag) {
+            if (target.invulnerableTime > 0) {
+                target.invulnerableTime = 0;
             }
+            target.hurt(new EntityDamageSource("lava", this).bypassArmor(), 2.0F);
 
-            if (ticksUntilNextAttack == 1) {
-                Firenando.setAnimationState(0);
-                this.Firenando.addFireCharge(1);
-            }
-
+            this.setLastHurtMob(target);
         }
 
-        @Override
-        protected void checkAndPerformAttack(LivingEntity enemy, double distToEnemySqr) {
-
-            double d0 = this.getAttackReachSqr(enemy);
-
-            if (distToEnemySqr <= d0 && isTimeToAttack()) {
-                Firenando.setAnimationState(2);
-                this.resetAttackCooldown();
-            }
-
-        }
-
+        return flag;
     }
 
 }
