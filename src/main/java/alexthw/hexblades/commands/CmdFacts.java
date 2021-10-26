@@ -44,8 +44,8 @@ public class CmdFacts {
             case ("evolution_ritual"):
                 fact = HexFacts.EVOLVE_RITUAL;
                 break;
-            case ("star_infusion"):
-                fact = HexFacts.STAR_INFUSION;
+            case ("elemental_summoning"):
+                fact = HexFacts.ELEMENTAL_SUMMON;
                 break;
             case ("villager_sacrifice"):
                 fact = HexFacts.VILLAGER_SACRIFICE;
@@ -71,7 +71,7 @@ public class CmdFacts {
                 fact = HexFacts.EVOLVE_RITUAL;
                 break;
             case ("star_infusion"):
-                fact = HexFacts.STAR_INFUSION;
+                fact = HexFacts.ELEMENTAL_SUMMON;
                 break;
             case ("villager_sacrifice"):
                 fact = HexFacts.VILLAGER_SACRIFICE;

@@ -17,7 +17,7 @@ public class FireBroad2 extends FireBroad1 {
 
     public FireBroad2(Properties props) {
         super(7, -2.7F, props);
-        tooltipText = new TranslationTextComponent("tooltip.HexSwordItem.flame_sword2");
+        tooltipText = new TranslationTextComponent("tooltip.hexblades.flame_sword2");
     }
 
     @Override

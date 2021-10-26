@@ -65,22 +65,14 @@ public class HexTouchSpell extends StaticSpell {
 
     boolean canTouch(ItemStack stack) {
         Item stackItem = stack.getItem();
-        return stackItem == Items.NETHER_STAR || stackItem == Items.LAPIS_LAZULI || stackItem == Items.DIAMOND || stackItem == HexItem.SOUL_CANDY.get();
+        return stackItem == Items.DIAMOND;
     }
 
     ItemStack touchResult(ItemStack stack) { // assumes canTouch is true
 
-        if (stack.getItem() == Items.NETHER_STAR)
-            return new ItemStack(HexItem.PATRON_SOUL.get());
-
-        if (stack.getItem() == Items.LAPIS_LAZULI)
-            return new ItemStack(HexItem.PATRON_SOUL2.get());
-
         if (stack.getItem() == Items.DIAMOND)
             return new ItemStack(HexItem.ELEMENTAL_CORE.get());
 
-        if (stack.getItem() == HexItem.SOUL_CANDY.get())
-            return new ItemStack(HexItem.SOUL_BAIT.get());
         return stack;
     }
 

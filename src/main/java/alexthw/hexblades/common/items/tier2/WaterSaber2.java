@@ -19,7 +19,7 @@ public class WaterSaber2 extends WaterSaber1 {
 
     public WaterSaber2(Properties props) {
         super(6, -2.4F, props);
-        tooltipText = new TranslationTextComponent("tooltip.HexSwordItem.water_saber2");
+        tooltipText = new TranslationTextComponent("tooltip.hexblades.water_saber2");
     }
 
     @Override

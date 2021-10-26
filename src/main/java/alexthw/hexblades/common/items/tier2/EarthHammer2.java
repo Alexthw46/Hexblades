@@ -17,7 +17,7 @@ public class EarthHammer2 extends EarthHammer1 {
     public EarthHammer2(Properties props) {
         super(9, -3.2F, props);
         baseMiningSpeed = newMiningSpeed = 8.0F;
-        tooltipText = new TranslationTextComponent("tooltip.HexSwordItem.earth_hammer2");
+        tooltipText = new TranslationTextComponent("tooltip.hexblades.earth_hammer2");
         mineSwitch = false;
     }
 

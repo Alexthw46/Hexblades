@@ -14,7 +14,7 @@ import static alexthw.hexblades.ConfigHandler.COMMON;
 public class IceKatana2 extends IceKatana1 {
     public IceKatana2(Properties props) {
         super(5, -2.5F, props);
-        tooltipText = new TranslationTextComponent("tooltip.HexSwordItem.ice_katana2");
+        tooltipText = new TranslationTextComponent("tooltip.hexblades.ice_katana2");
     }
 
     @Override

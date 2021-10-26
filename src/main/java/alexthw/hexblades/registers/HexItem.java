@@ -8,6 +8,7 @@ import alexthw.hexblades.common.items.tier1.*;
 import alexthw.hexblades.common.items.tier2.*;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
+import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.fml.RegistryObject;
@@ -28,7 +29,6 @@ public class HexItem {
     public static final RegistryObject<Item> ELEMENTAL_CORE;
     public static final RegistryObject<Item> DROWNED_HEART;
     public static final RegistryObject<Item> SOUL_CANDY;
-    public static final RegistryObject<Item> SOUL_BAIT;
     public static final RegistryObject<Item> FIRE_CORE;
 
 
@@ -63,13 +63,12 @@ public class HexItem {
     static {
         //Items
         HEXIUM_INGOT = ITEMS.register("hexium_ingot", () -> new Item(addTabProp()));
-        PATRON_SOUL = ITEMS.register("elemental_soul", () -> new ElementalSoul(addTabProp().fireResistant()));
-        PATRON_SOUL2 = ITEMS.register("elemental_soul_2", () -> new Item(addTabProp()));
+        PATRON_SOUL = ITEMS.register("elemental_soul", () -> new ElementalSoul(addTabProp().fireResistant().rarity(Rarity.EPIC)));
+        PATRON_SOUL2 = ITEMS.register("elemental_soul_2", () -> new Item(addTabProp().rarity(Rarity.EPIC)));
         DROWNED_HEART = ITEMS.register("drowned_heart", () -> new Item(addTabProp()));
-        ELEMENTAL_CORE = ITEMS.register("elemental_core", () -> new Item(addTabProp().fireResistant()));
+        ELEMENTAL_CORE = ITEMS.register("elemental_core", () -> new Item(addTabProp().fireResistant().rarity(Rarity.RARE)));
         SOUL_CANDY = ITEMS.register("soul_candy", () -> new Item(addTabProp().food(new Food.Builder().effect(() -> new EffectInstance(Effects.REGENERATION, 40, 1), 1.0F).fast().nutrition(1).saturationMod(0.1F).build())));
-        SOUL_BAIT = ITEMS.register("soul_bait", () -> new Item(addTabProp()));
-        FIRE_CORE = ITEMS.register("fire_core", () -> new Item(addTabProp()));
+        FIRE_CORE = ITEMS.register("fire_core", () -> new Item(addTabProp().rarity(Rarity.UNCOMMON)));
         //TEST_ARMOR = ITEMS.register("test_chestplate", () -> new TestArmor(EquipmentSlotType.CHEST, addTabProp()));
 
 
@@ -82,24 +81,24 @@ public class HexItem {
 
         //Hexblades
         DEV_SWORD = ITEMS.register("dev_sword_1", () -> new HexSwordItem(3, -1.6F, addTabProp().stacksTo(1)));
-        BLOOD_SWORD = ITEMS.register("blood_sword", () -> new SanguineSword(addTabProp().stacksTo(1).fireResistant()));
+        BLOOD_SWORD = ITEMS.register("blood_sword", () -> new SanguineSword(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.RARE)));
 
-        FROST_RAZOR = ITEMS.register("ice_katana_1", () -> new IceKatana1(addTabProp().stacksTo(1).fireResistant()));
-        FROST_RAZOR1 = ITEMS.register("ice_katana_2", () -> new IceKatana2(addTabProp().stacksTo(1).fireResistant()));
+        FROST_RAZOR = ITEMS.register("ice_katana_1", () -> new IceKatana1(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.UNCOMMON)));
+        FROST_RAZOR1 = ITEMS.register("ice_katana_2", () -> new IceKatana2(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.RARE)));
 
-        FIRE_BRAND = ITEMS.register("flame_sword_1", () -> new FireBroad1(addTabProp().stacksTo(1).fireResistant()));
-        FIRE_BRAND1 = ITEMS.register("flame_sword_2", () -> new FireBroad2(addTabProp().stacksTo(1).fireResistant()));
+        FIRE_BRAND = ITEMS.register("flame_sword_1", () -> new FireBroad1(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.UNCOMMON)));
+        FIRE_BRAND1 = ITEMS.register("flame_sword_2", () -> new FireBroad2(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.RARE)));
 
-        WATER_SABER = ITEMS.register("water_saber_1", () -> new WaterSaber1(addTabProp().stacksTo(1).fireResistant()));
-        WATER_SABER1 = ITEMS.register("water_saber_2", () -> new WaterSaber2(addTabProp().stacksTo(1).fireResistant()));
+        WATER_SABER = ITEMS.register("water_saber_1", () -> new WaterSaber1(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.UNCOMMON)));
+        WATER_SABER1 = ITEMS.register("water_saber_2", () -> new WaterSaber2(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.RARE)));
 
-        EARTH_HAMMER = ITEMS.register("earth_hammer_1", () -> new EarthHammer1(addTabProp().stacksTo(1).fireResistant()));
-        EARTH_HAMMER1 = ITEMS.register("earth_hammer_2", () -> new EarthHammer2(addTabProp().stacksTo(1).fireResistant()));
+        EARTH_HAMMER = ITEMS.register("earth_hammer_1", () -> new EarthHammer1(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.UNCOMMON)));
+        EARTH_HAMMER1 = ITEMS.register("earth_hammer_2", () -> new EarthHammer2(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.RARE)));
 
-        LIGHTNING_DAGGER_R = ITEMS.register("thunder_knives_right1", () -> new Lightning_SSwordR1(addTabProp().stacksTo(1).fireResistant()));
-        LIGHTNING_DAGGER_L = ITEMS.register("thunder_knives_left1", () -> new Lightning_SSwordL1(addTabProp().stacksTo(1).fireResistant()));
-        LIGHTNING_SSWORD_R = ITEMS.register("thunder_knives_right2", () -> new Lightning_SSwordR2(addTabProp().fireResistant()));
-        LIGHTNING_SSWORD_L = ITEMS.register("thunder_knives_left2", () -> new Lightning_SSwordL2(addTabProp().fireResistant()));
+        LIGHTNING_DAGGER_R = ITEMS.register("thunder_knives_right1", () -> new Lightning_SSwordR1(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.UNCOMMON)));
+        LIGHTNING_DAGGER_L = ITEMS.register("thunder_knives_left1", () -> new Lightning_SSwordL1(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.UNCOMMON)));
+        LIGHTNING_SSWORD_R = ITEMS.register("thunder_knives_right2", () -> new Lightning_SSwordR2(addTabProp().fireResistant().rarity(Rarity.RARE)));
+        LIGHTNING_SSWORD_L = ITEMS.register("thunder_knives_left2", () -> new Lightning_SSwordL2(addTabProp().fireResistant().rarity(Rarity.RARE)));
 
     }
 

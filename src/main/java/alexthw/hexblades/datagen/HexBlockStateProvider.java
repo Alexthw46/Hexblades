@@ -2,10 +2,9 @@ package alexthw.hexblades.datagen;
 
 import alexthw.hexblades.Hexblades;
 import alexthw.hexblades.common.blocks.DecoBlock;
-import alexthw.hexblades.common.blocks.EverfullUrnBlock;
-import alexthw.hexblades.common.blocks.SwordStandBlock;
 import alexthw.hexblades.registers.HexBlock;
 import alexthw.hexblades.util.HexUtils;
+import elucent.eidolon.block.BlockBase;
 import net.minecraft.block.*;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.util.registry.Registry;
@@ -37,8 +36,7 @@ public class HexBlockStateProvider extends BlockStateProvider{
         //HexUtils.takeAll(blocks, b -> b.get() instanceof WallBlock).forEach(this::wallBlock);
         HexUtils.takeAll(blocks, b -> b.get() instanceof FenceBlock).forEach(this::fenceBlock);
         HexUtils.takeAll(blocks, b -> b.get() instanceof FenceGateBlock).forEach(this::fenceGateBlock);
-        HexUtils.takeAll(blocks, b -> b.get() instanceof SwordStandBlock);
-        HexUtils.takeAll(blocks, b -> b.get() instanceof EverfullUrnBlock);
+        HexUtils.takeAll(blocks, b -> b.get() instanceof BlockBase);
         blocks.forEach(this::basicBlock);
 
     }

@@ -82,6 +82,10 @@ public class HexSwordItem extends SwordItem implements IHexblade {
         return isActivated;
     }
 
+    public void updateState(boolean aws) {
+        isActivated = aws;
+    }
+
     public int getRechargeTicks() {
         return rechargeTick;
     }
@@ -123,15 +127,6 @@ public class HexSwordItem extends SwordItem implements IHexblade {
             } else {
                 tag.putDouble(Constants.NBT.EXTRA_ATTACK_SPEED, baseSpeed);
             }
-        }
-    }
-
-
-    public void setAwakenedState(ItemStack stack, boolean aws) {
-        if (!stack.isEmpty()) {
-            CompoundNBT tag = NBTHelper.checkNBT(stack).getTag();
-            if (tag != null) tag.putBoolean(Constants.NBT.AW_State, aws);
-            isActivated = aws;
         }
     }
 

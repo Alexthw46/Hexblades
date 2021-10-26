@@ -36,7 +36,7 @@ public class HexDeity extends Deity {
         } else if (!KnowledgeUtil.knowsFact(player, HexFacts.EVOLVE_RITUAL) && current >= 30.0D) {
             rep.setReputation(player, id, 30.0D);
             rep.lock(player, id, DeityLocks.EVOLVED_WEAPON);
-            KnowledgeUtil.grantFact(player, HexFacts.STAR_INFUSION);
+            KnowledgeUtil.grantFact(player, HexFacts.ELEMENTAL_SUMMON);
         } else if (current >= 60.0D) {
             rep.setReputation(player, id, 60.0D);
             rep.lock(player, id, DeityLocks.MAXDAMAGE);

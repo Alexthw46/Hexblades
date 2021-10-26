@@ -17,7 +17,7 @@ public class FireBroad1 extends HexSwordItem {
 
     public FireBroad1(Properties props) {
         super(6, -2.7F, props);
-        tooltipText = new TranslationTextComponent("tooltip.HexSwordItem.flame_sword");
+        tooltipText = new TranslationTextComponent("tooltip.hexblades.flame_sword");
     }
 
     public FireBroad1(int attackDamage, float attackSpeed, Properties props) {

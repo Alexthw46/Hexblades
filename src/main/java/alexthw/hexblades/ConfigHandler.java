@@ -47,6 +47,9 @@ public class ConfigHandler {
 
         public final ForgeConfigSpec.ConfigValue<Integer> UrnTickRate;
 
+        public final ForgeConfigSpec.ConfigValue<Integer> FT_AVG;
+        public final ForgeConfigSpec.ConfigValue<Integer> FT_MIN;
+
         public Common(ForgeConfigSpec.Builder builder) {
 
             builder.comment("Adjust these values to balance the bonus from devotion an Hexblade gets while awakened. Max devotion : 60")
@@ -163,6 +166,8 @@ public class ConfigHandler {
             builder.pop();
 
             builder.push("WorldGen Configs");
+            FT_AVG = builder.comment("average distance apart in chunks between spawn attempts").define("Must be more than minimum", 40);
+            FT_MIN = builder.comment("minimum distance apart in chunks between spawn attempts").define("Must be less than above", 15);
 
             builder.pop();
         }

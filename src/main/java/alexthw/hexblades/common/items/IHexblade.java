@@ -27,6 +27,8 @@ public interface IHexblade {
 
     void setAttackSpeed(ItemStack weapon, double extraspeed);
 
+    void updateState(boolean aws);
+
     // data getters
     int getRechargeTicks();
 
@@ -42,11 +44,12 @@ public interface IHexblade {
     default void inventoryTick(ItemStack stack, World worldIn, Entity user) {
         if (user instanceof PlayerEntity && !worldIn.isClientSide()) {
             PlayerEntity player = (PlayerEntity) user;
+            boolean currentState = getAwakened(stack);
             if (hasBonus()) {
-                applyHexBonus(player, isActivated());
+                applyHexBonus(player, currentState);
             }
-            if (isActivated() && !(player).isCreative()) {
-                if (getEnergyLeft(stack) > 5) {
+            if (currentState && !(player).isCreative()) {
+                if (getEnergyLeft(stack) > getRechargeTicks() + 1) {
                     stack.hurtAndBreak(2, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
                 } else {
                     recalculatePowers(player.getItemInHand(Hand.MAIN_HAND), worldIn, player);
@@ -78,7 +81,15 @@ public interface IHexblade {
         return tag != null && !stack.isEmpty() && tag.getBoolean(Constants.NBT.AW_State);
     }
 
-    void setAwakenedState(ItemStack stack, boolean aws);
+    default void setAwakenedState(ItemStack stack, boolean aws) {
+        if (!stack.isEmpty()) {
+            if (!aws || stack.getDamageValue() == 0) {
+                CompoundNBT tag = NBTHelper.checkNBT(stack).getTag();
+                if (tag != null) tag.putBoolean(Constants.NBT.AW_State, aws);
+                updateState(aws);
+            }
+        }
+    }
 
     default boolean hasBonus() {
         return false;
@@ -109,7 +120,5 @@ public interface IHexblade {
         }
         return true;
     }
-
-    //Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack);
 
 }

@@ -98,7 +98,6 @@ public class Hexblades {
      * Add our structure to all biomes including other modded biomes.
      * You can skip or add only to certain biomes based on stuff like biome category,
      * temperature, scale, precipitation, mod id, etc. All kinds of options!
-     * <p>
      * You can even use the BiomeDictionary as well! To use BiomeDictionary, do
      * RegistryKey.getOrCreateKey(Registry.BIOME_KEY, event.getName()) to get the biome's
      * registrykey. Then that can be fed into the dictionary to get the biome's types.

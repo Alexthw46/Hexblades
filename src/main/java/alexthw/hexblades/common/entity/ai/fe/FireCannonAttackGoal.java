@@ -32,7 +32,7 @@ public class FireCannonAttackGoal extends Goal {
         LivingEntity livingentity = this.Firenando.getTarget();
         if ((livingentity != null && this.Firenando.canAttack(livingentity) && livingentity.isAlive())) {
             double distance = this.Firenando.distanceToSqr(livingentity);
-            if (distance > 48.0F) {
+            if (distance < 128.0F && distance >= 32.0F) {
                 this.target = livingentity;
                 return true;
             }
@@ -50,6 +50,7 @@ public class FireCannonAttackGoal extends Goal {
         this.target = null;
         this.seeTime = 0;
         this.attackTime = 0;
+        this.Firenando.loadCannon(false);
         this.Firenando.setAnimationState(0);
     }
 
@@ -75,9 +76,10 @@ public class FireCannonAttackGoal extends Goal {
         //attack zone
         if ((this.attackTime == 0) && flag) {
             this.Firenando.setAnimationState(1);
-            this.Firenando.loadCannon(true);
             this.attackTime = attackInterval;
-        } else if ((this.attackTime == 25) && (this.Firenando.getAnimationState() == 1)) {
+        } else if ((this.attackTime == 30) && (this.Firenando.getAnimationState() == 1)) {
+            this.Firenando.loadCannon(true);
+        } else if ((this.attackTime == 15) && (this.Firenando.getAnimationState() == 1)) {
             float f = MathHelper.sqrt(d0) / this.attackRadius;
             float lvt_5_1_ = MathHelper.clamp(f, 0.1F, 1.0F);
             this.Firenando.performRangedAttack(this.target, lvt_5_1_);

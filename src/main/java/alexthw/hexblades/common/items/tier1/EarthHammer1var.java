@@ -86,12 +86,9 @@ public class EarthHammer1var extends PickaxeItem implements IHexblade {
         }
     }
 
-    public void setAwakenedState(ItemStack stack, boolean aws) {
-        if (!stack.isEmpty()) {
-            CompoundNBT tag = NBTHelper.checkNBT(stack).getTag();
-            if (tag != null) tag.putBoolean(Constants.NBT.AW_State, aws);
-            isActivated = aws;
-        }
+    @Override
+    public void updateState(boolean aws) {
+        isActivated = aws;
     }
 
     public double getAttackPower(ItemStack weapon) {

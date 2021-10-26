@@ -35,12 +35,13 @@ public class SanguineSword extends SappingSwordItem implements IHexblade {
     protected final double baseAttackSpeed;
     protected boolean isActivated;
 
-    protected String tooltipText = "It desires Blood";
+    protected String tooltipText = "tooltip.hexblades.sanguine_sword";
     protected int rechargeTick = 5;
     protected final int dialogueLines = 3;
 
     public SanguineSword(Properties builderIn) {
         super(builderIn);
+        setLore(tooltipText);
         baseAttack = 4;
         baseAttackSpeed = -2.4F;
         isActivated = false;
@@ -132,6 +133,10 @@ public class SanguineSword extends SappingSwordItem implements IHexblade {
         return getMaxDamage(stack) - stack.getDamageValue();
     }
 
+    public void updateState(boolean aws) {
+        isActivated = aws;
+    }
+
     //NBT GETTERS
     public double getAttackPower(ItemStack weapon) {
         CompoundNBT tag = NBTHelper.checkNBT(weapon).getTag();
@@ -184,18 +189,11 @@ public class SanguineSword extends SappingSwordItem implements IHexblade {
         }
     }
 
-    public void setAwakenedState(ItemStack stack, boolean aws) {
-        if (!stack.isEmpty()) {
-            CompoundNBT tag = NBTHelper.checkNBT(stack).getTag();
-            if (tag != null) tag.putBoolean(Constants.NBT.AW_State, aws);
-            this.isActivated = aws;
-        }
-    }
-
     @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
         return shouldCauseReequipAnimation(oldStack, newStack);
     }
+
 
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {

@@ -8,9 +8,6 @@ import elucent.eidolon.particle.Particles;
 import elucent.eidolon.util.ColorUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IRendersAsItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.MathHelper;
@@ -20,7 +17,7 @@ import net.minecraft.world.World;
 
 import java.util.UUID;
 
-public class MagmaProjectileEntity extends SpellProjectileEntity implements IRendersAsItem {
+public class MagmaProjectileEntity extends SpellProjectileEntity {
 
     UUID casterID;
     FireElementalEntity FEE;
@@ -44,8 +41,7 @@ public class MagmaProjectileEntity extends SpellProjectileEntity implements IRen
             double lerpX = MathHelper.lerp((float) i / 8.0F, this.xo, pos.x);
             double lerpY = MathHelper.lerp((float) i / 8.0F, this.yo, pos.y);
             double lerpZ = MathHelper.lerp((float) i / 8.0F, this.zo, pos.z);
-            Particles.create(Registry.FLAME_PARTICLE).setAlpha(0.375F, 0.0F).setScale(0.375F, 0.0F).setColor(1.0F, 0.875F, 0.5F, 0.5F, 0.25F, 1.0F).setLifetime(5).spawn(this.level, lerpX, lerpY, lerpZ);
-            Particles.create(Registry.WISP_PARTICLE).setAlpha(0.125F, 0.0F).setScale(0.25F, 0.125F).setColor(1.0F, 0.5F, 0.625F, 0.5F, 0.25F, 1.0F).setLifetime(20).spawn(this.level, lerpX, lerpY, lerpZ);
+            Particles.create(Registry.FLAME_PARTICLE).setAlpha(0.5F, 0.0F).setScale(0.375F, 0.0F).setColor(1.0F, 0.5F, 0.15F, 0.65F, 0.25F, 0.075F).setLifetime(3).spawn(this.level, lerpX, lerpY, lerpZ);
         }
     }
 
@@ -64,8 +60,4 @@ public class MagmaProjectileEntity extends SpellProjectileEntity implements IRen
 
     }
 
-    @Override
-    public ItemStack getItem() {
-        return new ItemStack(Items.FIRE_CHARGE);
-    }
 }

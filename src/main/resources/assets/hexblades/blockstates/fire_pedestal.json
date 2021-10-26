@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "hexblades:block/fire_pedestal"
+    },
+    "facing=south": {
+      "model": "hexblades:block/fire_pedestal",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "hexblades:block/fire_pedestal",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "hexblades:block/fire_pedestal",
+      "y": 90
+    }
+  }
+}

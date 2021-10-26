@@ -2,7 +2,7 @@ package alexthw.hexblades.client;
 
 import alexthw.hexblades.Hexblades;
 import alexthw.hexblades.client.render.entity.FireElementalER;
-import alexthw.hexblades.client.render.entity.MagmaProjectileRenderer;
+import alexthw.hexblades.client.render.tile.FirePedestalRenderer;
 import alexthw.hexblades.client.render.tile.SwordStandRenderer;
 import alexthw.hexblades.client.render.tile.Urn_Renderer;
 import alexthw.hexblades.common.items.IHexblade;
@@ -56,6 +56,7 @@ public class ClientEvents {
     @SubscribeEvent
     public static void bindTERs(FMLClientSetupEvent event) {
         ClientRegistry.bindTileEntityRenderer(HexTileEntityType.SWORD_STAND_TILE_ENTITY, SwordStandRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(HexTileEntityType.FIRE_PEDESTAL_TILE_ENTITY, FirePedestalRenderer::new);
         ClientRegistry.bindTileEntityRenderer(HexTileEntityType.EVERFULL_URN_TILE_ENTITY, Urn_Renderer::new);
     }
 
@@ -63,7 +64,7 @@ public class ClientEvents {
     public static void initClientEvents(FMLClientSetupEvent event) {
 
         RenderingRegistry.registerEntityRenderingHandler(HexEntityType.FULGOR_PROJECTILE.get(), EmptyRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(HexEntityType.MAGMA_PROJECTILE.get(), MagmaProjectileRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(HexEntityType.MAGMA_PROJECTILE.get(), EmptyRenderer::new);
         //RenderingRegistry.registerEntityRenderingHandler(HexEntityType.TEST_ELEMENTAL.get(), (erm) -> new ElementalEntityRender(erm, new MinionElementalModel(), 0.6F));
         RenderingRegistry.registerEntityRenderingHandler(HexEntityType.FIRE_ELEMENTAL.get(), FireElementalER::new);
         //RenderingRegistry.registerEntityRenderingHandler(HexEntityType.EARTH_ELEMENTAL.get(), EarthElementalER::new);

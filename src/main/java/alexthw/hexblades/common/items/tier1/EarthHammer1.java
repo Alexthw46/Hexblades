@@ -36,7 +36,7 @@ public class EarthHammer1 extends HexSwordItem {
                 props.addToolType(net.minecraftforge.common.ToolType.PICKAXE, Tiers.PatronWeaponTier.INSTANCE.getLevel()));
         baseMiningSpeed = 6.0F;
         newMiningSpeed = baseMiningSpeed;
-        tooltipText = new TranslationTextComponent("tooltip.HexSwordItem.earth_hammer");
+        tooltipText = new TranslationTextComponent("tooltip.hexblades.earth_hammer");
         mineSwitch = false;
     }
 

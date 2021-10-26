@@ -16,6 +16,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.HashMap;
 import java.util.Map;
 
+import static alexthw.hexblades.ConfigHandler.COMMON;
+
 public class HexStructures {
 
     public static final DeferredRegister<Structure<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, Hexblades.MODID);
@@ -25,8 +27,8 @@ public class HexStructures {
     public static void setupStructures() {
         setupMapSpacingAndLand(
                 FIRE_TEMPLE.get(), /* The instance of the structure */
-                new StructureSeparationSettings(40 /* average distance apart in chunks between spawn attempts */,
-                        15 /* minimum distance apart in chunks between spawn attempts. MUST BE LESS THAN ABOVE VALUE*/,
+                new StructureSeparationSettings(COMMON.FT_AVG.get() /* average distance apart in chunks between spawn attempts */,
+                        COMMON.FT_MIN.get() /* minimum distance apart in chunks between spawn attempts. MUST BE LESS THAN ABOVE VALUE*/,
                         499602286 /* this modifies the seed of the structure so no two structures always spawn over each-other. Make this large and unique. */),
                 true);
 

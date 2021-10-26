@@ -3,6 +3,7 @@ package alexthw.hexblades.registers;
 import alexthw.hexblades.Hexblades;
 import alexthw.hexblades.common.blocks.DecoBlock;
 import alexthw.hexblades.common.blocks.EverfullUrnBlock;
+import alexthw.hexblades.common.blocks.FirePedestalBlock;
 import alexthw.hexblades.common.blocks.SwordStandBlock;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
@@ -20,6 +21,7 @@ public class HexBlock {
 
     public static final RegistryObject<Block> SWORD_STAND;
     public static final RegistryObject<Block> EVERFULL_URN;
+    public static final RegistryObject<Block> FIRE_PEDESTAL;
     public static final RegistryObject<Block> MAGMA_BRICKS;
     public static DecoBlockPack DARK_POLISH_PLANKS;
 
@@ -29,12 +31,17 @@ public class HexBlock {
                 .noOcclusion()
         ));
 
+        FIRE_PEDESTAL = addBlock("fire_pedestal", new FirePedestalBlock(blockProps(Material.STONE, MaterialColor.COLOR_BROWN)
+                .noOcclusion().noDrops().strength(50.0F, 1200.0F)
+        ));
+
         EVERFULL_URN = addBlock("everfull_urn", new EverfullUrnBlock(blockProps(Material.STONE, MaterialColor.COLOR_RED)
                 .noOcclusion()
         ));
 
+
         MAGMA_BRICKS = addBlock("nether_magma_bricks", new Block(blockProps(Material.STONE, MaterialColor.NETHER)
-                .lightLevel((litBlockEmission) -> 6)
+                .lightLevel((litBlockEmission) -> 4)
                 .requiresCorrectToolForDrops()
                 .strength(2.0F, 6.0F)
                 .sound(SoundType.NETHER_BRICKS)) {

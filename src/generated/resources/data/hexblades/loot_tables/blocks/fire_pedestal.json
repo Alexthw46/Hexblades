@@ -1,17 +1,17 @@
 {
-  "type": "minecraft:entity",
+  "type": "minecraft:block",
   "pools": [
     {
       "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "hexblades:elemental_soul"
+          "name": "hexblades:fire_pedestal"
         }
       ],
       "conditions": [
         {
-          "condition": "minecraft:killed_by_player"
+          "condition": "minecraft:survives_explosion"
         }
       ]
     }

@@ -4,9 +4,10 @@ import alexthw.hexblades.common.entity.ai.fe.FEMeleeGoal;
 import alexthw.hexblades.common.entity.ai.fe.FireCannonAttackGoal;
 import alexthw.hexblades.common.entity.ai.fe.FireSpinAttackGoal;
 import alexthw.hexblades.registers.HexEntityType;
-import elucent.eidolon.Registry;
-import elucent.eidolon.particle.Particles;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.IRangedAttackMob;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
@@ -33,7 +34,7 @@ import software.bernie.geckolib3.core.event.ParticleKeyFrameEvent;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
-public class FireElementalEntity extends BaseElementalEntity implements IRangedAttackMob, IChargeableMob {
+public class FireElementalEntity extends BaseElementalEntity implements IRangedAttackMob {
     private static final DataParameter<Integer> ANIMATIONSTATE = EntityDataManager.defineId(FireElementalEntity.class, DataSerializers.INT);
     private static final DataParameter<Integer> FIRECHARGE = EntityDataManager.defineId(FireElementalEntity.class, DataSerializers.INT);
     private static final DataParameter<Boolean> LOADING = EntityDataManager.defineId(FireElementalEntity.class, DataSerializers.BOOLEAN);
@@ -84,6 +85,8 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
         //target selectors
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+        //this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, BlazeEntity.class, true));
+
     }
 
     public static AttributeModifierMap createAttributes() {
@@ -128,8 +131,10 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
     protected void applyEntityAI() {
         //target - no attacks
         this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+        //this.goalSelector.addGoal(8, new LookAtGoal(this, BlazeEntity.class, 8.0F));
+
         //attacks
-        this.goalSelector.addGoal(2, new FireCannonAttackGoal(this, 1.0D, 50, 20.0F));
+        this.goalSelector.addGoal(2, new FireCannonAttackGoal(this, 1.0D, 40, 20.0F));
         this.goalSelector.addGoal(4, new FEMeleeGoal(this, 1.0D, false));
         this.goalSelector.addGoal(3, new FireSpinAttackGoal(this, 1.0D, true));
         //no target
@@ -180,9 +185,6 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
     }
 
     private void particleListener(ParticleKeyFrameEvent<FireElementalEntity> particleKeyFrameEvent) {
-        if (isCannonLoaded()) {
-            Particles.create(Registry.FLAME_PARTICLE).setAlpha(0.7F, 0.0F).setScale(0.25F, 0.0F).setLifetime(10).randomOffset(0.3D, 0.3D).randomVelocity(0, -0.15F).setColor(1.5F, 0.875F, 0.5F, 0.5F, 0.25F, 1.0F).spawn(this.getCommandSenderWorld(), this.getX(), this.getY() + 5.75F, this.getZ());
-        }
     }
 
     private <T extends IAnimatable> PlayState idleP(AnimationEvent<T> event) {
@@ -197,7 +199,7 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
                 controller.setAnimation(new AnimationBuilder().addAnimation("animation.hexblades.fe.idle.arms"));
                 break;
             case 1:
-                controller.setAnimation(new AnimationBuilder().addAnimation("animation.hexblades.fe.attacks.shoot"));
+                controller.setAnimation(new AnimationBuilder().addAnimation("animation.hexblades.fe.attacks.shoot2"));
                 break;
             case 2:
                 controller.setAnimation(new AnimationBuilder().addAnimation("animation.hexblades.fe.attacks.melee", false));
@@ -212,24 +214,19 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
         return PlayState.CONTINUE;
     }
 
-    @Override
-    public boolean isPowered() {
-        return this.getHealth() <= this.getMaxHealth() / 2.0F;
-    }
-
     /**
      * Attack the specified entity using a ranged attack.
      */
     @Override
     public void performRangedAttack(LivingEntity Target, float pDistanceFactor) {
 
-        Vector3d pos = this.position().add(this.getLookAngle().scale(0.7)).add(0.5D * Math.sin(Math.toRadians(225.0F - this.yHeadRot)), this.getBbHeight() * 2 / 3, 0.5D * Math.cos(Math.toRadians(225.0F - this.yHeadRot)));
-        double vx = Target.getX() - pos.x;
-        double vy = Target.getY() - pos.y;
-        double vz = Target.getZ() - pos.z;
+        this.lookAt(Target, 360, 360);
+
+        Vector3d vel = getEyePosition(0.0F).add(getLookAngle().scale(40.0D)).subtract(this.position()).scale(0.05D);
+        Vector3d pos = new Vector3d(getX() + Math.cos(Math.toRadians(yBodyRot + 90)), getY() + 2.3F, getZ() + Math.sin(Math.toRadians(yBodyRot + 90)));
         loadCannon(false);
 
-        level.addFreshEntity((new MagmaProjectileEntity(HexEntityType.MAGMA_PROJECTILE.get(), level)).shoot(pos.x, pos.y + 0.5, pos.z, vx * 0.9, vy, vz * 0.9, this.getUUID(), this));
+        level.addFreshEntity((new MagmaProjectileEntity(HexEntityType.MAGMA_PROJECTILE.get(), level)).shoot(pos.x, pos.y, pos.z, vel.x * 0.9, vel.y, vel.z * 0.9, this.getUUID(), this));
 
     }
 

@@ -20,7 +20,7 @@ public class IceKatana1 extends HexSwordItem {
 
     public IceKatana1(Properties props) {
         super(5, -2.5F, props);
-        tooltipText = new TranslationTextComponent("tooltip.HexSwordItem.ice_katana");
+        tooltipText = new TranslationTextComponent("tooltip.hexblades.ice_katana");
     }
 
     public IceKatana1(int attackDamage, float attackSpeed, Properties props) {
