@@ -27,7 +27,7 @@ public class FireTempleStructure extends AbstractJigsawStructure {
 
     @Override
     public GenerationStage.Decoration step() {
-        return GenerationStage.Decoration.UNDERGROUND_DECORATION;
+        return GenerationStage.Decoration.SURFACE_STRUCTURES;
     }
 
     @Override
@@ -64,7 +64,7 @@ public class FireTempleStructure extends AbstractJigsawStructure {
              * that the structure spawns at blockpos's y value instead of placing the structure on the Bedrock roof!
              */
 
-            BlockPos placementPos = new BlockPos(chunkX * 16, WorldGenUtil.getLowestLand(chunkGenerator, this.getBoundingBox(), true).getY(), chunkZ * 16);
+            BlockPos placementPos = new BlockPos(chunkX * 16, WorldGenUtil.getLowestLand(chunkGenerator, this.getBoundingBox(), false).getY(), chunkZ * 16);
 
             // All a structure has to do is call this method to turn it into a jigsaw based structure!
             JigsawManager.addPieces(
@@ -89,7 +89,7 @@ public class FireTempleStructure extends AbstractJigsawStructure {
 
             // Definitely keep this false when placing structures in the nether as otherwise, heightmap placing will put the structure on the Bedrock roof.
 
-            this.pieces.forEach(piece -> piece.move(0, -11, 0));
+            this.pieces.forEach(piece -> piece.move(0, -8, 0));
 
             // Since by default, the start piece of a structure spawns with it's corner at centerPos
             // and will randomly rotate around that corner, we will center the piece on centerPos instead.

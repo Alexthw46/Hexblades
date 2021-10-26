@@ -239,7 +239,7 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
             if (target.invulnerableTime > 0) {
                 target.invulnerableTime = 0;
             }
-            target.hurt(new EntityDamageSource("lava", this).bypassArmor(), 2.0F);
+            target.hurt(new EntityDamageSource("lava", this).bypassArmor(), 2.0F + (float) this.level.getDifficulty().getId() / 2);
 
             this.setLastHurtMob(target);
         }

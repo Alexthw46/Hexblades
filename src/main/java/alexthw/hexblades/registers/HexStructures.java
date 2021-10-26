@@ -22,7 +22,7 @@ public class HexStructures {
 
     public static final DeferredRegister<Structure<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, Hexblades.MODID);
 
-    public static final RegistryObject<Structure<NoFeatureConfig>> FIRE_TEMPLE = STRUCTURES.register("fire_temple", () -> new FireTempleStructure(NoFeatureConfig.CODEC, 32, 32, 1, false));
+    public static final RegistryObject<Structure<NoFeatureConfig>> FIRE_TEMPLE = STRUCTURES.register("fire_temple", () -> new FireTempleStructure(NoFeatureConfig.CODEC, 20, 16, 32, false));
 
     public static void setupStructures() {
         setupMapSpacingAndLand(
