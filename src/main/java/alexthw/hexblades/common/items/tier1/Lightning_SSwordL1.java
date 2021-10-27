@@ -3,8 +3,9 @@ package alexthw.hexblades.common.items.tier1;
 import alexthw.hexblades.common.entity.FulgorProjectileEntity;
 import alexthw.hexblades.common.items.HexSwordItem;
 import alexthw.hexblades.registers.HexEntityType;
-import alexthw.hexblades.registers.HexItem;
 import alexthw.hexblades.registers.HexRegistry;
+import alexthw.hexblades.util.Constants;
+import alexthw.hexblades.util.NBTHelper;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import elucent.eidolon.Registry;
@@ -17,6 +18,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -44,6 +46,24 @@ public class Lightning_SSwordL1 extends HexSwordItem {
     }
 
     @Override
+    public void setAwakenedState(ItemStack stack, boolean aws) {
+        if (!stack.isEmpty()) {
+            CompoundNBT tag = NBTHelper.checkNBT(stack).getTag();
+            if (tag != null) tag.putBoolean(Constants.NBT.AW_State, aws);
+            updateState(aws);
+        }
+    }
+
+    @Override
+    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker, boolean hex) {
+        if (attacker instanceof PlayerEntity) {
+            applyHexEffects(stack, target, (PlayerEntity) attacker);
+            stack.setDamageValue(Math.max(stack.getDamageValue() - 10, 0));
+        }
+        return true;
+    }
+
+    @Override
     public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
         ItemStack stack = playerIn.getItemInHand(handIn);
         if (handIn == Hand.OFF_HAND && hasTwin(playerIn) && (stack.getMaxDamage() - stack.getDamageValue() > projectileCost)) {
@@ -56,7 +76,11 @@ public class Lightning_SSwordL1 extends HexSwordItem {
     }
 
     public boolean hasTwin(PlayerEntity player) {
-        return player.getItemInHand(Hand.MAIN_HAND).getItem() == HexItem.LIGHTNING_DAGGER_R.get();
+        ItemStack is = player.getItemInHand(Hand.MAIN_HAND);
+        if (is.getItem() instanceof Lightning_SSwordR1) {
+            return ((Lightning_SSwordR1) (is.getItem())).isActivated();
+        }
+        return false;
     }
 
     @Override

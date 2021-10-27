@@ -23,18 +23,18 @@ public class Lightning_SSwordR1 extends HexSwordItem {
     public void recalculatePowers(ItemStack weapon, World world, PlayerEntity player) {
         double devotion = getDevotion(player);
 
-        if (hasTwin(player)) {
-            if (!isActivated) {
-                setAwakenedState(weapon, true);
 
-                setAttackPower(weapon, devotion / COMMON.DualsDS1.get());
-                setAttackSpeed(weapon, devotion / COMMON.DualsAS1.get());
-            }
-        } else {
+        if (!hasTwin(player)) {
             setAwakenedState(weapon, false);
-            setAttackPower(weapon, 0);
-            setAttackSpeed(weapon, 0);
+        } else if (getAwakened(weapon)) {
+            setAwakenedState(weapon, weapon.getDamageValue() <= getMaxDamage(weapon) * 0.8);
+        } else {
+            setAwakenedState(weapon, true);
         }
+
+        setAttackPower(weapon, devotion / COMMON.DualsDS1.get());
+        setAttackSpeed(weapon, devotion / COMMON.DualsAS1.get());
+
     }
 
     public boolean hasTwin(PlayerEntity player) {

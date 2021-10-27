@@ -1,7 +1,6 @@
 package alexthw.hexblades.common.items.tier2;
 
 import alexthw.hexblades.common.items.tier1.Lightning_SSwordL1;
-import alexthw.hexblades.registers.HexItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
@@ -27,6 +26,10 @@ public class Lightning_SSwordL2 extends Lightning_SSwordL1 {
 
     @Override
     public boolean hasTwin(PlayerEntity player) {
-        return player.getItemInHand(Hand.MAIN_HAND).getItem() == HexItem.LIGHTNING_SSWORD_R.get();
+        ItemStack is = player.getItemInHand(Hand.MAIN_HAND);
+        if (is.getItem() instanceof Lightning_SSwordR2) {
+            return ((Lightning_SSwordR2) (is.getItem())).isActivated();
+        }
+        return false;
     }
 }

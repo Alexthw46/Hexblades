@@ -16,7 +16,7 @@ apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.16.5-0.0.8'
+version = '1.16.5-0.0.8.1'
 group = 'Alexthw46.hexblades'
 archivesBaseName = 'Hexblades'
 
@@ -154,7 +154,7 @@ dependencies {
 
     //runtimeOnly fg.deobf("vulp:druidcraft:1.16.5-0.4.53")
     //runtimeOnly fg.deobf("klikli_dev:occultism:1.16.5-1.15.0")
-    runtimeOnly fg.deobf("ignore:malum:1.16.5-0.3.0")
+    //runtimeOnly fg.deobf("ignore:malum:1.16.5-0.3.0")
     //runtimeOnly fg.deobf("vazkii.botania:Botania:1.16.5-418")
     //runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-53.1")
 
