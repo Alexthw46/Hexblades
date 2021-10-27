@@ -27,7 +27,7 @@ public class Lightning_SSwordR1 extends HexSwordItem {
         if (!hasTwin(player)) {
             setAwakenedState(weapon, false);
         } else if (getAwakened(weapon)) {
-            setAwakenedState(weapon, weapon.getDamageValue() <= getMaxDamage(weapon) * 0.8);
+            setAwakenedState(weapon, weapon.getDamageValue() <= getMaxDamage(weapon) * 0.9);
         } else {
             setAwakenedState(weapon, true);
         }

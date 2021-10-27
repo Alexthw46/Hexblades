@@ -19,18 +19,16 @@ public class Lightning_SSwordR2 extends Lightning_SSwordR1 {
     public void recalculatePowers(ItemStack weapon, World world, PlayerEntity player) {
         double devotion = getDevotion(player);
 
-        if (hasTwin(player)) {
-            if (!isActivated) {
-                setAwakenedState(weapon, true);
-
-                setAttackPower(weapon, devotion / COMMON.DualsDS2.get());
-                setAttackSpeed(weapon, devotion / COMMON.DualsAS2.get());
-            }
-        } else {
+        if (!hasTwin(player)) {
             setAwakenedState(weapon, false);
-            setAttackPower(weapon, 0);
-            setAttackSpeed(weapon, 0);
+        } else if (getAwakened(weapon)) {
+            setAwakenedState(weapon, weapon.getDamageValue() <= getMaxDamage(weapon) * 0.9);
+        } else {
+            setAwakenedState(weapon, true);
         }
+
+        setAttackPower(weapon, devotion / COMMON.DualsDS2.get());
+        setAttackSpeed(weapon, devotion / COMMON.DualsAS2.get());
     }
 
     @Override
