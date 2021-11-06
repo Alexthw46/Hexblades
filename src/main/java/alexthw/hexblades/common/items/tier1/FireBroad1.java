@@ -25,18 +25,20 @@ public class FireBroad1 extends HexSwordItem {
     }
 
     @Override
-    public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
-        target.hurt(new EntityDamageSource("lava", attacker).bypassArmor(), (float) (getDevotion(attacker) / COMMON.SwordED1.get()));
-        target.setSecondsOnFire(2);
+    public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker, boolean awakened) {
+        if (awakened) {
+            target.hurt(new EntityDamageSource("lava", attacker).bypassArmor(), (float) (getDevotion(attacker) / COMMON.SwordED1.get()));
+            target.setSecondsOnFire(2);
+        }
     }
 
     @Override
     public void recalculatePowers(ItemStack weapon, World world, PlayerEntity player) {
         double devotion = getDevotion(player);
 
-        setAwakenedState(weapon, !getAwakened(weapon));
+        boolean awakening = setAwakenedState(weapon, !getAwakened(weapon));
 
-        setAttackPower(weapon, devotion / COMMON.SwordDS1.get());
+        setAttackPower(weapon, awakening, devotion / COMMON.SwordDS1.get());
     }
 
     @Override

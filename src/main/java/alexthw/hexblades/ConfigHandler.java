@@ -33,11 +33,11 @@ public class ConfigHandler {
 
 
         public final ForgeConfigSpec.ConfigValue<Integer> HammerDS1;
-        public final ForgeConfigSpec.ConfigValue<Float> HammerED1;
+        public final ForgeConfigSpec.ConfigValue<Double> HammerED1;
         public final ForgeConfigSpec.ConfigValue<Integer> HammerMS1;
         public final ForgeConfigSpec.ConfigValue<Integer> HammerKB1;
         public final ForgeConfigSpec.ConfigValue<Integer> HammerDS2;
-        public final ForgeConfigSpec.ConfigValue<Float> HammerED2;
+        public final ForgeConfigSpec.ConfigValue<Double> HammerED2;
         public final ForgeConfigSpec.ConfigValue<Integer> HammerMS2;
         public final ForgeConfigSpec.ConfigValue<Integer> HammerKB2;
 
@@ -49,6 +49,11 @@ public class ConfigHandler {
 
         public final ForgeConfigSpec.ConfigValue<Integer> FT_AVG;
         public final ForgeConfigSpec.ConfigValue<Integer> FT_MIN;
+
+        public final ForgeConfigSpec.ConfigValue<Boolean> NUKE_RITUALS;
+        public final ForgeConfigSpec.ConfigValue<Boolean> NUKE_CRUCIBLE;
+        public final ForgeConfigSpec.ConfigValue<Boolean> NUKE_WORKBENCH;
+
 
         public Common(ForgeConfigSpec.Builder builder) {
 
@@ -120,7 +125,7 @@ public class ConfigHandler {
                     .define("DAS2 divide by", 40);
             DualsRR = builder
                     .comment("Set the ratio of devotion -> recharge rate of the left thunder dual.")
-                    .define("DRR divide by", 2);
+                    .define("DRR divide by", 10);
             builder.pop();
 
             builder.push("Weapon scaling - Hammer");
@@ -129,7 +134,7 @@ public class ConfigHandler {
                     .define("HDS1 divide by", 20);
             HammerED1 = builder
                     .comment("Set the ratio of devotion -> elemental damage of the earth hammer Tier 1.")
-                    .define("HED1 fixed damage", 2.0F);
+                    .define("HED1 fixed damage", 2.0);
             HammerMS1 = builder
                     .comment("Set the ratio of devotion -> mining speed of the earth hammer Tier 1.")
                     .define("HMS1 divide by", 20);
@@ -141,7 +146,7 @@ public class ConfigHandler {
                     .define("HDS2 divide by", 15);
             HammerED2 = builder
                     .comment("Set the ratio of devotion -> elemental damage of the earth hammer Tier 2.")
-                    .define("HED2 fixed damage", 2.0F);
+                    .define("HED2 fixed damage", 2.0);
             HammerMS2 = builder
                     .comment("Set the ratio of devotion -> mining speed of the earth hammer Tier 2.")
                     .define("HMS2 divide by", 10);
@@ -165,9 +170,25 @@ public class ConfigHandler {
                     .define("Refill every x ticks", 100);
             builder.pop();
 
-            builder.push("WorldGen Configs");
-            FT_AVG = builder.comment("average distance apart in chunks between spawn attempts").define("Must be more than minimum", 40);
-            FT_MIN = builder.comment("minimum distance apart in chunks between spawn attempts").define("Must be less than above", 15);
+            builder.comment("WorldGen Configs").push("Fire Temple worldgen");
+
+            FT_AVG = builder.comment("Average distance apart in chunks between spawn attempts")
+                    .define("Must be more than minimum", 40);
+            FT_MIN = builder.comment("Minimum distance apart in chunks between spawn attempts")
+                    .define("Must be less than average", 15);
+
+            builder.pop();
+
+            builder.comment("Recipe disabler for hexblades").push("Recipe nukers");
+
+            NUKE_CRUCIBLE = builder.comment("set this to true to disable all hexblades crucible craftings")
+                    .define("Disable crucible recipes", false);
+
+            NUKE_RITUALS = builder.comment("set this to true to disable all hexblades ritual craftings")
+                    .define("Disable ritual recipes", false);
+
+            NUKE_WORKBENCH = builder.comment("set this to true to disable all hexblades magic workbench craftings")
+                    .define("Disable workbench recipes", false);
 
             builder.pop();
         }

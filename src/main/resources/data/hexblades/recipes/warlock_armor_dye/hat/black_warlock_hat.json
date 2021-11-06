@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "hexblades:dye_warlock_hat"
+    },
+    {
+      "tag": "forge:dyes/black"
+    }
+  ],
+  "result": {
+    "item": "hexblades:dye_warlock_hat",
+    "nbt": {
+      "color": 12
+    }
+  }
+}

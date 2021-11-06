@@ -27,8 +27,10 @@ public class Lightning_SSwordR2 extends Lightning_SSwordR1 {
             setAwakenedState(weapon, true);
         }
 
-        setAttackPower(weapon, devotion / COMMON.DualsDS2.get());
-        setAttackSpeed(weapon, devotion / COMMON.DualsAS2.get());
+        boolean awakening = getAwakened(weapon);
+
+        setAttackPower(weapon, awakening, devotion / COMMON.DualsDS2.get());
+        setAttackSpeed(weapon, awakening, devotion / COMMON.DualsAS2.get());
     }
 
     @Override

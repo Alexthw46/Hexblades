@@ -2,6 +2,7 @@ package alexthw.hexblades;
 
 import alexthw.hexblades.common.items.HexSwordItem;
 import alexthw.hexblades.common.items.IHexblade;
+import alexthw.hexblades.common.items.armors.HexWArmor;
 import alexthw.hexblades.common.items.tier1.WaterSaber1;
 import alexthw.hexblades.deity.HexDeities;
 import alexthw.hexblades.network.FlameEffectPacket;
@@ -9,6 +10,7 @@ import alexthw.hexblades.registers.HexItem;
 import alexthw.hexblades.util.HexUtils;
 import elucent.eidolon.capability.ReputationProvider;
 import elucent.eidolon.deity.Deity;
+import elucent.eidolon.event.SpeedFactorEvent;
 import elucent.eidolon.network.Networking;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
@@ -19,13 +21,14 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.ArrayList;
@@ -35,8 +38,6 @@ import static alexthw.hexblades.util.Constants.NBT.*;
 import static net.minecraft.world.GameRules.RULE_KEEPINVENTORY;
 
 public class Events {
-    public Events() {
-    }
 
     @SubscribeEvent
     public void onMobDrops(LivingDropsEvent event) {
@@ -44,7 +45,7 @@ public class Events {
         LivingEntity entity = event.getEntityLiving();
         World world = entity.level;
 
-        if (!world.isClientSide) {
+        if (!world.isClientSide()) {
             if (entity instanceof DrownedEntity) {
                 LivingEntity source = (LivingEntity) event.getSource().getEntity();
 
@@ -128,13 +129,11 @@ public class Events {
     public void onDamage(LivingDamageEvent event) {
         LivingEntity damaged = event.getEntityLiving();
         if (damaged instanceof PlayerEntity) {
-            Item item = damaged.getItemBySlot(EquipmentSlotType.MAINHAND).getItem();
-
-            if (item instanceof WaterSaber1) {
-                float shield = ((WaterSaber1) item).shield;
+            ItemStack item = damaged.getItemBySlot(EquipmentSlotType.MAINHAND);
+            if (item.getItem() instanceof WaterSaber1) {
+                float shield = ((WaterSaber1) item.getItem()).getShielding(item);
                 event.setAmount(Math.min(1, event.getAmount() - shield));
             }
-
         }
     }
 
@@ -157,4 +156,57 @@ public class Events {
             }
         }
     }
+
+    @SubscribeEvent
+    public void onApplyPotion(PotionEvent.PotionApplicableEvent event) {
+        if (event.getPotionEffect().getEffect() == Effects.MOVEMENT_SLOWDOWN && event.getEntityLiving().getItemBySlot(EquipmentSlotType.FEET).getItem() instanceof HexWArmor) {
+            event.setResult(Event.Result.DENY);
+        }
+    }
+
+    @SubscribeEvent
+    public void onLivingHurt(LivingHurtEvent event) {
+
+        if (!(event.getSource().getEntity() instanceof LivingEntity)) {
+            return;
+        }
+
+        LivingEntity livingEntity = (LivingEntity) event.getSource().getEntity();
+
+        if (event.getSource() == DamageSource.WITHER || event.getSource().isMagic()) {
+
+            ItemStack stack = livingEntity.getItemBySlot(EquipmentSlotType.HEAD);
+
+            if (stack.getItem() instanceof HexWArmor) {
+                float multiplier = HexWArmor.getFocusId(stack) == 1 ? 1.5F : 1.25F;
+                event.setAmount(event.getAmount() * multiplier);
+
+                if (event.getSource() == DamageSource.WITHER) {
+                    livingEntity.heal(event.getAmount() / 3.0F);
+                }
+            }
+
+            stack = event.getEntityLiving().getItemBySlot(EquipmentSlotType.CHEST);
+
+            if (stack.getItem() instanceof HexWArmor) {
+                float multiplier = HexWArmor.getFocusId(stack) == 1 ? 0.5F : 0.75F;
+                event.setAmount(event.getAmount() * multiplier);
+            }
+
+        }
+
+    }
+
+    @SubscribeEvent
+    public void onGetSpeedFactor(SpeedFactorEvent event) {
+        if ((event.getSpeedFactor() < 1.0F) && event.getEntity() instanceof LivingEntity) {
+            ItemStack stack = ((LivingEntity) event.getEntity()).getItemBySlot(EquipmentSlotType.FEET);
+            if ((stack.getItem() instanceof HexWArmor) && HexWArmor.getFocusId(stack) == 1) {
+                float diff = 1.0F - event.getSpeedFactor();
+                event.setSpeedFactor(1.0F - diff / 2.0F);
+            }
+        }
+
+    }
+
 }

@@ -23,12 +23,14 @@ public class WaterSaber2 extends WaterSaber1 {
     }
 
     @Override
-    public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
-        float bonus_dmg = (float) (getDevotion(attacker) / COMMON.SaberED2.get());
-        if (target.getMobType() == CreatureAttribute.WATER) {
-            target.hurt(new EntityDamageSource(MAGIC.getMsgId(), attacker).bypassArmor(), bonus_dmg);
-        } else {
-            target.hurt(new EntityDamageSource(DROWN.getMsgId(), attacker).bypassArmor(), bonus_dmg);
+    public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker, boolean awakened) {
+        if (awakened) {
+            float bonus_dmg = (float) (getDevotion(attacker) / COMMON.SaberED2.get());
+            if (target.getMobType() == CreatureAttribute.WATER) {
+                target.hurt(new EntityDamageSource(MAGIC.getMsgId(), attacker).bypassArmor(), bonus_dmg);
+            } else {
+                target.hurt(new EntityDamageSource(DROWN.getMsgId(), attacker).bypassArmor(), bonus_dmg);
+            }
         }
     }
 
@@ -46,10 +48,10 @@ public class WaterSaber2 extends WaterSaber1 {
     public void recalculatePowers(ItemStack weapon, World world, PlayerEntity player) {
         double devotion = getDevotion(player);
 
-        setAwakenedState(weapon, !getAwakened(weapon));
+        boolean awakening = setAwakenedState(weapon, !getAwakened(weapon));
 
-        setAttackPower(weapon, devotion / COMMON.SaberDS2.get());
-        setShielding(weapon, (float) (devotion / COMMON.SaberSH2.get()));
+        setAttackPower(weapon, awakening, devotion / COMMON.SaberDS2.get());
+        setShielding(weapon, awakening, (float) (devotion / COMMON.SaberSH2.get()));
     }
 
 

@@ -13,11 +13,6 @@ import java.util.concurrent.CompletableFuture;
 public class HexArgumentType implements ArgumentType<String> {
 
     @Override
-    public String toString() {
-        return "string()";
-    }
-
-    @Override
     public String parse(StringReader reader) throws CommandSyntaxException {
         String read = reader.readUnquotedString();
         if (getExamples().contains(read)) {

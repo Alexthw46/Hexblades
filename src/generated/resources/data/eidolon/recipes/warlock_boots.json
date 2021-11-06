@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "hexblades:dye_warlock_boots"
+    }
+  ],
+  "result": {
+    "item": "eidolon:warlock_boots"
+  }
+}

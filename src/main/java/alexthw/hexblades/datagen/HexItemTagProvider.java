@@ -1,6 +1,7 @@
 package alexthw.hexblades.datagen;
 
 import alexthw.hexblades.Hexblades;
+import alexthw.hexblades.common.items.IHexblade;
 import alexthw.hexblades.registers.HexItem;
 import alexthw.hexblades.registers.HexTags;
 import alexthw.hexblades.util.HexUtils;
@@ -13,6 +14,7 @@ import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.fml.RegistryObject;
 
 public class HexItemTagProvider extends ItemTagsProvider {
 
@@ -34,9 +36,13 @@ public class HexItemTagProvider extends ItemTagsProvider {
         this.copy(BlockTags.WOODEN_SLABS, ItemTags.WOODEN_SLABS);
         this.copy(BlockTags.WOODEN_FENCES, ItemTags.WOODEN_FENCES);
 
-        tag(HexTags.Items.HEX_BLADE).add(HexItem.DEV_SWORD.get());
         tag(HexTags.Items.HEXIUM_INGOT).add(HexItem.HEXIUM_INGOT.get());
+        HexItem.ITEMS.getEntries().stream().filter(c -> c.get() instanceof IHexblade).forEach(this::hexbladeTag);
         tag(Tags.Items.INGOTS).addTag(HexTags.Items.HEXIUM_INGOT);
+    }
+
+    private void hexbladeTag(RegistryObject<Item> item) {
+        tag(HexTags.Items.HEX_BLADE).add(item.get());
     }
 
     @Override

@@ -16,27 +16,23 @@ public class ElementalSoul extends Item {
 
     public ElementalSoul(Properties properties) {
         super(properties);
-        unlock = true;
     }
-
-    boolean unlock;
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entityIn, int itemSlot, boolean isSelected) {
-        if (unlock) {
-            if (!world.isClientSide && entityIn instanceof PlayerEntity) {
-                PlayerEntity player = (PlayerEntity) entityIn;
-                if (!KnowledgeUtil.knowsFact(player, HexFacts.EVOLVE_RITUAL)) {
-                    world.getCapability(ReputationProvider.CAPABILITY, null).ifPresent((rep) -> {
-                        Deity deity = HexDeities.HEX_DEITY;
-                        if (rep.unlock(player, deity.getId(), DeityLocks.EVOLVED_WEAPON)) {
-                            deity.onReputationUnlock(player, rep, DeityLocks.EVOLVED_WEAPON);
-                            unlock = false;
-                        }
-                    });
-                }
+
+        if (!world.isClientSide() && entityIn instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) entityIn;
+            if (!KnowledgeUtil.knowsFact(player, HexFacts.EVOLVE_RITUAL)) {
+                world.getCapability(ReputationProvider.CAPABILITY, null).ifPresent(rep -> {
+                    Deity deity = HexDeities.HEX_DEITY;
+                    if (rep.unlock(player, deity.getId(), DeityLocks.EVOLVED_WEAPON)) {
+                        deity.onReputationUnlock(player, rep, DeityLocks.EVOLVED_WEAPON);
+                    }
+                });
             }
         }
+
     }
 
 }

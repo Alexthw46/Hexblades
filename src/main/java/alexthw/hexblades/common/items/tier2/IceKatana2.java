@@ -23,9 +23,9 @@ public class IceKatana2 extends IceKatana1 {
     }
 
     @Override
-    public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
-        super.applyHexEffects(stack, target, attacker);
-        if (isActivated) {
+    public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker, boolean awakened) {
+        super.applyHexEffects(stack, target, attacker, awakened);
+        if (awakened) {
             target.addEffect(new EffectInstance(Registry.CHILLED_EFFECT.get(), 100, 0));
         }
     }
@@ -34,9 +34,9 @@ public class IceKatana2 extends IceKatana1 {
     public void recalculatePowers(ItemStack weapon, World world, PlayerEntity player) {
         double devotion = getDevotion(player);
 
-        setAwakenedState(weapon, !getAwakened(weapon));
+        boolean awakening = setAwakenedState(weapon, !getAwakened(weapon));
 
-        setAttackPower(weapon, devotion / COMMON.KatanaDS2.get());
-        setAttackSpeed(weapon, devotion / COMMON.KatanaAS2.get());
+        setAttackPower(weapon, awakening, devotion / COMMON.KatanaDS2.get());
+        setAttackSpeed(weapon, awakening, devotion / COMMON.KatanaAS2.get());
     }
 }

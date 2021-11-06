@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "hexblades:dye_warlock_hat"
+    }
+  ],
+  "result": {
+    "item": "eidolon:warlock_hat"
+  }
+}

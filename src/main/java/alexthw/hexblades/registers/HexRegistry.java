@@ -6,6 +6,7 @@ import alexthw.hexblades.compat.CrucibleCompatHandler;
 import alexthw.hexblades.compat.MalumCompat;
 import alexthw.hexblades.deity.HexDeities;
 import alexthw.hexblades.network.FlameEffectPacket;
+import alexthw.hexblades.network.MiningSwitchPacket;
 import alexthw.hexblades.network.RefillEffectPacket;
 import alexthw.hexblades.network.WeaponAwakenPacket;
 import alexthw.hexblades.ritual.HexRituals;
@@ -41,13 +42,14 @@ public class HexRegistry {
     public static void init() {
         HexDeities.registerDeity();
         HexSpells.RegisterSpells();
+        HexSerializers.registerCmdArgTypesSerializers();
     }
 
     public static void post_init() {
         Network();
         TempRecipes.init();
         HexRituals.init();
-        CompatUtil.check();
+        CompatUtil.check(); //may be useless, already checked before
         CrucibleCompatHandler.start();
         if (isMalumLoaded()) {
             try {
@@ -63,6 +65,7 @@ public class HexRegistry {
     private static void Network() {
         Networking.INSTANCE.registerMessage(90, FlameEffectPacket.class, FlameEffectPacket::encode, FlameEffectPacket::decode, FlameEffectPacket::consume);
         Networking.INSTANCE.registerMessage(91, RefillEffectPacket.class, RefillEffectPacket::encode, RefillEffectPacket::decode, RefillEffectPacket::consume);
+        Networking.INSTANCE.registerMessage(98, MiningSwitchPacket.class, MiningSwitchPacket::encode, MiningSwitchPacket::decode, MiningSwitchPacket::consume);
         Networking.INSTANCE.registerMessage(99, WeaponAwakenPacket.class, WeaponAwakenPacket::encode, WeaponAwakenPacket::decode, WeaponAwakenPacket::consume);
     }
 

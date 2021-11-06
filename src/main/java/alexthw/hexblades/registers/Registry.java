@@ -2,6 +2,7 @@ package alexthw.hexblades.registers;
 
 import alexthw.hexblades.Hexblades;
 import net.minecraft.item.Item;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -18,6 +19,7 @@ public class Registry {
     public static void init(IEventBus hexbus) {
         hexbus.register(new HexTileEntityType());
         hexbus.register(new HexParticles());
+        hexbus.addGenericListener(IRecipeSerializer.class, HexSerializers::registerRecipeSerializers);
 
         HexBlock.BLOCKS.register(hexbus);
         ITEMS.register(hexbus);

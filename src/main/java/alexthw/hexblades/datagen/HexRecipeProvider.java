@@ -2,14 +2,17 @@ package alexthw.hexblades.datagen;
 
 import alexthw.hexblades.registers.HexBlock;
 import alexthw.hexblades.registers.HexItem;
+import alexthw.hexblades.temp.ArmorFocusRecipe;
 import elucent.eidolon.Registry;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.RecipeProvider;
-import net.minecraft.data.ShapedRecipeBuilder;
+import net.minecraft.data.*;
 import net.minecraft.item.Items;
+import net.minecraft.item.crafting.SpecialRecipeSerializer;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.function.Consumer;
+
+import static alexthw.hexblades.util.HexUtils.prefix;
+import static net.minecraft.util.registry.Registry.RECIPE_SERIALIZER;
 
 public class HexRecipeProvider extends RecipeProvider {
 
@@ -33,6 +36,22 @@ public class HexRecipeProvider extends RecipeProvider {
         ShapedRecipeBuilder.shaped(HexBlock.DARK_POLISH_PLANKS.getStairs().asItem(), 4).define('X', HexBlock.DARK_POLISH_PLANKS.getBlock().asItem()).pattern("X  ").pattern("XX ").pattern("XXX").unlockedBy("has_dark_polished_wood", has(HexBlock.DARK_POLISH_PLANKS.getBlock().asItem())).save(consumer);
         ShapedRecipeBuilder.shaped(HexBlock.DARK_POLISH_PLANKS.getFenceGate().asItem()).define('#', Items.STICK).define('X', HexBlock.DARK_POLISH_PLANKS.getBlock().asItem()).pattern("   ").pattern("#X#").pattern("#X#").unlockedBy("has_dark_polished_wood", has(HexBlock.DARK_POLISH_PLANKS.getBlock().asItem())).save(consumer);
         ShapedRecipeBuilder.shaped(HexBlock.DARK_POLISH_PLANKS.getFence().asItem(), 3).define('#', Items.STICK).define('X', HexBlock.DARK_POLISH_PLANKS.getBlock().asItem()).pattern("   ").pattern("X#X").pattern("X#X").unlockedBy("has_dark_polished_wood", has(HexBlock.DARK_POLISH_PLANKS.getBlock().asItem())).save(consumer);
+
+        //make warlock armor dye and back
+        ShapelessRecipeBuilder.shapeless(HexItem.DYE_WARLOCK_H.get()).requires(Registry.WARLOCK_HAT.get()).unlockedBy("warlock_hat", has(Registry.WARLOCK_HAT.get())).save(consumer);
+        ShapelessRecipeBuilder.shapeless(HexItem.DYE_WARLOCK_C.get()).requires(Registry.WARLOCK_CLOAK.get()).unlockedBy("warlock_chest", has(Registry.WARLOCK_CLOAK.get())).save(consumer);
+        ShapelessRecipeBuilder.shapeless(HexItem.DYE_WARLOCK_F.get()).requires(Registry.WARLOCK_BOOTS.get()).unlockedBy("warlock_boots", has(Registry.WARLOCK_BOOTS.get())).save(consumer);
+
+        ShapelessRecipeBuilder.shapeless(Registry.WARLOCK_HAT.get()).requires(HexItem.DYE_WARLOCK_H.get()).unlockedBy("warlock_hat", has(Registry.WARLOCK_HAT.get())).save(consumer);
+        ShapelessRecipeBuilder.shapeless(Registry.WARLOCK_CLOAK.get()).requires(HexItem.DYE_WARLOCK_C.get()).unlockedBy("warlock_chest", has(Registry.WARLOCK_CLOAK.get())).save(consumer);
+        ShapelessRecipeBuilder.shapeless(Registry.WARLOCK_BOOTS.get()).requires(HexItem.DYE_WARLOCK_F.get()).unlockedBy("warlock_boots", has(Registry.WARLOCK_BOOTS.get())).save(consumer);
+
+        specialRecipe(consumer, ArmorFocusRecipe.SERIALIZER);
+    }
+
+    private void specialRecipe(Consumer<IFinishedRecipe> consumer, SpecialRecipeSerializer<ArmorFocusRecipe> serializer) {
+        ResourceLocation name = RECIPE_SERIALIZER.getKey(serializer);
+        CustomRecipeBuilder.special(serializer).save(consumer, prefix(name.getPath()).toString());
 
     }
 

@@ -2,7 +2,6 @@ package alexthw.hexblades.common.items;
 
 import alexthw.hexblades.deity.HexDeities;
 import alexthw.hexblades.util.Constants;
-import alexthw.hexblades.util.NBTHelper;
 import elucent.eidolon.capability.ReputationProvider;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -23,18 +22,14 @@ public interface IHexblade {
     double getAttackPower(ItemStack weapon);
 
     //NBT SETTERS
-    void setAttackPower(ItemStack weapon, double extradamage);
+    void setAttackPower(ItemStack weapon, boolean awakening, double extradamage);
 
-    void setAttackSpeed(ItemStack weapon, double extraspeed);
-
-    void updateState(boolean aws);
+    void setAttackSpeed(ItemStack weapon, boolean awakening, double extraspeed);
 
     // data getters
     int getRechargeTicks();
 
     int getEnergyLeft(ItemStack stack);
-
-    boolean isActivated();
 
     //overloaded methods
     default boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack) {
@@ -48,7 +43,7 @@ public interface IHexblade {
             if (hasBonus()) {
                 applyHexBonus(player, currentState);
             }
-            if (currentState && !(player).isCreative()) {
+            if (currentState && !player.isCreative()) {
                 if (getEnergyLeft(stack) > getRechargeTicks() + 1) {
                     stack.hurtAndBreak(2, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
                 } else {
@@ -69,34 +64,33 @@ public interface IHexblade {
     default void recalculatePowers(ItemStack weapon, World world, PlayerEntity player) {
         double devotion = getDevotion(player);
 
-        setAwakenedState(weapon, !getAwakened(weapon));
+        boolean awakening = setAwakenedState(weapon, !getAwakened(weapon));
 
-        setAttackPower(weapon, devotion);
-        setAttackSpeed(weapon, devotion);
+        setAttackPower(weapon, awakening, devotion);
+        setAttackSpeed(weapon, awakening, devotion);
 
     }
 
     default boolean getAwakened(ItemStack stack) {
-        CompoundNBT tag = NBTHelper.checkNBT(stack).getTag();
-        return tag != null && !stack.isEmpty() && tag.getBoolean(Constants.NBT.AW_State);
+        return !stack.isEmpty() && stack.getOrCreateTag().getBoolean(Constants.NBT.AW_State);
     }
 
-    default void setAwakenedState(ItemStack stack, boolean aws) {
+    default boolean setAwakenedState(ItemStack stack, boolean aws) {
         if (!stack.isEmpty()) {
             if (!aws || stack.getDamageValue() == 0) {
-                CompoundNBT tag = NBTHelper.checkNBT(stack).getTag();
-                if (tag != null) tag.putBoolean(Constants.NBT.AW_State, aws);
-                updateState(aws);
+                CompoundNBT tag = stack.getOrCreateTag();
+                tag.putBoolean(Constants.NBT.AW_State, aws);
+                return aws;
             }
         }
+        return false;
     }
 
     default boolean hasBonus() {
         return false;
     }
 
-    default void applyHexBonus(PlayerEntity user, boolean awakened) {
-    }
+    void applyHexBonus(PlayerEntity user, boolean awakened);
 
     default boolean onHitEffects() {
         return false;
@@ -106,8 +100,9 @@ public interface IHexblade {
      * @param stack    the instance of the item
      * @param target   the entity that is being damaged
      * @param attacker the player who is attacking
+     * @param awakened state of the hexblade
      */
-    void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker);
+    void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker, boolean awakened);
 
 
     default boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker, boolean hex) {
@@ -115,7 +110,7 @@ public interface IHexblade {
             if (target.invulnerableTime > 0) {
                 target.invulnerableTime = 0;
             }
-            if (isActivated() || onHitEffects()) applyHexEffects(stack, target, (PlayerEntity) attacker);
+            if (onHitEffects()) applyHexEffects(stack, target, (PlayerEntity) attacker, getAwakened(stack));
             stack.setDamageValue(Math.max(stack.getDamageValue() - 10, 0));
         }
         return true;

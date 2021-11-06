@@ -32,8 +32,10 @@ public class Lightning_SSwordR1 extends HexSwordItem {
             setAwakenedState(weapon, true);
         }
 
-        setAttackPower(weapon, devotion / COMMON.DualsDS1.get());
-        setAttackSpeed(weapon, devotion / COMMON.DualsAS1.get());
+        boolean awakening = getAwakened(weapon);
+
+        setAttackPower(weapon, awakening, devotion / COMMON.DualsDS1.get());
+        setAttackSpeed(weapon, awakening, devotion / COMMON.DualsAS1.get());
 
     }
 
