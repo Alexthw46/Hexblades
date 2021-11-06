@@ -1,11 +1,15 @@
 package alexthw.hexblades.registers;
 
 import alexthw.hexblades.Hexblades;
+import alexthw.hexblades.common.items.ArmorFocus;
 import alexthw.hexblades.common.items.ElementalSoul;
 import alexthw.hexblades.common.items.HexSwordItem;
+import alexthw.hexblades.common.items.armors.DyebleWarlockArmor;
 import alexthw.hexblades.common.items.dulls.*;
 import alexthw.hexblades.common.items.tier1.*;
 import alexthw.hexblades.common.items.tier2.*;
+import alexthw.hexblades.compat.ArmorCompatHandler;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.Rarity;
@@ -31,8 +35,21 @@ public class HexItem {
     public static final RegistryObject<Item> SOUL_CANDY;
     public static final RegistryObject<Item> FIRE_CORE;
 
+    //Armors
+    public static final RegistryObject<Item> DYE_WARLOCK_H;
+    public static final RegistryObject<Item> DYE_WARLOCK_C;
+    public static final RegistryObject<Item> DYE_WARLOCK_F;
 
-    //public static final RegistryObject<Item> TEST_ARMOR;
+    public static final RegistryObject<Item> HEX_ARMOR_H;
+    public static final RegistryObject<Item> HEX_ARMOR_C;
+    public static final RegistryObject<Item> HEX_ARMOR_L;
+    public static final RegistryObject<Item> HEX_ARMOR_B;
+
+    //HWArmor Focus
+
+    public static final RegistryObject<Item> FOCUS_WARLOCK;
+    public static final RegistryObject<Item> FOCUS_BOTANIA;
+    public static final RegistryObject<Item> FOCUS_NOUVEAU;
 
     //Hexblades
 
@@ -69,8 +86,22 @@ public class HexItem {
         ELEMENTAL_CORE = ITEMS.register("elemental_core", () -> new Item(addTabProp().fireResistant().rarity(Rarity.RARE)));
         SOUL_CANDY = ITEMS.register("soul_candy", () -> new Item(addTabProp().food(new Food.Builder().effect(() -> new EffectInstance(Effects.REGENERATION, 40, 1), 1.0F).fast().nutrition(1).saturationMod(0.1F).build())));
         FIRE_CORE = ITEMS.register("fire_core", () -> new Item(addTabProp().rarity(Rarity.UNCOMMON)));
-        //TEST_ARMOR = ITEMS.register("test_chestplate", () -> new TestArmor(EquipmentSlotType.CHEST, addTabProp()));
 
+        //Armors
+        DYE_WARLOCK_H = ITEMS.register("dye_warlock_hat", () -> new DyebleWarlockArmor(EquipmentSlotType.HEAD, addTabProp()));
+        DYE_WARLOCK_C = ITEMS.register("dye_warlock_robes", () -> new DyebleWarlockArmor(EquipmentSlotType.CHEST, addTabProp()));
+        DYE_WARLOCK_F = ITEMS.register("dye_warlock_boots", () -> new DyebleWarlockArmor(EquipmentSlotType.FEET, addTabProp()));
+
+        HEX_ARMOR_H = ITEMS.register("hex_helmet", () -> ArmorCompatHandler.makeHead(addTabProp()));
+        HEX_ARMOR_C = ITEMS.register("hex_chestplate", () -> ArmorCompatHandler.makeChest(addTabProp()));
+        HEX_ARMOR_L = ITEMS.register("hex_leggings", () -> ArmorCompatHandler.makeLegs(addTabProp()));
+        HEX_ARMOR_B = ITEMS.register("hex_boots", () -> ArmorCompatHandler.makeFeet(addTabProp()));
+
+        //HexWArmor Focus
+
+        FOCUS_WARLOCK = ITEMS.register("eidolon_focus", () -> new ArmorFocus(addTabProp(), "eidolon"));
+        FOCUS_BOTANIA = ITEMS.register("botania_focus", () -> new ArmorFocus(addTabProp(), "botania"));
+        FOCUS_NOUVEAU = ITEMS.register("ars_nouveau_focus", () -> new ArmorFocus(addTabProp(), "ars nouveau"));
 
         //Dull Sword/Tools
         DULL_KATANA = ITEMS.register("katana_dull", () -> new Katana_dull(2, -2.5F, addTabProp().stacksTo(1)));

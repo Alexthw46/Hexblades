@@ -16,7 +16,6 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.jigsaw.JigsawManager;
 import net.minecraft.world.gen.feature.structure.*;
 import net.minecraft.world.gen.feature.template.TemplateManager;
-import org.apache.logging.log4j.Level;
 
 public class FireTempleStructure extends AbstractJigsawStructure {
 
@@ -107,11 +106,10 @@ public class FireTempleStructure extends AbstractJigsawStructure {
 
             // I use to debug and quickly find out if the structure is spawning or not and where it is.
             // This is returning the coordinates of the center starting piece.
-            Hexblades.LOGGER.log(Level.DEBUG, "Fire Temple spawned at " +
-                    this.pieces.get(0).getBoundingBox().x0 + " " +
-                    this.pieces.get(0).getBoundingBox().y0 + " " +
-                    this.pieces.get(0).getBoundingBox().z0);
-
+            // Hexblades.LOGGER.log(Level.DEBUG, "Fire Temple spawned at " +
+            //         this.pieces.get(0).getBoundingBox().x0 + " " +
+            //         this.pieces.get(0).getBoundingBox().y0 + " " +
+            //         this.pieces.get(0).getBoundingBox().z0);
         }
     }
 }

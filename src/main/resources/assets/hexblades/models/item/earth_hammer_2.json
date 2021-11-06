@@ -5,15 +5,31 @@
   "overrides": [
     {
       "predicate": {
-        "hexblades:awakened": 0.0
+        "hexblades:awakened": 0.0,
+        "hexblades:mining": 0.0
       },
       "model": "hexblades:item/variants/earth_hammer_2_deactivated"
     },
     {
       "predicate": {
-        "hexblades:awakened": 1.0
+        "hexblades:awakened": 1.0,
+        "hexblades:mining": 0.0
       },
       "model": "hexblades:item/variants/earth_hammer_2_activated"
+    },
+    {
+      "predicate": {
+        "hexblades:awakened": 0.0,
+        "hexblades:mining": 1.0
+      },
+      "model": "hexblades:item/variants/earth_hammer_2_deactivated_alt"
+    },
+    {
+      "predicate": {
+        "hexblades:awakened": 1.0,
+        "hexblades:mining": 1.0
+      },
+      "model": "hexblades:item/variants/earth_hammer_2_activated_alt"
     }
   ]
 }

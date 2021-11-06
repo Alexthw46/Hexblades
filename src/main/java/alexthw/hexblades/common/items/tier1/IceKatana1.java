@@ -28,19 +28,21 @@ public class IceKatana1 extends HexSwordItem {
     }
 
     @Override
-    public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
-        target.hurt(new EntityDamageSource(Registry.FROST_DAMAGE.getMsgId(), attacker).bypassArmor(), (float) (getDevotion(attacker) / COMMON.KatanaED.get()));
-        target.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 200, 0));
+    public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker, boolean awakened) {
+        if (awakened) {
+            target.hurt(new EntityDamageSource(Registry.FROST_DAMAGE.getMsgId(), attacker).bypassArmor(), (float) (getDevotion(attacker) / COMMON.KatanaED.get()));
+            target.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 200, 0));
+        }
     }
 
     @Override
     public void recalculatePowers(ItemStack weapon, World world, PlayerEntity player) {
         double devotion = getDevotion(player);
 
-        setAwakenedState(weapon, !getAwakened(weapon));
+        boolean awakening = setAwakenedState(weapon, !getAwakened(weapon));
 
-        setAttackPower(weapon, devotion / COMMON.KatanaDS1.get());
-        setAttackSpeed(weapon, devotion / COMMON.KatanaAS1.get());
+        setAttackPower(weapon, awakening, devotion / COMMON.KatanaDS1.get());
+        setAttackSpeed(weapon, awakening, devotion / COMMON.KatanaAS1.get());
     }
 
     @Override

@@ -19,6 +19,7 @@ import net.minecraft.potion.Potions;
 
 import java.util.List;
 
+import static alexthw.hexblades.ConfigHandler.COMMON;
 import static net.minecraftforge.fml.common.ObfuscationReflectionHelper.getPrivateValue;
 
 public class CodexHexChapters {
@@ -76,10 +77,10 @@ public class CodexHexChapters {
 
             MISC = new Chapter(makeChapterKey("misc"),
                     new TitlePage(makePageKey("misc.soul_candy")),
-                    new CruciblePage(new ItemStack(HexItem.SOUL_CANDY.get(), 4),
+                    nukeRecipe(COMMON.NUKE_CRUCIBLE.get(), new CruciblePage(new ItemStack(HexItem.SOUL_CANDY.get(), 4),
                             new CruciblePage.CrucibleStep(new ItemStack(Registry.SOUL_SHARD.get())),
                             new CruciblePage.CrucibleStep(1, new ItemStack(Items.SUGAR), new ItemStack(Items.HONEY_BOTTLE))
-                    ), new ChantPage(makePageKey("misc.fire_touch"), Signs.SACRED_SIGN, Signs.SACRED_SIGN, Signs.SACRED_SIGN)
+                    )), new ChantPage(makePageKey("misc.fire_touch"), Signs.SACRED_SIGN, Signs.SACRED_SIGN, Signs.SACRED_SIGN)
             );
 
             TEMPLES = new Chapter(makeChapterKey("structures"),
@@ -113,60 +114,60 @@ public class CodexHexChapters {
             HEX_SUMMONING = new Chapter(makeChapterKey("hex_summon"),
                     new TextPage(makePageKey("hex_summon.0")),
                     new ChantPage(makePageKey("hex_summon.1"), Signs.SACRED_SIGN, Signs.SOUL_SIGN, Signs.MIND_SIGN, Signs.SOUL_SIGN, Signs.SACRED_SIGN),
-                    new RitualPage(HexRituals.SUMMON_FIRE, new ItemStack(Registry.SHADOW_GEM.get()),
+                    nukeRecipe(COMMON.NUKE_RITUALS.get(), new RitualPage(HexRituals.SUMMON_FIRE, new ItemStack(Registry.SHADOW_GEM.get()),
                             new RitualPage.RitualIngredient(new ItemStack(Items.NETHER_BRICK), false),
                             new RitualPage.RitualIngredient(new ItemStack(Registry.CRIMSON_ESSENCE.get()), false),
                             new RitualPage.RitualIngredient(new ItemStack(Items.QUARTZ), false),
                             new RitualPage.RitualIngredient(new ItemStack(Items.LAVA_BUCKET), false),
                             new RitualPage.RitualIngredient(new ItemStack(Registry.CRIMSON_ESSENCE.get()), false),
                             new RitualPage.RitualIngredient(new ItemStack(Items.NETHER_BRICK), false)
-                    )
+                    ))
             );
 
             HEX_EVOLUTION = new Chapter(makeChapterKey("evolution"),
                     //evolve katana
                     new TitlePage(makePageKey("evolve_ice_katana")),
-                    new RitualPage(HexRituals.EVOLVE_KATANA, new ItemStack(HexItem.FROST_RAZOR.get()),
+                    nukeRecipe(COMMON.NUKE_RITUALS.get(), new RitualPage(HexRituals.EVOLVE_KATANA, new ItemStack(HexItem.FROST_RAZOR.get()),
                             new RitualPage.RitualIngredient(new ItemStack(Items.QUARTZ), false),
                             new RitualPage.RitualIngredient(new ItemStack(Registry.WRAITH_HEART.get()), false),
                             new RitualPage.RitualIngredient(new ItemStack(HexItem.PATRON_SOUL.get()), true),
                             new RitualPage.RitualIngredient(PotionUtils.setPotion(new ItemStack(Items.POTION), Registry.CHILLED_POTION.get()), false),
                             new RitualPage.RitualIngredient(new ItemStack(Items.QUARTZ), false)
-                    ),
+                    )),
                     //evolve sword
                     new TitlePage(makePageKey("evolve_flame_sword")),
-                    new RitualPage(HexRituals.EVOLVE_SWORD, new ItemStack(HexItem.FIRE_BRAND.get()),
+                    nukeRecipe(COMMON.NUKE_RITUALS.get(), new RitualPage(HexRituals.EVOLVE_SWORD, new ItemStack(HexItem.FIRE_BRAND.get()),
                             new RitualPage.RitualIngredient(new ItemStack(Registry.CRIMSON_ESSENCE.get()), false),
                             new RitualPage.RitualIngredient(new ItemStack(Registry.CRIMSON_ESSENCE.get()), false),
                             new RitualPage.RitualIngredient(new ItemStack(HexItem.PATRON_SOUL.get()), true),
                             new RitualPage.RitualIngredient(new ItemStack(Registry.SHADOW_GEM.get()), false)
-                    ),
+                    )),
                     //evolve saber
                     new TitlePage(makePageKey("evolve_water_saber")),
-                    new RitualPage(HexRituals.EVOLVE_SABER, new ItemStack(HexItem.WATER_SABER.get()),
+                    nukeRecipe(COMMON.NUKE_RITUALS.get(), new RitualPage(HexRituals.EVOLVE_SABER, new ItemStack(HexItem.WATER_SABER.get()),
                             new RitualPage.RitualIngredient(new ItemStack(Items.PRISMARINE_CRYSTALS), false),
                             new RitualPage.RitualIngredient(new ItemStack(HexItem.DROWNED_HEART.get()), false),
                             new RitualPage.RitualIngredient(new ItemStack(HexItem.PATRON_SOUL.get()), true),
                             new RitualPage.RitualIngredient(new ItemStack(Items.HEART_OF_THE_SEA), false),
                             new RitualPage.RitualIngredient(new ItemStack(Items.PRISMARINE_CRYSTALS), false)
-                    ),
+                    )),
                     //evolve hammer
                     new TitlePage(makePageKey("evolve_earth_hammer")),
-                    new RitualPage(HexRituals.EVOLVE_HAMMER, new ItemStack(HexItem.EARTH_HAMMER.get()),
+                    nukeRecipe(COMMON.NUKE_RITUALS.get(), new RitualPage(HexRituals.EVOLVE_HAMMER, new ItemStack(HexItem.EARTH_HAMMER.get()),
                             new RitualPage.RitualIngredient(new ItemStack(Registry.ARCANE_GOLD_BLOCK.get()), false),
                             new RitualPage.RitualIngredient(new ItemStack(HexItem.PATRON_SOUL.get()), true),
                             new RitualPage.RitualIngredient(new ItemStack(Registry.ARCANE_GOLD_BLOCK.get()), false)
-                    ),
+                    )),
                     //evolve dual
                     new TitlePage(makePageKey("evolve_duals")),
-                    new RitualPage(HexRituals.EVOLVE_DAGGERS, new ItemStack(HexItem.PATRON_SOUL.get()),
+                    nukeRecipe(COMMON.NUKE_RITUALS.get(), new RitualPage(HexRituals.EVOLVE_DAGGERS, new ItemStack(HexItem.PATRON_SOUL.get()),
                             new RitualPage.RitualIngredient(new ItemStack(Items.PHANTOM_MEMBRANE), false),
                             new RitualPage.RitualIngredient(new ItemStack(Items.REDSTONE), false),
                             new RitualPage.RitualIngredient(new ItemStack(HexItem.LIGHTNING_DAGGER_L.get()), true),
                             new RitualPage.RitualIngredient(new ItemStack(HexItem.LIGHTNING_DAGGER_R.get()), true),
                             new RitualPage.RitualIngredient(new ItemStack(Items.REDSTONE), false),
                             new RitualPage.RitualIngredient(new ItemStack(Items.PHANTOM_MEMBRANE), false)
-                    )
+                    ))
             );
         }
 
@@ -174,9 +175,11 @@ public class CodexHexChapters {
         {
             HEX_ALLOY = new Chapter(makeChapterKey("hex_metal"), new TitlePage(makePageKey("hex_metal.0")),
                     //ingot
-                    new CruciblePage(new ItemStack(HexItem.HEXIUM_INGOT.get(), 2),
+                    nukeRecipe(COMMON.NUKE_CRUCIBLE.get(), new CruciblePage(new ItemStack(HexItem.HEXIUM_INGOT.get(), 2),
                             new CruciblePage.CrucibleStep(new ItemStack(Items.GOLD_INGOT), new ItemStack(Registry.LEAD_INGOT.get())),
-                            new CruciblePage.CrucibleStep(1, new ItemStack(Registry.ENCHANTED_ASH.get()), new ItemStack(Registry.SOUL_SHARD.get()))),
+                            new CruciblePage.CrucibleStep(1, new ItemStack(Registry.ENCHANTED_ASH.get()), new ItemStack(Registry.SOUL_SHARD.get())
+                            ))
+                    ),
                     new TextPage(makePageKey("hex_metal.1")),
                     //katana
                     new CraftingPage(new ItemStack(HexItem.DULL_KATANA.get()),
@@ -210,73 +213,74 @@ public class CodexHexChapters {
         {
             FLAME_SWORD = new Chapter(makeChapterKey("flame_sword"),
                     new TitlePage(makePageKey("flame_sword")),
-                    new RitualPage(HexRituals.AWAKE_SWORD, new ItemStack(HexItem.DULL_BROADSWORD.get()),
+                    nukeRecipe(COMMON.NUKE_RITUALS.get(), new RitualPage(HexRituals.AWAKE_SWORD, new ItemStack(HexItem.DULL_BROADSWORD.get()),
                             new RitualPage.RitualIngredient(new ItemStack(Items.NETHERITE_SCRAP), false),
                             new RitualPage.RitualIngredient(new ItemStack(Items.NETHERITE_SCRAP), false),
                             new RitualPage.RitualIngredient(new ItemStack(HexItem.ELEMENTAL_CORE.get()), false),
                             new RitualPage.RitualIngredient(new ItemStack(Items.MAGMA_CREAM), false),
                             new RitualPage.RitualIngredient(new ItemStack(Items.MAGMA_CREAM), false)
-                    ),
+                    )),
                     new TextPage(makePageKey("flame_sword.powers"))
             );
 
             ICE_KATANA = new Chapter(makeChapterKey("ice_katana"),
                     new TitlePage(makePageKey("ice_katana")),
-                    new RitualPage(HexRituals.AWAKE_KATANA, new ItemStack(HexItem.DULL_KATANA.get()),
+                    nukeRecipe(COMMON.NUKE_RITUALS.get(), new RitualPage(HexRituals.AWAKE_KATANA, new ItemStack(HexItem.DULL_KATANA.get()),
                             new RitualPage.RitualIngredient(new ItemStack(Items.BLUE_ICE), false),
                             new RitualPage.RitualIngredient(new ItemStack(Items.BLUE_ICE), false),
                             new RitualPage.RitualIngredient(new ItemStack(HexItem.ELEMENTAL_CORE.get()), false),
                             new RitualPage.RitualIngredient(new ItemStack(Registry.TATTERED_CLOTH.get()), false),
                             new RitualPage.RitualIngredient(new ItemStack(Registry.WRAITH_HEART.get()), false)
-                    ),
+                    )),
                     new TextPage(makePageKey("ice_katana.powers"))
             );
 
             WATER_SABER = new Chapter(makeChapterKey("water_saber"),
                     new TitlePage(makePageKey("water_saber")),
-                    new RitualPage(HexRituals.AWAKE_SABER, new ItemStack(HexItem.DULL_SABER.get()),
+                    nukeRecipe(COMMON.NUKE_RITUALS.get(), new RitualPage(HexRituals.AWAKE_SABER, new ItemStack(HexItem.DULL_SABER.get()),
                             new RitualPage.RitualIngredient(new ItemStack(Items.PRISMARINE_SHARD), false),
                             new RitualPage.RitualIngredient(new ItemStack(Items.PRISMARINE_SHARD), false),
                             new RitualPage.RitualIngredient(new ItemStack(HexItem.ELEMENTAL_CORE.get()), false),
                             new RitualPage.RitualIngredient(new ItemStack(Items.PRISMARINE_SHARD), false),
                             new RitualPage.RitualIngredient(new ItemStack(HexItem.DROWNED_HEART.get()), false)
-                    ),
+                    )),
                     new TextPage(makePageKey("water_saber.powers"))
             );
 
             EARTH_HAMMER = new Chapter(makeChapterKey("earth_hammer"),
                     new TitlePage(makePageKey("earth_hammer")),
-                    new RitualPage(HexRituals.AWAKE_HAMMER, new ItemStack(HexItem.DULL_HAMMER.get()),
+                    nukeRecipe(COMMON.NUKE_RITUALS.get(), new RitualPage(HexRituals.AWAKE_HAMMER, new ItemStack(HexItem.DULL_HAMMER.get()),
                             new RitualPage.RitualIngredient(new ItemStack(Items.OBSIDIAN), false),
                             new RitualPage.RitualIngredient(new ItemStack(Items.OBSIDIAN), false),
                             new RitualPage.RitualIngredient(new ItemStack(HexItem.ELEMENTAL_CORE.get()), false),
                             new RitualPage.RitualIngredient(new ItemStack(Registry.LEAD_BLOCK.get()), false),
                             new RitualPage.RitualIngredient(new ItemStack(Registry.LEAD_BLOCK.get()), false)
-                    ),
+                    )),
                     new TextPage(makePageKey("earth_hammer.powers")),
                     new TextPage(makePageKey("earth_hammer.powers_mine"))
             );
 
             THUNDER_DUALS = new Chapter(makeChapterKey("thunder_duals"),
                     new TitlePage(makePageKey("thunder_duals")),
-                    new RitualPage(HexRituals.AWAKE_DAGGER, new ItemStack(HexItem.DULL_DAGGER.get()),
+                    nukeRecipe(COMMON.NUKE_RITUALS.get(), new RitualPage(HexRituals.AWAKE_DAGGER, new ItemStack(HexItem.DULL_DAGGER.get()),
                             new RitualPage.RitualIngredient(new ItemStack(Registry.ARCANE_GOLD_INGOT.get()), false),
                             new RitualPage.RitualIngredient(new ItemStack(Registry.ARCANE_GOLD_INGOT.get()), false),
                             new RitualPage.RitualIngredient(new ItemStack(HexItem.ELEMENTAL_CORE.get()), false),
                             new RitualPage.RitualIngredient(new ItemStack(Registry.PEWTER_INGOT.get()), false),
                             new RitualPage.RitualIngredient(new ItemStack(Registry.PEWTER_INGOT.get()), false)
-                    ),
+                    )),
                     new TextPage(makePageKey("thunder_duals.powers"))
             );
 
             SANGUINE_UPGRADE = new Chapter(makeChapterKey("sanguine_upgrade"),
                     new TitlePage(makePageKey("sanguine_wither")),
-                    new RitualPage(HexRituals.EVOLVE_SAPPING, new ItemStack(Registry.SAPPING_SWORD.get()),
+                    nukeRecipe(COMMON.NUKE_RITUALS.get(), new RitualPage(HexRituals.EVOLVE_SAPPING, new ItemStack(Registry.SAPPING_SWORD.get()),
                             new RitualPage.RitualIngredient(new ItemStack(Registry.LESSER_SOUL_GEM.get()), false),
                             new RitualPage.RitualIngredient(PotionUtils.setPotion(new ItemStack(Items.POTION), HexRegistry.WITHER_POTION.get()), false),
                             new RitualPage.RitualIngredient(new ItemStack(Items.NETHER_STAR), true),
                             new RitualPage.RitualIngredient(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.HEALING), false),
                             new RitualPage.RitualIngredient(new ItemStack(Registry.LESSER_SOUL_GEM.get()), false))
+                    )
             );
         }
 
@@ -330,5 +334,12 @@ public class CodexHexChapters {
             CCategories.add(HEXBLADES_WEAPONS = new Category("hexblades_weapons", new ItemStack(HexItem.DEV_SWORD.get()), ColorUtil.packColor(220, 0, 0, 46), HEXBLADES_WINDEX));
         }
     }
+
+    static Page nukeRecipe(boolean flag, Page page) {
+        return flag ? disabled : page;
+    }
+
+    static TextPage disabled = new TextPage("hexblades.codex.disabled");
+
 }
 

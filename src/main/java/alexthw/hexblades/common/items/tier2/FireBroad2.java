@@ -34,27 +34,17 @@ public class FireBroad2 extends FireBroad1 {
     public void recalculatePowers(ItemStack weapon, World world, PlayerEntity player) {
         double devotion = getDevotion(player);
 
-        setAwakenedState(weapon, !getAwakened(weapon));
+        boolean awakening = setAwakenedState(weapon, !getAwakened(weapon));
 
-        setAttackPower(weapon, devotion / COMMON.SwordDS2.get());
+        setAttackPower(weapon, awakening, devotion / COMMON.SwordDS2.get());
     }
 
     @Override
-    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (attacker instanceof PlayerEntity) {
-            if (target.invulnerableTime > 0) {
-                target.invulnerableTime = 0;
-                target.setSecondsOnFire(3);
-                if (isActivated) applyHexEffects(stack, target, (PlayerEntity) attacker);
-            }
+    public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker, boolean awakened) {
+        if (awakened) {
+            target.hurt(new EntityDamageSource("magic", attacker).bypassArmor(), (float) (getDevotion(attacker) / COMMON.SwordED2.get()));
         }
-        stack.setDamageValue(Math.max(stack.getDamageValue() - 10, 0));
-        return true;
-    }
-
-    @Override
-    public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
-        target.hurt(new EntityDamageSource("magic", attacker).bypassArmor(), (float) (getDevotion(attacker) / COMMON.SwordED2.get()));
+        target.setSecondsOnFire(3);
     }
 
 }

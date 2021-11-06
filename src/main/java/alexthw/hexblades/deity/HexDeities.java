@@ -19,6 +19,6 @@ public class HexDeities extends Deities {
         HEX_DEITY = Deities.register(new HexDeity(temp_id, 0, 102, 255));
     }
 
-    public static List<String> DeityNames = Arrays.asList("dark", "blade");
+    public static final List<String> DeityNames = Arrays.asList("dark", "blade");
 
 }

@@ -13,6 +13,7 @@ import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 
+import static alexthw.hexblades.ConfigHandler.COMMON;
 import static alexthw.hexblades.util.HexUtils.*;
 import static elucent.eidolon.Registry.CRIMSON_ESSENCE;
 
@@ -36,6 +37,8 @@ public class HexRituals {
 
 
     public static void init() {
+
+        if (COMMON.NUKE_RITUALS.get()) return;
 
         //awake
         AWAKE_SWORD = RitualRegistry.register(HexItem.DULL_BROADSWORD.get(),

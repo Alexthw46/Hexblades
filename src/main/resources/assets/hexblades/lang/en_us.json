@@ -27,6 +27,16 @@
   "item.hexblades.elemental_core": "Unstable elemental core",
   "item.hexblades.elemental_soul": "Soul of an Elemental",
   "item.hexblades.elemental_soul_2": "Soul of Debug",
+  "item.hexblades.dye_warlock_hat": "Warlock's Hat (Dyed)",
+  "item.hexblades.dye_warlock_robes": "Warlock's Cloak (Dyed)",
+  "item.hexblades.dye_warlock_boots": "Warlock's Boots (Dyed)",
+  "item.hexblades.hex_helmet": "HexWarrior Helm (WIP)",
+  "item.hexblades.hex_chestplate": "HexWarrior Chestplate (WIP)",
+  "item.hexblades.hex_leggings": "HexWarrior Leggings (WIP)",
+  "item.hexblades.hex_boots": "HexWarrior Boots (WIP)",
+  "item.hexblades.eidolon_focus": "Warlock Focus",
+  "item.hexblades.botania_focus": "Botanist Focus",
+  "item.hexblades.ars_nouveau_focus": "Sourcerer Focus",
   "item.hexblades.drowned_heart": "Drowned Heart",
   "item.hexblades.soul_candy": "Soul Candy",
   "item.hexblades.fire_core": "Magmatic Core",
@@ -175,5 +185,7 @@
   "item.hexblades.spawn_fire_elemental": "Fire Elemental Spawn Egg",
   "entity.hexblades.fire_elemental": "Elemental of Flames",
   "key.hexblades.awake": "Awaken held Hexblade",
-  "command.hexblades.error": "Argument not valid"
+  "key.hexblades.mining": "Switch drill mining mode",
+  "command.hexblades.error": "Argument not valid",
+  "hexblades.codex.disabled": "This recipe have been disabled in the config, your modpack has other plans for you."
 }

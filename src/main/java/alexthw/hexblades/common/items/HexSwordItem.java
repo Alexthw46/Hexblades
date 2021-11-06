@@ -1,8 +1,8 @@
 package alexthw.hexblades.common.items;
 
+import alexthw.hexblades.compat.ArsNouveauCompat;
 import alexthw.hexblades.registers.Tiers;
 import alexthw.hexblades.util.Constants;
-import alexthw.hexblades.util.NBTHelper;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.client.util.ITooltipFlag;
@@ -18,7 +18,6 @@ import net.minecraft.item.ShieldItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
@@ -29,11 +28,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 
+import static alexthw.hexblades.util.CompatUtil.isArsNovLoaded;
+
 public class HexSwordItem extends SwordItem implements IHexblade {
 
     protected final double baseAttack;
     protected final double baseSpeed;
-    protected boolean isActivated;
 
     protected TranslationTextComponent tooltipText = new TranslationTextComponent("The Dev Sword, you shouldn't read this");
     protected int rechargeTick = 5;
@@ -43,7 +43,6 @@ public class HexSwordItem extends SwordItem implements IHexblade {
         super(Tiers.PatronWeaponTier.INSTANCE, attackDamage, attackSpeed, properties);
         baseAttack = attackDamage;
         baseSpeed = attackSpeed;
-        isActivated = false;
     }
 
     @Override
@@ -64,7 +63,12 @@ public class HexSwordItem extends SwordItem implements IHexblade {
     @Override
     public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         if (!world.isClientSide()) {
-            if (!(isActivated && (player.getItemInHand(Hand.OFF_HAND).getItem() instanceof ShieldItem))) {
+            if (!(player.getItemInHand(Hand.OFF_HAND).getItem() instanceof ShieldItem)) {
+
+                if (isArsNovLoaded()) {
+                    if (ArsNouveauCompat.spellbookInOffHand(player)) return super.use(world, player, hand);
+                }
+
                 recalculatePowers(player.getItemInHand(hand), world, player);
             }
         }
@@ -72,19 +76,16 @@ public class HexSwordItem extends SwordItem implements IHexblade {
     }
 
     //Only apply special effects if wielded by a Player
-    public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
-        target.hurt(new EntityDamageSource("wither", attacker).bypassArmor(), 2.0f);
+
+    @Override
+    public void applyHexBonus(PlayerEntity user, boolean awakened) {
+    }
+
+    @Override
+    public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker, boolean awakened) {
     }
 
     //data getters
-
-    public boolean isActivated() {
-        return isActivated;
-    }
-
-    public void updateState(boolean aws) {
-        isActivated = aws;
-    }
 
     public int getRechargeTicks() {
         return rechargeTick;
@@ -98,61 +99,48 @@ public class HexSwordItem extends SwordItem implements IHexblade {
     public void recalculatePowers(ItemStack weapon, World world, PlayerEntity player) {
         double devotion = getDevotion(player);
 
-        setAwakenedState(weapon, !getAwakened(weapon));
+        boolean awakening = setAwakenedState(weapon, !getAwakened(weapon));
 
-        setAttackPower(weapon, devotion);
-        setAttackSpeed(weapon, devotion);
+        setAttackPower(weapon, awakening, devotion);
+        setAttackSpeed(weapon, awakening, devotion);
 
     }
 
-    public void setAttackPower(ItemStack weapon, double extradamage) {
+    public void setAttackPower(ItemStack weapon, boolean awakening, double extradamage) {
 
-        CompoundNBT tag = NBTHelper.checkNBT(weapon).getTag();
-        if (tag != null) {
-            if (isActivated) {
-                tag.putDouble(Constants.NBT.EXTRA_DAMAGE, baseAttack + extradamage);
-            } else {
-                tag.putDouble(Constants.NBT.EXTRA_DAMAGE, baseAttack);
-            }
+        CompoundNBT tag = weapon.getOrCreateTag();
+        if (awakening) {
+            tag.putDouble(Constants.NBT.EXTRA_DAMAGE, baseAttack + extradamage);
+        } else {
+            tag.putDouble(Constants.NBT.EXTRA_DAMAGE, baseAttack);
         }
     }
 
-    public void setAttackSpeed(ItemStack weapon, double extraspeed) {
+    public void setAttackSpeed(ItemStack weapon, boolean awakening, double extraspeed) {
 
-        CompoundNBT tag = NBTHelper.checkNBT(weapon).getTag();
-        if (tag != null) {
+        CompoundNBT tag = weapon.getOrCreateTag();
 
-            if (isActivated) {
-                tag.putDouble(Constants.NBT.EXTRA_ATTACK_SPEED, baseSpeed + extraspeed);
-            } else {
-                tag.putDouble(Constants.NBT.EXTRA_ATTACK_SPEED, baseSpeed);
-            }
+        if (awakening) {
+            tag.putDouble(Constants.NBT.EXTRA_ATTACK_SPEED, baseSpeed + extraspeed);
+        } else {
+            tag.putDouble(Constants.NBT.EXTRA_ATTACK_SPEED, baseSpeed);
         }
     }
 
     public double getAttackPower(ItemStack weapon) {
-        CompoundNBT tag = NBTHelper.checkNBT(weapon).getTag();
 
-        if (tag != null) {
-            double AP = tag.getDouble(Constants.NBT.EXTRA_DAMAGE);
+        double AP = weapon.getOrCreateTag().getDouble(Constants.NBT.EXTRA_DAMAGE);
 
-            if (AP > 0) {
-                return AP;
-            }
+        return AP > 0 ? AP : baseAttack;
 
-        }
-            return baseAttack;
     }
 
     public double getAttackSpeed(ItemStack weapon) {
-        CompoundNBT tag = NBTHelper.checkNBT(weapon).getTag();
 
-        if (tag != null) {
-            double AS = tag.getDouble(Constants.NBT.EXTRA_ATTACK_SPEED);
-            if (AS != 0) return AS;
-        }
+        double AS = weapon.getOrCreateTag().getDouble(Constants.NBT.EXTRA_ATTACK_SPEED);
 
-        return baseSpeed;
+        return AS != 0 ? AS : baseSpeed;
+
     }
 
     @Override

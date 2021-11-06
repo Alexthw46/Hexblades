@@ -3,7 +3,6 @@ package alexthw.hexblades.common.items.tier1;
 import alexthw.hexblades.common.items.IHexblade;
 import alexthw.hexblades.registers.Tiers;
 import alexthw.hexblades.util.Constants;
-import alexthw.hexblades.util.NBTHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
@@ -33,10 +32,7 @@ public class EarthHammer1var extends PickaxeItem implements IHexblade {
     protected final double baseAttack;
     protected final double baseAttackSpeed;
     protected final float baseMiningSpeed;
-    protected float newMiningSpeed;
-    protected boolean mineSwitch;
-    protected boolean isActivated;
-    private final String tooltipText = "tooltip.HexSwordItem.earth_hammer";
+    protected TranslationTextComponent tooltipText = new TranslationTextComponent("tooltip.HexSwordItem.earth_hammer");
     protected int rechargeTick = 5;
     protected int dialogueLines = 3;
 
@@ -48,72 +44,61 @@ public class EarthHammer1var extends PickaxeItem implements IHexblade {
         super(tier, attackDamageIn, attackSpeedIn, builder);
         baseAttack = attackDamageIn;
         baseAttackSpeed = attackSpeedIn;
-        baseMiningSpeed = newMiningSpeed = tier.getSpeed();
-        mineSwitch = false;
+        baseMiningSpeed = tier.getSpeed();
     }
 
-    public void setAttackPower(ItemStack weapon, double extradamage) {
+    public void switchMining(ItemStack weapon) {
+        CompoundNBT tag = weapon.getOrCreateTag();
+        tag.putBoolean(Constants.NBT.MiningSwitch, !tag.getBoolean(Constants.NBT.MiningSwitch));
+        weapon.setTag(tag);
+    }
 
-        CompoundNBT tag = NBTHelper.checkNBT(weapon).getTag();
-        if (tag != null) {
-            if (isActivated) {
-                tag.putDouble(Constants.NBT.EXTRA_DAMAGE, baseAttack + extradamage);
+    public void setAttackPower(ItemStack weapon, boolean awakening, double extradamage) {
+
+        CompoundNBT tag = weapon.getOrCreateTag();
+        tag.putDouble(Constants.NBT.EXTRA_DAMAGE, awakening ? baseAttack + extradamage : baseAttack);
+    }
+
+    public void setAttackSpeed(ItemStack weapon, boolean awakening, double extraspeed) {
+
+        CompoundNBT tag = weapon.getOrCreateTag();
+        tag.putDouble(Constants.NBT.EXTRA_ATTACK_SPEED, awakening ? baseAttackSpeed + extraspeed : baseAttackSpeed);
+    }
+
+    public void setMiningSpeed(ItemStack weapon, boolean awakening, float extra_mining) {
+
+        CompoundNBT tag = weapon.getOrCreateTag();
+
+        float newMiningSpeed;
+
+        if (tag.getBoolean(Constants.NBT.MiningSwitch)) {
+            if (awakening) {
+                newMiningSpeed = baseMiningSpeed + extra_mining / 2;
             } else {
-                tag.putDouble(Constants.NBT.EXTRA_DAMAGE, baseAttack);
+                newMiningSpeed = baseMiningSpeed;
             }
-        }
-    }
-
-    public void setAttackSpeed(ItemStack weapon, double extraspeed) {
-
-        CompoundNBT tag = NBTHelper.checkNBT(weapon).getTag();
-        if (tag != null) {
-
-            if (isActivated) {
-                tag.putDouble(Constants.NBT.EXTRA_ATTACK_SPEED, baseAttackSpeed + extraspeed);
-            } else {
-                tag.putDouble(Constants.NBT.EXTRA_ATTACK_SPEED, baseAttackSpeed);
-            }
-        }
-    }
-
-    public void setMiningSpeed(float extra_mining) {
-
-        if (isActivated) {
-            newMiningSpeed = baseMiningSpeed + extra_mining / 2;
         } else {
-            newMiningSpeed = baseMiningSpeed;
+            newMiningSpeed = 1.0F;
         }
+        tag.putFloat(Constants.NBT.EXTRA_MINING_SPEED, newMiningSpeed);
+
+        weapon.setTag(tag);
     }
 
-    @Override
-    public void updateState(boolean aws) {
-        isActivated = aws;
-    }
 
     public double getAttackPower(ItemStack weapon) {
-        CompoundNBT tag = NBTHelper.checkNBT(weapon).getTag();
 
-        if (tag != null) {
-            double AP = tag.getDouble(Constants.NBT.EXTRA_DAMAGE);
+        double AP = weapon.getOrCreateTag().getDouble(Constants.NBT.EXTRA_DAMAGE);
 
-            if (AP > 0) {
-                return AP;
-            }
+        return AP > 0 ? AP : baseAttack;
 
-        }
-        return baseAttack;
     }
 
     public double getAttackSpeed(ItemStack weapon) {
-        CompoundNBT tag = NBTHelper.checkNBT(weapon).getTag();
 
-        if (tag != null) {
-            double AS = tag.getDouble(Constants.NBT.EXTRA_ATTACK_SPEED);
-            if (AS != 0) return AS;
-        }
+        double AS = weapon.getOrCreateTag().getDouble(Constants.NBT.EXTRA_ATTACK_SPEED);
+        return AS != 0 ? AS : baseAttackSpeed;
 
-        return baseAttackSpeed;
     }
 
     @Override
@@ -122,10 +107,10 @@ public class EarthHammer1var extends PickaxeItem implements IHexblade {
     }
 
     @Override
-    public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
+    public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker, boolean awakened) {
         float power = 1.0F;
-        if (isActivated) {
-            target.hurt(new EntityDamageSource("anvil", attacker).bypassArmor(), COMMON.HammerED1.get());
+        if (awakened) {
+            target.hurt(new EntityDamageSource("anvil", attacker).bypassArmor(), COMMON.HammerED1.get().floatValue());
             power = (float) (1.0F + getDevotion(attacker) / 30);
         }
         double X = attacker.getX() - target.getX();
@@ -137,27 +122,15 @@ public class EarthHammer1var extends PickaxeItem implements IHexblade {
     @Override
     public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         if (player.isShiftKeyDown() && !world.isClientSide()) {
-            mineSwitch = !mineSwitch;
+            switchMining(player.getItemInHand(hand));
         }
         return super.use(world, player, hand);
     }
 
     @Override
     public void inventoryTick(ItemStack stack, World worldIn, Entity user, int itemSlot, boolean isSelected) {
-        if (!mineSwitch && (user instanceof PlayerEntity) && !worldIn.isClientSide()) {
-            if (hasBonus()) {
-                applyHexBonus((PlayerEntity) user, isActivated);
-            }
-            if (isActivated && !((PlayerEntity) user).isCreative()) {
-                if ((getMaxDamage(stack) - stack.getDamageValue()) > 5) {
-                    stack.hurtAndBreak(2, (LivingEntity) user, (entity) -> entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
-                } else {
-                    recalculatePowers(((PlayerEntity) user).getItemInHand(Hand.MAIN_HAND), worldIn, (PlayerEntity) user);
-                }
-            } else if (stack.getDamageValue() > 0) {
-                stack.setDamageValue(Math.max(stack.getDamageValue() - rechargeTick, 0));
-            }
-        }
+        if (stack.getOrCreateTag().getBoolean(Constants.NBT.MiningSwitch)) return;
+        this.inventoryTick(stack, worldIn, user);
     }
 
     @Override
@@ -179,10 +152,19 @@ public class EarthHammer1var extends PickaxeItem implements IHexblade {
     public void recalculatePowers(ItemStack weapon, World world, PlayerEntity player) {
         double devotion = getDevotion(player);
 
-        if (!mineSwitch) setAwakenedState(weapon, !getAwakened(weapon));
-        setAttackPower(weapon, mineSwitch ? -6 : (devotion / COMMON.HammerDS1.get()));
-        setMiningSpeed(mineSwitch ? (float) (devotion / COMMON.HammerMS1.get()) : 1.0F);
+        boolean mineSwitch = weapon.getOrCreateTag().getBoolean(Constants.NBT.MiningSwitch);
 
+        if (!mineSwitch) setAwakenedState(weapon, !getAwakened(weapon));
+
+        boolean awakening = getAwakened(weapon);
+
+        setAttackPower(weapon, awakening, mineSwitch ? -6 : (devotion / COMMON.HammerDS1.get()));
+        setMiningSpeed(weapon, awakening, (float) (devotion / COMMON.HammerMS1.get()));
+
+    }
+
+    @Override
+    public void applyHexBonus(PlayerEntity user, boolean awakened) {
     }
 
     @Override
@@ -191,15 +173,10 @@ public class EarthHammer1var extends PickaxeItem implements IHexblade {
     }
 
     @Override
-    public boolean isActivated() {
-        return isActivated;
-    }
-
-    @Override
     public boolean mineBlock(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
         if (!worldIn.isClientSide && (state.getDestroySpeed(worldIn, pos) != 0.0F) && entityLiving instanceof PlayerEntity) {
             if (stack.getMaxDamage() - stack.getDamageValue() < 101) {
-                mineSwitch = false;
+                switchMining(stack);
                 recalculatePowers(stack, worldIn, (PlayerEntity) entityLiving);
             } else {
                 stack.hurtAndBreak(100, entityLiving, (entity) -> entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
@@ -215,7 +192,8 @@ public class EarthHammer1var extends PickaxeItem implements IHexblade {
 
         Material material = state.getMaterial();
 
-        if ((material == Material.STONE) && isActivated) {
+        float newMiningSpeed = getMiningSpeed(stack);
+        if ((material == Material.STONE) && getAwakened(stack)) {
             result = newMiningSpeed + 2.0F;
         } else if (material == Material.METAL || material == Material.HEAVY_METAL || getToolTypes(stack).stream().anyMatch(state::isToolEffective)) {
             result = newMiningSpeed;
@@ -225,11 +203,15 @@ public class EarthHammer1var extends PickaxeItem implements IHexblade {
         return result;
     }
 
+    protected float getMiningSpeed(ItemStack weapon) {
+        return weapon.getOrCreateTag().getFloat(Constants.NBT.EXTRA_MINING_SPEED);
+    }
+
     @Override
     public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent(tooltipText));
-        tooltip.add(new TranslationTextComponent("Mining mode:" + (mineSwitch ? "On" : "Off")));
+        tooltip.add(tooltipText);
+        tooltip.add(new TranslationTextComponent("Mining mode:" + (stack.getOrCreateTag().getBoolean(Constants.NBT.MiningSwitch) ? "On" : "Off")));
     }
 
     @Override

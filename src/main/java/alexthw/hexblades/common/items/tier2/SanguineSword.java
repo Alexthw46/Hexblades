@@ -1,8 +1,8 @@
 package alexthw.hexblades.common.items.tier2;
 
 import alexthw.hexblades.common.items.IHexblade;
+import alexthw.hexblades.compat.ArsNouveauCompat;
 import alexthw.hexblades.util.Constants;
-import alexthw.hexblades.util.NBTHelper;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import elucent.eidolon.item.SappingSwordItem;
@@ -28,12 +28,12 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
+import static alexthw.hexblades.util.CompatUtil.isArsNovLoaded;
 
 public class SanguineSword extends SappingSwordItem implements IHexblade {
 
     protected final double baseAttack;
     protected final double baseAttackSpeed;
-    protected boolean isActivated;
 
     protected String tooltipText = "tooltip.hexblades.sanguine_sword";
     protected int rechargeTick = 5;
@@ -44,7 +44,6 @@ public class SanguineSword extends SappingSwordItem implements IHexblade {
         setLore(tooltipText);
         baseAttack = 4;
         baseAttackSpeed = -2.4F;
-        isActivated = false;
     }
 
     @Override
@@ -64,18 +63,19 @@ public class SanguineSword extends SappingSwordItem implements IHexblade {
 
     @Override
     public void applyHexBonus(PlayerEntity user, boolean awakened) {
-        if (isActivated()) user.addEffect(new EffectInstance(Effects.NIGHT_VISION, 400, 0, false, false));
+        if (awakened) user.addEffect(new EffectInstance(Effects.NIGHT_VISION, 400, 0, false, false));
     }
 
     /**
      * @param stack    the instance of the item
      * @param target   the entity that is being damaged
      * @param attacker the player who is attacking
+     * @param awakened if the blade is awakened
      */
     @Override
-    public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
+    public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker, boolean awakened) {
         float before = target.getHealth();
-        target.hurt((new EntityDamageSource("wither", attacker)).bypassArmor(), isActivated() ? (float) (2.0F + getDevotion(attacker) / COMMON.BloodED.get()) : 2.0F);
+        target.hurt((new EntityDamageSource("wither", attacker)).bypassArmor(), awakened ? (float) (2.0F + getDevotion(attacker) / COMMON.BloodED.get()) : 2.0F);
         float healing = before - target.getHealth();
         if (healing > 0.0F) {
             attacker.heal(healing);
@@ -89,9 +89,9 @@ public class SanguineSword extends SappingSwordItem implements IHexblade {
     public void recalculatePowers(ItemStack weapon, World world, PlayerEntity player) {
         double devotion = getDevotion(player);
 
-        setAwakenedState(weapon, !getAwakened(weapon));
+        boolean awakening = setAwakenedState(weapon, !getAwakened(weapon));
 
-        setAttackPower(weapon, devotion / COMMON.BloodDS.get());
+        setAttackPower(weapon, awakening, devotion / COMMON.BloodDS.get());
 
     }
 
@@ -101,7 +101,7 @@ public class SanguineSword extends SappingSwordItem implements IHexblade {
             if (target.invulnerableTime > 0) {
                 target.invulnerableTime = 0;
             }
-            if (onHitEffects()) applyHexEffects(stack, target, (PlayerEntity) attacker);
+            if (onHitEffects()) applyHexEffects(stack, target, (PlayerEntity) attacker, getAwakened(stack));
             stack.setDamageValue(Math.max(stack.getDamageValue() - 10, 0));
         }
         return true;
@@ -109,7 +109,12 @@ public class SanguineSword extends SappingSwordItem implements IHexblade {
 
     public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         if (!world.isClientSide()) {
-            if (!(isActivated() && (player.getItemInHand(Hand.OFF_HAND).getItem() instanceof ShieldItem))) {
+            if (!(player.getItemInHand(Hand.OFF_HAND).getItem() instanceof ShieldItem)) {
+
+                if (isArsNovLoaded()) {
+                    if (ArsNouveauCompat.spellbookInOffHand(player)) return super.use(world, player, hand);
+                }
+
                 recalculatePowers(player.getItemInHand(hand), world, player);
             }
         }
@@ -121,10 +126,6 @@ public class SanguineSword extends SappingSwordItem implements IHexblade {
     }
 
     //data getters
-    public boolean isActivated() {
-        return isActivated;
-    }
-
     public int getRechargeTicks() {
         return rechargeTick;
     }
@@ -133,60 +134,37 @@ public class SanguineSword extends SappingSwordItem implements IHexblade {
         return getMaxDamage(stack) - stack.getDamageValue();
     }
 
-    public void updateState(boolean aws) {
-        isActivated = aws;
-    }
-
     //NBT GETTERS
     public double getAttackPower(ItemStack weapon) {
-        CompoundNBT tag = NBTHelper.checkNBT(weapon).getTag();
 
-        if (tag != null) {
-            double AP = tag.getDouble(Constants.NBT.EXTRA_DAMAGE);
+        double AP = weapon.getOrCreateTag().getDouble(Constants.NBT.EXTRA_DAMAGE);
 
-            if (AP > 0) {
-                return AP;
-            }
+        return AP > 0 ? AP : baseAttack;
 
-        }
-        return baseAttack;
     }
 
     public double getAttackSpeed(ItemStack weapon) {
-        CompoundNBT tag = NBTHelper.checkNBT(weapon).getTag();
 
-        if (tag != null) {
-            double AS = tag.getDouble(Constants.NBT.EXTRA_ATTACK_SPEED);
-            if (AS != 0) return AS;
-        }
+        double AS = weapon.getOrCreateTag().getDouble(Constants.NBT.EXTRA_ATTACK_SPEED);
 
-        return baseAttackSpeed;
+        return AS != 0 ? AS : baseAttackSpeed;
+
     }
 
     //NBT SETTERS
 
-    public void setAttackPower(ItemStack weapon, double extradamage) {
+    public void setAttackPower(ItemStack weapon, boolean awakening, double extradamage) {
 
-        CompoundNBT tag = NBTHelper.checkNBT(weapon).getTag();
-        if (tag != null) {
-            if (isActivated) {
-                tag.putDouble(Constants.NBT.EXTRA_DAMAGE, baseAttack + extradamage);
-            } else {
-                tag.putDouble(Constants.NBT.EXTRA_DAMAGE, baseAttack);
-            }
-        }
+        CompoundNBT tag = weapon.getOrCreateTag();
+
+        tag.putDouble(Constants.NBT.EXTRA_DAMAGE, awakening ? baseAttack + extradamage : baseAttack);
     }
 
-    public void setAttackSpeed(ItemStack weapon, double extraspeed) {
+    public void setAttackSpeed(ItemStack weapon, boolean awakening, double extraspeed) {
 
-        CompoundNBT tag = NBTHelper.checkNBT(weapon).getTag();
-        if (tag != null) {
-            if (isActivated) {
-                tag.putDouble(Constants.NBT.EXTRA_ATTACK_SPEED, baseAttackSpeed + extraspeed);
-            } else {
-                tag.putDouble(Constants.NBT.EXTRA_ATTACK_SPEED, baseAttackSpeed);
-            }
-        }
+        CompoundNBT tag = weapon.getOrCreateTag();
+
+        tag.putDouble(Constants.NBT.EXTRA_ATTACK_SPEED, awakening ? baseAttackSpeed + extraspeed : baseAttackSpeed);
     }
 
     @Override

@@ -6,6 +6,7 @@ import alexthw.hexblades.client.render.tile.FirePedestalRenderer;
 import alexthw.hexblades.client.render.tile.SwordStandRenderer;
 import alexthw.hexblades.client.render.tile.Urn_Renderer;
 import alexthw.hexblades.common.items.IHexblade;
+import alexthw.hexblades.network.MiningSwitchPacket;
 import alexthw.hexblades.network.WeaponAwakenPacket;
 import alexthw.hexblades.registers.HexEntityType;
 import alexthw.hexblades.registers.HexItem;
@@ -15,7 +16,6 @@ import elucent.eidolon.entity.EmptyRenderer;
 import elucent.eidolon.network.Networking;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraftforge.api.distmarker.Dist;
@@ -34,20 +34,24 @@ import static alexthw.hexblades.datagen.HexItemModelProvider.rl;
 public class ClientEvents {
 
     public static final KeyBinding HEXBLADE_KEYBINDING = new KeyBinding("key.hexblades.awake", GLFW.GLFW_KEY_H, "key.categories.misc");
+    public static final KeyBinding HEXDRILL_KEYBINDING = new KeyBinding("key.hexblades.mining", GLFW.GLFW_KEY_J, "key.categories.misc");
 
     @SubscribeEvent
     public static void registerKeybinding(FMLClientSetupEvent event) {
         ClientRegistry.registerKeyBinding(HEXBLADE_KEYBINDING);
+        ClientRegistry.registerKeyBinding(HEXDRILL_KEYBINDING);
     }
 
     @SubscribeEvent
     public void onKeyPress(TickEvent.ClientTickEvent event) {
 
-        Minecraft minecraft = Minecraft.getInstance();
-        PlayerEntity playerEntity = minecraft.player;
+        if (Minecraft.getInstance().player == null) return;
 
-        if (HEXBLADE_KEYBINDING.consumeClick() && playerEntity != null) {
+        if (HEXBLADE_KEYBINDING.consumeClick()) {
             WeaponAwakenPacket pkt = new WeaponAwakenPacket();
+            Networking.sendToServer(pkt);
+        } else if (HEXDRILL_KEYBINDING.consumeClick()) {
+            MiningSwitchPacket pkt = new MiningSwitchPacket();
             Networking.sendToServer(pkt);
         }
 
@@ -60,6 +64,7 @@ public class ClientEvents {
         ClientRegistry.bindTileEntityRenderer(HexTileEntityType.EVERFULL_URN_TILE_ENTITY, Urn_Renderer::new);
     }
 
+    @SuppressWarnings("deprecation")
     @SubscribeEvent
     public static void initClientEvents(FMLClientSetupEvent event) {
 
@@ -86,6 +91,8 @@ public class ClientEvents {
             registerToggleAnimation(HexItem.LIGHTNING_SSWORD_R.get());
             registerToggleAnimation(HexItem.BLOOD_SWORD.get());
 
+            registerToggleDrillAnimation(HexItem.EARTH_HAMMER.get());
+            registerToggleDrillAnimation(HexItem.EARTH_HAMMER1.get());
         });
 
     }
@@ -93,5 +100,10 @@ public class ClientEvents {
     public static void registerToggleAnimation(Item item) {
         ItemModelsProperties.register(item, rl(Constants.NBT.AW_State), (stack, world, entity) -> ((IHexblade) stack.getItem()).getAwakened(stack) ? 1.0F : 0.0F);
     }
+
+    public static void registerToggleDrillAnimation(Item item) {
+        ItemModelsProperties.register(item, rl(Constants.NBT.MiningSwitch), (stack, world, entity) -> (stack.getOrCreateTag().getBoolean(Constants.NBT.MiningSwitch) ? 1.0F : 0.0F));
+    }
+
 
 }

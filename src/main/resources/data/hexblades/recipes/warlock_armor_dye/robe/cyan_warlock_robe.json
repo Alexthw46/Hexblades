@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "hexblades:dye_warlock_robes"
+    },
+    {
+      "tag": "forge:dyes/cyan"
+    }
+  ],
+  "result": {
+    "item": "hexblades:dye_warlock_robes",
+    "nbt": {
+      "color": 5
+    }
+  }
+}
