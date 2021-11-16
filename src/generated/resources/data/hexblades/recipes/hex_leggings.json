@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "HFH",
+    "H H",
+    "L L"
+  ],
+  "key": {
+    "H": {
+      "item": "hexblades:hexed_ingot"
+    },
+    "L": {
+      "item": "eidolon:lead_ingot"
+    },
+    "F": {
+      "item": "hexblades:eidolon_focus"
+    }
+  },
+  "result": {
+    "item": "hexblades:hex_leggings"
+  }
+}

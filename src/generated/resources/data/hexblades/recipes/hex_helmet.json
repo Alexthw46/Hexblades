@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "HFH",
+    "H H"
+  ],
+  "key": {
+    "H": {
+      "item": "hexblades:hexed_ingot"
+    },
+    "F": {
+      "item": "hexblades:eidolon_focus"
+    }
+  },
+  "result": {
+    "item": "hexblades:hex_helmet"
+  }
+}

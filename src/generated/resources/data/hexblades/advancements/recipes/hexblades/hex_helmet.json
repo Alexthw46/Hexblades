@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "hexblades:hex_helmet"
+    ]
+  },
+  "criteria": {
+    "has_spirited_metal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "hexblades:hexium_ingot"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "hexblades:hex_helmet"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_spirited_metal",
+      "has_the_recipe"
+    ]
+  ]
+}

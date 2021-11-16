@@ -1,6 +1,6 @@
 modLoader="javafml"
 loaderVersion = "[35,)"
-license = "MIT License"
+license = "BSD License"
 # A URL to refer people to when problems occur with this mod
 #issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
 [[mods]] #mandatory
@@ -82,6 +82,6 @@ side = "BOTH"
 [[dependencies.hexblades]]
 modId = "ars_nouveau"
 mandatory = false
-versionRange = "[1.23.11,)"
+versionRange = "[1.24.0,)"
 ordering = "AFTER"
 side = "BOTH"

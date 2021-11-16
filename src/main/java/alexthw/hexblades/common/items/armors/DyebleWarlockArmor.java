@@ -20,36 +20,36 @@ public class DyebleWarlockArmor extends WarlockRobesItem {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        switch (getColor(stack)) {
-            case (1):
-                return "hexblades:textures/entity/warlock_robes/yellow.png";
-            case (2):
-                return "hexblades:textures/entity/warlock_robes/orange.png";
-            case (3):
-                return "hexblades:textures/entity/warlock_robes/red.png";
-            case (4):
-                return "hexblades:textures/entity/warlock_robes/purple.png";
-            case (5):
-                return "hexblades:textures/entity/warlock_robes/cyan.png";
-            case (6):
-                return "hexblades:textures/entity/warlock_robes/green.png";
-            case (7):
-                return "hexblades:textures/entity/warlock_robes/lime.png";
-            case (8):
-                return "hexblades:textures/entity/warlock_robes/pink.png";
-            case (9):
-                return "hexblades:textures/entity/warlock_robes/magenta.png";
-            case (10):
-                return "hexblades:textures/entity/warlock_robes/brown.png";
-            case (11):
-                return "hexblades:textures/entity/warlock_robes/light_blue.png";
-            case (12):
-                return "hexblades:textures/entity/warlock_robes/black.png";
-            case (13):
+        int color = getColor(stack);
+        switch (color) {
+            case 0:
                 return "hexblades:textures/entity/warlock_robes/white.png";
-            default:
-                return super.getArmorTexture(stack, entity, slot, type);
+            case 1:
+                return "hexblades:textures/entity/warlock_robes/orange.png";
+            case 2:
+                return "hexblades:textures/entity/warlock_robes/magenta.png";
+            case 3:
+                return "hexblades:textures/entity/warlock_robes/light_blue.png";
+            case 4:
+                return "hexblades:textures/entity/warlock_robes/yellow.png";
+            case 5:
+                return "hexblades:textures/entity/warlock_robes/lime.png";
+            case 6:
+                return "hexblades:textures/entity/warlock_robes/pink.png";
+            case 9:
+                return "hexblades:textures/entity/warlock_robes/cyan.png";
+            case 10:
+                return "hexblades:textures/entity/warlock_robes/purple.png";
+            case 12:
+                return "hexblades:textures/entity/warlock_robes/brown.png";
+            case 13:
+                return "hexblades:textures/entity/warlock_robes/green.png";
+            case 14:
+                return "hexblades:textures/entity/warlock_robes/red.png";
+            case 15:
+                return "hexblades:textures/entity/warlock_robes/black.png";
         }
+        return super.getArmorTexture(stack, entity, slot, type);
     }
 
     @Override
@@ -66,32 +66,32 @@ public class DyebleWarlockArmor extends WarlockRobesItem {
     private String getColor(int index) {
 
         switch (index) {
+            case (0):
+                return "White";
             case (1):
-                return "Yellow";
-            case (2):
                 return "Orange";
+            case (2):
+                return "Magenta";
             case (3):
-                return "Red";
+                return "Light_blue";
             case (4):
-                return "Purple";
+                return "Yellow";
             case (5):
-                return "Cyan";
-            case (6):
-                return "Green";
-            case (7):
                 return "Lime";
-            case (8):
+            case (6):
                 return "Pink";
             case (9):
-                return "Magenta";
+                return "Cyan";
             case (10):
-                return "Brown";
-            case (11):
-                return "Light_blue";
+                return "Purple";
             case (12):
-                return "Black";
+                return "Brown";
             case (13):
-                return "White";
+                return "Green";
+            case (14):
+                return "Red";
+            case (15):
+                return "Black";
             default:
                 return "Blue";
         }

@@ -27,10 +27,6 @@ import static alexthw.hexblades.util.HexUtils.takeAll;
 
 public class HexItemModelProvider extends ItemModelProvider {
 
-    public static ResourceLocation rl(String name) {
-        return new ResourceLocation(Hexblades.MODID, name);
-    }
-
     private static final ResourceLocation GENERATED = new ResourceLocation("item/generated");
     private static final ResourceLocation HANDHELD = new ResourceLocation("item/handheld");
     private static final ResourceLocation SPAWN_EGG = new ResourceLocation("item/template_spawn_egg");
@@ -76,7 +72,7 @@ public class HexItemModelProvider extends ItemModelProvider {
 
         ModelFile activatedFile = singleTexture("item/variants/" + path + "_activated", mcLoc("item/handheld"), "layer0", modLoc("item/" + path + "_activated"));
         ModelFile deactivatedFile = singleTexture("item/variants/" + path + "_deactivated", mcLoc("item/handheld"), "layer0", modLoc("item/" + path));
-        builder.override().predicate(rl("awakened"), 0).model(deactivatedFile).end().override().predicate(rl("awakened"), 1).model(activatedFile).end();
+        builder.override().predicate(prefix("awakened"), 0).model(deactivatedFile).end().override().predicate(prefix("awakened"), 1).model(activatedFile).end();
 
 
     }
@@ -88,7 +84,7 @@ public class HexItemModelProvider extends ItemModelProvider {
         withExistingParent(path, HANDHELD).texture("layer0", prefix("item/" + path));
 
         ModelFile deactivatedFile = singleTexture("item/variants/" + path + "_deactivated", mcLoc("item/handheld"), "layer0", modLoc("item/" + path));
-        builder.override().predicate(rl("awakened"), 0).model(deactivatedFile).end().override().predicate(rl("awakened"), 1).model(getExistingFile(modLoc("item/variants/" + path + "_activated"))).end();
+        builder.override().predicate(prefix("awakened"), 0).model(deactivatedFile).end().override().predicate(prefix("awakened"), 1).model(getExistingFile(modLoc("item/variants/" + path + "_activated"))).end();
 
 
     }

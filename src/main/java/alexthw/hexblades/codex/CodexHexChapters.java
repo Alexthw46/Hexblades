@@ -24,7 +24,6 @@ import static net.minecraftforge.fml.common.ObfuscationReflectionHelper.getPriva
 
 public class CodexHexChapters {
 
-
     static Category HEXBLADES;
     static Category HEXBLADES_WEAPONS;
     static Chapter ICE_KATANA;
@@ -43,6 +42,7 @@ public class CodexHexChapters {
     static Chapter COMPAT;
     static Chapter MISC;
     static Chapter TEMPLES;
+    static Chapter ARMORS;
     static Chapter HEXBLADES_INDEX;
     static Chapter HEXBLADES_WINDEX;
 
@@ -97,6 +97,8 @@ public class CodexHexChapters {
             } else {
                 COMPAT = new Chapter(makeChapterKey("compats"), new TitlePage(makePageKey("compats")));
             }
+
+            ARMORS = getArmorsPage();
         }
 
         //Hex Theurgy - page 2
@@ -295,6 +297,39 @@ public class CodexHexChapters {
         }
     }
 
+    static Chapter getArmorsPage() {
+        Chapter Armors;
+        CraftingPage helmCraft = new CraftingPage(new ItemStack(HexItem.HEX_ARMOR_H.get(), 1),
+                new ItemStack(Registry.ARCANE_GOLD_INGOT.get()), new ItemStack(Registry.LESSER_SOUL_GEM.get()), new ItemStack(Registry.ARCANE_GOLD_INGOT.get()),
+                new ItemStack(HexItem.HEXIUM_INGOT.get()), ItemStack.EMPTY, new ItemStack(HexItem.HEXIUM_INGOT.get())
+        );
+        CraftingPage chestCraft = new CraftingPage(new ItemStack(HexItem.HEX_ARMOR_C.get(), 1),
+                new ItemStack(Registry.ARCANE_GOLD_INGOT.get()), ItemStack.EMPTY, new ItemStack(Registry.ARCANE_GOLD_INGOT.get()),
+                new ItemStack(HexItem.HEXIUM_INGOT.get()), new ItemStack(Registry.SHADOW_GEM.get()), new ItemStack(HexItem.HEXIUM_INGOT.get()),
+                new ItemStack(HexItem.HEXIUM_INGOT.get()), new ItemStack(HexItem.HEXIUM_INGOT.get()), new ItemStack(HexItem.HEXIUM_INGOT.get())
+        );
+        CraftingPage legsCraft = new CraftingPage(new ItemStack(HexItem.HEX_ARMOR_L.get(), 1),
+                new ItemStack(Registry.ARCANE_GOLD_INGOT.get()), new ItemStack(HexItem.HEXIUM_INGOT.get()), new ItemStack(Registry.ARCANE_GOLD_INGOT.get()),
+                new ItemStack(HexItem.HEXIUM_INGOT.get()), ItemStack.EMPTY, new ItemStack(HexItem.HEXIUM_INGOT.get()),
+                new ItemStack(HexItem.HEXIUM_INGOT.get()), ItemStack.EMPTY, new ItemStack(HexItem.HEXIUM_INGOT.get())
+        );
+        CraftingPage bootsCraft = new CraftingPage(new ItemStack(HexItem.HEX_ARMOR_B.get(), 1),
+                new ItemStack(Registry.PEWTER_INGOT.get()), ItemStack.EMPTY, new ItemStack(Registry.PEWTER_INGOT.get()),
+                new ItemStack(HexItem.HEXIUM_INGOT.get()), ItemStack.EMPTY, new ItemStack(HexItem.HEXIUM_INGOT.get())
+        );
+        Armors = new Chapter(makeChapterKey("armors"),
+                new TitlePage(makePageKey("circlet")),
+                helmCraft,
+                new TitlePage(makePageKey("chestplate")),
+                chestCraft,
+                new TitlePage(makePageKey("leggings")),
+                legsCraft,
+                new TitlePage(makePageKey("boots")),
+                bootsCraft
+        );
+        return Armors;
+    }
+
     static void makeIndexes() {
         HEXBLADES_INDEX = new Chapter(makeChapterKey("hex_index"),
                 new TitledIndexPage("hexblades.codex.hex_index.0",
@@ -302,7 +337,8 @@ public class CodexHexChapters {
                         new IndexPage.IndexEntry(URN_OF_WATERS, new ItemStack(HexBlock.EVERFULL_URN.get().asItem())),
                         getCompatsPage(),
                         new IndexPage.IndexEntry(MISC, new ItemStack(HexBlock.SWORD_STAND.get().asItem())),
-                        new IndexPage.IndexEntry(TEMPLES, new ItemStack(HexBlock.MAGMA_BRICKS.get().asItem()))
+                        new IndexPage.IndexEntry(TEMPLES, new ItemStack(HexBlock.MAGMA_BRICKS.get().asItem())),
+                        new IndexPage.IndexEntry(ARMORS, new ItemStack(HexItem.HEX_ARMOR_C.get()))
                 ),
                 new IndexPage(
                         new IndexPage.SignLockedEntry(HEX_PRAY, new ItemStack(HexItem.DEV_SWORD.get()), Signs.SOUL_SIGN),

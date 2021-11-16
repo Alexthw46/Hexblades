@@ -28,7 +28,7 @@ public class ArmorFocus extends Item {
 
         for (ItemStack stack : pPlayer.getArmorSlots()) {
             if (stack.getItem() instanceof HexWArmor) {
-                ((HexWArmor) stack.getItem()).setFocus(stack, modFocus);
+                HexWArmor.setFocus(stack, modFocus);
             }
         }
 

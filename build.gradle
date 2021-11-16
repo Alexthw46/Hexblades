@@ -16,9 +16,9 @@ apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.16.5-0.0.8.5'
-group = 'Alexthw46.hexblades'
-archivesBaseName = 'Hexblades'
+version = "${mc_version}-${mod_version}"
+group = 'alexthw.hexblades'
+archivesBaseName = project.mod_id
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
@@ -141,29 +141,29 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.0'
 
     //compats
-    compileOnly fg.deobf("sammy:malum:1.16.5-0.3.0")
+    compileOnly fg.deobf('mezz.jei:jei-1.16.5:7.6.4.90:api')
     compileOnly fg.deobf("vazkii.botania:Botania:1.16.5-418")
-    compileOnly fg.deobf("vulp:druidcraft:1.16.5-0.4.53")
-    compileOnly fg.deobf("klikli_dev:occultism:1.16.5-1.15.0")
-    compileOnly fg.deobf("hollingsworth:ars_nouveau:1.16.5-1.23.11")
+
+    compileOnly fg.deobf("curse.maven:malum-484064:3374475") //0.3
+    compileOnly fg.deobf("curse.maven:druidcraft-340991:3507029")//0.4.54
+    compileOnly fg.deobf("curse.maven:occultism-361026:3522201") //1.19.3
+    compileOnly fg.deobf("curse.maven:ars_nouveau-401955:3527164")//1.24.0
 
     //dependencies
     implementation fg.deobf("elucent:eidolon:0.2.7")
     implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.16.5:3.0.49')
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.1")
 
-    compileOnly fg.deobf('mezz.jei:jei-1.16.5:7.6.4.90')
-
     //testers
     runtimeOnly fg.deobf('mezz.jei:jei-1.16.5:7.6.4.90')
-    //runtimeOnly fg.deobf("com.telepathicgrunt:Blame:1.16.5-3.2.0-forge")
-    //runtimeOnly fg.deobf("vulp:druidcraft:1.16.5-0.4.53")
-    //runtimeOnly fg.deobf("klikli_dev:occultism:1.16.5-1.15.0")
-    runtimeOnly fg.deobf("sammy:malum:1.16.5-0.3.0")
     runtimeOnly fg.deobf("vazkii.botania:Botania:1.16.5-418")
-    runtimeOnly fg.deobf("hollingsworth:ars_nouveau:1.16.5-1.23.11")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-53.1")
+    runtimeOnly fg.deobf("curse.maven:druidcraft-340991:3507029")
+    runtimeOnly fg.deobf("curse.maven:occultism-361026:3522201")
+    runtimeOnly fg.deobf("curse.maven:malum-484064:3374475")
+    runtimeOnly fg.deobf("curse.maven:ars_nouveau-401955:3527164")
     runtimeOnly fg.deobf("curse.maven:exp-407174:3188120")  // Shutup experimental settings
+    //runtimeOnly fg.deobf("com.telepathicgrunt:Blame:1.16.5-3.2.0-forge")
 
 }
 
@@ -172,11 +172,11 @@ jar {
     manifest {
         attributes([
                 "Specification-Title"     : "hexblades",
-                "Specification-Vendor"    : "Alexthw",
-                "Specification-Version"   : "0.2.7 - 0.0.8.5",
+                "Specification-Vendor"    : "hexblades",
+                "Specification-Version"   : "1",
                 "Implementation-Title"    : project.name,
-                "Implementation-Version"  : "${version}",
-                "Implementation-Vendor"   : "Alexthw",
+                "Implementation-Version"  : project.jar.archiveVersion,
+                "Implementation-Vendor"   : "hexblades",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }

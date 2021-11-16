@@ -1,7 +1,6 @@
 package alexthw.hexblades;
 
 import alexthw.hexblades.client.ClientEvents;
-import alexthw.hexblades.compat.NouveauWorkaround;
 import alexthw.hexblades.registers.*;
 import alexthw.hexblades.util.CompatUtil;
 import alexthw.hexblades.util.WorldGenUtil;
@@ -71,10 +70,6 @@ public class Hexblades {
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
 
         forgeBus.register(new Events());
-
-        if (CompatUtil.isArsNovLoaded()) {
-            forgeBus.register(new NouveauWorkaround());
-        }
 
         //Structures stuff
         forgeBus.addListener(EventPriority.NORMAL, this::addDimensionalSpacing);

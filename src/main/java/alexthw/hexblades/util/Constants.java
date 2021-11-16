@@ -24,10 +24,10 @@ public class Constants {
 
         //constants for modular armor
 
-        public static final String focusTag = "focus";
+        public static final String FOCUS_TAG = "focus";
 
         public static final int BotaniaDiscount = 25;
-        public static final int ArsManaDiscount = 0;
+        public static final int ArsManaDiscount = 3;
         public static final int ArsManaRegen = 4;
         public static final int ArsManaBuff = 60;
     }

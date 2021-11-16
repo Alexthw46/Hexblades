@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "P P",
+    "H H"
+  ],
+  "key": {
+    "H": {
+      "item": "hexblades:hexed_ingot"
+    },
+    "P": {
+      "item": "eidolon:pewter_ingot"
+    }
+  },
+  "result": {
+    "item": "hexblades:hex_boots"
+  }
+}

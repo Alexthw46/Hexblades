@@ -3,6 +3,7 @@ package alexthw.hexblades.datagen;
 import alexthw.hexblades.registers.HexBlock;
 import alexthw.hexblades.registers.HexItem;
 import alexthw.hexblades.temp.ArmorFocusRecipe;
+import alexthw.hexblades.temp.WarlockArmorDye;
 import elucent.eidolon.Registry;
 import net.minecraft.data.*;
 import net.minecraft.item.Items;
@@ -38,21 +39,25 @@ public class HexRecipeProvider extends RecipeProvider {
         ShapedRecipeBuilder.shaped(HexBlock.DARK_POLISH_PLANKS.getFence().asItem(), 3).define('#', Items.STICK).define('X', HexBlock.DARK_POLISH_PLANKS.getBlock().asItem()).pattern("   ").pattern("X#X").pattern("X#X").unlockedBy("has_dark_polished_wood", has(HexBlock.DARK_POLISH_PLANKS.getBlock().asItem())).save(consumer);
 
         //make warlock armor dye and back
-        ShapelessRecipeBuilder.shapeless(HexItem.DYE_WARLOCK_H.get()).requires(Registry.WARLOCK_HAT.get()).unlockedBy("warlock_hat", has(Registry.WARLOCK_HAT.get())).save(consumer);
-        ShapelessRecipeBuilder.shapeless(HexItem.DYE_WARLOCK_C.get()).requires(Registry.WARLOCK_CLOAK.get()).unlockedBy("warlock_chest", has(Registry.WARLOCK_CLOAK.get())).save(consumer);
-        ShapelessRecipeBuilder.shapeless(HexItem.DYE_WARLOCK_F.get()).requires(Registry.WARLOCK_BOOTS.get()).unlockedBy("warlock_boots", has(Registry.WARLOCK_BOOTS.get())).save(consumer);
-
         ShapelessRecipeBuilder.shapeless(Registry.WARLOCK_HAT.get()).requires(HexItem.DYE_WARLOCK_H.get()).unlockedBy("warlock_hat", has(Registry.WARLOCK_HAT.get())).save(consumer);
         ShapelessRecipeBuilder.shapeless(Registry.WARLOCK_CLOAK.get()).requires(HexItem.DYE_WARLOCK_C.get()).unlockedBy("warlock_chest", has(Registry.WARLOCK_CLOAK.get())).save(consumer);
         ShapelessRecipeBuilder.shapeless(Registry.WARLOCK_BOOTS.get()).requires(HexItem.DYE_WARLOCK_F.get()).unlockedBy("warlock_boots", has(Registry.WARLOCK_BOOTS.get())).save(consumer);
 
         specialRecipe(consumer, ArmorFocusRecipe.SERIALIZER);
+        specialRecipe(consumer, WarlockArmorDye.SERIALIZER);
+
+        //hexwarrior recipes
+        ShapedRecipeBuilder.shaped(HexItem.HEX_ARMOR_H.get()).define('H', HexItem.HEXED_INGOT.get()).define('F', HexItem.FOCUS_BASE.get()).pattern("HFH").pattern("H H").unlockedBy("has_spirited_metal", has(HexItem.HEXIUM_INGOT.get())).save(consumer);
+        ShapedRecipeBuilder.shaped(HexItem.HEX_ARMOR_C.get()).define('H', HexItem.HEXED_INGOT.get()).define('F', HexItem.FOCUS_BASE.get()).pattern("H H").pattern("HFH").pattern("HHH").unlockedBy("has_spirited_metal", has(HexItem.HEXIUM_INGOT.get())).save(consumer);
+        ShapedRecipeBuilder.shaped(HexItem.HEX_ARMOR_L.get()).define('H', HexItem.HEXED_INGOT.get()).define('L', Registry.LEAD_INGOT.get()).define('F', HexItem.FOCUS_BASE.get()).pattern("HFH").pattern("H H").pattern("L L").unlockedBy("has_spirited_metal", has(HexItem.HEXIUM_INGOT.get())).save(consumer);
+        ShapedRecipeBuilder.shaped(HexItem.HEX_ARMOR_B.get()).define('H', HexItem.HEXED_INGOT.get()).define('P', Registry.PEWTER_INGOT.get()).pattern("P P").pattern("H H").unlockedBy("has_spirited_metal", has(HexItem.HEXIUM_INGOT.get())).save(consumer);
+
     }
 
-    private void specialRecipe(Consumer<IFinishedRecipe> consumer, SpecialRecipeSerializer<ArmorFocusRecipe> serializer) {
+    private void specialRecipe(Consumer<IFinishedRecipe> consumer, SpecialRecipeSerializer<?> serializer) {
         ResourceLocation name = RECIPE_SERIALIZER.getKey(serializer);
-        CustomRecipeBuilder.special(serializer).save(consumer, prefix(name.getPath()).toString());
-
+        if (name != null)
+            CustomRecipeBuilder.special(serializer).save(consumer, prefix(name.getPath()).toString());
     }
 
 

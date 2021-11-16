@@ -18,4 +18,5 @@ public class ArsBotaniaArmor extends NouveauArmor implements IManaDiscountArmor 
     public float getDiscount(ItemStack stack, int slot, PlayerEntity player, @Nullable ItemStack tool) {
         return getFocus(stack).equals("botania") ? Constants.ArmorCompat.BotaniaDiscount : 0;
     }
+
 }

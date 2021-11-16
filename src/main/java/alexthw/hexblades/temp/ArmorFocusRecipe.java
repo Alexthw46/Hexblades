@@ -64,15 +64,13 @@ public class ArmorFocusRecipe extends SpecialRecipe {
                 if (stack.getItem() instanceof HexWArmor && item.isEmpty()) {
                     item = stack;
                 } else {
-                    focus = ((ArmorFocus) stack.getItem()).getModFocus(); // we already verified this is a will in matches()
+                    focus = ((ArmorFocus) stack.getItem()).getModFocus();
                 }
             }
         }
 
-        HexWArmor container = (HexWArmor) item.getItem();
-
         ItemStack copy = item.copy();
-        container.setFocus(copy, focus);
+        HexWArmor.setFocus(copy, focus);
         return copy;
     }
 
@@ -92,4 +90,5 @@ public class ArmorFocusRecipe extends SpecialRecipe {
     public IRecipeSerializer<?> getSerializer() {
         return SERIALIZER;
     }
+
 }

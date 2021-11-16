@@ -167,13 +167,15 @@ public class Events {
     @SubscribeEvent
     public void onLivingHurt(LivingHurtEvent event) {
 
-        if (!(event.getSource().getEntity() instanceof LivingEntity)) {
+        DamageSource source = event.getSource();
+
+        if (!(source.getEntity() instanceof PlayerEntity)) {
             return;
         }
 
-        LivingEntity livingEntity = (LivingEntity) event.getSource().getEntity();
+        PlayerEntity livingEntity = (PlayerEntity) source.getEntity();
 
-        if (event.getSource() == DamageSource.WITHER || event.getSource().isMagic()) {
+        if (source == DamageSource.WITHER || source.isMagic()) {
 
             ItemStack stack = livingEntity.getItemBySlot(EquipmentSlotType.HEAD);
 
@@ -181,7 +183,7 @@ public class Events {
                 float multiplier = HexWArmor.getFocusId(stack) == 1 ? 1.5F : 1.25F;
                 event.setAmount(event.getAmount() * multiplier);
 
-                if (event.getSource() == DamageSource.WITHER) {
+                if (source == DamageSource.WITHER) {
                     livingEntity.heal(event.getAmount() / 3.0F);
                 }
             }
@@ -193,6 +195,12 @@ public class Events {
                 event.setAmount(event.getAmount() * multiplier);
             }
 
+        } else if (source == DamageSource.FALL || source == DamageSource.ANVIL || source == DamageSource.HOT_FLOOR) {
+            ItemStack stack = livingEntity.getItemBySlot(EquipmentSlotType.LEGS);
+            if (stack.getItem() instanceof HexWArmor) {
+                float multiplier = HexWArmor.getFocusId(stack) == 1 ? 0.5F : 0.75F;
+                event.setAmount(event.getAmount() * multiplier);
+            }
         }
 
     }

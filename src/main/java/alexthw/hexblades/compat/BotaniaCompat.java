@@ -1,6 +1,7 @@
 package alexthw.hexblades.compat;
 
 import alexthw.hexblades.Hexblades;
+import alexthw.hexblades.client.render.entity.ArmorRenderer;
 import alexthw.hexblades.common.items.armors.BotaniaArmor;
 import alexthw.hexblades.common.items.armors.HexWArmor;
 import alexthw.hexblades.network.RefillEffectPacket;
@@ -15,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 import vazkii.botania.api.item.IPetalApothecary.State;
 import vazkii.botania.common.block.tile.TileAltar;
 import vazkii.botania.common.item.ModItems;
@@ -44,7 +46,7 @@ public class BotaniaCompat {
     public static void addRecipes() {
         WorktableRegistry.register(new WorktableRecipe(new Object[]{
                 ItemStack.EMPTY, ModItems.manaweaveCloth, ItemStack.EMPTY,
-                ModItems.manaweaveCloth, ItemStack.EMPTY, ModItems.manaweaveCloth,
+                ModItems.manaweaveCloth, HexItem.FOCUS_BASE, ModItems.manaweaveCloth,
                 ItemStack.EMPTY, ModItems.manaweaveCloth, ItemStack.EMPTY
         }, new Object[]{
                 ModItems.terrasteelNugget,
@@ -53,4 +55,9 @@ public class BotaniaCompat {
                 ModItems.terrasteelNugget
         }, new ItemStack(HexItem.FOCUS_BOTANIA.get(), 1)).setRegistryName(Hexblades.MODID, "botania_focus"));
     }
+
+    public static void renderer() {
+        GeoArmorRenderer.registerArmorRenderer(BotaniaArmor.class, new ArmorRenderer());
+    }
+
 }

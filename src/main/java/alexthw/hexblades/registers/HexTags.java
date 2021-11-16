@@ -1,6 +1,7 @@
 package alexthw.hexblades.registers;
 
 import alexthw.hexblades.Hexblades;
+import alexthw.hexblades.util.HexUtils;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.tags.BlockTags;
@@ -30,5 +31,7 @@ public class HexTags {
         }
     }
 
-    //public static ITag.INamedTag<Item> makeWrapperTag(String id)    {        return ItemTags.createOptional(HexUtils.prefix(id)); }
+    public static ITag.INamedTag<Item> makeWrapperTag(String id) {
+        return ItemTags.createOptional(HexUtils.prefix(id));
+    }
 }

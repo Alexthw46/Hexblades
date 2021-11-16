@@ -6,6 +6,7 @@ externalmods
 .metadata
 .classpath
 .project
+.bbmodel
 
 # idea
 out

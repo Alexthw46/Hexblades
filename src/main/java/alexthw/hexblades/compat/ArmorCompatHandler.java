@@ -47,4 +47,16 @@ public class ArmorCompatHandler {
 
         return new HexWArmor(slot, properties);
     }
+
+    public static void attachRenderers() {
+        if (CompatUtil.isBotaniaLoaded() && CompatUtil.isArsNovLoaded()) {
+            ArsBotaniaHandler.renderer();
+            return;
+        }
+        if (CompatUtil.isBotaniaLoaded()) {
+            BotaniaCompat.renderer();
+        } else if (CompatUtil.isArsNovLoaded()) {
+            ArsNouveauCompat.renderer();
+        }
+    }
 }

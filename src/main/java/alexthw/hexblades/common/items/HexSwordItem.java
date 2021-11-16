@@ -6,6 +6,8 @@ import alexthw.hexblades.util.Constants;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
@@ -43,6 +45,12 @@ public class HexSwordItem extends SwordItem implements IHexblade {
         super(Tiers.PatronWeaponTier.INSTANCE, attackDamage, attackSpeed, properties);
         baseAttack = attackDamage;
         baseSpeed = attackSpeed;
+    }
+
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        if (enchantment.category == EnchantmentType.BREAKABLE) return false;
+        return super.canApplyAtEnchantingTable(stack, enchantment);
     }
 
     @Override

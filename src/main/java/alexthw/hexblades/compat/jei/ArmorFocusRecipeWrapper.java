@@ -31,10 +31,8 @@ public class ArmorFocusRecipeWrapper implements ICustomCraftingCategoryExtension
         IFocus<?> focus = recipeLayout.getFocus();
         IGuiItemStackGroup group = recipeLayout.getItemStacks();
         group.set(ingredients);
-
         if (focus != null) {
             ItemStack focused = (ItemStack) focus.getValue();
-
             if (focus.getMode() == IFocus.Mode.INPUT && focused.getItem() instanceof ArmorFocus) {
                 ItemStack copy = focused.copy();
                 copy.setCount(1);
@@ -42,17 +40,17 @@ public class ArmorFocusRecipeWrapper implements ICustomCraftingCategoryExtension
                 group.set(0, getArmorsWithFocus(((ArmorFocus) focused.getItem()).getModFocus(), ingredients));
             } else if (focused.getItem() instanceof HexWArmor) {
                 group.set(1, new ItemStack(focused.getItem()));
-                group.set(0, getFocusOnPiece(focused.getItem()));
+                group.set(0, getFociOnPiece(focused.getItem()));
             }
         }
     }
 
-    private List<ItemStack> getFocusOnPiece(Item item) {
+    private List<ItemStack> getFociOnPiece(Item item) {
         if (item instanceof HexWArmor) {
             ImmutableList.Builder<ItemStack> builder = ImmutableList.builder();
             for (String type : ArmorFocus.foci) {
                 ItemStack stack = new ItemStack(item);
-                ((HexWArmor) item).setFocus(stack, type);
+                HexWArmor.setFocus(stack, type);
                 builder.add(stack);
             }
             return builder.build();
@@ -64,7 +62,7 @@ public class ArmorFocusRecipeWrapper implements ICustomCraftingCategoryExtension
         ImmutableList.Builder<ItemStack> builder = ImmutableList.builder();
         for (ItemStack itemStack : ingredients.getOutputs(VanillaTypes.ITEM).get(0)) {
             ItemStack toAdd = itemStack.copy();
-            ((HexWArmor) toAdd.getItem()).setFocus(toAdd, type);
+            HexWArmor.setFocus(toAdd, type);
             builder.add(toAdd);
         }
         return builder.build();

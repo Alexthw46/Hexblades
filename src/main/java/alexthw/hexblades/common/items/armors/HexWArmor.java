@@ -1,60 +1,49 @@
 package alexthw.hexblades.common.items.armors;
 
 import alexthw.hexblades.registers.HexItem;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.item.GeoArmorItem;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static alexthw.hexblades.util.Constants.ArmorCompat.focusTag;
+import static alexthw.hexblades.util.Constants.ArmorCompat.FOCUS_TAG;
 
-public class HexWArmor extends ArmorItem {
+public class HexWArmor extends GeoArmorItem implements IAnimatable {
 
     public HexWArmor(EquipmentSlotType slot, Properties builderIn) {
         super(HexWArmor.Material.INSTANCE, slot, builderIn);
     }
 
-    @Override
-    public void onCraftedBy(ItemStack pStack, World pLevel, PlayerEntity pPlayer) {
-        super.onCraftedBy(pStack, pLevel, pPlayer);
-    }
-
-    public String getFocus(ItemStack stack) {
-        String focus = stack.getOrCreateTag().getString(focusTag);
+    public static String getFocus(ItemStack stack) {
+        String focus = stack.getOrCreateTag().getString(FOCUS_TAG);
         return focus.equals("") ? "none" : focus;
     }
 
-    public void setFocus(ItemStack stack, String focus) {
+    public static void setFocus(ItemStack stack, String focus) {
+
+        if (!(stack.getItem() instanceof HexWArmor)) return;
 
         CompoundNBT tag = stack.getOrCreateTag();
-
-        tag.putString(focusTag, focus);
-
+        tag.putString(FOCUS_TAG, focus);
         stack.setTag(tag);
-
     }
 
     public static int getFocusId(ItemStack stack) {
-        String focus = stack.getOrCreateTag().getString(focusTag);
+        String focus = stack.getOrCreateTag().getString(FOCUS_TAG);
         switch (focus) {
             case ("eidolon"):
                 return 1;
@@ -75,28 +64,6 @@ public class HexWArmor extends ArmorItem {
         pTooltip.add(new StringTextComponent("Focus: " + getFocus(pStack)));
     }
 
-    HexWArmorModel model = null;
-
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public HexWArmorModel getArmorModel(LivingEntity entity, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
-        if (this.model == null) {
-            this.model = slot == EquipmentSlotType.LEGS ? new HexWArmorModel(slot, 0.5F) : new HexWArmorModel(slot, 1.0F);
-        }
-
-        float pticks = Minecraft.getInstance().getFrameTime();
-        float f = MathHelper.rotLerp(pticks, entity.yBodyRotO, entity.yBodyRot);
-        float f1 = MathHelper.rotLerp(pticks, entity.yHeadRotO, entity.yHeadRot);
-        float netHeadYaw = f1 - f;
-        float netHeadPitch = MathHelper.lerp(pticks, entity.xRotO, entity.xRot);
-        this.model.setupAnim(entity, entity.animationPosition, entity.animationSpeed, (float) entity.tickCount + pticks, netHeadYaw, netHeadPitch);
-        return this.model;
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        return "hexblades:textures/entity/silver_armor.png";
-    }
 
     public static class Material implements IArmorMaterial {
         public static final HexWArmor.Material INSTANCE = new HexWArmor.Material();
@@ -114,6 +81,8 @@ public class HexWArmor extends ArmorItem {
                     return 7;
                 case HEAD:
                     return 3;
+                case LEGS:
+                    return 5;
                 case FEET:
                     return 2;
                 default:
@@ -126,24 +95,38 @@ public class HexWArmor extends ArmorItem {
         }
 
         public SoundEvent getEquipSound() {
-            return ArmorMaterial.LEATHER.getEquipSound();
+            return ArmorMaterial.GOLD.getEquipSound();
         }
 
         public Ingredient getRepairIngredient() {
-            return Ingredient.of(new ItemStack(HexItem.HEXIUM_INGOT.get()));
+            return Ingredient.of(new ItemStack(HexItem.HEXED_INGOT.get()));
         }
 
         public String getName() {
-            return "hexblades:test_armor";
+            return "hexblades:hex_armor";
         }
 
         public float getToughness() {
-            return 0.0F;
+            return 2.0F;
         }
 
         public float getKnockbackResistance() {
-            return 0.0F;
+            return 0.1F;
         }
+
     }
+    //useless
+
+    private final AnimationFactory factory = new AnimationFactory(this);
+
+    @Override
+    public void registerControllers(AnimationData data) {
+    }
+
+    @Override
+    public AnimationFactory getFactory() {
+        return this.factory;
+    }
+
 }
 

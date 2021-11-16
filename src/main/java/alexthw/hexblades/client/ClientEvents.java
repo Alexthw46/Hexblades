@@ -1,11 +1,13 @@
 package alexthw.hexblades.client;
 
 import alexthw.hexblades.Hexblades;
+import alexthw.hexblades.client.render.entity.ArmorRenderer;
 import alexthw.hexblades.client.render.entity.FireElementalER;
 import alexthw.hexblades.client.render.tile.FirePedestalRenderer;
 import alexthw.hexblades.client.render.tile.SwordStandRenderer;
 import alexthw.hexblades.client.render.tile.Urn_Renderer;
 import alexthw.hexblades.common.items.IHexblade;
+import alexthw.hexblades.common.items.armors.HexWArmor;
 import alexthw.hexblades.network.MiningSwitchPacket;
 import alexthw.hexblades.network.WeaponAwakenPacket;
 import alexthw.hexblades.registers.HexEntityType;
@@ -27,8 +29,10 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.lwjgl.glfw.GLFW;
+import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
-import static alexthw.hexblades.datagen.HexItemModelProvider.rl;
+import static alexthw.hexblades.compat.ArmorCompatHandler.attachRenderers;
+import static alexthw.hexblades.util.HexUtils.prefix;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = Hexblades.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientEvents {
@@ -68,6 +72,8 @@ public class ClientEvents {
     @SubscribeEvent
     public static void initClientEvents(FMLClientSetupEvent event) {
 
+        GeoArmorRenderer.registerArmorRenderer(HexWArmor.class, new ArmorRenderer());
+        attachRenderers();
         RenderingRegistry.registerEntityRenderingHandler(HexEntityType.FULGOR_PROJECTILE.get(), EmptyRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(HexEntityType.MAGMA_PROJECTILE.get(), EmptyRenderer::new);
         //RenderingRegistry.registerEntityRenderingHandler(HexEntityType.TEST_ELEMENTAL.get(), (erm) -> new ElementalEntityRender(erm, new MinionElementalModel(), 0.6F));
@@ -98,11 +104,11 @@ public class ClientEvents {
     }
 
     public static void registerToggleAnimation(Item item) {
-        ItemModelsProperties.register(item, rl(Constants.NBT.AW_State), (stack, world, entity) -> ((IHexblade) stack.getItem()).getAwakened(stack) ? 1.0F : 0.0F);
+        ItemModelsProperties.register(item, prefix(Constants.NBT.AW_State), (stack, world, entity) -> ((IHexblade) stack.getItem()).getAwakened(stack) ? 1.0F : 0.0F);
     }
 
     public static void registerToggleDrillAnimation(Item item) {
-        ItemModelsProperties.register(item, rl(Constants.NBT.MiningSwitch), (stack, world, entity) -> (stack.getOrCreateTag().getBoolean(Constants.NBT.MiningSwitch) ? 1.0F : 0.0F));
+        ItemModelsProperties.register(item, prefix(Constants.NBT.MiningSwitch), (stack, world, entity) -> (stack.getOrCreateTag().getBoolean(Constants.NBT.MiningSwitch) ? 1.0F : 0.0F));
     }
 
 

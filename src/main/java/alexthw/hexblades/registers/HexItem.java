@@ -28,6 +28,8 @@ public class HexItem {
 
     //Items
     public static final RegistryObject<Item> HEXIUM_INGOT;
+    public static final RegistryObject<Item> HEXED_INGOT;
+
     public static final RegistryObject<Item> PATRON_SOUL;
     public static final RegistryObject<Item> PATRON_SOUL2;
     public static final RegistryObject<Item> ELEMENTAL_CORE;
@@ -46,7 +48,7 @@ public class HexItem {
     public static final RegistryObject<Item> HEX_ARMOR_B;
 
     //HWArmor Focus
-
+    public static final RegistryObject<Item> FOCUS_BASE;
     public static final RegistryObject<Item> FOCUS_WARLOCK;
     public static final RegistryObject<Item> FOCUS_BOTANIA;
     public static final RegistryObject<Item> FOCUS_NOUVEAU;
@@ -78,8 +80,10 @@ public class HexItem {
     public static final RegistryObject<Item> LIGHTNING_SSWORD_L;
 
     static {
+
         //Items
         HEXIUM_INGOT = ITEMS.register("hexium_ingot", () -> new Item(addTabProp()));
+        HEXED_INGOT = ITEMS.register("hexed_ingot", () -> new Item(addTabProp()));
         PATRON_SOUL = ITEMS.register("elemental_soul", () -> new ElementalSoul(addTabProp().fireResistant().rarity(Rarity.EPIC)));
         PATRON_SOUL2 = ITEMS.register("elemental_soul_2", () -> new Item(addTabProp().rarity(Rarity.EPIC)));
         DROWNED_HEART = ITEMS.register("drowned_heart", () -> new Item(addTabProp()));
@@ -98,7 +102,7 @@ public class HexItem {
         HEX_ARMOR_B = ITEMS.register("hex_boots", () -> ArmorCompatHandler.makeFeet(addTabProp()));
 
         //HexWArmor Focus
-
+        FOCUS_BASE = ITEMS.register("blank_focus", () -> new Item(addTabProp()));
         FOCUS_WARLOCK = ITEMS.register("eidolon_focus", () -> new ArmorFocus(addTabProp(), "eidolon"));
         FOCUS_BOTANIA = ITEMS.register("botania_focus", () -> new ArmorFocus(addTabProp(), "botania"));
         FOCUS_NOUVEAU = ITEMS.register("ars_nouveau_focus", () -> new ArmorFocus(addTabProp(), "ars nouveau"));
