@@ -1,8 +1,8 @@
 package alexthw.hexblades.compat.jei;
 
 import alexthw.hexblades.Hexblades;
-import alexthw.hexblades.temp.ArmorFocusRecipe;
-import alexthw.hexblades.temp.WarlockArmorDye;
+import alexthw.hexblades.recipes.ArmorFocusRecipe;
+import alexthw.hexblades.recipes.WarlockArmorDye;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.IVanillaCategoryExtensionRegistration;

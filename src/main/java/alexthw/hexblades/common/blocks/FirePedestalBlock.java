@@ -1,17 +1,18 @@
 package alexthw.hexblades.common.blocks;
 
+import elucent.eidolon.block.HorizontalBlockBase;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 
-public class FirePedestalBlock extends HZBlockShaped {
+public class FirePedestalBlock extends HorizontalBlockBase {
 
 
     public FirePedestalBlock(Properties properties) {
         super(properties);
-        runCalculation(makeShape());
+        this.setShape(makeShape());
     }
 
     @Override

@@ -72,19 +72,18 @@ public class HexWArmor extends GeoArmorItem implements IAnimatable {
         }
 
         public int getDurabilityForSlot(EquipmentSlotType slot) {
-            return HexWArmor.MAX_DAMAGE_ARRAY[slot.getIndex()] * 21;
+            return HexWArmor.MAX_DAMAGE_ARRAY[slot.getIndex()] * 30;
         }
 
         public int getDefenseForSlot(EquipmentSlotType slot) {
             switch (slot) {
                 case CHEST:
-                    return 7;
+                    return 8;
                 case HEAD:
+                case FEET:
                     return 3;
                 case LEGS:
-                    return 5;
-                case FEET:
-                    return 2;
+                    return 6;
                 default:
                     return 0;
             }
@@ -111,7 +110,7 @@ public class HexWArmor extends GeoArmorItem implements IAnimatable {
         }
 
         public float getKnockbackResistance() {
-            return 0.1F;
+            return 0.075F;
         }
 
     }

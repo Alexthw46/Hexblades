@@ -12,6 +12,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.monster.ZoglinEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.network.datasync.DataParameter;
@@ -33,6 +34,8 @@ import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.ParticleKeyFrameEvent;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
+
+import javax.annotation.Nullable;
 
 public class FireElementalEntity extends BaseElementalEntity implements IRangedAttackMob {
     private static final DataParameter<Integer> ANIMATIONSTATE = EntityDataManager.defineId(FireElementalEntity.class, DataSerializers.INT);
@@ -61,6 +64,12 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
         return SoundEvents.BLAZE_HURT;
     }
 
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return SoundEvents.FIRE_AMBIENT;
+    }
+
     @Override
     protected SoundEvent getDeathSound() {
         return SoundEvents.BLAZE_DEATH;
@@ -85,7 +94,7 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
         //target selectors
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
-        //this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, BlazeEntity.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, ZoglinEntity.class, true));
 
     }
 

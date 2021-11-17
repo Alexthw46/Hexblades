@@ -2,12 +2,13 @@ package alexthw.hexblades.datagen;
 
 import alexthw.hexblades.registers.HexBlock;
 import alexthw.hexblades.registers.HexItem;
-import alexthw.hexblades.temp.ArmorFocusRecipe;
-import alexthw.hexblades.temp.WarlockArmorDye;
+import alexthw.hexblades.recipes.ArmorFocusRecipe;
+import alexthw.hexblades.recipes.WarlockArmorDye;
 import elucent.eidolon.Registry;
 import net.minecraft.data.*;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.SpecialRecipeSerializer;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.function.Consumer;
@@ -24,11 +25,11 @@ public class HexRecipeProvider extends RecipeProvider {
     @Override
     protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
 
-        ShapedRecipeBuilder.shaped(HexItem.DULL_BROADSWORD.get()).define('#', Items.STICK).define('X', HexItem.HEXIUM_INGOT.get()).pattern("X").pattern("X").pattern("#").unlockedBy("has_spirited_metal", has(HexItem.HEXIUM_INGOT.get())).save(consumer);
-        ShapedRecipeBuilder.shaped(HexItem.DULL_SABER.get()).define('#', Items.STICK).define('X', HexItem.HEXIUM_INGOT.get()).pattern(" X ").pattern(" X ").pattern("X# ").unlockedBy("has_spirited_metal", has(HexItem.HEXIUM_INGOT.get())).save(consumer);
-        ShapedRecipeBuilder.shaped(HexItem.DULL_KATANA.get()).define('#', Items.STICK).define('X', HexItem.HEXIUM_INGOT.get()).pattern("  X").pattern(" X ").pattern("#  ").unlockedBy("has_spirited_metal", has(HexItem.HEXIUM_INGOT.get())).save(consumer);
-        ShapedRecipeBuilder.shaped(HexItem.DULL_HAMMER.get()).define('#', Items.STICK).define('X', HexItem.HEXIUM_INGOT.get()).pattern("XXX").pattern("X#X").pattern(" # ").unlockedBy("has_spirited_metal", has(HexItem.HEXIUM_INGOT.get())).save(consumer);
-        ShapedRecipeBuilder.shaped(HexItem.DULL_DAGGER.get()).define('#', Items.STICK).define('X', HexItem.HEXIUM_INGOT.get()).pattern("  ").pattern(" X").pattern("# ").unlockedBy("has_spirited_metal", has(HexItem.HEXIUM_INGOT.get())).save(consumer);
+        ShapedRecipeBuilder.shaped(HexItem.DULL_BROADSWORD.get()).define('#', Items.STICK).define('X', HexItem.HEXIUM_INGOT.get()).pattern("X").pattern("X").pattern("#").unlockedBy("has_spirited_alloy", has(HexItem.HEXIUM_INGOT.get())).save(consumer);
+        ShapedRecipeBuilder.shaped(HexItem.DULL_SABER.get()).define('#', Items.STICK).define('X', HexItem.HEXIUM_INGOT.get()).pattern(" X ").pattern(" X ").pattern("X# ").unlockedBy("has_spirited_alloy", has(HexItem.HEXIUM_INGOT.get())).save(consumer);
+        ShapedRecipeBuilder.shaped(HexItem.DULL_KATANA.get()).define('#', Items.STICK).define('X', HexItem.HEXIUM_INGOT.get()).pattern("  X").pattern(" X ").pattern("#  ").unlockedBy("has_spirited_alloy", has(HexItem.HEXIUM_INGOT.get())).save(consumer);
+        ShapedRecipeBuilder.shaped(HexItem.DULL_HAMMER.get()).define('#', Items.STICK).define('X', HexItem.HEXIUM_INGOT.get()).pattern("XXX").pattern("X#X").pattern(" # ").unlockedBy("has_spirited_alloy", has(HexItem.HEXIUM_INGOT.get())).save(consumer);
+        ShapedRecipeBuilder.shaped(HexItem.DULL_DAGGER.get()).define('#', Items.STICK).define('X', HexItem.HEXIUM_INGOT.get()).pattern("  ").pattern(" X").pattern("# ").unlockedBy("has_spirited_alloy", has(HexItem.HEXIUM_INGOT.get())).save(consumer);
 
         ShapedRecipeBuilder.shaped(HexBlock.MAGMA_BRICKS.get().asItem(), 4).define('B', Items.NETHER_BRICK).define('M', Items.MAGMA_BLOCK).pattern("BBB").pattern("BMB").pattern("BBB").unlockedBy("has nether bricks", has(Items.NETHER_BRICK)).save(consumer);
 
@@ -47,10 +48,10 @@ public class HexRecipeProvider extends RecipeProvider {
         specialRecipe(consumer, WarlockArmorDye.SERIALIZER);
 
         //hexwarrior recipes
-        ShapedRecipeBuilder.shaped(HexItem.HEX_ARMOR_H.get()).define('H', HexItem.HEXED_INGOT.get()).define('F', HexItem.FOCUS_BASE.get()).pattern("HFH").pattern("H H").unlockedBy("has_spirited_metal", has(HexItem.HEXIUM_INGOT.get())).save(consumer);
-        ShapedRecipeBuilder.shaped(HexItem.HEX_ARMOR_C.get()).define('H', HexItem.HEXED_INGOT.get()).define('F', HexItem.FOCUS_BASE.get()).pattern("H H").pattern("HFH").pattern("HHH").unlockedBy("has_spirited_metal", has(HexItem.HEXIUM_INGOT.get())).save(consumer);
-        ShapedRecipeBuilder.shaped(HexItem.HEX_ARMOR_L.get()).define('H', HexItem.HEXED_INGOT.get()).define('L', Registry.LEAD_INGOT.get()).define('F', HexItem.FOCUS_BASE.get()).pattern("HFH").pattern("H H").pattern("L L").unlockedBy("has_spirited_metal", has(HexItem.HEXIUM_INGOT.get())).save(consumer);
-        ShapedRecipeBuilder.shaped(HexItem.HEX_ARMOR_B.get()).define('H', HexItem.HEXED_INGOT.get()).define('P', Registry.PEWTER_INGOT.get()).pattern("P P").pattern("H H").unlockedBy("has_spirited_metal", has(HexItem.HEXIUM_INGOT.get())).save(consumer);
+        ShapedRecipeBuilder.shaped(HexItem.HEX_ARMOR_H.get()).define('H', HexItem.HEXED_INGOT.get()).define('F', HexItem.FOCUS_BASE.get()).pattern("HFH").pattern("H H").unlockedBy("has_spirited_metal", has(HexItem.HEXED_INGOT.get())).save(consumer);
+        ShapedRecipeBuilder.shaped(HexItem.HEX_ARMOR_C.get()).define('H', HexItem.HEXED_INGOT.get()).define('F', HexItem.FOCUS_BASE.get()).pattern("H H").pattern("HFH").pattern("HHH").unlockedBy("has_spirited_metal", has(HexItem.HEXED_INGOT.get())).save(consumer);
+        ShapedRecipeBuilder.shaped(HexItem.HEX_ARMOR_L.get()).define('H', HexItem.HEXED_INGOT.get()).define('L', ItemTags.createOptional(new ResourceLocation("forge","ingots/lead")) ).define('F', HexItem.FOCUS_BASE.get()).pattern("HFH").pattern("H H").pattern("L L").unlockedBy("has_spirited_metal", has(HexItem.HEXED_INGOT.get())).save(consumer);
+        ShapedRecipeBuilder.shaped(HexItem.HEX_ARMOR_B.get()).define('H', HexItem.HEXED_INGOT.get()).define('P', Registry.PEWTER_INGOT.get()).pattern("P P").pattern("H H").unlockedBy("has_spirited_metal", has(HexItem.HEXED_INGOT.get())).save(consumer);
 
     }
 

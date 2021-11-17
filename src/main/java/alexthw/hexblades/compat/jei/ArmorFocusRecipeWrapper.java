@@ -3,7 +3,7 @@ package alexthw.hexblades.compat.jei;
 import alexthw.hexblades.common.items.ArmorFocus;
 import alexthw.hexblades.common.items.armors.HexWArmor;
 import alexthw.hexblades.registers.HexItem;
-import alexthw.hexblades.temp.ArmorFocusRecipe;
+import alexthw.hexblades.recipes.ArmorFocusRecipe;
 import com.google.common.collect.ImmutableList;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;

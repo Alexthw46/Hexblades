@@ -2,7 +2,7 @@ package alexthw.hexblades.compat.jei;
 
 import alexthw.hexblades.common.items.armors.DyebleWarlockArmor;
 import alexthw.hexblades.registers.HexItem;
-import alexthw.hexblades.temp.WarlockArmorDye;
+import alexthw.hexblades.recipes.WarlockArmorDye;
 import com.google.common.collect.ImmutableList;
 import elucent.eidolon.Registry;
 import elucent.eidolon.item.WarlockRobesItem;

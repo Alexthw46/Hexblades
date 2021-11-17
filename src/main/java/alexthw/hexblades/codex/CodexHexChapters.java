@@ -1,6 +1,7 @@
 package alexthw.hexblades.codex;
 
 import alexthw.hexblades.Hexblades;
+import alexthw.hexblades.compat.ArmorCompatHandler;
 import alexthw.hexblades.deity.HexFacts;
 import alexthw.hexblades.registers.HexBlock;
 import alexthw.hexblades.registers.HexItem;
@@ -17,6 +18,8 @@ import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
@@ -48,11 +51,11 @@ public class CodexHexChapters {
 
     static String prefix = Hexblades.MODID + ".codex.";
 
-    static String makePageKey(String path) {
+    public static String makePageKey(String path) {
         return prefix + "page." + path;
     }
 
-    static String makeChapterKey(String path) {
+    public static String makeChapterKey(String path) {
         return prefix + "chapter." + path;
     }
 
@@ -98,7 +101,7 @@ public class CodexHexChapters {
                 COMPAT = new Chapter(makeChapterKey("compats"), new TitlePage(makePageKey("compats")));
             }
 
-            ARMORS = getArmorsPage();
+            ARMORS = new Chapter(makeChapterKey("armors"), margeArmorPages(getArmorPages(), ArmorCompatHandler.makeCodex()));
         }
 
         //Hex Theurgy - page 2
@@ -207,7 +210,13 @@ public class CodexHexChapters {
                     new CraftingPage(new ItemStack(HexItem.DULL_DAGGER.get()),
                             ItemStack.EMPTY, new ItemStack(HexItem.HEXIUM_INGOT.get()), ItemStack.EMPTY,
                             new ItemStack(Items.STICK), ItemStack.EMPTY, ItemStack.EMPTY,
-                            ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY)
+                            ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY),
+                    //hexed ingot
+                    new TitlePage(makePageKey("hexed_metal")),
+                    nukeRecipe(COMMON.NUKE_CRUCIBLE.get(), new CruciblePage(new ItemStack(HexItem.HEXED_INGOT.get(),1),
+                            new CruciblePage.CrucibleStep(0, new ItemStack(HexItem.HEXIUM_INGOT.get()), new ItemStack(Registry.ARCANE_GOLD_INGOT.get())), new CruciblePage.CrucibleStep(1, new ItemStack(Registry.DEATH_ESSENCE.get())
+                            ))
+                    )
             );
         }
 
@@ -289,6 +298,30 @@ public class CodexHexChapters {
         makeIndexes();
     }
 
+    private static Page[] margeArmorPages(Page[] armorPages, Page[] focusPages) {
+
+        List<Page> list = new ArrayList<>();
+
+
+        TitlePage blank = new TitlePage(makePageKey("blank_focus"));
+        WorktablePage blankCraft= new WorktablePage(new ItemStack(HexItem.FOCUS_BASE.get(),1),
+                ItemStack.EMPTY, new ItemStack(HexItem.HEXIUM_INGOT.get()), ItemStack.EMPTY,
+                new ItemStack(HexItem.HEXIUM_INGOT.get()), new ItemStack(Registry.LESSER_SOUL_GEM.get()), new ItemStack(HexItem.HEXIUM_INGOT.get()),
+                ItemStack.EMPTY, new ItemStack(HexItem.HEXIUM_INGOT.get()), ItemStack.EMPTY,
+
+                new ItemStack(Registry.UNHOLY_SYMBOL.get()),
+                new ItemStack(Registry.GOLD_INLAY.get()),
+                new ItemStack(Registry.WICKED_WEAVE.get()),
+                new ItemStack(Registry.GOLD_INLAY.get())
+        );
+
+        Collections.addAll(list, blank, nukeRecipe(COMMON.NUKE_WORKBENCH.get(),blankCraft));
+        Collections.addAll(list, armorPages);
+        Collections.addAll(list, focusPages);
+
+        return list.toArray(new Page[0]);
+    }
+
     static IndexPage.IndexEntry getCompatsPage() {
         if (CompatUtil.isMalumLoaded()) {
             return new IndexPage.IndexEntry(COMPAT, new ItemStack(MalumItems.BLUE_ETHER.get()));
@@ -297,37 +330,35 @@ public class CodexHexChapters {
         }
     }
 
-    static Chapter getArmorsPage() {
-        Chapter Armors;
+    static Page[] getArmorPages() {
         CraftingPage helmCraft = new CraftingPage(new ItemStack(HexItem.HEX_ARMOR_H.get(), 1),
-                new ItemStack(Registry.ARCANE_GOLD_INGOT.get()), new ItemStack(Registry.LESSER_SOUL_GEM.get()), new ItemStack(Registry.ARCANE_GOLD_INGOT.get()),
-                new ItemStack(HexItem.HEXIUM_INGOT.get()), ItemStack.EMPTY, new ItemStack(HexItem.HEXIUM_INGOT.get())
+                new ItemStack(HexItem.HEXED_INGOT.get()), new ItemStack(HexItem.FOCUS_BASE.get()), new ItemStack(HexItem.HEXED_INGOT.get()),
+                new ItemStack(HexItem.HEXED_INGOT.get()), ItemStack.EMPTY, new ItemStack(HexItem.HEXED_INGOT.get())
         );
         CraftingPage chestCraft = new CraftingPage(new ItemStack(HexItem.HEX_ARMOR_C.get(), 1),
-                new ItemStack(Registry.ARCANE_GOLD_INGOT.get()), ItemStack.EMPTY, new ItemStack(Registry.ARCANE_GOLD_INGOT.get()),
-                new ItemStack(HexItem.HEXIUM_INGOT.get()), new ItemStack(Registry.SHADOW_GEM.get()), new ItemStack(HexItem.HEXIUM_INGOT.get()),
-                new ItemStack(HexItem.HEXIUM_INGOT.get()), new ItemStack(HexItem.HEXIUM_INGOT.get()), new ItemStack(HexItem.HEXIUM_INGOT.get())
+                new ItemStack(HexItem.HEXED_INGOT.get()), ItemStack.EMPTY, new ItemStack(HexItem.HEXED_INGOT.get()),
+                new ItemStack(HexItem.HEXED_INGOT.get()), new ItemStack(HexItem.FOCUS_BASE.get()), new ItemStack(HexItem.HEXED_INGOT.get()),
+                new ItemStack(HexItem.HEXED_INGOT.get()), new ItemStack(HexItem.HEXED_INGOT.get()), new ItemStack(HexItem.HEXED_INGOT.get())
         );
         CraftingPage legsCraft = new CraftingPage(new ItemStack(HexItem.HEX_ARMOR_L.get(), 1),
-                new ItemStack(Registry.ARCANE_GOLD_INGOT.get()), new ItemStack(HexItem.HEXIUM_INGOT.get()), new ItemStack(Registry.ARCANE_GOLD_INGOT.get()),
-                new ItemStack(HexItem.HEXIUM_INGOT.get()), ItemStack.EMPTY, new ItemStack(HexItem.HEXIUM_INGOT.get()),
-                new ItemStack(HexItem.HEXIUM_INGOT.get()), ItemStack.EMPTY, new ItemStack(HexItem.HEXIUM_INGOT.get())
+                new ItemStack(HexItem.HEXED_INGOT.get()), new ItemStack(HexItem.FOCUS_BASE.get()), new ItemStack(HexItem.HEXED_INGOT.get()),
+                new ItemStack(HexItem.HEXED_INGOT.get()), ItemStack.EMPTY, new ItemStack(HexItem.HEXED_INGOT.get()),
+                new ItemStack(Registry.LEAD_INGOT.get()), ItemStack.EMPTY, new ItemStack(Registry.LEAD_INGOT.get())
         );
         CraftingPage bootsCraft = new CraftingPage(new ItemStack(HexItem.HEX_ARMOR_B.get(), 1),
                 new ItemStack(Registry.PEWTER_INGOT.get()), ItemStack.EMPTY, new ItemStack(Registry.PEWTER_INGOT.get()),
-                new ItemStack(HexItem.HEXIUM_INGOT.get()), ItemStack.EMPTY, new ItemStack(HexItem.HEXIUM_INGOT.get())
+                new ItemStack(HexItem.HEXED_INGOT.get()), ItemStack.EMPTY, new ItemStack(HexItem.HEXED_INGOT.get())
         );
-        Armors = new Chapter(makeChapterKey("armors"),
-                new TitlePage(makePageKey("circlet")),
+        return new Page[]{
+                new TextPage(makePageKey("circlet")),
                 helmCraft,
-                new TitlePage(makePageKey("chestplate")),
+                new TextPage(makePageKey("chestplate")),
                 chestCraft,
-                new TitlePage(makePageKey("leggings")),
+                new TextPage(makePageKey("leggings")),
                 legsCraft,
-                new TitlePage(makePageKey("boots")),
+                new TextPage(makePageKey("boots")),
                 bootsCraft
-        );
-        return Armors;
+        };
     }
 
     static void makeIndexes() {
@@ -371,7 +402,7 @@ public class CodexHexChapters {
         }
     }
 
-    static Page nukeRecipe(boolean flag, Page page) {
+    public static Page nukeRecipe(boolean flag, Page page) {
         return flag ? disabled : page;
     }
 

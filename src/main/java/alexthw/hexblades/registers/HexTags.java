@@ -22,7 +22,7 @@ public class HexTags {
         public static final ITag.INamedTag<Item> HEXIUM_INGOT = forge("ingot/hexium");
         public static final ITag.INamedTag<Item> HEX_BLADE = mod("hexblade");
 
-        private static ITag.INamedTag<Item> forge(String path) {
+        public static ITag.INamedTag<Item> forge(String path) {
             return ItemTags.bind(new ResourceLocation("forge", path).toString());
         }
 

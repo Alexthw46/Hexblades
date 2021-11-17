@@ -1,4 +1,4 @@
-package alexthw.hexblades.temp;
+package alexthw.hexblades.recipes;
 
 import alexthw.hexblades.common.items.armors.DyebleWarlockArmor;
 import alexthw.hexblades.registers.HexItem;

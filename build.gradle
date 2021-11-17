@@ -141,22 +141,22 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.0'
 
     //compats
-    compileOnly fg.deobf('mezz.jei:jei-1.16.5:7.6.4.90:api')
-    compileOnly fg.deobf("vazkii.botania:Botania:1.16.5-418")
+    compileOnly fg.deobf('mezz.jei:jei-1.16.5:7.7.1.136:api')
+    compileOnly fg.deobf("vazkii.botania:Botania:1.16.5-420")
 
     compileOnly fg.deobf("curse.maven:malum-484064:3374475") //0.3
     compileOnly fg.deobf("curse.maven:druidcraft-340991:3507029")//0.4.54
-    compileOnly fg.deobf("curse.maven:occultism-361026:3522201") //1.19.3
+    compileOnly fg.deobf("curse.maven:occultism-361026:3528496") //1.20.0
     compileOnly fg.deobf("curse.maven:ars_nouveau-401955:3527164")//1.24.0
 
     //dependencies
     implementation fg.deobf("elucent:eidolon:0.2.7")
-    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.16.5:3.0.49')
-    implementation fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.1")
+    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.16.5:3.0.55')
+    implementation fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.3")
 
     //testers
-    runtimeOnly fg.deobf('mezz.jei:jei-1.16.5:7.6.4.90')
-    runtimeOnly fg.deobf("vazkii.botania:Botania:1.16.5-418")
+    runtimeOnly fg.deobf('mezz.jei:jei-1.16.5:7.7.1.136')
+    runtimeOnly fg.deobf("vazkii.botania:Botania:1.16.5-420")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-53.1")
     runtimeOnly fg.deobf("curse.maven:druidcraft-340991:3507029")
     runtimeOnly fg.deobf("curse.maven:occultism-361026:3522201")

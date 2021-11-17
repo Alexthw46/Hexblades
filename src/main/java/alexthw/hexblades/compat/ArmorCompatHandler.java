@@ -1,9 +1,23 @@
 package alexthw.hexblades.compat;
 
 import alexthw.hexblades.common.items.armors.HexWArmor;
+import alexthw.hexblades.registers.HexItem;
 import alexthw.hexblades.util.CompatUtil;
+import elucent.eidolon.Registry;
+import elucent.eidolon.codex.Page;
+import elucent.eidolon.codex.TitlePage;
+import elucent.eidolon.codex.WorktablePage;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import static alexthw.hexblades.ConfigHandler.COMMON;
+import static alexthw.hexblades.codex.CodexHexChapters.makePageKey;
+import static alexthw.hexblades.codex.CodexHexChapters.nukeRecipe;
 
 public class ArmorCompatHandler {
 
@@ -58,5 +72,34 @@ public class ArmorCompatHandler {
         } else if (CompatUtil.isArsNovLoaded()) {
             ArsNouveauCompat.renderer();
         }
+    }
+
+    public static Page[] makeCodex() {
+
+        List<Page> pages = new ArrayList<>();
+
+        TitlePage warlock = new TitlePage(makePageKey("warlock_focus"));
+        WorktablePage warlockCraft = new WorktablePage(new ItemStack(HexItem.FOCUS_WARLOCK.get(),1),
+                ItemStack.EMPTY, new ItemStack(Registry.WICKED_WEAVE.get()), ItemStack.EMPTY,
+                new ItemStack(Registry.WICKED_WEAVE.get()), new ItemStack(HexItem.FOCUS_BASE.get()), new ItemStack(Registry.WICKED_WEAVE.get()),
+                ItemStack.EMPTY, new ItemStack(Registry.WICKED_WEAVE.get()), ItemStack.EMPTY,
+
+                new ItemStack(Registry.ARCANE_GOLD_NUGGET.get()),
+                new ItemStack(Registry.ARCANE_GOLD_NUGGET.get()),
+                new ItemStack(Registry.ARCANE_GOLD_NUGGET.get()),
+                new ItemStack(Registry.ARCANE_GOLD_NUGGET.get())
+        );
+
+        Collections.addAll(pages, warlock, nukeRecipe(COMMON.NUKE_WORKBENCH.get(),warlockCraft));
+
+        if (CompatUtil.isBotaniaLoaded()) {
+            Collections.addAll(pages,BotaniaCompat.makeCodex());
+        }
+        if (CompatUtil.isArsNovLoaded()) {
+            Collections.addAll(pages,ArsNouveauCompat.makeCodex());
+        }
+
+
+        return pages.toArray(new Page[0]);
     }
 }

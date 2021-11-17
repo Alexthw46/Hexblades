@@ -1,18 +1,16 @@
 package alexthw.hexblades.common.blocks;
 
+import elucent.eidolon.block.HorizontalBlockBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.IBooleanFunction;
-import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
 
 import java.util.stream.Stream;
 
-public class SwordStandBlock extends HZBlockShaped {
+public class SwordStandBlock extends HorizontalBlockBase {
 
     public SwordStandBlock(Properties properties) {
         super(properties);
@@ -23,14 +21,7 @@ public class SwordStandBlock extends HZBlockShaped {
                 Block.box(2, 1, 2, 13, 2, 3),
                 Block.box(3, 1, 13, 14, 2, 14)
         ).reduce((v1, v2) -> VoxelShapes.join(v1, v2, IBooleanFunction.OR)).get();
-        runCalculation(VSHAPE);
-    }
-
-    //Voxel Shaping
-    @Override
-    public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
-        this.setShape(SHAPES.get(state.getValue(HORIZONTAL_FACING)));
-        return this.getInteractionShape(state, world, pos);
+        setShape(VSHAPE);
     }
 
     @Override

@@ -195,11 +195,16 @@ public class Events {
                 event.setAmount(event.getAmount() * multiplier);
             }
 
-        } else if (source == DamageSource.FALL || source == DamageSource.ANVIL || source == DamageSource.HOT_FLOOR) {
+        } else if (source == DamageSource.FALL || source == DamageSource.ANVIL || source == DamageSource.HOT_FLOOR || source.isExplosion()) {
             ItemStack stack = livingEntity.getItemBySlot(EquipmentSlotType.LEGS);
             if (stack.getItem() instanceof HexWArmor) {
                 float multiplier = HexWArmor.getFocusId(stack) == 1 ? 0.5F : 0.75F;
                 event.setAmount(event.getAmount() * multiplier);
+            }
+        }else if (source == DamageSource.SWEET_BERRY_BUSH){
+            ItemStack stack = livingEntity.getItemBySlot(EquipmentSlotType.FEET);
+            if (stack.getItem() instanceof HexWArmor && event.isCancelable()) {
+                event.setCanceled(true);
             }
         }
 

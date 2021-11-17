@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_spirited_metal": {
+    "has_spirited_alloy": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -25,7 +25,7 @@
   },
   "requirements": [
     [
-      "has_spirited_metal",
+      "has_spirited_alloy",
       "has_the_recipe"
     ]
   ]

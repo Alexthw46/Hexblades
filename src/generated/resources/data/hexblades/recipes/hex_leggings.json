@@ -10,10 +10,10 @@
       "item": "hexblades:hexed_ingot"
     },
     "L": {
-      "item": "eidolon:lead_ingot"
+      "tag": "forge:ingots/lead"
     },
     "F": {
-      "item": "hexblades:eidolon_focus"
+      "item": "hexblades:blank_focus"
     }
   },
   "result": {

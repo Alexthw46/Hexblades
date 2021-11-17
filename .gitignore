@@ -6,7 +6,6 @@ externalmods
 .metadata
 .classpath
 .project
-.bbmodel
 
 # idea
 out
@@ -25,3 +24,4 @@ run
 
 # Files from Forge MDK
 forge*changelog.txt
+*.[bbmodel]
