@@ -32,10 +32,12 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import software.bernie.geckolib3.GeckoLib;
 
+import javax.annotation.Nonnull;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,6 +49,7 @@ public class Hexblades {
     public static final String MODID = "hexblades";
     public static final CreativeModeTab TAB = new CreativeModeTab(MODID) {
         @Override
+        @Nonnull
         public ItemStack makeIcon() {
             return new ItemStack(HexItem.PATRON_SOUL2.get());
         }
@@ -71,8 +74,8 @@ public class Hexblades {
         forgeBus.register(new Events());
 
         //Structures stuff
-        //forgeBus.addListener(EventPriority.NORMAL, this::addDimensionalSpacing);
-        //forgeBus.addListener(EventPriority.HIGH, this::biomeModification);
+        forgeBus.addListener(EventPriority.NORMAL, this::addDimensionalSpacing);
+        forgeBus.addListener(EventPriority.HIGH, this::biomeModification);
 
         //Client-side only
         DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> {
@@ -104,7 +107,7 @@ public class Hexblades {
      * registrykey. Then that can be fed into the dictionary to get the biome's types.
      **/
 
-    /*
+
     public void biomeModification(final BiomeLoadingEvent event) {
 
         if (WorldGenUtil.haveCategories(event, Biome.BiomeCategory.NETHER)) {
@@ -113,16 +116,12 @@ public class Hexblades {
     }
 
     private static Method GETCODEC_METHOD;
-    */
 
-    /*
+
     public void addDimensionalSpacing(final WorldEvent.Load event) {
 
-        if (event.getWorld() instanceof ServerLevel) {
-            ServerLevel serverWorld = (ServerLevel) event.getWorld();
-
-
-             //Skip Terraforged's chunk generator as they are a special case of a mod locking down their chunkgenerator.
+        if (event.getWorld() instanceof ServerLevel serverWorld) {
+            //Skip Terraforged's chunk generator as they are a special case of a mod locking down their chunkgenerator.
              //They will handle your structure spacing for your if you add to WorldGenRegistries.NOISE_GENERATOR_SETTINGS in your structure's registration.
              //If you are using mixins, you can call the codec method with an invoker mixin instead of using reflection.
 
@@ -150,7 +149,7 @@ public class Hexblades {
             serverWorld.getChunkSource().generator.getSettings().structureConfig = tempMap;
         }
     }
-    */
+
 
     private void registerPlacements() {
         //EntitySpawnPlacementRegistry.register(HexEntityType.TEST_ELEMENTAL.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, net.minecraft.world.gen.Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::checkMonsterSpawnRules);

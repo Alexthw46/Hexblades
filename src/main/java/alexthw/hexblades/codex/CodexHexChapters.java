@@ -166,12 +166,12 @@ public class CodexHexChapters {
                     //evolve dual
                     new TitlePage(makePageKey("evolve_duals")),
                     nukeRecipe(COMMON.NUKE_RITUALS.get(), new RitualPage(HexRituals.EVOLVE_DAGGERS, new ItemStack(HexItem.PATRON_SOUL.get()),
-                            new RitualPage.RitualIngredient(new ItemStack(Items.PHANTOM_MEMBRANE), false),
-                            new RitualPage.RitualIngredient(new ItemStack(Items.REDSTONE), false),
+                            new RitualPage.RitualIngredient(new ItemStack(Registry.ARCANE_GOLD_INGOT.get()), false),
+                            new RitualPage.RitualIngredient(new ItemStack(Items.LIGHTNING_ROD), false),
                             new RitualPage.RitualIngredient(new ItemStack(HexItem.LIGHTNING_DAGGER_L.get()), true),
                             new RitualPage.RitualIngredient(new ItemStack(HexItem.LIGHTNING_DAGGER_R.get()), true),
-                            new RitualPage.RitualIngredient(new ItemStack(Items.REDSTONE), false),
-                            new RitualPage.RitualIngredient(new ItemStack(Items.PHANTOM_MEMBRANE), false)
+                            new RitualPage.RitualIngredient(new ItemStack(Items.PHANTOM_MEMBRANE), false),
+                            new RitualPage.RitualIngredient(new ItemStack(Registry.ARCANE_GOLD_INGOT.get()), false)
                     ))
             );
         }
@@ -181,7 +181,7 @@ public class CodexHexChapters {
             HEX_ALLOY = new Chapter(makeChapterKey("hex_metal"), new TitlePage(makePageKey("hex_metal.0")),
                     //ingot
                     nukeRecipe(COMMON.NUKE_CRUCIBLE.get(), new CruciblePage(new ItemStack(HexItem.HEXIUM_INGOT.get(), 2),
-                            new CruciblePage.CrucibleStep(new ItemStack(Items.GOLD_INGOT), new ItemStack(Registry.LEAD_INGOT.get())),
+                            new CruciblePage.CrucibleStep(new ItemStack(Registry.SILVER_INGOT.get()), new ItemStack(Registry.LEAD_INGOT.get())),
                             new CruciblePage.CrucibleStep(1, new ItemStack(Registry.ENCHANTED_ASH.get()), new ItemStack(Registry.SOUL_SHARD.get())
                             ))
                     ),
@@ -274,11 +274,11 @@ public class CodexHexChapters {
             THUNDER_DUALS = new Chapter(makeChapterKey("thunder_duals"),
                     new TitlePage(makePageKey("thunder_duals")),
                     nukeRecipe(COMMON.NUKE_RITUALS.get(), new RitualPage(HexRituals.AWAKE_DAGGER, new ItemStack(HexItem.DULL_DAGGER.get()),
-                            new RitualPage.RitualIngredient(new ItemStack(Registry.ARCANE_GOLD_INGOT.get()), false),
-                            new RitualPage.RitualIngredient(new ItemStack(Registry.ARCANE_GOLD_INGOT.get()), false),
+                            new RitualPage.RitualIngredient(new ItemStack(Items.COPPER_INGOT), false),
+                            new RitualPage.RitualIngredient(new ItemStack(Items.COPPER_INGOT), false),
                             new RitualPage.RitualIngredient(new ItemStack(HexItem.ELEMENTAL_CORE.get()), false),
-                            new RitualPage.RitualIngredient(new ItemStack(Registry.PEWTER_INGOT.get()), false),
-                            new RitualPage.RitualIngredient(new ItemStack(Registry.PEWTER_INGOT.get()), false)
+                            new RitualPage.RitualIngredient(new ItemStack(Registry.SILVER_INGOT.get()), false),
+                            new RitualPage.RitualIngredient(new ItemStack(Registry.SILVER_INGOT.get()), false)
                     )),
                     new TextPage(makePageKey("thunder_duals.powers"))
             );

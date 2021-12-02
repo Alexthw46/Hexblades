@@ -1,7 +1,6 @@
-package alexthw.hexblades.compat.jei;
+package alexthw.hexblades.recipes;
 
 import alexthw.hexblades.Hexblades;
-import alexthw.hexblades.recipes.ArmorFocusRecipe;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.IVanillaCategoryExtensionRegistration;

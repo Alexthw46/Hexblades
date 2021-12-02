@@ -1,0 +1,32 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "ars_nouveau"
+    }
+  ],
+  "type": "eidolon:worktable",
+  "pattern": [
+    " b ",
+    "bfb",
+    " b "
+  ],
+  "reagents": "meme",
+  "key": {
+    "m": {
+      "item": "ars_nouveau:mana_gem"
+    },
+    "f": {
+      "item": "hexblades:blank_focus"
+    },
+    "b": {
+      "item": "ars_nouveau:blaze_fiber"
+    },
+    "e": {
+      "item": "eidolon:end_calx"
+    }
+  },
+  "result": {
+    "item": "hexblades:ars_nouveau_focus"
+  }
+}

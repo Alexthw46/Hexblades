@@ -43,7 +43,7 @@ public class BaseElementalEntity extends Monster implements IAnimatable {
         if (this.tickCount % 20 == 0) {
             this.heal(1.0F);
         }
-        this.bossEvent.setPercent(this.getHealth() / this.getMaxHealth());
+        this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
     }
 
     public int getExperienceReward(Player player) {

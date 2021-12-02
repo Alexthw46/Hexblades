@@ -136,7 +136,7 @@ public class Events {
         }
     }
 
-    /*
+
     @SubscribeEvent
     public void onKill(LivingDeathEvent event) {
         if (event.getSource().getEntity() instanceof Player player && event.getEntity() instanceof Monster) {
@@ -155,7 +155,7 @@ public class Events {
             }
         }
     }
-    */
+
     @SubscribeEvent
     public void onApplyPotion(PotionEvent.PotionApplicableEvent event) {
         if (event.getPotionEffect().getEffect() == MobEffects.MOVEMENT_SLOWDOWN && event.getEntityLiving().getItemBySlot(EquipmentSlot.FEET).getItem() instanceof HexWArmor) {

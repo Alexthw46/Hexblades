@@ -1,4 +1,4 @@
-package alexthw.hexblades.compat.jei;
+package alexthw.hexblades.recipes;
 
 import alexthw.hexblades.common.items.ArmorFocus;
 import alexthw.hexblades.common.items.armors.HexWArmor;
@@ -8,14 +8,12 @@ import com.google.common.collect.ImmutableList;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
-import mezz.jei.api.ingredients.IIngredientType;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IFocus;
 import mezz.jei.api.recipe.category.extensions.vanilla.crafting.ICustomCraftingCategoryExtension;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.crafting.Ingredient;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -30,7 +28,7 @@ public class ArmorFocusRecipeWrapper implements ICustomCraftingCategoryExtension
 
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, IIngredients ingredients) {
-        IFocus<?> focus = recipeLayout.getFocus();
+        IFocus<?> focus = recipeLayout.getFocus(VanillaTypes.ITEM);
         IGuiItemStackGroup group = recipeLayout.getItemStacks();
         group.set(ingredients);
         if (focus != null) {

@@ -32,9 +32,9 @@ public class HexPrayerSpell extends StaticSpell {
     }
 
     public boolean canCast(Level world, BlockPos pos, Player player) {
-        if (!world.getCapability(ReputationProvider.CAPABILITY).isPresent()) {
+        if (world.getCapability(ReputationProvider.CAPABILITY).resolve().isEmpty()) {
             return false;
-        } else if (!world.getCapability(ReputationProvider.CAPABILITY).resolve().get().canPray(player, world.getGameTime())) {
+        } else if (world.getCapability(ReputationProvider.CAPABILITY).resolve().get().canPray(player, world.getGameTime())) {
             return false;
         } else {
             List<EffigyTileEntity> effigies = Ritual.getTilesWithinAABB(EffigyTileEntity.class, world, new AABB(pos.offset(-4, -4, -4), pos.offset(5, 5, 5)));

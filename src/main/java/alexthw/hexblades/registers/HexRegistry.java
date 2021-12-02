@@ -10,7 +10,6 @@ import alexthw.hexblades.network.RefillEffectPacket;
 import alexthw.hexblades.network.WeaponAwakenPacket;
 import alexthw.hexblades.ritual.HexRituals;
 import alexthw.hexblades.spells.HexSpells;
-import alexthw.hexblades.recipes.TempRecipes;
 import alexthw.hexblades.util.CompatUtil;
 import elucent.eidolon.mixin.PotionBrewingMixin;
 import elucent.eidolon.network.Networking;
@@ -51,7 +50,6 @@ public class HexRegistry {
 
     public static void post_init() {
         Network();
-        TempRecipes.init();
         HexRituals.init();
         CompatUtil.check(); //may be useless, already checked before
         if (isMalumLoaded()) {

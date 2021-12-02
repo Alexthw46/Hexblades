@@ -19,7 +19,7 @@ public class HexTags {
     }
 
     public static final class Items {
-        public static final Tag.Named<Item> HEXIUM_INGOT = forge("ingot/hexium");
+        public static final Tag.Named<Item> HEXIUM_INGOT = forge("ingots/hexium");
         public static final Tag.Named<Item> HEX_BLADE = mod("hexblade");
 
         public static Tag.Named<Item> forge(String path) {

@@ -1,6 +1,5 @@
 package alexthw.hexblades.compat;
 
-import alexthw.hexblades.Hexblades;
 import alexthw.hexblades.client.render.entity.ArmorRenderer;
 import alexthw.hexblades.common.items.armors.BotaniaArmor;
 import alexthw.hexblades.common.items.armors.HexWArmor;
@@ -11,14 +10,12 @@ import elucent.eidolon.codex.Page;
 import elucent.eidolon.codex.TitlePage;
 import elucent.eidolon.codex.WorktablePage;
 import elucent.eidolon.network.Networking;
-import elucent.eidolon.recipe.WorktableRecipe;
-import elucent.eidolon.recipe.WorktableRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
@@ -49,20 +46,6 @@ public class BotaniaCompat {
 
     public static HexWArmor makeArmor(EquipmentSlot slot, Item.Properties properties) {
         return new BotaniaArmor(slot, properties);
-    }
-
-
-    public static void addRecipes() {
-        WorktableRegistry.register(new WorktableRecipe(new Object[]{
-                ItemStack.EMPTY, ModItems.manaweaveCloth, ItemStack.EMPTY,
-                ModItems.manaweaveCloth, HexItem.FOCUS_BASE.get(), ModItems.manaweaveCloth,
-                ItemStack.EMPTY, ModItems.manaweaveCloth, ItemStack.EMPTY
-        }, new Object[]{
-                ModItems.terrasteelNugget,
-                ModItems.terrasteelNugget,
-                ModItems.terrasteelNugget,
-                ModItems.terrasteelNugget
-        }, new ItemStack(HexItem.FOCUS_BOTANIA.get(), 1)).setRegistryName(Hexblades.MODID, "botania_focus"));
     }
 
     @OnlyIn(Dist.CLIENT)

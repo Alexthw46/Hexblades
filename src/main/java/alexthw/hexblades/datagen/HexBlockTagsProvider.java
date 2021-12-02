@@ -28,6 +28,8 @@ public class HexBlockTagsProvider extends BlockTagsProvider {
         super(generatorIn, Hexblades.MODID, existingFileHelper);
     }
 
+    //TODO BLOCK TOOLS
+
     @Override
     protected void addTags() {
 

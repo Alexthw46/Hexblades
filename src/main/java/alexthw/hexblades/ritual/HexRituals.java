@@ -88,11 +88,11 @@ public class HexRituals {
         AWAKE_DAGGER = RitualRegistry.register(HexItem.DULL_DAGGER.get(),
                 (new AwakenRitual(new ItemStack(HexItem.LIGHTNING_DAGGER_L.get()), thunderColor)
                         .setRegistryName(Hexblades.MODID, "awake_lightning_dagger")
-                        .addRequirement(new ItemRequirement(Registry.ARCANE_GOLD_INGOT.get()))
-                        .addRequirement(new ItemRequirement(Registry.ARCANE_GOLD_INGOT.get()))
+                        .addRequirement(new ItemRequirement(Registry.SILVER_INGOT.get()))
+                        .addRequirement(new ItemRequirement(Registry.SILVER_INGOT.get()))
                         .addRequirement(new ItemRequirement(HexItem.ELEMENTAL_CORE.get()))
-                        .addRequirement(new ItemRequirement(Registry.PEWTER_INGOT.get()))
-                        .addRequirement(new ItemRequirement(Registry.PEWTER_INGOT.get()))
+                        .addRequirement(new ItemRequirement(Items.COPPER_INGOT))
+                        .addRequirement(new ItemRequirement(Items.COPPER_INGOT))
                 )
         );
 
@@ -142,13 +142,12 @@ public class HexRituals {
         EVOLVE_DAGGERS = RitualRegistry.register(new MultiItemSacrifice(HexItem.PATRON_SOUL.get(), HexItem.LIGHTNING_DAGGER_R.get(), HexItem.LIGHTNING_DAGGER_L.get()),
                 (new EvolveRitual(new ItemStack(HexItem.LIGHTNING_SSWORD_L.get()), thunderColor)
                         .setRegistryName(Hexblades.MODID, "evolve_duals")
-                        .addRequirement(new ItemRequirement(Items.REDSTONE))
-                        .addRequirement(new ItemRequirement(Items.PHANTOM_MEMBRANE))
+                        .addRequirement(new ItemRequirement(Registry.ARCANE_GOLD_INGOT.get()))
+                        .addRequirement(new ItemRequirement(Items.LIGHTNING_ROD))
                         .addRequirement(new ItemRequirement(HexItem.LIGHTNING_DAGGER_L.get()))
                         .addRequirement(new ItemRequirement(HexItem.LIGHTNING_DAGGER_R.get()))
                         .addRequirement(new ItemRequirement(Items.PHANTOM_MEMBRANE))
-                        .addRequirement(new ItemRequirement(Items.REDSTONE))
-                )
+                        .addRequirement(new ItemRequirement(Registry.ARCANE_GOLD_INGOT.get()))                )
         );
 
         EVOLVE_SAPPING = RitualRegistry.register(new MultiItemSacrifice(Registry.SAPPING_SWORD.get(), Items.NETHER_STAR),

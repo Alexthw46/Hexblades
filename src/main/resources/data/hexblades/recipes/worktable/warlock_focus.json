@@ -1,0 +1,23 @@
+{
+  "type": "eidolon:worktable",
+  "pattern": [
+    " w ",
+    "wfw",
+    " w "
+  ],
+  "reagents": "gggg",
+  "key": {
+    "f": {
+      "item": "hexblades:blank_focus"
+    },
+    "g": {
+      "item": "eidolon:arcane_gold_nugget"
+    },
+    "w": {
+      "item": "eidolon:wicked_weave"
+    }
+  },
+  "result": {
+    "item": "hexblades:eidolon_focus"
+  }
+}

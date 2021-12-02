@@ -3,26 +3,25 @@ package alexthw.hexblades.world;
 import alexthw.hexblades.Hexblades;
 import alexthw.hexblades.util.WorldGenUtil;
 import com.mojang.serialization.Codec;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import net.minecraft.core.Vec3i;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.Vec3i;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.structures.JigsawPlacement;
-import net.minecraft.world.gen.feature.structure.*;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
-
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
-import net.minecraft.world.level.levelgen.feature.StructureFeature.StructureStartFactory;
-import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 
 public class FireTempleStructure extends AbstractJigsawStructure {
 
@@ -118,5 +117,6 @@ public class FireTempleStructure extends AbstractJigsawStructure {
             //         this.pieces.get(0).getBoundingBox().y0 + " " +
             //         this.pieces.get(0).getBoundingBox().z0);
         }
+
     }
 }

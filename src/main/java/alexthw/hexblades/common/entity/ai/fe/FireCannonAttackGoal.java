@@ -58,7 +58,7 @@ public class FireCannonAttackGoal extends Goal {
     public void tick() {
         //pathfinding
         double d0 = this.Firenando.distanceToSqr(this.target.getX(), this.target.getY(), this.target.getZ());
-        boolean flag = this.Firenando.getSensing().canSee(this.target);
+        boolean flag = this.Firenando.getSensing().hasLineOfSight(this.target);
         if (flag) {
             ++this.seeTime;
         } else {
@@ -80,7 +80,7 @@ public class FireCannonAttackGoal extends Goal {
         } else if ((this.attackTime == 30) && (this.Firenando.getAnimationState() == 1)) {
             this.Firenando.loadCannon(true);
         } else if ((this.attackTime == 15) && (this.Firenando.getAnimationState() == 1)) {
-            float f = Mth.sqrt(d0) / this.attackRadius;
+            float f = Mth.sqrt((float) d0) / this.attackRadius;
             float lvt_5_1_ = Mth.clamp(f, 0.1F, 1.0F);
             this.Firenando.performRangedAttack(this.target, lvt_5_1_);
         } else if (this.attackTime == 1) {

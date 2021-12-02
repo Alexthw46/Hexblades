@@ -1,0 +1,29 @@
+{
+  "type": "eidolon:worktable",
+  "pattern": [
+    " h ",
+    "hgh",
+    " h "
+  ],
+  "reagents": "uiwi",
+  "key": {
+    "u": {
+      "item": "eidolon:unholy_symbol"
+    },
+    "h": {
+      "tag": "forge:ingots/hexium"
+    },
+    "g": {
+      "item": "eidolon:lesser_soul_gem"
+    },
+    "i": {
+      "item": "eidolon:gold_inlay"
+    },
+    "w": {
+      "item": "eidolon:wicked_weave"
+    }
+  },
+  "result": {
+    "item": "hexblades:blank_focus"
+  }
+}

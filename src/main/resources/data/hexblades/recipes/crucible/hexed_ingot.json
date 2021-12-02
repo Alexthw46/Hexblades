@@ -1,0 +1,27 @@
+{
+  "type": "eidolon:crucible",
+  "steps": [
+    {
+      "items": [
+        {
+          "tag": "forge:ingots/hexium"
+        },
+        {
+          "tag": "forge:ingots/arcane_gold"
+        }
+      ]
+    },
+    {
+      "stirs": 1,
+      "items": [
+        {
+          "item": "eidolon:death_essence"
+        }
+      ]
+    }
+  ],
+  "result": {
+    "item": "hexblades:hexed_ingot",
+    "count": 1
+  }
+}
