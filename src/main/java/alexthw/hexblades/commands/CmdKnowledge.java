@@ -8,17 +8,17 @@ import elucent.eidolon.Eidolon;
 import elucent.eidolon.spell.KnowledgeUtil;
 import elucent.eidolon.spell.Sign;
 import elucent.eidolon.spell.Signs;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.Commands;
-import net.minecraft.command.arguments.EntityArgument;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.resources.ResourceLocation;
 
 public class CmdKnowledge {
 
     private static final CmdKnowledge CMD = new CmdKnowledge();
 
-    public static ArgumentBuilder<CommandSource, ?> register(CommandDispatcher<CommandSource> dispatcher) {
+    public static ArgumentBuilder<CommandSourceStack, ?> register(CommandDispatcher<CommandSourceStack> dispatcher) {
         return Commands.literal("knowledge")
                 .requires(cs -> cs.hasPermission(2))
                 .then(Commands.argument("player", EntityArgument.player())
@@ -30,7 +30,7 @@ public class CmdKnowledge {
                 );
     }
 
-    private int giveKnowledge(ServerPlayerEntity player, String knowledgeName) {
+    private int giveKnowledge(ServerPlayer player, String knowledgeName) {
 
         Sign sign = Signs.find(new ResourceLocation(Eidolon.MODID, knowledgeName));
 

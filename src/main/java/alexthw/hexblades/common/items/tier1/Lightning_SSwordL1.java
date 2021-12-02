@@ -8,23 +8,23 @@ import alexthw.hexblades.util.Constants;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import elucent.eidolon.Registry;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
 import static java.lang.Math.min;
@@ -35,12 +35,12 @@ public class Lightning_SSwordL1 extends HexSwordItem {
 
     public Lightning_SSwordL1(Item.Properties props) {
         super(1, -1.5F, props);
-        tooltipText = new TranslationTextComponent("tooltip.hexblades.thunder_knives");
+        tooltipText = new TranslatableComponent("tooltip.hexblades.thunder_knives");
     }
 
     @Override
-    public UseAction getUseAnimation(ItemStack stack) {
-        return UseAction.SPEAR;
+    public UseAnim getUseAnimation(ItemStack stack) {
+        return UseAnim.SPEAR;
     }
 
     @Override
@@ -53,9 +53,9 @@ public class Lightning_SSwordL1 extends HexSwordItem {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, World worldIn, Entity user) {
-        if (user instanceof PlayerEntity && !worldIn.isClientSide()) {
-            PlayerEntity player = (PlayerEntity) user;
+    public void inventoryTick(ItemStack stack, Level worldIn, Entity user) {
+        if (user instanceof Player && !worldIn.isClientSide()) {
+            Player player = (Player) user;
             boolean currentState = hasTwin(player);
             if (stack.getDamageValue() > 0) {
                 int rechargeTicksBonus = currentState ? (int) getDevotion(player) / (COMMON.DualsRR.get()) : 0;
@@ -66,27 +66,27 @@ public class Lightning_SSwordL1 extends HexSwordItem {
 
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker, boolean hex) {
-        if (attacker instanceof PlayerEntity) {
-            applyHexEffects(stack, target, (PlayerEntity) attacker, getAwakened(stack));
+        if (attacker instanceof Player) {
+            applyHexEffects(stack, target, (Player) attacker, getAwakened(stack));
             stack.setDamageValue(Math.max(stack.getDamageValue() - 10, 0));
         }
         return true;
     }
 
     @Override
-    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         ItemStack stack = playerIn.getItemInHand(handIn);
-        if (handIn == Hand.OFF_HAND && hasTwin(playerIn) && (stack.getMaxDamage() - stack.getDamageValue() > projectileCost)) {
+        if (handIn == InteractionHand.OFF_HAND && hasTwin(playerIn) && (stack.getMaxDamage() - stack.getDamageValue() > projectileCost)) {
             playerIn.startUsingItem(handIn);
             setAwakenedState(stack, true);
             recalculatePowers(playerIn.getItemInHand(handIn), worldIn, playerIn);
-            return ActionResult.consume(stack);
+            return InteractionResultHolder.consume(stack);
         }
-        return ActionResult.pass(playerIn.getItemInHand(handIn));
+        return InteractionResultHolder.pass(playerIn.getItemInHand(handIn));
     }
 
-    public boolean hasTwin(PlayerEntity player) {
-        ItemStack is = player.getItemInHand(Hand.MAIN_HAND);
+    public boolean hasTwin(Player player) {
+        ItemStack is = player.getItemInHand(InteractionHand.MAIN_HAND);
         if (is.getItem() instanceof Lightning_SSwordR1) {
             return (getAwakened(is));
         }
@@ -94,7 +94,7 @@ public class Lightning_SSwordL1 extends HexSwordItem {
     }
 
     @Override
-    public void recalculatePowers(ItemStack weapon, World world, PlayerEntity player) {
+    public void recalculatePowers(ItemStack weapon, Level world, Player player) {
         boolean awakening = getAwakened(weapon);
         double devotion = getDevotion(player);
         setAttackPower(weapon, awakening, devotion / COMMON.DualsDS1.get());
@@ -107,16 +107,16 @@ public class Lightning_SSwordL1 extends HexSwordItem {
     }
 
     @Override
-    public void releaseUsing(ItemStack stack, World world, LivingEntity entity, int timeleft) {
-        if (!(entity instanceof PlayerEntity)) return;
-        PlayerEntity player = (PlayerEntity) entity;
+    public void releaseUsing(ItemStack stack, Level world, LivingEntity entity, int timeleft) {
+        if (!(entity instanceof Player)) return;
+        Player player = (Player) entity;
         int i = this.getUseDuration(stack) - timeleft;
         if (!world.isClientSide() && i >= 10) {
-            Vector3d pos = entity.position().add(entity.getLookAngle().scale(0.5D)).add(-0.5D * Math.sin(Math.toRadians(225.0F - entity.yHeadRot)), entity.getBbHeight() * 0.75F, -0.5D * Math.cos(Math.toRadians(225.0F - entity.yHeadRot)));
-            Vector3d vel = entity.getEyePosition(0.0F).add(entity.getLookAngle().scale(40.0D)).subtract(pos).scale(0.05D);
+            Vec3 pos = entity.position().add(entity.getLookAngle().scale(0.5D)).add(-0.5D * Math.sin(Math.toRadians(225.0F - entity.yHeadRot)), entity.getBbHeight() * 0.75F, -0.5D * Math.cos(Math.toRadians(225.0F - entity.yHeadRot)));
+            Vec3 vel = entity.getEyePosition(0.0F).add(entity.getLookAngle().scale(40.0D)).subtract(pos).scale(0.05D);
             world.addFreshEntity((new FulgorProjectileEntity(HexEntityType.FULGOR_PROJECTILE.get(), world)).shoot(pos.x, pos.y, pos.z, vel.x, vel.y, vel.z, entity.getUUID()));
-            world.playSound(null, pos.x, pos.y, pos.z, Registry.CAST_SOULFIRE_EVENT.get(), SoundCategory.NEUTRAL, 0.75F, random.nextFloat() * 0.2F + 0.9F);
-            if (!(player.abilities.instabuild)) {
+            world.playSound(null, pos.x, pos.y, pos.z, Registry.CAST_SOULFIRE_EVENT.get(), SoundSource.NEUTRAL, 0.75F, world.random.nextFloat() * 0.2F + 0.9F);
+            if (!(player.isCreative())) {
                 stack.setDamageValue(min(stack.getDamageValue() + projectileCost, stack.getMaxDamage() - 1));
             }
         }
@@ -130,14 +130,14 @@ public class Lightning_SSwordL1 extends HexSwordItem {
     }
 
     @Override
-    public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker, boolean awakened) {
-        target.addEffect(new EffectInstance(HexRegistry.CHARGED_EFFECT.get(), 100, 0));
+    public void applyHexEffects(ItemStack stack, LivingEntity target, Player attacker, boolean awakened) {
+        target.addEffect(new MobEffectInstance(HexRegistry.CHARGED_EFFECT.get(), 100, 0));
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
         Multimap<Attribute, AttributeModifier> multimap = HashMultimap.create();
-        if (slot == EquipmentSlotType.OFFHAND) {
+        if (slot == EquipmentSlot.OFFHAND) {
             multimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", getAttackPower(stack), AttributeModifier.Operation.ADDITION));
             multimap.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", getAttackSpeed(stack), AttributeModifier.Operation.ADDITION));
         }
@@ -146,7 +146,7 @@ public class Lightning_SSwordL1 extends HexSwordItem {
     }
 
     @Override
-    public void talk(PlayerEntity player) {
+    public void talk(Player player) {
     }
 
 }

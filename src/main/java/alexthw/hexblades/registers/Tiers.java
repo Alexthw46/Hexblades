@@ -1,12 +1,12 @@
 package alexthw.hexblades.registers;
 
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 
 public class Tiers {
 
-    public static class HexiumTier implements IItemTier {
+    public static class HexiumTier implements Tier {
         @Override
         public int getUses() {
             return 750;
@@ -38,7 +38,7 @@ public class Tiers {
         public static HexiumTier INSTANCE = new HexiumTier();
     }
 
-    public static class PatronWeaponTier implements IItemTier {
+    public static class PatronWeaponTier implements Tier {
         @Override
         public int getUses() {
             return 1250;

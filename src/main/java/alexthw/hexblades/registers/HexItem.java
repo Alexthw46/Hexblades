@@ -4,18 +4,16 @@ import alexthw.hexblades.Hexblades;
 import alexthw.hexblades.common.items.ArmorFocus;
 import alexthw.hexblades.common.items.ElementalSoul;
 import alexthw.hexblades.common.items.HexSwordItem;
-import alexthw.hexblades.common.items.armors.DyebleWarlockArmor;
 import alexthw.hexblades.common.items.dulls.*;
 import alexthw.hexblades.common.items.tier1.*;
 import alexthw.hexblades.common.items.tier2.*;
 import alexthw.hexblades.compat.ArmorCompatHandler;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Food;
-import net.minecraft.item.Item;
-import net.minecraft.item.Rarity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 
 public class HexItem {
@@ -38,10 +36,6 @@ public class HexItem {
     public static final RegistryObject<Item> FIRE_CORE;
 
     //Armors
-    public static final RegistryObject<Item> DYE_WARLOCK_H;
-    public static final RegistryObject<Item> DYE_WARLOCK_C;
-    public static final RegistryObject<Item> DYE_WARLOCK_F;
-
     public static final RegistryObject<Item> HEX_ARMOR_H;
     public static final RegistryObject<Item> HEX_ARMOR_C;
     public static final RegistryObject<Item> HEX_ARMOR_L;
@@ -56,6 +50,7 @@ public class HexItem {
     //Hexblades
 
     public static final RegistryObject<Item> DEV_SWORD;
+
     public static final RegistryObject<Item> BLOOD_SWORD;
 
     //DULLS
@@ -88,13 +83,8 @@ public class HexItem {
         PATRON_SOUL2 = ITEMS.register("elemental_soul_2", () -> new Item(addTabProp().rarity(Rarity.EPIC)));
         DROWNED_HEART = ITEMS.register("drowned_heart", () -> new Item(addTabProp()));
         ELEMENTAL_CORE = ITEMS.register("elemental_core", () -> new Item(addTabProp().fireResistant().rarity(Rarity.RARE)));
-        SOUL_CANDY = ITEMS.register("soul_candy", () -> new Item(addTabProp().food(new Food.Builder().effect(() -> new EffectInstance(Effects.REGENERATION, 40, 1), 1.0F).fast().nutrition(1).saturationMod(0.1F).build())));
+        SOUL_CANDY = ITEMS.register("soul_candy", () -> new Item(addTabProp().food(new FoodProperties.Builder().effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 40, 1), 1.0F).fast().nutrition(1).saturationMod(0.1F).build())));
         FIRE_CORE = ITEMS.register("fire_core", () -> new Item(addTabProp().rarity(Rarity.UNCOMMON)));
-
-        //Armors
-        DYE_WARLOCK_H = ITEMS.register("dye_warlock_hat", () -> new DyebleWarlockArmor(EquipmentSlotType.HEAD, addTabProp()));
-        DYE_WARLOCK_C = ITEMS.register("dye_warlock_robes", () -> new DyebleWarlockArmor(EquipmentSlotType.CHEST, addTabProp()));
-        DYE_WARLOCK_F = ITEMS.register("dye_warlock_boots", () -> new DyebleWarlockArmor(EquipmentSlotType.FEET, addTabProp()));
 
         HEX_ARMOR_H = ITEMS.register("hex_helmet", () -> ArmorCompatHandler.makeHead(addTabProp()));
         HEX_ARMOR_C = ITEMS.register("hex_chestplate", () -> ArmorCompatHandler.makeChest(addTabProp()));

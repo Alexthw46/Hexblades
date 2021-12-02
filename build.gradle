@@ -20,7 +20,7 @@ version = "${mc_version}-${mod_version}"
 group = 'alexthw.hexblades'
 archivesBaseName = project.mod_id
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 
 sourceSets{
     main.resources.srcDirs += 'src/main/generated_resources'
@@ -29,7 +29,7 @@ sourceSets{
 minecraft {
 
     // Simply re-run your setup task after changing the mappings to update your workspace.
-    mappings channel: 'parchment', version: '2021.10.17-1.16.5'
+    mappings channel: 'official', version: '1.17.1'
 
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
     
@@ -138,28 +138,29 @@ dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.16.5-36.2.0'
+    minecraft 'net.minecraftforge:forge:1.17.1-37.1.0'
 
     //compats
-    compileOnly fg.deobf('mezz.jei:jei-1.16.5:7.7.1.136:api')
+    compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency
     compileOnly fg.deobf("vazkii.botania:Botania:1.16.5-420")
 
     compileOnly fg.deobf("curse.maven:malum-484064:3374475") //0.3
     compileOnly fg.deobf("curse.maven:ars_nouveau-401955:3527164")//1.24.0
 
     //dependencies
-    implementation fg.deobf("elucent:eidolon:0.2.7")
-    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.16.5:3.0.55')
-    implementation fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.3")
+    implementation fg.deobf("elucent:eidolon:0.3")
+    implementation fg.deobf("software.bernie.geckolib:geckolib-${mc_version}:${gecko_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}") // Adds the full JEI mod as a runtime dependency
+
+    implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-5.0.1.0")
 
     //testers
-    runtimeOnly fg.deobf('mezz.jei:jei-1.16.5:7.7.1.136')
     runtimeOnly fg.deobf("vazkii.botania:Botania:1.16.5-420")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-53.1")
     runtimeOnly fg.deobf("curse.maven:malum-484064:3374475")
     runtimeOnly fg.deobf("curse.maven:ars_nouveau-401955:3527164")
     runtimeOnly fg.deobf("curse.maven:exp-407174:3188120")  // Shutup experimental settings
-    //runtimeOnly fg.deobf("com.telepathicgrunt:Blame:1.16.5-3.2.0-forge")
+    //runtimeOnly fg.deobf("com.telepathicgrunt:Blame:${mc_version}-3.2.0-forge")
 
 }
 

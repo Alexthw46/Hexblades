@@ -2,8 +2,7 @@ package alexthw.hexblades.datagen;
 
 import alexthw.hexblades.Hexblades;
 import alexthw.hexblades.registers.HexBlock;
-import net.minecraft.block.*;
-import net.minecraft.data.BlockTagsProvider;
+import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.tags.BlockTags;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -17,6 +16,12 @@ import java.util.function.Predicate;
 import static alexthw.hexblades.registers.HexBlock.BLOCKS;
 import static net.minecraft.tags.BlockTags.*;
 
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.level.block.FenceGateBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.StairBlock;
+
 public class HexBlockTagsProvider extends BlockTagsProvider {
 
     public HexBlockTagsProvider(DataGenerator generatorIn, ExistingFileHelper existingFileHelper) {
@@ -28,7 +33,7 @@ public class HexBlockTagsProvider extends BlockTagsProvider {
 
         tag(PLANKS).add(HexBlock.DARK_POLISH_PLANKS.getBlock());
         tag(BlockTags.SLABS).add(getModBlocks(b -> b instanceof SlabBlock));
-        tag(BlockTags.STAIRS).add(getModBlocks(b -> b instanceof StairsBlock));
+        tag(BlockTags.STAIRS).add(getModBlocks(b -> b instanceof StairBlock));
         tag(BlockTags.FENCES).add(getModBlocks(b -> b instanceof FenceBlock));
         tag(BlockTags.FENCE_GATES).add(getModBlocks(b -> b instanceof FenceGateBlock));
         tag(WOODEN_SLABS).add(HexBlock.DARK_POLISH_PLANKS.getSlab());

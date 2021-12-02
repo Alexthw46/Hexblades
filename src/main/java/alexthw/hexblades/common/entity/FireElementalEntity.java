@@ -4,29 +4,28 @@ import alexthw.hexblades.common.entity.ai.fe.FEMeleeGoal;
 import alexthw.hexblades.common.entity.ai.fe.FireCannonAttackGoal;
 import alexthw.hexblades.common.entity.ai.fe.FireSpinAttackGoal;
 import alexthw.hexblades.registers.HexEntityType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IRangedAttackMob;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.monster.ZoglinEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.BossInfo;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.Zoglin;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerBossInfo;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerBossEvent;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -37,14 +36,21 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class FireElementalEntity extends BaseElementalEntity implements IRangedAttackMob {
-    private static final DataParameter<Integer> ANIMATIONSTATE = EntityDataManager.defineId(FireElementalEntity.class, DataSerializers.INT);
-    private static final DataParameter<Integer> FIRECHARGE = EntityDataManager.defineId(FireElementalEntity.class, DataSerializers.INT);
-    private static final DataParameter<Boolean> LOADING = EntityDataManager.defineId(FireElementalEntity.class, DataSerializers.BOOLEAN);
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 
-    public FireElementalEntity(EntityType<FireElementalEntity> type, World worldIn) {
+public class FireElementalEntity extends BaseElementalEntity implements RangedAttackMob {
+    private static final EntityDataAccessor<Integer> ANIMATIONSTATE = SynchedEntityData.defineId(FireElementalEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> FIRECHARGE = SynchedEntityData.defineId(FireElementalEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> LOADING = SynchedEntityData.defineId(FireElementalEntity.class, EntityDataSerializers.BOOLEAN);
+
+    public FireElementalEntity(EntityType<FireElementalEntity> type, Level worldIn) {
         super(type, worldIn);
-        bossEvent = (ServerBossInfo) (new ServerBossInfo(this.getDisplayName(), BossInfo.Color.RED, BossInfo.Overlay.PROGRESS)).setDarkenScreen(true);
+        bossEvent = (ServerBossEvent) (new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS)).setDarkenScreen(true);
 
         this.registerGoals();
         this.navigation.canFloat();
@@ -53,7 +59,7 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
     @Override
     public void checkDespawn() {
         if (this.level.getDifficulty() == Difficulty.PEACEFUL && this.shouldDespawnInPeaceful()) {
-            this.remove();
+            this.remove(RemovalReason.DISCARDED);
         } else {
             this.noActionTime = 0;
         }
@@ -79,27 +85,28 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
         return 10.0F;
     }
 
-    public boolean causeFallDamage(float p_225503_1_, float p_225503_2_) {
+    @Override
+    public boolean causeFallDamage(float p_147187_, float p_147188_, DamageSource p_147189_) {
         return false;
     }
 
-    public int getExperienceReward(PlayerEntity player) {
+    public int getExperienceReward(Player player) {
         return 80;
     }
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new SwimGoal(this));
+        this.goalSelector.addGoal(0, new FloatGoal(this));
         this.applyEntityAI();
         //target selectors
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, ZoglinEntity.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Zoglin.class, true));
 
     }
 
-    public static AttributeModifierMap createAttributes() {
-        return MonsterEntity.createMonsterAttributes().
+    public static AttributeSupplier createAttributes() {
+        return Monster.createMonsterAttributes().
                 add(Attributes.MAX_HEALTH, 200.0D).
                 add(Attributes.FOLLOW_RANGE, 35.0D).
                 add(Attributes.MOVEMENT_SPEED, 0.3D).
@@ -112,7 +119,7 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
     public void aiStep() {
 
         FluidState below = this.level.getBlockState(this.getBlockPosBelowThatAffectsMyMovement()).getFluidState();
-        Vector3d motion;
+        Vec3 motion;
         if (!below.isEmpty()) {
             motion = this.getDeltaMovement();
             this.setOnGround(true);
@@ -139,7 +146,7 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
 
     protected void applyEntityAI() {
         //target - no attacks
-        this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+        this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
         //this.goalSelector.addGoal(8, new LookAtGoal(this, BlazeEntity.class, 8.0F));
 
         //attacks
@@ -147,8 +154,8 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
         this.goalSelector.addGoal(4, new FEMeleeGoal(this, 1.0D, false));
         this.goalSelector.addGoal(3, new FireSpinAttackGoal(this, 1.0D, true));
         //no target
-        this.goalSelector.addGoal(7, new RandomWalkingGoal(this, 1.0D));
-        this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
+        this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1.0D));
+        this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 
     }
 
@@ -202,7 +209,7 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
     }
 
     private <T extends IAnimatable> PlayState attackPredicate(AnimationEvent<T> event) {
-        AnimationController<FireElementalEntity> controller = event.getController();
+        AnimationController<?> controller = event.getController();
         switch (this.getAnimationState()) {
             case 0:
                 controller.setAnimation(new AnimationBuilder().addAnimation("animation.hexblades.fe.idle.arms"));
@@ -231,8 +238,8 @@ public class FireElementalEntity extends BaseElementalEntity implements IRangedA
 
         this.lookAt(Target, 360, 360);
 
-        Vector3d vel = getEyePosition(0.0F).add(getLookAngle().scale(40.0D)).subtract(this.position()).scale(0.05D);
-        Vector3d pos = new Vector3d(getX() + Math.cos(Math.toRadians(yBodyRot + 90)), getY() + 2.3F, getZ() + Math.sin(Math.toRadians(yBodyRot + 90)));
+        Vec3 vel = getEyePosition(0.0F).add(getLookAngle().scale(40.0D)).subtract(this.position()).scale(0.05D);
+        Vec3 pos = new Vec3(getX() + Math.cos(Math.toRadians(yBodyRot + 90)), getY() + 2.3F, getZ() + Math.sin(Math.toRadians(yBodyRot + 90)));
         loadCannon(false);
 
         level.addFreshEntity((new MagmaProjectileEntity(HexEntityType.MAGMA_PROJECTILE.get(), level)).shoot(pos.x, pos.y, pos.z, vel.x * 0.9, vel.y, vel.z * 0.9, this.getUUID(), this));

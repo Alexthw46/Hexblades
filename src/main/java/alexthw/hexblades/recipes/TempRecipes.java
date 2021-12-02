@@ -9,10 +9,10 @@ import elucent.eidolon.recipe.CrucibleRecipe;
 import elucent.eidolon.recipe.CrucibleRegistry;
 import elucent.eidolon.recipe.WorktableRecipe;
 import elucent.eidolon.recipe.WorktableRegistry;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.Tags;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;

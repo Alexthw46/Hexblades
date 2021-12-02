@@ -4,12 +4,12 @@ import alexthw.hexblades.Hexblades;
 import alexthw.hexblades.world.FireTempleStructure;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.util.registry.WorldGenRegistries;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraft.world.gen.settings.DimensionStructuresSettings;
-import net.minecraft.world.gen.settings.StructureSeparationSettings;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.StructureSettings;
+import net.minecraft.world.level.levelgen.feature.configurations.StructureFeatureConfiguration;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -20,14 +20,14 @@ import static alexthw.hexblades.ConfigHandler.COMMON;
 
 public class HexStructures {
 
-    public static final DeferredRegister<Structure<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, Hexblades.MODID);
+    public static final DeferredRegister<StructureFeature<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, Hexblades.MODID);
 
-    public static final RegistryObject<Structure<NoFeatureConfig>> FIRE_TEMPLE = STRUCTURES.register("fire_temple", () -> new FireTempleStructure(NoFeatureConfig.CODEC, 20, 16, 32, false));
+    public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> FIRE_TEMPLE = STRUCTURES.register("fire_temple", () -> new FireTempleStructure(NoneFeatureConfiguration.CODEC, 20, 16, 32, false));
 
     public static void setupStructures() {
         setupMapSpacingAndLand(
                 FIRE_TEMPLE.get(), /* The instance of the structure */
-                new StructureSeparationSettings(COMMON.FT_AVG.get() /* average distance apart in chunks between spawn attempts */,
+                new StructureFeatureConfiguration(COMMON.FT_AVG.get() /* average distance apart in chunks between spawn attempts */,
                         COMMON.FT_MIN.get() /* minimum distance apart in chunks between spawn attempts. MUST BE LESS THAN ABOVE VALUE*/,
                         499602286 /* this modifies the seed of the structure so no two structures always spawn over each-other. Make this large and unique. */),
                 true);
@@ -36,8 +36,8 @@ public class HexStructures {
         // Add more structures here and so on
     }
 
-    public static <F extends Structure<?>> void setupMapSpacingAndLand(F structure, StructureSeparationSettings structureSeparationSettings, boolean transformSurroundingLand) {
-        Structure.STRUCTURES_REGISTRY.put(structure.getRegistryName().toString(), structure);
+    public static <F extends StructureFeature<?>> void setupMapSpacingAndLand(F structure, StructureFeatureConfiguration structureSeparationSettings, boolean transformSurroundingLand) {
+        StructureFeature.STRUCTURES_REGISTRY.put(structure.getRegistryName().toString(), structure);
 
         /*
          * Whether surrounding land will be modified automatically to conform to the bottom of the structure.
@@ -50,9 +50,9 @@ public class HexStructures {
          * NOISE_AFFECTING_FEATURES requires AccessTransformer  (See resources/META-INF/accesstransformer.cfg)
          */
         if (transformSurroundingLand) {
-            Structure.NOISE_AFFECTING_FEATURES =
-                    ImmutableList.<Structure<?>>builder()
-                            .addAll(Structure.NOISE_AFFECTING_FEATURES)
+            StructureFeature.NOISE_AFFECTING_FEATURES =
+                    ImmutableList.<StructureFeature<?>>builder()
+                            .addAll(StructureFeature.NOISE_AFFECTING_FEATURES)
                             .add(structure)
                             .build();
         }
@@ -71,9 +71,9 @@ public class HexStructures {
          * DEFAULTS requires AccessTransformer  (See resources/META-INF/accesstransformer.cfg)
          */
 
-        DimensionStructuresSettings.DEFAULTS =
-                ImmutableMap.<Structure<?>, StructureSeparationSettings>builder()
-                        .putAll(DimensionStructuresSettings.DEFAULTS)
+        StructureSettings.DEFAULTS =
+                ImmutableMap.<StructureFeature<?>, StructureFeatureConfiguration>builder()
+                        .putAll(StructureSettings.DEFAULTS)
                         .put(structure, structureSeparationSettings)
                         .build();
 
@@ -86,11 +86,11 @@ public class HexStructures {
          * So yeah, don't do DimensionSettings.BUILTIN_OVERWORLD. Use the NOISE_GENERATOR_SETTINGS loop below instead if you must.
          */
 
-        WorldGenRegistries.NOISE_GENERATOR_SETTINGS.entrySet().forEach(settings -> {
-            Map<Structure<?>, StructureSeparationSettings> structureMap = settings.getValue().structureSettings().structureConfig();
+        BuiltinRegistries.NOISE_GENERATOR_SETTINGS.entrySet().forEach(settings -> {
+            Map<StructureFeature<?>, StructureFeatureConfiguration> structureMap = settings.getValue().structureSettings().structureConfig();
 
             if (structureMap instanceof ImmutableMap) {
-                Map<Structure<?>, StructureSeparationSettings> tempMap = new HashMap<>(structureMap);
+                Map<StructureFeature<?>, StructureFeatureConfiguration> tempMap = new HashMap<>(structureMap);
                 tempMap.put(structure, structureSeparationSettings);
                 settings.getValue().structureSettings().structureConfig = tempMap;
             } else {

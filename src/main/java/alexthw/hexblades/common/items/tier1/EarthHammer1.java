@@ -4,31 +4,33 @@ import alexthw.hexblades.common.items.HexSwordItem;
 import alexthw.hexblades.registers.Tiers;
 import alexthw.hexblades.util.Constants;
 import alexthw.hexblades.util.HexUtils;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.Color;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TextColor;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
 import static alexthw.hexblades.util.Constants.NBT.MiningSwitch;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class EarthHammer1 extends HexSwordItem {
 
@@ -38,7 +40,7 @@ public class EarthHammer1 extends HexSwordItem {
         this(7, -3.2F,
                 props.addToolType(net.minecraftforge.common.ToolType.PICKAXE, Tiers.PatronWeaponTier.INSTANCE.getLevel()));
         baseMiningSpeed = 8.0F;
-        tooltipText = new TranslationTextComponent("tooltip.hexblades.earth_hammer");
+        tooltipText = new TranslatableComponent("tooltip.hexblades.earth_hammer");
     }
 
     public EarthHammer1(int attack, float speed, Properties props) {
@@ -52,12 +54,12 @@ public class EarthHammer1 extends HexSwordItem {
 
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        if (enchantment.category == EnchantmentType.DIGGER) return true;
+        if (enchantment.category == EnchantmentCategory.DIGGER) return true;
         return super.canApplyAtEnchantingTable(stack, enchantment);
     }
 
     @Override
-    public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker, boolean awakened) {
+    public void applyHexEffects(ItemStack stack, LivingEntity target, Player attacker, boolean awakened) {
         if (stack.getOrCreateTag().getBoolean(MiningSwitch)) return;
         float power = 1.0F;
         if (awakened) {
@@ -71,7 +73,7 @@ public class EarthHammer1 extends HexSwordItem {
     }
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         if (player.isShiftKeyDown() && !world.isClientSide()) {
             switchMining(player.getItemInHand(hand));
         }
@@ -79,7 +81,7 @@ public class EarthHammer1 extends HexSwordItem {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, World worldIn, Entity user, int itemSlot, boolean isSelected) {
+    public void inventoryTick(ItemStack stack, Level worldIn, Entity user, int itemSlot, boolean isSelected) {
         if (stack.getOrCreateTag().getBoolean(MiningSwitch)) {
             return;
         }
@@ -87,7 +89,7 @@ public class EarthHammer1 extends HexSwordItem {
     }
 
     @Override
-    public void recalculatePowers(ItemStack weapon, World world, PlayerEntity player) {
+    public void recalculatePowers(ItemStack weapon, Level world, Player player) {
         double devotion = getDevotion(player);
 
         boolean mineSwitch = weapon.getOrCreateTag().getBoolean(MiningSwitch);
@@ -103,7 +105,7 @@ public class EarthHammer1 extends HexSwordItem {
 
     public void setMiningSpeed(ItemStack weapon, boolean awakening, float extra_mining) {
 
-        CompoundNBT tag = weapon.getOrCreateTag();
+        CompoundTag tag = weapon.getOrCreateTag();
 
         float newMiningSpeed;
 
@@ -131,7 +133,7 @@ public class EarthHammer1 extends HexSwordItem {
     }
 
     @Override
-    public boolean canAttackBlock(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
+    public boolean canAttackBlock(BlockState state, Level worldIn, BlockPos pos, Player player) {
         return true;
     }
 
@@ -153,7 +155,7 @@ public class EarthHammer1 extends HexSwordItem {
     }
 
     public void switchMining(ItemStack weapon) {
-        CompoundNBT tag = weapon.getOrCreateTag();
+        CompoundTag tag = weapon.getOrCreateTag();
         tag.putBoolean(MiningSwitch, !tag.getBoolean(MiningSwitch));
         weapon.setTag(tag);
     }
@@ -163,27 +165,27 @@ public class EarthHammer1 extends HexSwordItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent("Mining mode:" + (stack.getOrCreateTag().getBoolean(MiningSwitch) ? "On" : "Off")));
+        tooltip.add(new TranslatableComponent("Mining mode:" + (stack.getOrCreateTag().getBoolean(MiningSwitch) ? "On" : "Off")));
     }
 
     @Override
-    public boolean mineBlock(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-        if (!worldIn.isClientSide && (state.getDestroySpeed(worldIn, pos) != 0.0F) && entityLiving instanceof PlayerEntity) {
+    public boolean mineBlock(ItemStack stack, Level worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
+        if (!worldIn.isClientSide && (state.getDestroySpeed(worldIn, pos) != 0.0F) && entityLiving instanceof Player) {
             if (stack.getMaxDamage() - stack.getDamageValue() < 51) {
                 switchMining(stack);
-                recalculatePowers(stack, worldIn, (PlayerEntity) entityLiving);
+                recalculatePowers(stack, worldIn, (Player) entityLiving);
             } else {
-                stack.hurtAndBreak(50, entityLiving, (entity) -> entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
+                stack.hurtAndBreak(50, entityLiving, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
             }
         }
         return true;
     }
 
     @Override
-    public void talk(PlayerEntity player) {
-        player.sendMessage(new TranslationTextComponent(this.getDescriptionId() + ".dialogue." + player.level.getRandom().nextInt(dialogueLines)).setStyle(Style.EMPTY.withItalic(true).withColor(Color.fromRgb(HexUtils.earthColor))), player.getUUID());
+    public void talk(Player player) {
+        player.sendMessage(new TranslatableComponent(this.getDescriptionId() + ".dialogue." + player.level.getRandom().nextInt(dialogueLines)).setStyle(Style.EMPTY.withItalic(true).withColor(TextColor.fromRgb(HexUtils.earthColor))), player.getUUID());
 
     }
 

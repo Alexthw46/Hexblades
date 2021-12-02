@@ -1,8 +1,8 @@
 package alexthw.hexblades.common.entity.ai.fe;
 
 import alexthw.hexblades.common.entity.FireElementalEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 
 public class FireSpinAttackGoal extends MeleeAttackGoal {
 

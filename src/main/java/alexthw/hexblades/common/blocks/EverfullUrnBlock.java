@@ -1,15 +1,18 @@
 package alexthw.hexblades.common.blocks;
 
 import elucent.eidolon.block.HorizontalWaterloggableBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.IBooleanFunction;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.TickingBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.level.BlockGetter;
 
-public class EverfullUrnBlock extends HorizontalWaterloggableBlock {
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
+public class EverfullUrnBlock extends HorizontalWaterloggableBlock{
 
     public EverfullUrnBlock(Properties properties) {
         super(properties);
@@ -19,9 +22,9 @@ public class EverfullUrnBlock extends HorizontalWaterloggableBlock {
 
     //Voxel Shaping
 
-    static final VoxelShape VSHAPE = VoxelShapes.join(Block.box(3, 0, 3, 13, 9, 13), Block.box(5.5, 9, 5.5, 10.5, 13, 10.5), IBooleanFunction.OR);
+    static final VoxelShape VSHAPE = Shapes.join(Block.box(3, 0, 3, 13, 9, 13), Block.box(5.5, 9, 5.5, 10.5, 13, 10.5), BooleanOp.OR);
 
-    public VoxelShape getInteractionShape(BlockState state, IBlockReader world, BlockPos pos) {
+    public VoxelShape getInteractionShape(BlockState state, BlockGetter world, BlockPos pos) {
         return VSHAPE;
     }
 

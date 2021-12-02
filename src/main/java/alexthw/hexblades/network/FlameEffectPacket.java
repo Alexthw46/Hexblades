@@ -5,11 +5,11 @@ import elucent.eidolon.Eidolon;
 import elucent.eidolon.Registry;
 import elucent.eidolon.deity.Deity;
 import elucent.eidolon.particle.Particles;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkDirection;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.fmllegacy.network.NetworkDirection;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -20,11 +20,11 @@ public class FlameEffectPacket {
         this.pos = pos;
     }
 
-    public static void encode(FlameEffectPacket object, PacketBuffer buffer) {
+    public static void encode(FlameEffectPacket object, FriendlyByteBuf buffer) {
         buffer.writeBlockPos(object.pos);
     }
 
-    public static FlameEffectPacket decode(PacketBuffer buffer) {
+    public static FlameEffectPacket decode(FriendlyByteBuf buffer) {
         return new FlameEffectPacket(buffer.readBlockPos());
     }
 
@@ -32,7 +32,7 @@ public class FlameEffectPacket {
         ctx.get().enqueueWork(() -> {
             assert ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT;
 
-            World world = Eidolon.proxy.getWorld();
+            Level world = Eidolon.proxy.getWorld();
             if (world != null) {
                 Deity HexDeity = HexDeities.HEX_DEITY;
 

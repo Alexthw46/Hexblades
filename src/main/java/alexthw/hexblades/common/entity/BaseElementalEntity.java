@@ -1,40 +1,40 @@
 package alexthw.hexblades.common.entity;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerBossInfo;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerBossEvent;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class BaseElementalEntity extends MonsterEntity implements IAnimatable {
+public class BaseElementalEntity extends Monster implements IAnimatable {
 
-    public BaseElementalEntity(EntityType<? extends BaseElementalEntity> type, World worldIn) {
+    public BaseElementalEntity(EntityType<? extends BaseElementalEntity> type, Level worldIn) {
         super(type, worldIn);
     }
 
     protected AnimationFactory factory = new AnimationFactory(this);
-    protected ServerBossInfo bossEvent;
+    protected ServerBossEvent bossEvent;
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new SwimGoal(this));
-        this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-        this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
+        this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
     }
 
-    public static AttributeModifierMap createAttributes() {
-        return MonsterEntity.createMonsterAttributes().add(Attributes.MAX_HEALTH, 100.0D).add(Attributes.MOVEMENT_SPEED, 0.28D).add(Attributes.ATTACK_DAMAGE, 5.0D).add(Attributes.ARMOR, 10.0D).build();
+    public static AttributeSupplier createAttributes() {
+        return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 100.0D).add(Attributes.MOVEMENT_SPEED, 0.28D).add(Attributes.ATTACK_DAMAGE, 5.0D).add(Attributes.ARMOR, 10.0D).build();
     }
 
     @Override
@@ -46,7 +46,7 @@ public class BaseElementalEntity extends MonsterEntity implements IAnimatable {
         this.bossEvent.setPercent(this.getHealth() / this.getMaxHealth());
     }
 
-    public int getExperienceReward(PlayerEntity player) {
+    public int getExperienceReward(Player player) {
         return 80;
     }
 
@@ -59,13 +59,13 @@ public class BaseElementalEntity extends MonsterEntity implements IAnimatable {
     }
 
     @Override
-    public void stopSeenByPlayer(ServerPlayerEntity pPlayer) {
+    public void stopSeenByPlayer(ServerPlayer pPlayer) {
         super.stopSeenByPlayer(pPlayer);
         this.bossEvent.removePlayer(pPlayer);
     }
 
     @Override
-    public void startSeenByPlayer(ServerPlayerEntity pPlayer) {
+    public void startSeenByPlayer(ServerPlayer pPlayer) {
         super.startSeenByPlayer(pPlayer);
         this.bossEvent.addPlayer(pPlayer);
     }

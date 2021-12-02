@@ -13,17 +13,17 @@ import elucent.eidolon.Registry;
 import elucent.eidolon.codex.*;
 import elucent.eidolon.spell.Signs;
 import elucent.eidolon.util.ColorUtil;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.potion.Potions;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
-import static net.minecraftforge.fml.common.ObfuscationReflectionHelper.getPrivateValue;
+import static net.minecraftforge.fml.util.ObfuscationReflectionHelper.getPrivateValue;
 
 public class CodexHexChapters {
 
@@ -96,7 +96,7 @@ public class CodexHexChapters {
             );
 
             if (CompatUtil.isMalumLoaded()) {
-                COMPAT = new Chapter(makeChapterKey("compats"), new TitlePage(makePageKey("compats")), new TitlePage(makePageKey("compats.malum")), new ListPage(makePageKey("altar_ether"), new ListPage.ListEntry("brazier", new ItemStack(MalumItems.BLUE_ETHER_BRAZIER.get()))));
+                //COMPAT = new Chapter(makeChapterKey("compats"), new TitlePage(makePageKey("compats")), new TitlePage(makePageKey("compats.malum")), new ListPage(makePageKey("altar_ether"), new ListPage.ListEntry("brazier", new ItemStack(MalumItems.BLUE_ETHER_BRAZIER.get()))));
             } else {
                 COMPAT = new Chapter(makeChapterKey("compats"), new TitlePage(makePageKey("compats")));
             }
@@ -324,10 +324,11 @@ public class CodexHexChapters {
 
     static IndexPage.IndexEntry getCompatsPage() {
         if (CompatUtil.isMalumLoaded()) {
-            return new IndexPage.IndexEntry(COMPAT, new ItemStack(MalumItems.BLUE_ETHER.get()));
+            //return new IndexPage.IndexEntry(COMPAT, new ItemStack(MalumItems.BLUE_ETHER.get()));
         } else {
             return new IndexPage.IndexEntry(COMPAT, new ItemStack(Items.CAMPFIRE));
         }
+        return null;
     }
 
     static Page[] getArmorPages() {
@@ -393,8 +394,7 @@ public class CodexHexChapters {
                 )
         );
 
-        CodexChapters CChapters = new CodexChapters();
-        List<Category> CCategories = getPrivateValue(CodexChapters.class, CChapters, "categories");
+        List<Category> CCategories = getPrivateValue(CodexChapters.class, new CodexChapters(), "categories");
 
         if (CCategories != null) {
             CCategories.add(HEXBLADES = new Category(Hexblades.MODID, new ItemStack(HexItem.PATRON_SOUL.get()), ColorUtil.packColor(220, 0, 30, 66), HEXBLADES_INDEX));

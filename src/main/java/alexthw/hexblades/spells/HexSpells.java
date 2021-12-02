@@ -6,7 +6,7 @@ import elucent.eidolon.spell.PrayerSpell;
 import elucent.eidolon.spell.Signs;
 import elucent.eidolon.spell.Spell;
 import elucent.eidolon.spell.Spells;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class HexSpells {
 

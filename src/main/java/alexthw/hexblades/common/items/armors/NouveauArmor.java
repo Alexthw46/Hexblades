@@ -2,11 +2,13 @@ package alexthw.hexblades.common.items.armors;
 
 import alexthw.hexblades.util.Constants;
 import com.hollingsworth.arsnouveau.api.mana.IManaEquipment;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class NouveauArmor extends HexWArmor implements IManaEquipment {
-    public NouveauArmor(EquipmentSlotType slot, Properties builderIn) {
+    public NouveauArmor(EquipmentSlot slot, Properties builderIn) {
         super(slot, builderIn);
     }
 

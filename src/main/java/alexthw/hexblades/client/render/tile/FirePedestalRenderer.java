@@ -2,14 +2,15 @@ package alexthw.hexblades.client.render.tile;
 
 import alexthw.hexblades.Hexblades;
 import alexthw.hexblades.common.blocks.tile_entities.FirePedestalTileEntity;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 import software.bernie.geckolib3.renderers.geo.GeoBlockRenderer;
 
 public class FirePedestalRenderer extends GeoBlockRenderer<FirePedestalTileEntity> {
-    public FirePedestalRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {
-        super(rendererDispatcherIn, new AnimatedGeoModel<FirePedestalTileEntity>() {
+    public FirePedestalRenderer(BlockEntityRendererProvider.Context rendererDispatcherIn) {
+        super(rendererDispatcherIn, new AnimatedGeoModel<>() {
             /**
              * This resource location needs to point to a json file of your animation file,
              * i.e. "geckolib:animations/frog_animation.json"

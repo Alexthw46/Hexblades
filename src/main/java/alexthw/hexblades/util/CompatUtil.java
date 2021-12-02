@@ -7,14 +7,10 @@ public class CompatUtil {
 
     public static final String MOD_ID_MALUM = "malum";
     public static final String MOD_ID_BOTANIA = "botania";
-    public static final String MOD_ID_DRUIDCRAFT = "druidcraft";
-    public static final String MOD_ID_OCCULTISM = "occultism";
     public static final String MOD_ID_ARSNOUVEAU = "ars_nouveau";
 
     protected static boolean loadedMalum = false;
     protected static boolean loadedBotania = false;
-    protected static boolean loadedOccultism = false;
-    protected static boolean loadedDruid = false;
     protected static boolean loadedArsNov = false;
 
 
@@ -24,14 +20,6 @@ public class CompatUtil {
 
     public static boolean isBotaniaLoaded() {
         return loadedBotania;
-    }
-
-    public static boolean isDruidLoaded() {
-        return loadedDruid;
-    }
-
-    public static boolean isOccultismLoaded() {
-        return loadedOccultism;
     }
 
     public static boolean isArsNovLoaded() {
@@ -44,8 +32,6 @@ public class CompatUtil {
 
         loadedMalum = modList.isLoaded(MOD_ID_MALUM);
         loadedBotania = modList.isLoaded(MOD_ID_BOTANIA);
-        loadedDruid = modList.isLoaded(MOD_ID_DRUIDCRAFT);
-        loadedOccultism = modList.isLoaded(MOD_ID_OCCULTISM);
         loadedArsNov = modList.isLoaded(MOD_ID_ARSNOUVEAU);
 
     }

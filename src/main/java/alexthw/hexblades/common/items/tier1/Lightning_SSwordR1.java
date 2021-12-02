@@ -3,24 +3,25 @@ package alexthw.hexblades.common.items.tier1;
 import alexthw.hexblades.common.items.HexSwordItem;
 import alexthw.hexblades.registers.HexItem;
 import alexthw.hexblades.util.HexUtils;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.Color;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.chat.TextColor;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
+
 
 public class Lightning_SSwordR1 extends HexSwordItem {
 
     public Lightning_SSwordR1(Properties props) {
         super(4, -1.5F, props);
-        tooltipText = new TranslationTextComponent("tooltip.hexblades.thunder_knives");
+        tooltipText = new TranslatableComponent("tooltip.hexblades.thunder_knives");
     }
 
     @Override
-    public void recalculatePowers(ItemStack weapon, World world, PlayerEntity player) {
+    public void recalculatePowers(ItemStack weapon, Level world, Player player) {
         double devotion = getDevotion(player);
 
 
@@ -39,13 +40,13 @@ public class Lightning_SSwordR1 extends HexSwordItem {
 
     }
 
-    public boolean hasTwin(PlayerEntity player) {
+    public boolean hasTwin(Player player) {
         return player.getOffhandItem().getItem() == HexItem.LIGHTNING_DAGGER_L.get();
     }
 
     @Override
-    public void talk(PlayerEntity player) {
-        player.sendMessage(new TranslationTextComponent(this.getDescriptionId() + ".dialogue." + player.level.getRandom().nextInt(dialogueLines)).setStyle(Style.EMPTY.withItalic(true).withColor(Color.fromRgb(HexUtils.thunderColor))), player.getUUID());
+    public void talk(Player player) {
+        player.sendMessage(new TranslatableComponent(this.getDescriptionId() + ".dialogue." + player.level.getRandom().nextInt(dialogueLines)).setStyle(Style.EMPTY.withItalic(true).withColor(TextColor.fromRgb(HexUtils.thunderColor))), player.getUUID());
     }
 
 }

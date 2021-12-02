@@ -2,20 +2,17 @@ package alexthw.hexblades.datagen;
 
 import alexthw.hexblades.Hexblades;
 import alexthw.hexblades.common.items.IHexblade;
-import alexthw.hexblades.common.items.armors.DyebleWarlockArmor;
 import alexthw.hexblades.common.items.dulls.Hammer_dull;
 import alexthw.hexblades.common.items.tier1.EarthHammer1;
 import alexthw.hexblades.common.items.tier1.Lightning_SSwordL1;
-import net.minecraft.block.FenceBlock;
+import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.item.*;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Registry;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.fml.RegistryObject;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,6 +21,13 @@ import static alexthw.hexblades.registers.HexItem.ITEMS;
 import static alexthw.hexblades.util.HexUtils.prefix;
 import static alexthw.hexblades.util.HexUtils.takeAll;
 
+
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.item.SwordItem;
+import net.minecraftforge.fmllegacy.RegistryObject;
 
 public class HexItemModelProvider extends ItemModelProvider {
 
@@ -40,10 +44,9 @@ public class HexItemModelProvider extends ItemModelProvider {
         Set<RegistryObject<Item>> items = new HashSet<>(ITEMS.getEntries());
         takeAll(items, i -> i.get() instanceof BlockItem && ((BlockItem) i.get()).getBlock() instanceof FenceBlock).forEach(this::fenceBlockItem);
         takeAll(items, i -> i.get() instanceof BlockItem).forEach(this::blockItem);
-        takeAll(items, i -> i.get() instanceof ToolItem).forEach(this::handheldItem);
+        takeAll(items, i -> i.get() instanceof DiggerItem).forEach(this::handheldItem);
         takeAll(items, i -> i.get() instanceof Hammer_dull);
         takeAll(items, i -> i.get() instanceof EarthHammer1);
-        takeAll(items, i -> i.get() instanceof DyebleWarlockArmor);
         takeAll(items, i -> i.get() instanceof Lightning_SSwordL1).forEach(this::awakenThrowItem);
         takeAll(items, i -> i.get() instanceof IHexblade).forEach(this::awakenableItem);
         takeAll(items, i -> i.get() instanceof SwordItem).forEach(this::handheldItem);

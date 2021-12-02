@@ -13,12 +13,12 @@ import elucent.eidolon.codex.WorktablePage;
 import elucent.eidolon.network.Networking;
 import elucent.eidolon.recipe.WorktableRecipe;
 import elucent.eidolon.recipe.WorktableRegistry;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
@@ -34,9 +34,9 @@ import static alexthw.hexblades.codex.CodexHexChapters.nukeRecipe;
 
 public class BotaniaCompat {
 
-    public static void refillApotecaries(World world, BlockPos urn) {
+    public static void refillApotecaries(Level world, BlockPos urn) {
 
-        List<TileAltar> apothecaries = HexUtils.getTilesWithinAABB(TileAltar.class, world, new AxisAlignedBB(urn.offset(-2, -1, -2), urn.offset(3, 2, 3)));
+        List<TileAltar> apothecaries = HexUtils.getTilesWithinAABB(TileAltar.class, world, new AABB(urn.offset(-2, -1, -2), urn.offset(3, 2, 3)));
 
         for (TileAltar fillable : apothecaries) {
             if (fillable.getFluid() == State.EMPTY) {
@@ -47,7 +47,7 @@ public class BotaniaCompat {
 
     }
 
-    public static HexWArmor makeArmor(EquipmentSlotType slot, Item.Properties properties) {
+    public static HexWArmor makeArmor(EquipmentSlot slot, Item.Properties properties) {
         return new BotaniaArmor(slot, properties);
     }
 

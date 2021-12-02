@@ -7,9 +7,9 @@ import elucent.eidolon.Registry;
 import elucent.eidolon.codex.Page;
 import elucent.eidolon.codex.TitlePage;
 import elucent.eidolon.codex.WorktablePage;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +23,7 @@ public class ArmorCompatHandler {
 
 
     public static HexWArmor makeChest(Item.Properties properties) {
-        EquipmentSlotType slot = EquipmentSlotType.CHEST;
+        EquipmentSlot slot = EquipmentSlot.CHEST;
         if (CompatUtil.isBotaniaLoaded() && CompatUtil.isArsNovLoaded())
             return ArsBotaniaHandler.makeArmor(slot, properties);
         if (CompatUtil.isBotaniaLoaded()) return BotaniaCompat.makeArmor(slot, properties);
@@ -33,7 +33,7 @@ public class ArmorCompatHandler {
     }
 
     public static HexWArmor makeHead(Item.Properties properties) {
-        EquipmentSlotType slot = EquipmentSlotType.HEAD;
+        EquipmentSlot slot = EquipmentSlot.HEAD;
         if (CompatUtil.isBotaniaLoaded() && CompatUtil.isArsNovLoaded())
             return ArsBotaniaHandler.makeArmor(slot, properties);
         if (CompatUtil.isBotaniaLoaded()) return BotaniaCompat.makeArmor(slot, properties);
@@ -43,7 +43,7 @@ public class ArmorCompatHandler {
     }
 
     public static HexWArmor makeFeet(Item.Properties properties) {
-        EquipmentSlotType slot = EquipmentSlotType.FEET;
+        EquipmentSlot slot = EquipmentSlot.FEET;
         if (CompatUtil.isBotaniaLoaded() && CompatUtil.isArsNovLoaded())
             return ArsBotaniaHandler.makeArmor(slot, properties);
         if (CompatUtil.isBotaniaLoaded()) return BotaniaCompat.makeArmor(slot, properties);
@@ -53,7 +53,7 @@ public class ArmorCompatHandler {
     }
 
     public static HexWArmor makeLegs(Item.Properties properties) {
-        EquipmentSlotType slot = EquipmentSlotType.LEGS;
+        EquipmentSlot slot = EquipmentSlot.LEGS;
         if (CompatUtil.isBotaniaLoaded() && CompatUtil.isArsNovLoaded())
             return ArsBotaniaHandler.makeArmor(slot, properties);
         if (CompatUtil.isBotaniaLoaded()) return BotaniaCompat.makeArmor(slot, properties);

@@ -10,18 +10,18 @@ import com.mojang.brigadier.context.CommandContext;
 import elucent.eidolon.capability.ReputationProvider;
 import elucent.eidolon.deity.Deities;
 import elucent.eidolon.deity.Deity;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.Commands;
-import net.minecraft.command.arguments.EntityArgument;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.chat.TextComponent;
 
 public class CmdDevotion {
 
     private static final CmdDevotion CMD = new CmdDevotion();
 
 
-    public static ArgumentBuilder<CommandSource, ?> register(CommandDispatcher<CommandSource> dispatcher) {
+    public static ArgumentBuilder<CommandSourceStack, ?> register(CommandDispatcher<CommandSourceStack> dispatcher) {
         return Commands.literal("devotion")
                 .requires(cs -> cs.hasPermission(2))
                 .then(Commands.argument("player", EntityArgument.player())
@@ -37,7 +37,7 @@ public class CmdDevotion {
                 );
     }
 
-    private int setDevotion(ServerPlayerEntity player, String deityName, double qt) {
+    private int setDevotion(ServerPlayer player, String deityName, double qt) {
 
         Deity deity;
 
@@ -63,7 +63,7 @@ public class CmdDevotion {
         return Command.SINGLE_SUCCESS;
     }
 
-    private int getDevotion(CommandContext<CommandSource> ctx, ServerPlayerEntity player, String deityName) {
+    private int getDevotion(CommandContext<CommandSourceStack> ctx, ServerPlayer player, String deityName) {
 
         Deity deity;
 
@@ -82,7 +82,7 @@ public class CmdDevotion {
 
         player.getCommandSenderWorld().getCapability(ReputationProvider.CAPABILITY, null).ifPresent((rep) -> {
             double devotion = rep.getReputation(player, deity.getId());
-            ctx.getSource().sendSuccess(new StringTextComponent("" + devotion), false);
+            ctx.getSource().sendSuccess(new TextComponent("" + devotion), false);
         });
 
         return Command.SINGLE_SUCCESS;

@@ -6,15 +6,24 @@ import alexthw.hexblades.common.blocks.EverfullUrnBlock;
 import alexthw.hexblades.common.blocks.FirePedestalBlock;
 import alexthw.hexblades.common.blocks.SwordStandBlock;
 import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.item.BlockItem;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.item.BlockItem;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import static alexthw.hexblades.registers.HexItem.addTabProp;
+
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.level.block.FenceGateBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.WallBlock;
 
 public class HexBlock {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Hexblades.MODID);
@@ -48,20 +57,19 @@ public class HexBlock {
         });
 
         DARK_POLISH_PLANKS = (new DecoBlockPack(BLOCKS, "dark_polished_planks", blockProps(Material.WOOD, MaterialColor.COLOR_BLACK).sound(SoundType.WOOD)
-                .harvestTool(ToolType.AXE)
                 .strength(1.6F, 3.0F)))
                 .addFence();
 
     }
 
-    static net.minecraft.block.AbstractBlock.Properties blockProps(Material mat, MaterialColor color) {
-        return net.minecraft.block.AbstractBlock.Properties.of(mat, color);
+    static net.minecraft.world.level.block.state.BlockBehaviour.Properties blockProps(Material mat, MaterialColor color) {
+        return net.minecraft.world.level.block.state.BlockBehaviour.Properties.of(mat, color);
     }
 
     public static class DecoBlockPack {
         DeferredRegister<Block> registry;
         String basename;
-        net.minecraft.block.AbstractBlock.Properties props;
+        net.minecraft.world.level.block.state.BlockBehaviour.Properties props;
         RegistryObject<Block> full;
         RegistryObject<Block> slab;
         RegistryObject<Block> stair;
@@ -69,13 +77,13 @@ public class HexBlock {
         RegistryObject<Block> fence = null;
         RegistryObject<Block> fence_gate = null;
 
-        public DecoBlockPack(DeferredRegister<Block> blocks, String basename, net.minecraft.block.AbstractBlock.Properties props) {
+        public DecoBlockPack(DeferredRegister<Block> blocks, String basename, net.minecraft.world.level.block.state.BlockBehaviour.Properties props) {
             this.registry = blocks;
             this.basename = basename;
             this.props = props;
             this.full = addBlock(basename, new DecoBlock(props));
             this.slab = addBlock(basename + "_slab", new SlabBlock(props));
-            this.stair = addBlock(basename + "_stairs", new StairsBlock(
+            this.stair = addBlock(basename + "_stairs", new StairBlock(
                     () -> this.full.get().defaultBlockState(), props));
         }
 

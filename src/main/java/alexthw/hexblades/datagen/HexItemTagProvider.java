@@ -5,16 +5,16 @@ import alexthw.hexblades.common.items.IHexblade;
 import alexthw.hexblades.registers.HexItem;
 import alexthw.hexblades.registers.HexTags;
 import alexthw.hexblades.util.HexUtils;
-import net.minecraft.data.BlockTagsProvider;
+import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.ItemTagsProvider;
-import net.minecraft.item.Item;
+import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.world.item.Item;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ITag;
+import net.minecraft.tags.Tag;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fmllegacy.RegistryObject;
 
 public class HexItemTagProvider extends ItemTagsProvider {
 
@@ -23,7 +23,7 @@ public class HexItemTagProvider extends ItemTagsProvider {
     }
 
 
-    public static ITag.INamedTag<Item> makeWrapperTag(String id) {
+    public static Tag.Named<Item> makeWrapperTag(String id) {
         return ItemTags.createOptional(HexUtils.prefix(id));
     }
 

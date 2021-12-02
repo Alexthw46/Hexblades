@@ -8,18 +8,18 @@ import elucent.eidolon.network.Networking;
 import elucent.eidolon.spell.Sign;
 import elucent.eidolon.spell.Signs;
 import elucent.eidolon.spell.StaticSpell;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 
@@ -31,34 +31,32 @@ public class HexTouchSpell extends StaticSpell {
     }
 
     @Override
-    public boolean canCast(World world, BlockPos pos, PlayerEntity player) {
+    public boolean canCast(Level world, BlockPos pos, Player player) {
         if (!world.getCapability(ReputationProvider.CAPABILITY).isPresent()) return false;
-        if (world.getCapability(ReputationProvider.CAPABILITY).resolve().get().getReputation(player, HexDeities.HEX_DEITY.getId()) < 4.0)
-            return false;
 
-        Vector3d v = getVector(world, player);
-        List<ItemEntity> items = world.getEntitiesOfClass(ItemEntity.class, new AxisAlignedBB(v.x - 1.5, v.y - 1.5, v.z - 1.5, v.x + 1.5, v.y + 1.5, v.z + 1.5));
+        Vec3 v = getVector(world, player);
+        List<ItemEntity> items = world.getEntitiesOfClass(ItemEntity.class, new AABB(v.x - 1.5, v.y - 1.5, v.z - 1.5, v.x + 1.5, v.y + 1.5, v.z + 1.5));
         if (items.size() != 1) return false;
         ItemStack stack = items.get(0).getItem();
         return canTouch(stack);
     }
 
     @Override
-    public void cast(World world, BlockPos pos, PlayerEntity player) {
+    public void cast(Level world, BlockPos pos, Player player) {
 
-        Vector3d v = getVector(world, player);
-        List<ItemEntity> items = world.getEntitiesOfClass(ItemEntity.class, new AxisAlignedBB(v.x - 1.5, v.y - 1.5, v.z - 1.5, v.x + 1.5, v.y + 1.5, v.z + 1.5));
+        Vec3 v = getVector(world, player);
+        List<ItemEntity> items = world.getEntitiesOfClass(ItemEntity.class, new AABB(v.x - 1.5, v.y - 1.5, v.z - 1.5, v.x + 1.5, v.y + 1.5, v.z + 1.5));
         if (items.size() == 1) {
             if (!world.isClientSide) {
                 ItemStack stack = items.get(0).getItem();
                 if (canTouch(stack)) {
                     items.get(0).setItem(touchResult(stack));
-                    Vector3d p = items.get(0).position();
+                    Vec3 p = items.get(0).position();
                     items.get(0).setDefaultPickUpDelay();
                     Networking.sendToTracking(world, items.get(0).blockPosition(), new MagicBurstEffectPacket(p.x, p.y, p.z, Signs.SOUL_SIGN.getColor(), Signs.MIND_SIGN.getColor()));
                 }
             } else {
-                world.playSound(player, player.blockPosition(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundCategory.NEUTRAL, 1.0F, 0.6F + world.random.nextFloat() * 0.2F);
+                world.playSound(player, player.blockPosition(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.NEUTRAL, 1.0F, 0.6F + world.random.nextFloat() * 0.2F);
             }
         }
     }

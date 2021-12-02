@@ -1,7 +1,7 @@
 package alexthw.hexblades.deity;
 
 import elucent.eidolon.capability.Facts;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.Arrays;
 import java.util.List;

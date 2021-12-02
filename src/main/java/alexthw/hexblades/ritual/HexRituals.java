@@ -8,10 +8,10 @@ import elucent.eidolon.ritual.ItemRequirement;
 import elucent.eidolon.ritual.MultiItemSacrifice;
 import elucent.eidolon.ritual.Ritual;
 import elucent.eidolon.ritual.RitualRegistry;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.potion.Potions;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
 import static alexthw.hexblades.util.HexUtils.*;

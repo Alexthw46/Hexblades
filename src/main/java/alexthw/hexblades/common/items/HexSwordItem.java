@@ -5,26 +5,26 @@ import alexthw.hexblades.registers.Tiers;
 import alexthw.hexblades.util.Constants;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ShieldItem;
-import net.minecraft.item.SwordItem;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShieldItem;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -32,12 +32,14 @@ import java.util.List;
 
 import static alexthw.hexblades.util.CompatUtil.isArsNovLoaded;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class HexSwordItem extends SwordItem implements IHexblade {
 
     protected final double baseAttack;
     protected final double baseSpeed;
 
-    protected TranslationTextComponent tooltipText = new TranslationTextComponent("The Dev Sword, you shouldn't read this");
+    protected TranslatableComponent tooltipText = new TranslatableComponent("The Dev Sword, you shouldn't read this");
     protected int rechargeTick = 5;
     protected final int dialogueLines = 3;
 
@@ -49,7 +51,7 @@ public class HexSwordItem extends SwordItem implements IHexblade {
 
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        if (enchantment.category == EnchantmentType.BREAKABLE) return false;
+        if (enchantment.category == EnchantmentCategory.BREAKABLE) return false;
         return super.canApplyAtEnchantingTable(stack, enchantment);
     }
 
@@ -59,7 +61,7 @@ public class HexSwordItem extends SwordItem implements IHexblade {
     }
 
     @Override
-    public void inventoryTick(ItemStack pStack, World pLevel, Entity pEntity, int pItemSlot, boolean pIsSelected) {
+    public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pItemSlot, boolean pIsSelected) {
         this.inventoryTick(pStack, pLevel, pEntity);
     }
 
@@ -69,9 +71,9 @@ public class HexSwordItem extends SwordItem implements IHexblade {
     }
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         if (!world.isClientSide()) {
-            if (!(player.getItemInHand(Hand.OFF_HAND).getItem() instanceof ShieldItem)) {
+            if (!(player.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof ShieldItem)) {
 
                 if (isArsNovLoaded()) {
                     if (ArsNouveauCompat.spellbookInOffHand(player)) return super.use(world, player, hand);
@@ -86,11 +88,11 @@ public class HexSwordItem extends SwordItem implements IHexblade {
     //Only apply special effects if wielded by a Player
 
     @Override
-    public void applyHexBonus(PlayerEntity user, boolean awakened) {
+    public void applyHexBonus(Player user, boolean awakened) {
     }
 
     @Override
-    public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker, boolean awakened) {
+    public void applyHexEffects(ItemStack stack, LivingEntity target, Player attacker, boolean awakened) {
     }
 
     //data getters
@@ -104,7 +106,7 @@ public class HexSwordItem extends SwordItem implements IHexblade {
     }
 
     //set or reset awakened state & buffs
-    public void recalculatePowers(ItemStack weapon, World world, PlayerEntity player) {
+    public void recalculatePowers(ItemStack weapon, Level world, Player player) {
         double devotion = getDevotion(player);
 
         boolean awakening = setAwakenedState(weapon, !getAwakened(weapon));
@@ -116,7 +118,7 @@ public class HexSwordItem extends SwordItem implements IHexblade {
 
     public void setAttackPower(ItemStack weapon, boolean awakening, double extradamage) {
 
-        CompoundNBT tag = weapon.getOrCreateTag();
+        CompoundTag tag = weapon.getOrCreateTag();
         if (awakening) {
             tag.putDouble(Constants.NBT.EXTRA_DAMAGE, baseAttack + extradamage);
         } else {
@@ -126,7 +128,7 @@ public class HexSwordItem extends SwordItem implements IHexblade {
 
     public void setAttackSpeed(ItemStack weapon, boolean awakening, double extraspeed) {
 
-        CompoundNBT tag = weapon.getOrCreateTag();
+        CompoundTag tag = weapon.getOrCreateTag();
 
         if (awakening) {
             tag.putDouble(Constants.NBT.EXTRA_ATTACK_SPEED, baseSpeed + extraspeed);
@@ -153,15 +155,15 @@ public class HexSwordItem extends SwordItem implements IHexblade {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
         tooltip.add(tooltipText);
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
         Multimap<Attribute, AttributeModifier> multimap = HashMultimap.create();
-        if (slot == EquipmentSlotType.MAINHAND) {
+        if (slot == EquipmentSlot.MAINHAND) {
             multimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", getAttackPower(stack), AttributeModifier.Operation.ADDITION));
             multimap.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", getAttackSpeed(stack), AttributeModifier.Operation.ADDITION));
         }
@@ -169,7 +171,7 @@ public class HexSwordItem extends SwordItem implements IHexblade {
         return multimap;
     }
 
-    public void talk(PlayerEntity player) {
-        player.sendMessage(new TranslationTextComponent(this.getDescriptionId() + ".dialogue." + player.level.getRandom().nextInt(dialogueLines)).setStyle(Style.EMPTY.withItalic(true)), player.getUUID());
+    public void talk(Player player) {
+        player.sendMessage(new TranslatableComponent(this.getDescriptionId() + ".dialogue." + player.level.getRandom().nextInt(dialogueLines)).setStyle(Style.EMPTY.withItalic(true)), player.getUUID());
     }
 }

@@ -5,7 +5,7 @@ package alexthw.hexblades.client.render.models;// Made with Blockbench 3.9.3
 
 import alexthw.hexblades.Hexblades;
 import alexthw.hexblades.common.entity.FireElementalEntity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.processor.IBone;
 import software.bernie.geckolib3.model.AnimatedGeoModel;

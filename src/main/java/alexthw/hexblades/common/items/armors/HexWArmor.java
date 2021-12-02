@@ -1,17 +1,17 @@
 package alexthw.hexblades.common.items.armors;
 
 import alexthw.hexblades.registers.HexItem;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorMaterial;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorMaterials;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.level.Level;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
@@ -22,9 +22,11 @@ import java.util.List;
 
 import static alexthw.hexblades.util.Constants.ArmorCompat.FOCUS_TAG;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class HexWArmor extends GeoArmorItem implements IAnimatable {
 
-    public HexWArmor(EquipmentSlotType slot, Properties builderIn) {
+    public HexWArmor(EquipmentSlot slot, Properties builderIn) {
         super(HexWArmor.Material.INSTANCE, slot, builderIn);
     }
 
@@ -37,7 +39,7 @@ public class HexWArmor extends GeoArmorItem implements IAnimatable {
 
         if (!(stack.getItem() instanceof HexWArmor)) return;
 
-        CompoundNBT tag = stack.getOrCreateTag();
+        CompoundTag tag = stack.getOrCreateTag();
         tag.putString(FOCUS_TAG, focus);
         stack.setTag(tag);
     }
@@ -59,23 +61,23 @@ public class HexWArmor extends GeoArmorItem implements IAnimatable {
     private static final int[] MAX_DAMAGE_ARRAY = new int[]{13, 15, 16, 11};
 
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable World pLevel, List<ITextComponent> pTooltip, ITooltipFlag pFlag) {
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
         super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
-        pTooltip.add(new StringTextComponent("Focus: " + getFocus(pStack)));
+        pTooltip.add(new TextComponent("Focus: " + getFocus(pStack)));
     }
 
 
-    public static class Material implements IArmorMaterial {
+    public static class Material implements ArmorMaterial {
         public static final HexWArmor.Material INSTANCE = new HexWArmor.Material();
 
         public Material() {
         }
 
-        public int getDurabilityForSlot(EquipmentSlotType slot) {
+        public int getDurabilityForSlot(EquipmentSlot slot) {
             return HexWArmor.MAX_DAMAGE_ARRAY[slot.getIndex()] * 30;
         }
 
-        public int getDefenseForSlot(EquipmentSlotType slot) {
+        public int getDefenseForSlot(EquipmentSlot slot) {
             switch (slot) {
                 case CHEST:
                     return 8;
@@ -94,7 +96,7 @@ public class HexWArmor extends GeoArmorItem implements IAnimatable {
         }
 
         public SoundEvent getEquipSound() {
-            return ArmorMaterial.GOLD.getEquipSound();
+            return ArmorMaterials.GOLD.getEquipSound();
         }
 
         public Ingredient getRepairIngredient() {

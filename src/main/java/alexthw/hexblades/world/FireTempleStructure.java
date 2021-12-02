@@ -3,34 +3,41 @@ package alexthw.hexblades.world;
 import alexthw.hexblades.Hexblades;
 import alexthw.hexblades.util.WorldGenUtil;
 import com.mojang.serialization.Codec;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.util.math.vector.Vector3i;
-import net.minecraft.util.registry.DynamicRegistries;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.jigsaw.JigsawManager;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.core.Vec3i;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.Registry;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.structures.JigsawPlacement;
 import net.minecraft.world.gen.feature.structure.*;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.feature.StructureFeature.StructureStartFactory;
+import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
+import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
+import net.minecraft.world.level.levelgen.structure.StructurePiece;
+import net.minecraft.world.level.levelgen.structure.StructureStart;
 
 public class FireTempleStructure extends AbstractJigsawStructure {
 
 
-    public FireTempleStructure(Codec<NoFeatureConfig> pCodec, int minHeightLimit, int terrainHeightRadius, int allowTerrainHeightRange, boolean canSpawnInWater) {
+    public FireTempleStructure(Codec<NoneFeatureConfiguration> pCodec, int minHeightLimit, int terrainHeightRadius, int allowTerrainHeightRange, boolean canSpawnInWater) {
         super(pCodec, minHeightLimit, terrainHeightRadius, allowTerrainHeightRange, canSpawnInWater);
     }
 
     @Override
-    public GenerationStage.Decoration step() {
-        return GenerationStage.Decoration.SURFACE_STRUCTURES;
+    public GenerationStep.Decoration step() {
+        return GenerationStep.Decoration.SURFACE_STRUCTURES;
     }
 
     @Override
-    public IStartFactory<NoFeatureConfig> getStartFactory() {
+    public StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
         return FireTempleStructure.Start::new;
     }
 
@@ -39,14 +46,14 @@ public class FireTempleStructure extends AbstractJigsawStructure {
     }
 
 
-    private static class Start extends StructureStart<NoFeatureConfig> {
+    private static class Start extends StructureStart<NoneFeatureConfiguration> {
 
-        public Start(Structure<NoFeatureConfig> config, int chunkX, int chunkZ, MutableBoundingBox bounds, int refs, long seed) {
+        public Start(StructureFeature<NoneFeatureConfiguration> config, int chunkX, int chunkZ, BoundingBox bounds, int refs, long seed) {
             super(config, chunkX, chunkZ, bounds, refs, seed);
         }
 
         @Override
-        public void generatePieces(DynamicRegistries dynamicRegistryManager, ChunkGenerator chunkGenerator, TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn, NoFeatureConfig config) {
+        public void generatePieces(RegistryAccess dynamicRegistryManager, ChunkGenerator chunkGenerator, StructureManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn, NoneFeatureConfiguration config) {
 
             // Turns the chunk coordinates into actual coordinates we can use
 
@@ -66,9 +73,9 @@ public class FireTempleStructure extends AbstractJigsawStructure {
             BlockPos placementPos = new BlockPos(chunkX * 16, WorldGenUtil.getLowestLand(chunkGenerator, this.getBoundingBox(), false).getY(), chunkZ * 16);
 
             // All a structure has to do is call this method to turn it into a jigsaw based structure!
-            JigsawManager.addPieces(
+            JigsawPlacement.addPieces(
                     dynamicRegistryManager,
-                    new VillageConfig(() -> dynamicRegistryManager.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY)
+                    new JigsawConfiguration(() -> dynamicRegistryManager.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY)
                             // The path to the starting Template Pool JSON file to read.
 
                             .get(new ResourceLocation(Hexblades.MODID, "fire_temple/fire_temple_start")),
@@ -77,7 +84,7 @@ public class FireTempleStructure extends AbstractJigsawStructure {
                             // I recommend you keep this a decent value like 10 so people can use datapacks to add additional pieces to your structure easily.
                             // But don't make it too large for recursive structures like villages or you'll crash server due to hundreds of pieces attempting to generate!
                             14),
-                    AbstractVillagePiece::new,
+                    PoolElementStructurePiece::new,
                     chunkGenerator,
                     templateManagerIn,
                     placementPos, // Position of the structure. Y value is ignored if last parameter is set to true.
@@ -95,7 +102,7 @@ public class FireTempleStructure extends AbstractJigsawStructure {
             // This is so that our structure's start piece is now centered on the water check done in isFeatureChunk.
             // Whatever the offset done to center the start piece, that offset is applied to all other pieces
             // so the entire structure is shifted properly to the new spot.
-            Vector3i structureCenter = this.pieces.get(0).getBoundingBox().getCenter();
+            Vec3i structureCenter = this.pieces.get(0).getBoundingBox().getCenter();
             int xOffset = placementPos.getX() - structureCenter.getX();
             int zOffset = placementPos.getZ() - structureCenter.getZ();
             for (StructurePiece structurePiece : this.pieces) {

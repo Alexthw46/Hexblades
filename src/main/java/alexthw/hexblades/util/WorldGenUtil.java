@@ -1,13 +1,13 @@
 package alexthw.hexblades.util;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.ChunkGenerator;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 
 import java.util.Arrays;
@@ -16,18 +16,18 @@ import java.util.Set;
 
 public class WorldGenUtil {
 
-    public static boolean haveCategories(BiomeLoadingEvent context, Biome.Category... categories) {
-        Set<Biome.Category> categorySet = new HashSet<>(Arrays.asList(categories));
+    public static boolean haveCategories(BiomeLoadingEvent context, Biome.BiomeCategory... categories) {
+        Set<Biome.BiomeCategory> categorySet = new HashSet<>(Arrays.asList(categories));
         return categorySet.contains(context.getCategory());
     }
 
-    public static BlockPos getHighestLand(ChunkGenerator chunkGenerator, MutableBoundingBox boundingBox, boolean canBeOnLiquid) {
-        BlockPos.Mutable mutable = new BlockPos.Mutable().set(
+    public static BlockPos getHighestLand(ChunkGenerator chunkGenerator, BoundingBox boundingBox, boolean canBeOnLiquid) {
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos().set(
                 boundingBox.getCenter().getX(),
                 chunkGenerator.getGenDepth() - 20,
                 boundingBox.getCenter().getZ());
 
-        IBlockReader blockView = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ());
+        BlockGetter blockView = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ());
         BlockState currentBlockstate;
         while (mutable.getY() > chunkGenerator.getSeaLevel()) {
             currentBlockstate = blockView.getBlockState(mutable);
@@ -43,13 +43,13 @@ public class WorldGenUtil {
         return mutable;
     }
 
-    public static BlockPos getLowestLand(ChunkGenerator chunkGenerator, MutableBoundingBox boundingBox, boolean canBeOnLiquid) {
-        BlockPos.Mutable mutable = new BlockPos.Mutable().set(
+    public static BlockPos getLowestLand(ChunkGenerator chunkGenerator, BoundingBox boundingBox, boolean canBeOnLiquid) {
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos().set(
                 boundingBox.getCenter().getX(),
                 chunkGenerator.getSeaLevel() + 1,
                 boundingBox.getCenter().getZ());
 
-        IBlockReader blockView = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ());
+        BlockGetter blockView = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ());
         BlockState currentBlockstate = blockView.getBlockState(mutable);
         while (mutable.getY() <= chunkGenerator.getGenDepth() - 20) {
 

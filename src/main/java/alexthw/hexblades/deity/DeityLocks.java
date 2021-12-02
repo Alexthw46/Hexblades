@@ -1,6 +1,6 @@
 package alexthw.hexblades.deity;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class DeityLocks {
 

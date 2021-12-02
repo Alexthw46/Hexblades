@@ -1,12 +1,12 @@
 package alexthw.hexblades.world;
 
 import alexthw.hexblades.Hexblades;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.WorldGenRegistries;
-import net.minecraft.world.gen.FlatGenerationSettings;
-import net.minecraft.world.gen.feature.IFeatureConfig;
-import net.minecraft.world.gen.feature.StructureFeature;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Registry;
+import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.world.level.levelgen.flat.FlatLevelGeneratorSettings;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 
 import static alexthw.hexblades.registers.HexStructures.FIRE_TEMPLE;
 
@@ -14,10 +14,10 @@ public class ConfiguredStructures {
     /**
      * Static instance of our structure so we can reference it and add it to biomes easily.
      */
-    public static StructureFeature<?, ?> CONFIGURED_FIRE_TEMPLE = FIRE_TEMPLE.get().configured(IFeatureConfig.NONE);
+    public static ConfiguredStructureFeature<?, ?> CONFIGURED_FIRE_TEMPLE = FIRE_TEMPLE.get().configured(FeatureConfiguration.NONE);
 
     public static void registerConfiguredStructures() {
-        net.minecraft.util.registry.Registry<StructureFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE;
+        net.minecraft.core.Registry<ConfiguredStructureFeature<?, ?>> registry = BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE;
         Registry.register(registry, new ResourceLocation(Hexblades.MODID, "configured_fire_temple"), CONFIGURED_FIRE_TEMPLE);
 
         /* Ok so, this part may be hard to grasp but basically, just add your structure to this to
@@ -35,7 +35,7 @@ public class ConfiguredStructures {
          *
          * Requires AccessTransformer ( see resources/META-INF/accesstransformer.cfg )
          */
-        FlatGenerationSettings.STRUCTURE_FEATURES.put(FIRE_TEMPLE.get(), CONFIGURED_FIRE_TEMPLE);
+        FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(FIRE_TEMPLE.get(), CONFIGURED_FIRE_TEMPLE);
     }
 
 }

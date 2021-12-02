@@ -1,7 +1,7 @@
 package alexthw.hexblades.client.render.models;
 
 import alexthw.hexblades.common.items.armors.HexWArmor;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 import static alexthw.hexblades.util.HexUtils.prefix;

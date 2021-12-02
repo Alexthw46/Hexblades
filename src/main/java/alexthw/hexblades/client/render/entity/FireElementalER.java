@@ -2,21 +2,22 @@ package alexthw.hexblades.client.render.entity;
 
 import alexthw.hexblades.client.render.models.FireElementalModel;
 import alexthw.hexblades.common.entity.FireElementalEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import elucent.eidolon.Registry;
 import elucent.eidolon.particle.Particles;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 public class FireElementalER extends GeoEntityRenderer<FireElementalEntity> {
 
 
-    public FireElementalER(EntityRendererManager renderManager) {
+    public FireElementalER(EntityRendererProvider.Context renderManager) {
         super(renderManager, new FireElementalModel());
     }
 
-    public void render(FireElementalEntity entity, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
+    public void render(FireElementalEntity entity, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
         super.render(entity, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
         Particles.create(Registry.FLAME_PARTICLE).setAlpha(0.7F, 0.0F).setScale(0.35F, 0.0F).setLifetime(10).randomOffset(0.3D, 0.3D).randomVelocity(0, -0.15F).setColor(1.5F, 0.5F, 0.25F, 0.5F, 0.25F, 0.1F).spawn(entity.getCommandSenderWorld(), entity.getX(), entity.getY() + 0.75F, entity.getZ());
         if (entity.isCannonLoaded()) {

@@ -5,19 +5,24 @@ import alexthw.hexblades.common.blocks.DecoBlock;
 import alexthw.hexblades.registers.HexBlock;
 import alexthw.hexblades.util.HexUtils;
 import elucent.eidolon.block.BlockBase;
-import net.minecraft.block.*;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.core.Registry;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.fml.RegistryObject;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import static alexthw.hexblades.util.HexUtils.prefix;
+
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.level.block.FenceGateBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraftforge.fmllegacy.RegistryObject;
 
 @SuppressWarnings("CommentedOutCode")
 public class HexBlockStateProvider extends BlockStateProvider{
@@ -31,7 +36,7 @@ public class HexBlockStateProvider extends BlockStateProvider{
         Set<RegistryObject<Block>> blocks = new HashSet<>(HexBlock.BLOCKS.getEntries());
         HexUtils.takeAll(blocks, b -> b.get() instanceof DecoBlock).forEach(this::basicBlock);
         HexUtils.takeAll(blocks, b -> b.get() instanceof SlabBlock).forEach(this::slabBlock);
-        HexUtils.takeAll(blocks, b -> b.get() instanceof StairsBlock).forEach(this::stairsBlock);
+        HexUtils.takeAll(blocks, b -> b.get() instanceof StairBlock).forEach(this::stairsBlock);
         //HexUtils.takeAll(blocks, b -> b.get() instanceof RotatedPillarBlock).forEach(this::logBlock);
         //HexUtils.takeAll(blocks, b -> b.get() instanceof WallBlock).forEach(this::wallBlock);
         HexUtils.takeAll(blocks, b -> b.get() instanceof FenceBlock).forEach(this::fenceBlock);
@@ -62,7 +67,7 @@ public class HexBlockStateProvider extends BlockStateProvider{
     public void stairsBlock(RegistryObject<Block> blockRegistryObject) {
         String name = Registry.BLOCK.getKey(blockRegistryObject.get()).getPath();
         String baseName = name.substring(0, name.length() - 7);
-        stairsBlock((StairsBlock) blockRegistryObject.get(), prefix("block/" + baseName));
+        stairsBlock((StairBlock) blockRegistryObject.get(), prefix("block/" + baseName));
     }
 
     private void basicBlock(RegistryObject<Block> blockRegistryObject) {

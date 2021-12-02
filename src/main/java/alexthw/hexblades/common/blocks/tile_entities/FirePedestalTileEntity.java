@@ -7,15 +7,13 @@ import alexthw.hexblades.registers.HexTileEntityType;
 import elucent.eidolon.Registry;
 import elucent.eidolon.particle.Particles;
 import elucent.eidolon.tile.TileEntityBase;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -24,7 +22,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class FirePedestalTileEntity extends TileEntityBase implements IAnimatable, ITickableTileEntity {
+public class FirePedestalTileEntity extends TileEntityBase implements IAnimatable {
 
     private final AnimationFactory factory = new AnimationFactory(this);
     private boolean isSummoning;
@@ -32,8 +30,8 @@ public class FirePedestalTileEntity extends TileEntityBase implements IAnimatabl
     private int tickCounter;
     private int animationState;
 
-    public FirePedestalTileEntity() {
-        this(HexTileEntityType.FIRE_PEDESTAL_TILE_ENTITY);
+    public FirePedestalTileEntity(BlockPos blockPos, BlockState state) {
+        super(HexTileEntityType.FIRE_PEDESTAL_TILE_ENTITY,blockPos,state);
         animationState = -1;
         isSummoning = false;
         hasCore = false;
@@ -41,11 +39,6 @@ public class FirePedestalTileEntity extends TileEntityBase implements IAnimatabl
 
     }
 
-    public FirePedestalTileEntity(TileEntityType<?> tileEntityTypeIn) {
-        super(tileEntityTypeIn);
-    }
-
-    @Override
     public void tick() {
         if (!isSummoning || getLevel() == null) return;
         if (getLevel().isClientSide()) {
@@ -72,10 +65,10 @@ public class FirePedestalTileEntity extends TileEntityBase implements IAnimatabl
 
     }
 
-    public ActionResultType onActivated(BlockState state, BlockPos pos, PlayerEntity player, Hand hand) {
+    public InteractionResult onActivated(BlockState state, BlockPos pos, Player player, InteractionHand hand) {
 
         if (getLevel() != null && !getLevel().isClientSide())
-            if (hand == Hand.MAIN_HAND && canUse()) {
+            if (hand == InteractionHand.MAIN_HAND && canUse()) {
 
                 ItemStack itemHand = player.getItemInHand(hand);
 
@@ -90,7 +83,7 @@ public class FirePedestalTileEntity extends TileEntityBase implements IAnimatabl
                     animationState = 0;
                     this.sync();
 
-                    return ActionResultType.SUCCESS;
+                    return InteractionResult.SUCCESS;
                 } else if (itemHand.isEmpty() && hasCore) {
 
                     player.addItem(new ItemStack(HexItem.FIRE_CORE.get()));
@@ -99,11 +92,11 @@ public class FirePedestalTileEntity extends TileEntityBase implements IAnimatabl
                     animationState = -1;
                     this.sync();
 
-                    return ActionResultType.SUCCESS;
+                    return InteractionResult.SUCCESS;
                 }
 
             }
-        return ActionResultType.PASS;
+        return InteractionResult.PASS;
     }
 
     public void startSummoning() {
@@ -149,7 +142,7 @@ public class FirePedestalTileEntity extends TileEntityBase implements IAnimatabl
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT tag) {
+    public CompoundTag save(CompoundTag tag) {
         tag = super.save(tag);
         tag.putBoolean("isSummoning", isSummoning);
         tag.putBoolean("hasCore", hasCore);
@@ -159,8 +152,8 @@ public class FirePedestalTileEntity extends TileEntityBase implements IAnimatabl
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT tag) {
-        super.load(state, tag);
+    public void load( CompoundTag tag) {
+        super.load(tag);
         this.isSummoning = tag.getBoolean("isSummoning");
         this.hasCore = tag.getBoolean("hasCore");
         this.tickCounter = tag.getInt("tickCounter");

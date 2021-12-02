@@ -2,7 +2,7 @@ package alexthw.hexblades.client.render.models;
 
 import alexthw.hexblades.Hexblades;
 import alexthw.hexblades.common.entity.BaseElementalEntity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 public abstract class BaseElementalModel extends AnimatedGeoModel<BaseElementalEntity> {

@@ -1,18 +1,20 @@
 package alexthw.hexblades.common.items;
 
 import alexthw.hexblades.common.items.armors.HexWArmor;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class ArmorFocus extends Item {
 
@@ -30,7 +32,7 @@ public class ArmorFocus extends Item {
     public static String[] foci = {"eidolon", "botania", "ars nouveau"};
 
     @Override
-    public ActionResult<ItemStack> use(World pLevel, PlayerEntity pPlayer, Hand pHand) {
+    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pHand) {
 
         for (ItemStack stack : pPlayer.getArmorSlots()) {
             if (stack.getItem() instanceof HexWArmor) {
@@ -42,8 +44,8 @@ public class ArmorFocus extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable World pLevel, List<ITextComponent> pTooltip, ITooltipFlag pFlag) {
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
         super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
-        if (!modFocus.equals("eidolon")) pTooltip.add(new StringTextComponent("Requires " + modFocus));
+        if (!modFocus.equals("eidolon")) pTooltip.add(new TextComponent("Requires " + modFocus));
     }
 }

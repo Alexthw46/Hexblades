@@ -1,9 +1,9 @@
 package alexthw.hexblades.common.entity.ai.fe;
 
 import alexthw.hexblades.common.entity.FireElementalEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.util.Mth;
 
 import java.util.EnumSet;
 
@@ -80,8 +80,8 @@ public class FireCannonAttackGoal extends Goal {
         } else if ((this.attackTime == 30) && (this.Firenando.getAnimationState() == 1)) {
             this.Firenando.loadCannon(true);
         } else if ((this.attackTime == 15) && (this.Firenando.getAnimationState() == 1)) {
-            float f = MathHelper.sqrt(d0) / this.attackRadius;
-            float lvt_5_1_ = MathHelper.clamp(f, 0.1F, 1.0F);
+            float f = Mth.sqrt(d0) / this.attackRadius;
+            float lvt_5_1_ = Mth.clamp(f, 0.1F, 1.0F);
             this.Firenando.performRangedAttack(this.target, lvt_5_1_);
         } else if (this.attackTime == 1) {
             this.Firenando.setAnimationState(0);

@@ -10,15 +10,15 @@ import elucent.eidolon.spell.AltarInfo;
 import elucent.eidolon.spell.Sign;
 import elucent.eidolon.spell.StaticSpell;
 import elucent.eidolon.tile.EffigyTileEntity;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 import java.util.Comparator;
 import java.util.List;
@@ -31,13 +31,13 @@ public class HexPrayerSpell extends StaticSpell {
         this.deity = deity;
     }
 
-    public boolean canCast(World world, BlockPos pos, PlayerEntity player) {
+    public boolean canCast(Level world, BlockPos pos, Player player) {
         if (!world.getCapability(ReputationProvider.CAPABILITY).isPresent()) {
             return false;
         } else if (!world.getCapability(ReputationProvider.CAPABILITY).resolve().get().canPray(player, world.getGameTime())) {
             return false;
         } else {
-            List<EffigyTileEntity> effigies = Ritual.getTilesWithinAABB(EffigyTileEntity.class, world, new AxisAlignedBB(pos.offset(-4, -4, -4), pos.offset(5, 5, 5)));
+            List<EffigyTileEntity> effigies = Ritual.getTilesWithinAABB(EffigyTileEntity.class, world, new AABB(pos.offset(-4, -4, -4), pos.offset(5, 5, 5)));
             if (effigies.size() == 0) {
                 return false;
             } else {
@@ -47,8 +47,8 @@ public class HexPrayerSpell extends StaticSpell {
         }
     }
 
-    public void cast(World world, BlockPos pos, PlayerEntity player) {
-        List<EffigyTileEntity> effigies = Ritual.getTilesWithinAABB(EffigyTileEntity.class, world, new AxisAlignedBB(pos.offset(-4, -4, -4), pos.offset(5, 5, 5)));
+    public void cast(Level world, BlockPos pos, Player player) {
+        List<EffigyTileEntity> effigies = Ritual.getTilesWithinAABB(EffigyTileEntity.class, world, new AABB(pos.offset(-4, -4, -4), pos.offset(5, 5, 5)));
         if (effigies.size() != 0) {
             EffigyTileEntity effigy = effigies.stream().min(Comparator.comparingDouble((e) -> e.getBlockPos().distSqr(pos))).get();
             if (!world.isClientSide) {
@@ -61,8 +61,8 @@ public class HexPrayerSpell extends StaticSpell {
                     this.deity.onReputationChange(player, rep, prev, rep.getReputation(player, this.deity.getId()));
                 });
             } else {
-                world.playSound(player, effigy.getBlockPos(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundCategory.NEUTRAL, 10000.0F, 0.6F + world.random.nextFloat() * 0.2F);
-                world.playSound(player, effigy.getBlockPos(), SoundEvents.LIGHTNING_BOLT_IMPACT, SoundCategory.NEUTRAL, 2.0F, 0.5F + world.random.nextFloat() * 0.2F);
+                world.playSound(player, effigy.getBlockPos(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.NEUTRAL, 10000.0F, 0.6F + world.random.nextFloat() * 0.2F);
+                world.playSound(player, effigy.getBlockPos(), SoundEvents.LIGHTNING_BOLT_IMPACT, SoundSource.NEUTRAL, 2.0F, 0.5F + world.random.nextFloat() * 0.2F);
                 BlockState state = world.getBlockState(effigy.getBlockPos());
                 Direction dir = state.getValue(HorizontalBlockBase.HORIZONTAL_FACING);
                 Direction tangent = dir.getClockWise();

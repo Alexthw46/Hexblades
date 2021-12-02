@@ -3,11 +3,11 @@ package alexthw.hexblades.network;
 import elucent.eidolon.Eidolon;
 import elucent.eidolon.Registry;
 import elucent.eidolon.particle.Particles;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkDirection;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.fmllegacy.network.NetworkDirection;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -21,12 +21,12 @@ public class RefillEffectPacket {
         this.size = size;
     }
 
-    public static void encode(RefillEffectPacket object, PacketBuffer buffer) {
+    public static void encode(RefillEffectPacket object, FriendlyByteBuf buffer) {
         buffer.writeBlockPos(object.pos);
         buffer.writeFloat(object.size);
     }
 
-    public static RefillEffectPacket decode(PacketBuffer buffer) {
+    public static RefillEffectPacket decode(FriendlyByteBuf buffer) {
         return new RefillEffectPacket(buffer.readBlockPos(), buffer.readFloat());
     }
 
@@ -34,7 +34,7 @@ public class RefillEffectPacket {
         ctx.get().enqueueWork(() -> {
             assert ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT;
 
-            World world = Eidolon.proxy.getWorld();
+            Level world = Eidolon.proxy.getWorld();
             if (world != null) {
                 BlockPos pos = packet.pos;
                 float size = packet.size;

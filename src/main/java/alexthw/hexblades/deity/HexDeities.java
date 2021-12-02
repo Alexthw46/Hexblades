@@ -4,7 +4,7 @@ package alexthw.hexblades.deity;
 import alexthw.hexblades.Hexblades;
 import elucent.eidolon.deity.Deities;
 import elucent.eidolon.deity.Deity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.Arrays;
 import java.util.List;
