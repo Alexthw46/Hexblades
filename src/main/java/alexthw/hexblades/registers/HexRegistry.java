@@ -2,7 +2,6 @@ package alexthw.hexblades.registers;
 
 import alexthw.hexblades.codex.CodexHexChapters;
 import alexthw.hexblades.common.potions.EChargedEffect;
-import alexthw.hexblades.compat.CrucibleCompatHandler;
 import alexthw.hexblades.compat.MalumCompat;
 import alexthw.hexblades.deity.HexDeities;
 import alexthw.hexblades.network.FlameEffectPacket;
@@ -50,7 +49,6 @@ public class HexRegistry {
         TempRecipes.init();
         HexRituals.init();
         CompatUtil.check(); //may be useless, already checked before
-        CrucibleCompatHandler.start();
         if (isMalumLoaded()) {
             try {
                 MalumCompat.altar();

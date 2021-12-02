@@ -145,8 +145,6 @@ dependencies {
     compileOnly fg.deobf("vazkii.botania:Botania:1.16.5-420")
 
     compileOnly fg.deobf("curse.maven:malum-484064:3374475") //0.3
-    compileOnly fg.deobf("curse.maven:druidcraft-340991:3507029")//0.4.54
-    compileOnly fg.deobf("curse.maven:occultism-361026:3528496") //1.20.0
     compileOnly fg.deobf("curse.maven:ars_nouveau-401955:3527164")//1.24.0
 
     //dependencies
@@ -158,8 +156,6 @@ dependencies {
     runtimeOnly fg.deobf('mezz.jei:jei-1.16.5:7.7.1.136')
     runtimeOnly fg.deobf("vazkii.botania:Botania:1.16.5-420")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-53.1")
-    runtimeOnly fg.deobf("curse.maven:druidcraft-340991:3507029")
-    runtimeOnly fg.deobf("curse.maven:occultism-361026:3522201")
     runtimeOnly fg.deobf("curse.maven:malum-484064:3374475")
     runtimeOnly fg.deobf("curse.maven:ars_nouveau-401955:3527164")
     runtimeOnly fg.deobf("curse.maven:exp-407174:3188120")  // Shutup experimental settings
