@@ -3,6 +3,7 @@ package alexthw.hexblades.common.entity.ai.fe;
 import alexthw.hexblades.common.entity.FireElementalEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import org.jetbrains.annotations.NotNull;
 
 public class FEMeleeGoal extends MeleeAttackGoal {
 
@@ -56,7 +57,7 @@ public class FEMeleeGoal extends MeleeAttackGoal {
     }
 
     @Override
-    protected void checkAndPerformAttack(LivingEntity enemy, double distToEnemySqr) {
+    protected void checkAndPerformAttack(@NotNull LivingEntity enemy, double distToEnemySqr) {
 
         double d0 = this.getAttackReachSqr(enemy);
 

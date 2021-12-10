@@ -4,41 +4,48 @@ import alexthw.hexblades.common.items.HexSwordItem;
 import alexthw.hexblades.registers.Tiers;
 import alexthw.hexblades.util.Constants;
 import alexthw.hexblades.util.HexUtils;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
+import com.google.common.collect.Sets;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.damagesource.EntityDamageSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TextColor;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraftforge.common.TierSortingRegistry;
+import net.minecraftforge.common.ToolAction;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
 import static alexthw.hexblades.util.Constants.NBT.MiningSwitch;
-
-import net.minecraft.world.item.Item.Properties;
+import static net.minecraftforge.common.ToolActions.PICKAXE_DIG;
+import static net.minecraftforge.common.ToolActions.SHOVEL_DIG;
 
 public class EarthHammer1 extends HexSwordItem {
 
     protected float baseMiningSpeed;
 
     public EarthHammer1(Properties props) {
-        this(7, -3.2F,
-                props.addToolType(net.minecraftforge.common.ToolType.PICKAXE, Tiers.PatronWeaponTier.INSTANCE.getLevel()));
+        super(7, -3.2F,props);
         baseMiningSpeed = 8.0F;
         tooltipText = new TranslatableComponent("tooltip.hexblades.earth_hammer");
     }
@@ -73,7 +80,7 @@ public class EarthHammer1 extends HexSwordItem {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(Level world, @NotNull Player player, @NotNull InteractionHand hand) {
         if (player.isShiftKeyDown() && !world.isClientSide()) {
             switchMining(player.getItemInHand(hand));
         }
@@ -81,7 +88,7 @@ public class EarthHammer1 extends HexSwordItem {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, Level worldIn, Entity user, int itemSlot, boolean isSelected) {
+    public void inventoryTick(@NotNull ItemStack stack, @NotNull Level worldIn, @NotNull Entity user, int itemSlot, boolean isSelected) {
         if (stack.getOrCreateTag().getBoolean(MiningSwitch)) {
             return;
         }
@@ -123,35 +130,37 @@ public class EarthHammer1 extends HexSwordItem {
     }
 
     @Override
-    public boolean isCorrectToolForDrops(BlockState blockIn) {
-        int i = this.getTier().getLevel();
-        if (blockIn.getHarvestTool() == net.minecraftforge.common.ToolType.PICKAXE) {
-            return i >= blockIn.getHarvestLevel();
-        }
-        Material material = blockIn.getMaterial();
-        return material == Material.STONE || material == Material.METAL || material == Material.HEAVY_METAL;
+    public boolean isCorrectToolForDrops(ItemStack stack, BlockState state) {
+        if (state.is(BlockTags.MINEABLE_WITH_PICKAXE))
+            return TierSortingRegistry.isCorrectTierForDrops(Tiers.PatronWeaponTier.INSTANCE, state);
+
+        return super.isCorrectToolForDrops(stack, state);
     }
 
     @Override
-    public boolean canAttackBlock(BlockState state, Level worldIn, BlockPos pos, Player player) {
+    public boolean canAttackBlock(@NotNull BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos, @NotNull Player player) {
         return true;
     }
 
+    private static final Set<ToolAction> TOOL_ACTIONS =  Stream.of(PICKAXE_DIG, SHOVEL_DIG).collect(Collectors.toCollection(Sets::newIdentityHashSet));
     @Override
-    public float getDestroySpeed(ItemStack stack, BlockState state) {
+    public boolean canPerformAction(@NotNull ItemStack stack, @NotNull ToolAction toolAction)
+    {
+        return TOOL_ACTIONS.contains(toolAction);
+    }
 
-        float result;
-
+    @Override
+    public float getDestroySpeed(@NotNull ItemStack stack, BlockState state) {
         Material material = state.getMaterial();
 
-        if ((material == Material.STONE) && getAwakened(stack)) {
-            result = getMiningSpeed(stack) + 2.0F;
-        } else if (material == Material.METAL || material == Material.HEAVY_METAL || getToolTypes(stack).stream().anyMatch(state::isToolEffective)) {
-            result = getMiningSpeed(stack);
-        } else {
-            result = 1.0F;
+        float newMiningSpeed = getMiningSpeed(stack);
+        if ((material == Material.STONE || material == Material.DIRT) && getAwakened(stack)) {
+            return newMiningSpeed + 2.0F;
         }
-        return result;
+        if (material == Material.METAL || material == Material.HEAVY_METAL || state.is(BlockTags.MINEABLE_WITH_PICKAXE)) {
+            return newMiningSpeed;
+        }
+        return super.getDestroySpeed(stack, state);
     }
 
     public void switchMining(ItemStack weapon) {
@@ -165,13 +174,13 @@ public class EarthHammer1 extends HexSwordItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(@NotNull ItemStack stack, Level worldIn, @NotNull List<Component> tooltip, @NotNull TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
         tooltip.add(new TranslatableComponent("Mining mode:" + (stack.getOrCreateTag().getBoolean(MiningSwitch) ? "On" : "Off")));
     }
 
     @Override
-    public boolean mineBlock(ItemStack stack, Level worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
+    public boolean mineBlock(@NotNull ItemStack stack, Level worldIn, @NotNull BlockState state, @NotNull BlockPos pos, @NotNull LivingEntity entityLiving) {
         if (!worldIn.isClientSide && (state.getDestroySpeed(worldIn, pos) != 0.0F) && entityLiving instanceof Player) {
             if (stack.getMaxDamage() - stack.getDamageValue() < 51) {
                 switchMining(stack);

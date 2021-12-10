@@ -11,6 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerBossEvent;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
@@ -46,7 +47,7 @@ public class BaseElementalEntity extends Monster implements IAnimatable {
         this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
     }
 
-    public int getExperienceReward(Player player) {
+    public int getExperienceReward(@NotNull Player player) {
         return 80;
     }
 
@@ -59,13 +60,13 @@ public class BaseElementalEntity extends Monster implements IAnimatable {
     }
 
     @Override
-    public void stopSeenByPlayer(ServerPlayer pPlayer) {
+    public void stopSeenByPlayer(@NotNull ServerPlayer pPlayer) {
         super.stopSeenByPlayer(pPlayer);
         this.bossEvent.removePlayer(pPlayer);
     }
 
     @Override
-    public void startSeenByPlayer(ServerPlayer pPlayer) {
+    public void startSeenByPlayer(@NotNull ServerPlayer pPlayer) {
         super.startSeenByPlayer(pPlayer);
         this.bossEvent.addPlayer(pPlayer);
     }

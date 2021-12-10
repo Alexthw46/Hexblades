@@ -27,7 +27,8 @@ import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.SwordItem;
-import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
 
 public class HexItemModelProvider extends ItemModelProvider {
 
@@ -111,5 +112,10 @@ public class HexItemModelProvider extends ItemModelProvider {
         String name = Registry.ITEM.getKey(i.get()).getPath();
         String baseName = name.substring(0, name.length() - 6);
         fenceInventory(name, prefix("block/" + baseName));
+    }
+
+    @Override
+    public @NotNull String getName() {
+        return "HexBlades Item Models";
     }
 }

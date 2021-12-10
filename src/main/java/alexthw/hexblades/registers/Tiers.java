@@ -3,6 +3,7 @@ package alexthw.hexblades.registers;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import org.jetbrains.annotations.NotNull;
 
 public class Tiers {
 
@@ -31,7 +32,7 @@ public class Tiers {
 
 
         @Override
-        public Ingredient getRepairIngredient() {
+        public @NotNull Ingredient getRepairIngredient() {
             return Ingredient.of(new ItemStack(HexItem.HEXIUM_INGOT.get()));
         }
 
@@ -46,7 +47,7 @@ public class Tiers {
 
         @Override
         public float getSpeed() {
-            return 7.0F;
+            return 8.0F;
         }
 
         public float getAttackDamageBonus() {
@@ -63,7 +64,7 @@ public class Tiers {
 
 
         @Override
-        public Ingredient getRepairIngredient() {
+        public @NotNull Ingredient getRepairIngredient() {
             return Ingredient.EMPTY;
         }
 

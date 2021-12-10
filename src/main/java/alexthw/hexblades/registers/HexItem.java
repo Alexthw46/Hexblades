@@ -13,7 +13,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 
 public class HexItem {
@@ -22,7 +22,7 @@ public class HexItem {
         return new Item.Properties().tab(Hexblades.TAB);
     }
 
-    public static final DeferredRegister<Item> ITEMS = Registry.ITEMS;
+    public static final DeferredRegister<Item> ITEMS = HexRegistry.ITEMS;
 
     //Items
     public static final RegistryObject<Item> HEXIUM_INGOT;

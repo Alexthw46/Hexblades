@@ -8,29 +8,28 @@ import com.google.common.collect.Multimap;
 import elucent.eidolon.item.SappingSwordItem;
 import elucent.eidolon.network.LifestealEffectPacket;
 import elucent.eidolon.network.Networking;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.damagesource.EntityDamageSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
 import static alexthw.hexblades.util.CompatUtil.isArsNovLoaded;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class SanguineSword extends SappingSwordItem implements IHexblade {
 
@@ -59,7 +58,7 @@ public class SanguineSword extends SappingSwordItem implements IHexblade {
     }
 
     @Override
-    public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pItemSlot, boolean pIsSelected) {
+    public void inventoryTick(@NotNull ItemStack pStack, @NotNull Level pLevel, @NotNull Entity pEntity, int pItemSlot, boolean pIsSelected) {
         this.inventoryTick(pStack, pLevel, pEntity);
     }
 
@@ -99,17 +98,10 @@ public class SanguineSword extends SappingSwordItem implements IHexblade {
 
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (attacker instanceof Player) {
-            if (target.invulnerableTime > 0) {
-                target.invulnerableTime = 0;
-            }
-            if (onHitEffects()) applyHexEffects(stack, target, (Player) attacker, getAwakened(stack));
-            stack.setDamageValue(Math.max(stack.getDamageValue() - 10, 0));
-        }
-        return true;
+        return this.hurtEnemy(stack, target, attacker, true);
     }
 
-    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(Level world, @NotNull Player player, @NotNull InteractionHand hand) {
         if (!world.isClientSide()) {
             if (!(player.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof ShieldItem)) {
 

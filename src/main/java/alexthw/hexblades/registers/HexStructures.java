@@ -5,11 +5,11 @@ import alexthw.hexblades.world.FireTempleStructure;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.StructureSettings;
 import net.minecraft.world.level.levelgen.feature.configurations.StructureFeatureConfiguration;
-import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -22,7 +22,7 @@ public class HexStructures {
 
     public static final DeferredRegister<StructureFeature<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, Hexblades.MODID);
 
-    public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> FIRE_TEMPLE = STRUCTURES.register("fire_temple", () -> new FireTempleStructure(NoneFeatureConfiguration.CODEC, 20, 16, 32, false));
+    public static final RegistryObject<StructureFeature<JigsawConfiguration>> FIRE_TEMPLE = STRUCTURES.register("fire_temple", () -> new FireTempleStructure(JigsawConfiguration.CODEC, 20, 16, 32, false));
 
     public static void setupStructures() {
         setupMapSpacingAndLand(

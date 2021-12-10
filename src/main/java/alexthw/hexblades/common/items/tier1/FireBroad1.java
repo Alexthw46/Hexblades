@@ -13,8 +13,6 @@ import net.minecraft.world.level.Level;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
 
-import net.minecraft.world.item.Item.Properties;
-
 public class FireBroad1 extends HexSwordItem {
 
     public FireBroad1(Properties props) {

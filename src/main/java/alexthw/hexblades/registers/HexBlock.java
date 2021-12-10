@@ -8,7 +8,7 @@ import alexthw.hexblades.common.blocks.SwordStandBlock;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.item.BlockItem;;
-import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -56,7 +56,6 @@ public class HexBlock {
         DARK_POLISH_PLANKS = (new DecoBlockPack(BLOCKS, "dark_polished_planks", blockProps(Material.WOOD, MaterialColor.COLOR_BLACK).sound(SoundType.WOOD)
                 .strength(1.6F, 3.0F)))
                 .addFence();
-
     }
 
     static net.minecraft.world.level.block.state.BlockBehaviour.Properties blockProps(Material mat, MaterialColor color) {

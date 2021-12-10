@@ -1,12 +1,12 @@
 package alexthw.hexblades.world;
 
 import alexthw.hexblades.Hexblades;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.world.level.levelgen.flat.FlatLevelGeneratorSettings;
-import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.data.worldgen.PlainVillagePools;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
 
 import static alexthw.hexblades.registers.HexStructures.FIRE_TEMPLE;
 
@@ -14,28 +14,29 @@ public class ConfiguredStructures {
     /**
      * Static instance of our structure so we can reference it and add it to biomes easily.
      */
-    public static ConfiguredStructureFeature<?, ?> CONFIGURED_FIRE_TEMPLE = FIRE_TEMPLE.get().configured(FeatureConfiguration.NONE);
+    public static ConfiguredStructureFeature<?, ?> CONFIGURED_FIRE_TEMPLE = FIRE_TEMPLE.get().configured(new JigsawConfiguration(
+            // Dummy values for now. We will modify the pool at runtime since we cannot get json pool files here at mod init.
+            // You can create and register your pools in code, pass in the code create pool here, and delete line 137 in RunDownHouseStructure
+            () -> PlainVillagePools.START,
+
+            // We will set size at runtime too as JigsawConfiguration will not handle sizes above 7.
+            // If your size is below 7, you can set the size here and delete line 153 in RunDownHouseStructure
+            0
+
+            /*
+             * The only reason we are using JigsawConfiguration here is because in RunDownHouseStructure's createPiecesGenerator method,
+             * we are using JigsawPlacement.addPieces which requires JigsawConfiguration. However, if you create your own
+             * JigsawPlacement.addPieces, you could reduce the amount of workarounds like above that you need and give yourself more
+             * opportunities and control over your structures.
+             *
+             * An example of a custom JigsawPlacement.addPieces in action can be found here:
+             * https://github.com/TelepathicGrunt/RepurposedStructures/blob/1.18/src/main/java/com/telepathicgrunt/repurposedstructures/world/structures/pieces/PieceLimitedJigsawManager.java
+             */
+    ));
 
     public static void registerConfiguredStructures() {
         net.minecraft.core.Registry<ConfiguredStructureFeature<?, ?>> registry = BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE;
         Registry.register(registry, new ResourceLocation(Hexblades.MODID, "configured_fire_temple"), CONFIGURED_FIRE_TEMPLE);
-
-        /* Ok so, this part may be hard to grasp but basically, just add your structure to this to
-         * prevent any sort of crash or issue with other mod's custom ChunkGenerators. If they use
-         * FlatGenerationSettings.STRUCTURE_FEATURES in it and you don't add your structure to it, the game
-         * could crash later when you attempt to add the StructureSeparationSettings to the dimension.
-         *
-         * (It would also crash with superflat worldtype if you omit the below line
-         * and attempt to add the structure's StructureSeparationSettings to the world)
-         *
-         * Note: If you want your structure to spawn in superflat, remove the FlatChunkGenerator check
-         * in StructureTutorialMain.addDimensionalSpacing and then create a superflat world, exit it,
-         * and re-enter it and your structures will be spawning. I could not figure out why it needs
-         * the restart but honestly, superflat is really buggy and shouldn't be your main focus in my opinion.
-         *
-         * Requires AccessTransformer ( see resources/META-INF/accesstransformer.cfg )
-         */
-        FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(FIRE_TEMPLE.get(), CONFIGURED_FIRE_TEMPLE);
     }
 
 }

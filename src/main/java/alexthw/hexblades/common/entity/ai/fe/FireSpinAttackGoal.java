@@ -3,6 +3,7 @@ package alexthw.hexblades.common.entity.ai.fe;
 import alexthw.hexblades.common.entity.FireElementalEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import org.jetbrains.annotations.NotNull;
 
 public class FireSpinAttackGoal extends MeleeAttackGoal {
 
@@ -68,7 +69,7 @@ public class FireSpinAttackGoal extends MeleeAttackGoal {
     }
 
     @Override
-    protected void checkAndPerformAttack(LivingEntity enemy, double distToEnemySqr) {
+    protected void checkAndPerformAttack(@NotNull LivingEntity enemy, double distToEnemySqr) {
         double d0 = this.getAttackReachSqr(enemy);
         if (distToEnemySqr <= d0 && isTimeToAttack()) {
             this.resetAttackCooldown();

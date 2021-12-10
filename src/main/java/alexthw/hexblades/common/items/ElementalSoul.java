@@ -12,7 +12,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-import net.minecraft.world.item.Item.Properties;
+import org.jetbrains.annotations.NotNull;
 
 public class ElementalSoul extends Item {
 
@@ -21,10 +21,9 @@ public class ElementalSoul extends Item {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, Level world, Entity entityIn, int itemSlot, boolean isSelected) {
+    public void inventoryTick(@NotNull ItemStack stack, Level world, @NotNull Entity entityIn, int itemSlot, boolean isSelected) {
 
-        if (!world.isClientSide() && entityIn instanceof Player) {
-            Player player = (Player) entityIn;
+        if (!world.isClientSide() && entityIn instanceof Player player) {
             if (!KnowledgeUtil.knowsFact(player, HexFacts.EVOLVE_RITUAL)) {
                 world.getCapability(ReputationProvider.CAPABILITY, null).ifPresent(rep -> {
                     Deity deity = HexDeities.HEX_DEITY;

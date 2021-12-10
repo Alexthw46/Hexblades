@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import net.minecraft.world.item.Item.Properties;
+import org.jetbrains.annotations.NotNull;
 
 public class ArmorFocus extends Item {
 
@@ -32,7 +32,7 @@ public class ArmorFocus extends Item {
     public static String[] foci = {"eidolon", "botania", "ars nouveau"};
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pHand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pHand) {
 
         for (ItemStack stack : pPlayer.getArmorSlots()) {
             if (stack.getItem() instanceof HexWArmor) {
@@ -44,7 +44,7 @@ public class ArmorFocus extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
+    public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, @NotNull List<Component> pTooltip, @NotNull TooltipFlag pFlag) {
         super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
         if (!modFocus.equals("eidolon")) pTooltip.add(new TextComponent("Requires " + modFocus));
     }

@@ -19,8 +19,7 @@ import net.minecraft.world.item.Item.Properties;
 public class EarthHammer2 extends EarthHammer1 {
 
     public EarthHammer2(Properties props) {
-        super(8, -3.2F,
-                props.addToolType(net.minecraftforge.common.ToolType.PICKAXE, Tiers.PatronWeaponTier.INSTANCE.getLevel()));
+        super(8, -3.2F,props);
         baseMiningSpeed = 8.0F;
         tooltipText = new TranslatableComponent("tooltip.hexblades.earth_hammer2");
     }

@@ -11,6 +11,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import java.util.stream.Stream;
 
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import org.jetbrains.annotations.NotNull;
 
 public class SwordStandBlock extends HorizontalBlockBase {
 
@@ -27,7 +28,7 @@ public class SwordStandBlock extends HorizontalBlockBase {
     }
 
     @Override
-    public RenderShape getRenderShape(BlockState state) {
+    public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
         return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 

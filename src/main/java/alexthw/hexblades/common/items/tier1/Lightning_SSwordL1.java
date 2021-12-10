@@ -25,13 +25,14 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
 import static java.lang.Math.min;
 
 public class Lightning_SSwordL1 extends HexSwordItem {
 
-    protected int projectileCost = getMaxDamage() / 3;
+    protected int projectileCost = this.getTier().getUses() / 3;
 
     public Lightning_SSwordL1(Item.Properties props) {
         super(1, -1.5F, props);
@@ -39,7 +40,7 @@ public class Lightning_SSwordL1 extends HexSwordItem {
     }
 
     @Override
-    public UseAnim getUseAnimation(ItemStack stack) {
+    public @NotNull UseAnim getUseAnimation(@NotNull ItemStack stack) {
         return UseAnim.SPEAR;
     }
 
@@ -54,8 +55,7 @@ public class Lightning_SSwordL1 extends HexSwordItem {
 
     @Override
     public void inventoryTick(ItemStack stack, Level worldIn, Entity user) {
-        if (user instanceof Player && !worldIn.isClientSide()) {
-            Player player = (Player) user;
+        if (user instanceof Player player && !worldIn.isClientSide()) {
             boolean currentState = hasTwin(player);
             if (stack.getDamageValue() > 0) {
                 int rechargeTicksBonus = currentState ? (int) getDevotion(player) / (COMMON.DualsRR.get()) : 0;
@@ -74,7 +74,7 @@ public class Lightning_SSwordL1 extends HexSwordItem {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    public @NotNull InteractionResultHolder<ItemStack> use(Level worldIn, @NotNull Player playerIn, @NotNull InteractionHand handIn) {
         ItemStack stack = playerIn.getItemInHand(handIn);
         if (handIn == InteractionHand.OFF_HAND && hasTwin(playerIn) && (stack.getMaxDamage() - stack.getDamageValue() > projectileCost)) {
             playerIn.startUsingItem(handIn);
@@ -102,15 +102,14 @@ public class Lightning_SSwordL1 extends HexSwordItem {
 
     }
 
-    public int getUseDuration(ItemStack stack) {
+    public int getUseDuration(@NotNull ItemStack stack) {
         return 72000 - (int) (10 * getAttackSpeed(stack));
     }
 
     @Override
-    public void releaseUsing(ItemStack stack, Level world, LivingEntity entity, int timeleft) {
-        if (!(entity instanceof Player)) return;
-        Player player = (Player) entity;
-        int i = this.getUseDuration(stack) - timeleft;
+    public void releaseUsing(@NotNull ItemStack stack, @NotNull Level world, @NotNull LivingEntity entity, int timeLeft) {
+        if (!(entity instanceof Player player)) return;
+        int i = this.getUseDuration(stack) - timeLeft;
         if (!world.isClientSide() && i >= 10) {
             Vec3 pos = entity.position().add(entity.getLookAngle().scale(0.5D)).add(-0.5D * Math.sin(Math.toRadians(225.0F - entity.yHeadRot)), entity.getBbHeight() * 0.75F, -0.5D * Math.cos(Math.toRadians(225.0F - entity.yHeadRot)));
             Vec3 vel = entity.getEyePosition(0.0F).add(entity.getLookAngle().scale(40.0D)).subtract(pos).scale(0.05D);

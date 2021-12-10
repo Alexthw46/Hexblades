@@ -3,6 +3,10 @@ package alexthw.hexblades.common.items.tier1;
 import alexthw.hexblades.common.items.IHexblade;
 import alexthw.hexblades.registers.Tiers;
 import alexthw.hexblades.util.Constants;
+import com.google.common.collect.Sets;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.item.TooltipFlag;
@@ -24,10 +28,16 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
+import static net.minecraftforge.common.ToolActions.*;
 
-import net.minecraft.world.item.Item.Properties;
+import net.minecraftforge.common.TierSortingRegistry;
+import net.minecraftforge.common.ToolAction;
+import org.jetbrains.annotations.NotNull;
 
 public class EarthHammer1var extends PickaxeItem implements IHexblade {
 
@@ -39,7 +49,7 @@ public class EarthHammer1var extends PickaxeItem implements IHexblade {
     protected int dialogueLines = 3;
 
     public EarthHammer1var(Properties props) {
-        this(Tiers.PatronWeaponTier.INSTANCE, 8, -3.2F, props);
+        this(Tiers.PatronWeaponTier.INSTANCE, 7, -3.2F, props);
     }
 
     public EarthHammer1var(Tier tier, int attackDamageIn, float attackSpeedIn, Properties builder) {
@@ -122,7 +132,7 @@ public class EarthHammer1var extends PickaxeItem implements IHexblade {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level world, Player player, @NotNull InteractionHand hand) {
         if (player.isShiftKeyDown() && !world.isClientSide()) {
             switchMining(player.getItemInHand(hand));
         }
@@ -130,7 +140,7 @@ public class EarthHammer1var extends PickaxeItem implements IHexblade {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, Level worldIn, Entity user, int itemSlot, boolean isSelected) {
+    public void inventoryTick(ItemStack stack, @NotNull Level worldIn, @NotNull Entity user, int itemSlot, boolean isSelected) {
         if (stack.getOrCreateTag().getBoolean(Constants.NBT.MiningSwitch)) return;
         this.inventoryTick(stack, worldIn, user);
     }
@@ -170,12 +180,12 @@ public class EarthHammer1var extends PickaxeItem implements IHexblade {
     }
 
     @Override
-    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+    public boolean hurtEnemy(@NotNull ItemStack stack, @NotNull LivingEntity target, @NotNull LivingEntity attacker) {
         return this.hurtEnemy(stack, target, attacker, true);
     }
 
     @Override
-    public boolean mineBlock(ItemStack stack, Level worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
+    public boolean mineBlock(@NotNull ItemStack stack, Level worldIn, @NotNull BlockState state, @NotNull BlockPos pos, @NotNull LivingEntity entityLiving) {
         if (!worldIn.isClientSide && (state.getDestroySpeed(worldIn, pos) != 0.0F) && entityLiving instanceof Player) {
             if (stack.getMaxDamage() - stack.getDamageValue() < 101) {
                 switchMining(stack);
@@ -187,22 +197,33 @@ public class EarthHammer1var extends PickaxeItem implements IHexblade {
         return true;
     }
 
+    private static final Set<ToolAction> TOOL_ACTIONS =  Stream.of(PICKAXE_DIG, SHOVEL_DIG).collect(Collectors.toCollection(Sets::newIdentityHashSet));
     @Override
-    public float getDestroySpeed(ItemStack stack, BlockState state) {
+    public boolean canPerformAction(@NotNull ItemStack stack, @NotNull ToolAction toolAction)
+    {
+        return TOOL_ACTIONS.contains(toolAction);
+    }
 
-        float result;
+    @Override
+    public float getDestroySpeed(@NotNull ItemStack stack, BlockState state) {
 
         Material material = state.getMaterial();
 
         float newMiningSpeed = getMiningSpeed(stack);
-        if ((material == Material.STONE) && getAwakened(stack)) {
-            result = newMiningSpeed + 2.0F;
-        } else if (material == Material.METAL || material == Material.HEAVY_METAL || getToolTypes(stack).stream().anyMatch(state::isToolEffective)) {
-            result = newMiningSpeed;
-        } else {
-            result = 1.0F;
+        if ((material == Material.STONE || material == Material.DIRT) && getAwakened(stack)) {
+            return newMiningSpeed + 2.0F;
         }
-        return result;
+        if (material == Material.METAL || material == Material.HEAVY_METAL || state.is(BlockTags.MINEABLE_WITH_PICKAXE)) {
+            return newMiningSpeed;
+        }
+        return super.getDestroySpeed(stack, state);
+    }
+
+    @Override
+    public boolean isCorrectToolForDrops(@NotNull ItemStack stack, BlockState state) {
+        if (state.is(BlockTags.MINEABLE_WITH_PICKAXE) || state.is(BlockTags.MINEABLE_WITH_SHOVEL))
+            return TierSortingRegistry.isCorrectTierForDrops(Tiers.PatronWeaponTier.INSTANCE, state);
+        return super.isCorrectToolForDrops(stack, state);
     }
 
     protected float getMiningSpeed(ItemStack weapon) {
@@ -210,7 +231,13 @@ public class EarthHammer1var extends PickaxeItem implements IHexblade {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        if (enchantment.category == EnchantmentCategory.WEAPON) return true;
+        return super.canApplyAtEnchantingTable(stack, enchantment);
+    }
+
+    @Override
+    public void appendHoverText(@NotNull ItemStack stack, Level worldIn, @NotNull List<Component> tooltip, @NotNull TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
         tooltip.add(tooltipText);
         tooltip.add(new TranslatableComponent("Mining mode:" + (stack.getOrCreateTag().getBoolean(Constants.NBT.MiningSwitch) ? "On" : "Off")));

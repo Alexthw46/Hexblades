@@ -22,7 +22,8 @@ import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
-import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("CommentedOutCode")
 public class HexBlockStateProvider extends BlockStateProvider{
@@ -92,4 +93,10 @@ public class HexBlockStateProvider extends BlockStateProvider{
                 .nextModel().modelFile(file).rotationY(270)
                 .addModel();
     }
+
+    @Override
+    public @NotNull String getName() {
+        return "HexBlades Blockstates";
+    }
+
 }

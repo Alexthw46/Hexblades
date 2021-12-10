@@ -3,6 +3,7 @@ package alexthw.hexblades.common.items.tier1;
 import alexthw.hexblades.common.items.HexSwordItem;
 import alexthw.hexblades.util.HexUtils;
 import elucent.eidolon.Registry;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -15,8 +16,6 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class IceKatana1 extends HexSwordItem {
 
@@ -32,7 +31,7 @@ public class IceKatana1 extends HexSwordItem {
     @Override
     public void applyHexEffects(ItemStack stack, LivingEntity target, Player attacker, boolean awakened) {
         if (awakened) {
-            target.hurt(new EntityDamageSource(Registry.FROST_DAMAGE.getMsgId(), attacker).bypassArmor(), (float) (getDevotion(attacker) / COMMON.KatanaED.get()));
+            target.hurt(new EntityDamageSource(DamageSource.FREEZE.getMsgId(), attacker).bypassArmor(), (float) (getDevotion(attacker) / COMMON.KatanaED.get()));
             target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 200, 0));
         }
     }

@@ -26,6 +26,7 @@ import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerBossEvent;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -66,7 +67,7 @@ public class FireElementalEntity extends BaseElementalEntity implements RangedAt
     }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource p_184601_1_) {
+    protected SoundEvent getHurtSound(@NotNull DamageSource p_184601_1_) {
         return SoundEvents.BLAZE_HURT;
     }
 
@@ -86,11 +87,11 @@ public class FireElementalEntity extends BaseElementalEntity implements RangedAt
     }
 
     @Override
-    public boolean causeFallDamage(float p_147187_, float p_147188_, DamageSource p_147189_) {
+    public boolean causeFallDamage(float p_147187_, float p_147188_, @NotNull DamageSource p_147189_) {
         return false;
     }
 
-    public int getExperienceReward(Player player) {
+    public int getExperienceReward(@NotNull Player player) {
         return 80;
     }
 
@@ -234,7 +235,7 @@ public class FireElementalEntity extends BaseElementalEntity implements RangedAt
      * Attack the specified entity using a ranged attack.
      */
     @Override
-    public void performRangedAttack(LivingEntity Target, float pDistanceFactor) {
+    public void performRangedAttack(@NotNull LivingEntity Target, float pDistanceFactor) {
 
         this.lookAt(Target, 360, 360);
 

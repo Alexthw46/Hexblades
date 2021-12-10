@@ -14,17 +14,13 @@ import net.minecraft.tags.Tag;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
 
 public class HexItemTagProvider extends ItemTagsProvider {
 
     public HexItemTagProvider(DataGenerator dataGenerator, BlockTagsProvider blockTagProvider, ExistingFileHelper existingFileHelper) {
         super(dataGenerator, blockTagProvider, Hexblades.MODID, existingFileHelper);
-    }
-
-
-    public static Tag.Named<Item> makeWrapperTag(String id) {
-        return ItemTags.createOptional(HexUtils.prefix(id));
     }
 
     @Override
@@ -46,7 +42,7 @@ public class HexItemTagProvider extends ItemTagsProvider {
     }
 
     @Override
-    public String getName() {
-        return "HexBlades Block Tags";
+    public @NotNull String getName() {
+        return "HexBlades Item Tags";
     }
 }

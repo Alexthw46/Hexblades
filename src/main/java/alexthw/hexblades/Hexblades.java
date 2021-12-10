@@ -3,9 +3,13 @@ package alexthw.hexblades;
 import alexthw.hexblades.client.ClientEvents;
 import alexthw.hexblades.registers.*;
 import alexthw.hexblades.util.CompatUtil;
-import alexthw.hexblades.util.WorldGenUtil;
+import net.minecraft.core.Registry;
 import alexthw.hexblades.world.ConfiguredStructures;
+import alexthw.hexblades.world.FireTempleStructure;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMultimap;
 import com.mojang.serialization.Codec;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.CreativeModeTab;
@@ -16,13 +20,13 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.FlatLevelSource;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.StructureSettings;
 import net.minecraft.world.level.levelgen.feature.configurations.StructureFeatureConfiguration;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -65,8 +69,7 @@ public class Hexblades {
 
         //Register all the things
         CompatUtil.check();
-        Registry.init(hexbus);
-        HexRegistry.init();
+        HexRegistry.init(hexbus);
 
         // For events that happen after initialization.
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
@@ -75,7 +78,7 @@ public class Hexblades {
 
         //Structures stuff
         forgeBus.addListener(EventPriority.NORMAL, this::addDimensionalSpacing);
-        forgeBus.addListener(EventPriority.HIGH, this::biomeModification);
+        forgeBus.addListener(EventPriority.NORMAL, FireTempleStructure::setupStructureSpawns);
 
         //Client-side only
         DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> {
@@ -98,56 +101,85 @@ public class Hexblades {
         this.registerPlacements();
     }
 
-    /**
-     * Add our structure to all biomes including other modded biomes.
-     * You can skip or add only to certain biomes based on stuff like biome category,
-     * temperature, scale, precipitation, mod id, etc. All kinds of options!
-     * You can even use the BiomeDictionary as well! To use BiomeDictionary, do
-     * RegistryKey.getOrCreateKey(Registry.BIOME_KEY, event.getName()) to get the biome's
-     * registrykey. Then that can be fed into the dictionary to get the biome's types.
-     **/
-
-
-    public void biomeModification(final BiomeLoadingEvent event) {
-
-        if (WorldGenUtil.haveCategories(event, Biome.BiomeCategory.NETHER)) {
-            event.getGeneration().getStructures().add(() -> ConfiguredStructures.CONFIGURED_FIRE_TEMPLE);
-        }
-    }
 
     private static Method GETCODEC_METHOD;
 
 
     public void addDimensionalSpacing(final WorldEvent.Load event) {
 
-        if (event.getWorld() instanceof ServerLevel serverWorld) {
+        if(event.getWorld() instanceof ServerLevel serverWorld) {
+            ChunkGenerator chunkGenerator = serverWorld.getChunkSource().getGenerator();
+            StructureSettings worldStructureConfig = chunkGenerator.getSettings();
+
+            //////////// BIOME BASED STRUCTURE SPAWNING ////////////
+
+            // Grab the map that holds what ConfigureStructures a structure has and what biomes it can spawn in.
+            // Requires AccessTransformer  (see resources/META-INF/accesstransformer.cfg)
+            ImmutableMap.Builder<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> tempStructureToMultiMap = ImmutableMap.builder();
+            worldStructureConfig.configuredStructures.entrySet().forEach(tempStructureToMultiMap::put);
+
+
+            // Create the multimap of Configured Structures to biomes we will need.
+            ImmutableMultimap.Builder<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>> tempConfiguredStructureBiomeMultiMap = ImmutableMultimap.builder();
+
+            // Add the registrykey of all biomes that this Configured Structure can spawn in.
+            for (Map.Entry<ResourceKey<Biome>, Biome> biomeEntry : serverWorld.registryAccess().ownedRegistryOrThrow(Registry.BIOME_REGISTRY).entrySet()) {
+                // Skip all ocean, end, nether, and none category biomes.
+                // You can do checks for other traits that the biome has.
+                Biome.BiomeCategory biomeCategory = biomeEntry.getValue().getBiomeCategory();
+                if (biomeCategory != Biome.BiomeCategory.OCEAN && biomeCategory != Biome.BiomeCategory.THEEND && biomeCategory != Biome.BiomeCategory.NETHER && biomeCategory != Biome.BiomeCategory.NONE) {
+                    tempConfiguredStructureBiomeMultiMap.put(ConfiguredStructures.CONFIGURED_FIRE_TEMPLE, biomeEntry.getKey());
+                }
+            }
+
+            // Alternative way to add our structures to a fixed set of biomes by creating a set of biome registry keys.
+            // To create a custom registry key that points to your own biome, do this:
+            // ResourceKey.of(Registry.BIOME_REGISTRY, new ResourceLocation("modid", "custom_biome"))
+//            ImmutableSet<ResourceKey<Biome>> overworldBiomes = ImmutableSet.<ResourceKey<Biome>>builder()
+//                    .add(Biomes.FOREST)
+//                    .add(Biomes.MEADOW)
+//                    .add(Biomes.PLAINS)
+//                    .add(Biomes.SAVANNA)
+//                    .add(Biomes.SNOWY_PLAINS)
+//                    .add(Biomes.SWAMP)
+//                    .add(Biomes.SUNFLOWER_PLAINS)
+//                    .add(Biomes.TAIGA)
+//                    .build();
+//            overworldBiomes.forEach(biomeKey -> tempConfiguredStructureBiomeMultiMap.put(STConfiguredStructures.CONFIGURED_RUN_DOWN_HOUSE, biomeKey));
+
+            // Add the base structure to associate with this new multimap of Configured Structures to biomes to spawn in.
+            tempStructureToMultiMap.put(HexStructures.FIRE_TEMPLE.get(), tempConfiguredStructureBiomeMultiMap.build());
+
+            // Requires AccessTransformer  (see resources/META-INF/accesstransformer.cfg)
+            worldStructureConfig.configuredStructures = tempStructureToMultiMap.build();
+
             //Skip Terraforged's chunk generator as they are a special case of a mod locking down their chunkgenerator.
-             //They will handle your structure spacing for your if you add to WorldGenRegistries.NOISE_GENERATOR_SETTINGS in your structure's registration.
-             //If you are using mixins, you can call the codec method with an invoker mixin instead of using reflection.
+                //They will handle your structure spacing for your if you add to BuiltinRegistries.NOISE_GENERATOR_SETTINGS in your structure's registration.
+                //If you are using mixins, you can call the codec method with an invoker mixin instead of using reflection.
 
-            try {
-                if (GETCODEC_METHOD == null)
-                    GETCODEC_METHOD = ObfuscationReflectionHelper.findMethod(ChunkGenerator.class, "func_230347_a_");
-                ResourceLocation cgRL = net.minecraft.core.Registry.CHUNK_GENERATOR.getKey((Codec<? extends ChunkGenerator>) GETCODEC_METHOD.invoke(serverWorld.getChunkSource().generator));
-                if (cgRL != null && cgRL.getNamespace().equals("terraforged")) return;
-            } catch (Exception e) {
-                LOGGER.error("Was unable to check if " + serverWorld.dimension().location() + " is using Terraforged's ChunkGenerator.");
+                try {
+                    if (GETCODEC_METHOD == null)
+                        GETCODEC_METHOD = ObfuscationReflectionHelper.findMethod(ChunkGenerator.class, "func_230347_a_");
+                    ResourceLocation cgRL = net.minecraft.core.Registry.CHUNK_GENERATOR.getKey((Codec<? extends ChunkGenerator>) GETCODEC_METHOD.invoke(chunkGenerator));
+                    if (cgRL != null && cgRL.getNamespace().equals("terraforged")) return;
+                } catch (Exception e) {
+                    LOGGER.error("Was unable to check if " + serverWorld.dimension().location() + " is using Terraforged's ChunkGenerator.");
+                }
+
+
+                // Prevent spawning our structure in Vanilla's superflat world as
+                // people seem to want their superflat worlds free of modded structures.
+                // Also that vanilla superflat is really tricky and buggy to work with in my experience.
+
+                if (chunkGenerator instanceof FlatLevelSource &&
+                        serverWorld.dimension().equals(Level.OVERWORLD)) {
+                    return;
+                }
+
+                Map<StructureFeature<?>, StructureFeatureConfiguration> tempMap = new HashMap<>(worldStructureConfig.structureConfig());
+                tempMap.putIfAbsent(HexStructures.FIRE_TEMPLE.get(), StructureSettings.DEFAULTS.get(HexStructures.FIRE_TEMPLE.get()));
+                worldStructureConfig.structureConfig = tempMap;
             }
-
-
-             // Prevent spawning our structure in Vanilla's superflat world as
-             // people seem to want their superflat worlds free of modded structures.
-             // Also that vanilla superflat is really tricky and buggy to work with in my experience.
-
-            if (serverWorld.getChunkSource().getGenerator() instanceof FlatLevelSource &&
-                    serverWorld.dimension().equals(Level.OVERWORLD)) {
-                return;
-            }
-
-            Map<StructureFeature<?>, StructureFeatureConfiguration> tempMap = new HashMap<>(serverWorld.getChunkSource().generator.getSettings().structureConfig());
-            tempMap.putIfAbsent(HexStructures.FIRE_TEMPLE.get(), StructureSettings.DEFAULTS.get(HexStructures.FIRE_TEMPLE.get()));
-            serverWorld.getChunkSource().generator.getSettings().structureConfig = tempMap;
-        }
     }
 
 

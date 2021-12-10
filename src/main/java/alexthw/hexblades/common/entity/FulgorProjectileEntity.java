@@ -8,19 +8,17 @@ import elucent.eidolon.network.MagicBurstEffectPacket;
 import elucent.eidolon.network.Networking;
 import elucent.eidolon.particle.Particles;
 import elucent.eidolon.util.ColorUtil;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.IndirectEntityDamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.IndirectEntityDamageSource;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.level.Level;
 
 import java.util.UUID;
 
@@ -50,9 +48,9 @@ public class FulgorProjectileEntity extends SpellProjectileEntity {
         Vec3 norm = motion.normalize().scale(0.02500000037252903D);
 
         for (int i = 0; i < 8; ++i) {
-            double lerpX = Mth.lerp((double) ((float) i / 8.0F), this.xo, pos.x);
-            double lerpY = Mth.lerp((double) ((float) i / 8.0F), this.yo, pos.y);
-            double lerpZ = Mth.lerp((double) ((float) i / 8.0F), this.zo, pos.z);
+            double lerpX = Mth.lerp((float) i / 8.0F, this.xo, pos.x);
+            double lerpY = Mth.lerp((float) i / 8.0F, this.yo, pos.y);
+            double lerpZ = Mth.lerp((float) i / 8.0F, this.zo, pos.z);
             Particles.create(FULGOR_PARTICLE).addVelocity(-norm.x, -norm.y, -norm.z).setAlpha(0.0825F, 0.0F).setScale(0.5F, 0.0F).setColor(1.0F, 0.875F, 0.25F, 0.75F, 0.375F, 0.25F).setLifetime(5).spawn(this.level, lerpX, lerpY, lerpZ);
             Particles.create(Registry.SPARKLE_PARTICLE).addVelocity(-norm.x, -norm.y, -norm.z).setAlpha(0.521F, 0.0F).setScale(0.15F).setColor(1.0F, 0.875F, 0.25F, 0.75F, 0.375F, 0.25F).setLifetime(7).spawn(this.level, lerpX, lerpY, lerpZ);
         }
@@ -72,7 +70,7 @@ public class FulgorProjectileEntity extends SpellProjectileEntity {
         this.removeAfterChangingDimensions();
         if (!this.level.isClientSide) {
             Vec3 pos = ray.getLocation();
-            this.level.playSound((Player) null, pos.x, pos.y, pos.z, (SoundEvent) Registry.SPLASH_SOULFIRE_EVENT.get(), SoundSource.NEUTRAL, 0.5F, this.random.nextFloat() * 0.2F + 0.9F);
+            this.level.playSound(null, pos.x, pos.y, pos.z, Registry.SPLASH_SOULFIRE_EVENT.get(), SoundSource.NEUTRAL, 0.5F, this.random.nextFloat() * 0.2F + 0.9F);
             Networking.sendToTracking(this.level, this.blockPosition(), new MagicBurstEffectPacket(pos.x, pos.y, pos.z, ColorUtil.packColor(255, 255, 255, 72), ColorUtil.packColor(255, 255, 235, 102)));
         }
 

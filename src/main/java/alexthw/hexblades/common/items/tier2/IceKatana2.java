@@ -2,16 +2,14 @@ package alexthw.hexblades.common.items.tier2;
 
 import alexthw.hexblades.common.items.tier1.IceKatana1;
 import elucent.eidolon.Registry;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class IceKatana2 extends IceKatana1 {
     public IceKatana2(Properties props) {

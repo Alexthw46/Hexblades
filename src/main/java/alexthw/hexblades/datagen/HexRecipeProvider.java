@@ -18,6 +18,7 @@ import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.SpecialRecipeBuilder;
+import org.jetbrains.annotations.NotNull;
 
 public class HexRecipeProvider extends RecipeProvider {
 
@@ -59,5 +60,8 @@ public class HexRecipeProvider extends RecipeProvider {
             SpecialRecipeBuilder.special(serializer).save(consumer, prefix(name.getPath()).toString());
     }
 
-
+    @Override
+    public @NotNull String getName() {
+        return "HexBlades Recipes";
+    }
 }

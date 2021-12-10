@@ -1,5 +1,6 @@
 package alexthw.hexblades.registers;
 
+import alexthw.hexblades.Hexblades;
 import alexthw.hexblades.codex.CodexHexChapters;
 import alexthw.hexblades.common.potions.EChargedEffect;
 import alexthw.hexblades.compat.MalumCompat;
@@ -15,18 +16,20 @@ import elucent.eidolon.mixin.PotionBrewingMixin;
 import elucent.eidolon.network.Networking;
 
 import java.lang.reflect.InvocationTargetException;
-
-import static alexthw.hexblades.registers.Registry.POTIONS;
-import static alexthw.hexblades.registers.Registry.POTION_TYPES;
 import static alexthw.hexblades.util.CompatUtil.isMalumLoaded;
 import static elucent.eidolon.Registry.DEATH_ESSENCE;
 
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 public class HexRegistry {
 
@@ -35,6 +38,10 @@ public class HexRegistry {
     public static RegistryObject<Potion> CHARGED_POTION;
     public static RegistryObject<Potion> WITHER_POTION;
 
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Hexblades.MODID);
+    public static final DeferredRegister<MobEffect> POTIONS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, Hexblades.MODID);
+
+    public static final DeferredRegister<Potion> POTION_TYPES = DeferredRegister.create(ForgeRegistries.POTIONS, Hexblades.MODID);
 
     static {
         CHARGED_EFFECT = POTIONS.register("electro_charged", EChargedEffect::new);
@@ -42,7 +49,20 @@ public class HexRegistry {
         WITHER_POTION = POTION_TYPES.register("wither", () -> new Potion(new MobEffectInstance(MobEffects.WITHER, 100)));
     }
 
-    public static void init() {
+    public static void init(IEventBus hexbus) {
+        hexbus.register(new HexTileEntityType());
+        hexbus.register(new HexParticles());
+        hexbus.addGenericListener(RecipeSerializer.class, HexSerializers::registerRecipeSerializers);
+
+        HexBlock.BLOCKS.register(hexbus);
+        ITEMS.register(hexbus);
+        HexEntityType.ENTITIES.register(hexbus);
+        HexTileEntityType.TILE_ENTITIES.register(hexbus);
+        HexParticles.PARTICLES.register(hexbus);
+        POTIONS.register(hexbus);
+        POTION_TYPES.register(hexbus);
+        HexStructures.STRUCTURES.register(hexbus);
+
         HexDeities.registerDeity();
         HexSpells.RegisterSpells();
         HexSerializers.registerCmdArgTypesSerializers();

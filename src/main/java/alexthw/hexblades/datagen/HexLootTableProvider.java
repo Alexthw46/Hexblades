@@ -37,7 +37,9 @@ import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.ConditionUserBuilder;
-import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
 
 public class HexLootTableProvider extends LootTableProvider {
     public HexLootTableProvider(DataGenerator dataGeneratorIn) {
@@ -53,7 +55,7 @@ public class HexLootTableProvider extends LootTableProvider {
     private static final LootItemCondition.Builder NOT_SILK_TOUCH_OR_SHEARS = SILK_TOUCH_OR_SHEARS.invert();
 
     @Override
-    protected void validate(Map<ResourceLocation, LootTable> map, ValidationContext validationtracker) {
+    protected void validate(Map<ResourceLocation, LootTable> map, @NotNull ValidationContext validationtracker) {
         map.forEach((loc, table) -> LootTables.validate(validationtracker, loc, table));
     }
 
@@ -73,11 +75,11 @@ public class HexLootTableProvider extends LootTableProvider {
     }
 
     protected static LootTable.Builder dropping(ItemLike item) {
-        return LootTable.lootTable().withPool(withSurvivesExplosion(item, LootPool.lootPool().setRolls(ConstantIntValue.exactly(1)).add(LootItem.lootTableItem(item))));
+        return LootTable.lootTable().withPool(withSurvivesExplosion(item, LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(item))));
     }
 
     protected static LootTable.Builder dropping(Block block, LootItemCondition.Builder conditionBuilder, LootPoolEntryContainer.Builder<?> p_218494_2_) {
-        return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantIntValue.exactly(1)).add(LootItem.lootTableItem(block).when(conditionBuilder).otherwise(p_218494_2_)));
+        return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(block).when(conditionBuilder).otherwise(p_218494_2_)));
     }
 
     protected void registerLootTable(Block blockIn, LootTable.Builder table) {
@@ -94,4 +96,8 @@ public class HexLootTableProvider extends LootTableProvider {
         }
     }
 
+    @Override
+    public @NotNull String getName() {
+        return "HexBlades Loot Tables";
+    }
 }

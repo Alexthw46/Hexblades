@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion = "[35,)"
+loaderVersion = "[38,)"
 license = "BSD License"
 # A URL to refer people to when problems occur with this mod
 #issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
@@ -23,7 +23,7 @@ This mod adds Hexblades to Eidolon, few magic gadgets and compatibility patches 
 modId = "forge" #mandatory
 # Does this dependency have to exist - if not, ordering below must be specified
 mandatory = true #mandatory
-versionRange = "[35,)" #mandatory
+versionRange = "[38,)" #mandatory
 # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
 ordering = "NONE"
 side = "BOTH"
@@ -31,14 +31,14 @@ side = "BOTH"
 [[dependencies.hexblades]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.16.4,1.17)"
+versionRange = "[1.18,1.19)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.hexblades]]
 modId = "eidolon"
 mandatory = true
-versionRange = "[0.2.7]"
+versionRange = "[0.3,)"
 ordering = "NONE"
 side = "BOTH"
 

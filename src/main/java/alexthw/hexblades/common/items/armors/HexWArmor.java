@@ -12,6 +12,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
@@ -21,8 +22,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 import static alexthw.hexblades.util.Constants.ArmorCompat.FOCUS_TAG;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class HexWArmor extends GeoArmorItem implements IAnimatable {
 
@@ -46,22 +45,18 @@ public class HexWArmor extends GeoArmorItem implements IAnimatable {
 
     public static int getFocusId(ItemStack stack) {
         String focus = stack.getOrCreateTag().getString(FOCUS_TAG);
-        switch (focus) {
-            case ("eidolon"):
-                return 1;
-            case ("botania"):
-                return 2;
-            case ("ars nouveau"):
-                return 3;
-            default:
-                return 0;
-        }
+        return switch (focus) {
+            case ("eidolon") -> 1;
+            case ("botania") -> 2;
+            case ("ars nouveau") -> 3;
+            default -> 0;
+        };
     }
 
     private static final int[] MAX_DAMAGE_ARRAY = new int[]{13, 15, 16, 11};
 
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
+    public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, @NotNull List<Component> pTooltip, @NotNull TooltipFlag pFlag) {
         super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
         pTooltip.add(new TextComponent("Focus: " + getFocus(pStack)));
     }
@@ -77,33 +72,29 @@ public class HexWArmor extends GeoArmorItem implements IAnimatable {
             return HexWArmor.MAX_DAMAGE_ARRAY[slot.getIndex()] * 30;
         }
 
-        public int getDefenseForSlot(EquipmentSlot slot) {
-            switch (slot) {
-                case CHEST:
-                    return 8;
-                case HEAD:
-                case FEET:
-                    return 3;
-                case LEGS:
-                    return 6;
-                default:
-                    return 0;
-            }
+        public int getDefenseForSlot(@NotNull EquipmentSlot slot) {
+            return switch (slot) {
+                case CHEST -> 8;
+                case HEAD, FEET -> 3;
+                case LEGS -> 6;
+                default -> 0;
+            };
         }
 
         public int getEnchantmentValue() {
             return 25;
         }
 
-        public SoundEvent getEquipSound() {
+        public @NotNull SoundEvent getEquipSound() {
             return ArmorMaterials.GOLD.getEquipSound();
         }
 
-        public Ingredient getRepairIngredient() {
+        @Override
+        public @NotNull Ingredient getRepairIngredient() {
             return Ingredient.of(new ItemStack(HexItem.HEXED_INGOT.get()));
         }
 
-        public String getName() {
+        public @NotNull String getName() {
             return "hexblades:hex_armor";
         }
 

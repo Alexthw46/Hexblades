@@ -5,6 +5,7 @@ import alexthw.hexblades.registers.HexBlock;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.Tag;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import javax.annotation.Nonnull;
@@ -21,6 +22,8 @@ import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
+import net.minecraftforge.common.data.ForgeBlockTagsProvider;
+import org.jetbrains.annotations.NotNull;
 
 public class HexBlockTagsProvider extends BlockTagsProvider {
 
@@ -41,6 +44,30 @@ public class HexBlockTagsProvider extends BlockTagsProvider {
         tag(WOODEN_SLABS).add(HexBlock.DARK_POLISH_PLANKS.getSlab());
         tag(WOODEN_STAIRS).add(HexBlock.DARK_POLISH_PLANKS.getStairs());
         tag(WOODEN_FENCES).add(HexBlock.DARK_POLISH_PLANKS.getFence());
+        addDecoBlockTags(HexBlock.DARK_POLISH_PLANKS, MINEABLE_WITH_AXE);
+        addPickMineable(0, HexBlock.EVERFULL_URN.get(), HexBlock.SWORD_STAND.get());
+        addPickMineable(1, HexBlock.MAGMA_BRICKS.get());
+    }
+
+    void addDecoBlockTags(HexBlock.DecoBlockPack deco, Tag.Named<Block> tag) {
+        tag(tag).add(deco.getBlock());
+        tag(tag).add(deco.getSlab());
+        tag(tag).add(deco.getStairs());
+        tag(tag).add(deco.getFence());
+        tag(tag).add(deco.getFenceGate());
+    }
+
+    void addPickMineable(int level,Block...blocks){
+        for (Block block : blocks){
+            tag(MINEABLE_WITH_PICKAXE).add(block);
+            switch (level) {
+                case (1) -> tag(NEEDS_STONE_TOOL).add(block);
+                case (2) -> tag(NEEDS_IRON_TOOL).add(block);
+                case (3) -> tag(NEEDS_DIAMOND_TOOL).add(block);
+                default -> {
+                }
+            }
+        }
 
     }
 
@@ -54,8 +81,8 @@ public class HexBlockTagsProvider extends BlockTagsProvider {
     }
 
     @Override
-    public String getName() {
-        return "HexBlades Item Tags";
+    public @NotNull String getName() {
+        return "HexBlades Block Tags";
     }
 
 }

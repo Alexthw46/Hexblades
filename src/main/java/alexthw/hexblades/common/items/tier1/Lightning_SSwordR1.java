@@ -20,6 +20,8 @@ public class Lightning_SSwordR1 extends HexSwordItem {
         tooltipText = new TranslatableComponent("tooltip.hexblades.thunder_knives");
     }
 
+
+
     @Override
     public void recalculatePowers(ItemStack weapon, Level world, Player player) {
         double devotion = getDevotion(player);
