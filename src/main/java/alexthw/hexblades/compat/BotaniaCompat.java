@@ -19,9 +19,9 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
-import vazkii.botania.api.item.IPetalApothecary.State;
-import vazkii.botania.common.block.tile.TileAltar;
-import vazkii.botania.common.item.ModItems;
+//import vazkii.botania.api.item.IPetalApothecary.State;
+//import vazkii.botania.common.block.tile.TileAltar;
+//import vazkii.botania.common.item.ModItems;
 
 import java.util.List;
 
@@ -33,6 +33,7 @@ public class BotaniaCompat {
 
     public static void refillApotecaries(Level world, BlockPos urn) {
 
+        /*TODO
         List<TileAltar> apothecaries = HexUtils.getTilesWithinAABB(TileAltar.class, world, new AABB(urn.offset(-2, -1, -2), urn.offset(3, 2, 3)));
 
         for (TileAltar fillable : apothecaries) {
@@ -41,7 +42,7 @@ public class BotaniaCompat {
                 Networking.sendToTracking(world, urn, new RefillEffectPacket(fillable.getBlockPos(), 0.5F));
             }
         }
-
+        */
     }
 
     public static HexWArmor makeArmor(EquipmentSlot slot, Item.Properties properties) {
@@ -53,6 +54,7 @@ public class BotaniaCompat {
         GeoArmorRenderer.registerArmorRenderer(BotaniaArmor.class, new ArmorRenderer());
     }
 
+    /* TODO reneable when ported
     public static Page[] makeCodex() {
         TitlePage titled = new TitlePage(makePageKey("botania_focus"));
         WorktablePage worktable = new WorktablePage(new ItemStack(HexItem.FOCUS_BOTANIA.get(),1),
@@ -67,4 +69,5 @@ public class BotaniaCompat {
         );
         return new Page[]{titled,nukeRecipe(COMMON.NUKE_WORKBENCH.get(),worktable)};
     }
+     */
 }

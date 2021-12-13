@@ -21,6 +21,7 @@ public class WorldGenUtil {
         return categorySet.contains(context.getCategory());
     }
 
+    /* TODO check TG new method
     public static BlockPos getHighestLand(ChunkGenerator chunkGenerator, BoundingBox boundingBox, boolean canBeOnLiquid) {
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos().set(
                 boundingBox.getCenter().getX(),
@@ -43,6 +44,9 @@ public class WorldGenUtil {
         return mutable;
     }
 
+     */
+
+    /* TODO check TG new method
     public static BlockPos getLowestLand(ChunkGenerator chunkGenerator, BoundingBox boundingBox, boolean canBeOnLiquid) {
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos().set(
                 boundingBox.getCenter().getX(),
@@ -66,6 +70,6 @@ public class WorldGenUtil {
 
         return mutable.set(mutable.getX(), chunkGenerator.getSeaLevel(), mutable.getZ());
     }
-
+     */
 
 }

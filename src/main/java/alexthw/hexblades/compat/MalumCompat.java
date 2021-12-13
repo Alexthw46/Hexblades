@@ -1,8 +1,8 @@
 package alexthw.hexblades.compat;
 
 import alexthw.hexblades.util.HexUtils;
-import com.sammy.malum.common.blocks.lighting.EtherBrazierBlock;
-import com.sammy.malum.core.init.blocks.MalumBlocks;
+//import com.sammy.malum.common.blocks.lighting.EtherBrazierBlock;
+//import com.sammy.malum.core.init.blocks.MalumBlocks;
 import elucent.eidolon.spell.AltarEntries;
 import elucent.eidolon.spell.AltarEntry;
 import elucent.eidolon.spell.AltarKeys;
@@ -29,6 +29,7 @@ public class MalumCompat {
         Constructor<AltarEntry> altarEntryConstructor = ObfuscationReflectionHelper.findConstructor(AltarEntry.class, ResourceLocation.class);
         Method setPowerMethod = ObfuscationReflectionHelper.findMethod(AltarEntry.class, "setPower", double.class);
 
+        /* TODO Hope that elu make it private || cope
         if (AltarEntriesCopy != null) {
 
             Set<RegistryObject<Block>> blocks = new HashSet<>(MalumBlocks.BLOCKS.getEntries());
@@ -37,7 +38,7 @@ public class MalumCompat {
             }
 
         }
-
+        */
     }
 
 }

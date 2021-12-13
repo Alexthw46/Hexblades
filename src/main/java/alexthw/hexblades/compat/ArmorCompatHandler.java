@@ -93,7 +93,7 @@ public class ArmorCompatHandler {
         Collections.addAll(pages, warlock, nukeRecipe(COMMON.NUKE_WORKBENCH.get(),warlockCraft));
 
         if (CompatUtil.isBotaniaLoaded()) {
-            Collections.addAll(pages,BotaniaCompat.makeCodex());
+            //Collections.addAll(pages,BotaniaCompat.makeCodex());
         }
         if (CompatUtil.isArsNovLoaded()) {
             Collections.addAll(pages,ArsNouveauCompat.makeCodex());

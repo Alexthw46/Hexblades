@@ -8,7 +8,7 @@ import alexthw.hexblades.registers.HexItem;
 import alexthw.hexblades.registers.HexRegistry;
 import alexthw.hexblades.ritual.HexRituals;
 import alexthw.hexblades.util.CompatUtil;
-import com.sammy.malum.core.init.items.MalumItems;
+//import com.sammy.malum.core.init.items.MalumItems;
 import elucent.eidolon.Registry;
 import elucent.eidolon.codex.*;
 import elucent.eidolon.spell.Signs;

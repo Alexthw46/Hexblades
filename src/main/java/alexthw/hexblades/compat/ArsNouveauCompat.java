@@ -4,6 +4,7 @@ import alexthw.hexblades.client.render.entity.ArmorRenderer;
 import alexthw.hexblades.common.items.armors.HexWArmor;
 import alexthw.hexblades.common.items.armors.NouveauArmor;
 import alexthw.hexblades.registers.HexItem;
+import com.hollingsworth.arsnouveau.api.item.ICasterTool;
 import com.hollingsworth.arsnouveau.common.items.SpellBook;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import elucent.eidolon.Registry;
@@ -15,7 +16,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
@@ -31,25 +31,24 @@ public class ArsNouveauCompat {
     }
 
     public static boolean spellbookInOffHand(Player player) {
-        return (player.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof SpellBook);
+        return (player.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof ICasterTool);
     }
 
     @OnlyIn(Dist.CLIENT)
     public static void renderer() {
         GeoArmorRenderer.registerArmorRenderer(NouveauArmor.class, new ArmorRenderer());
     }
-
     public static Page[] makeCodex() {
 
         TitlePage titled = new TitlePage(makePageKey("ars_focus"));
         WorktablePage worktable = new WorktablePage(new ItemStack(HexItem.FOCUS_NOUVEAU.get(),1),
-                ItemStack.EMPTY, new ItemStack((ItemLike) ItemsRegistry.BLAZE_FIBER), ItemStack.EMPTY,
-                new ItemStack((ItemLike) ItemsRegistry.BLAZE_FIBER), new ItemStack(HexItem.FOCUS_BASE.get()), new ItemStack((ItemLike) ItemsRegistry.BLAZE_FIBER),
-                ItemStack.EMPTY, new ItemStack((ItemLike) ItemsRegistry.BLAZE_FIBER), ItemStack.EMPTY,
+                ItemStack.EMPTY, new ItemStack(ItemsRegistry.BLAZE_FIBER), ItemStack.EMPTY,
+                new ItemStack(ItemsRegistry.BLAZE_FIBER), new ItemStack(HexItem.FOCUS_BASE.get()), new ItemStack(ItemsRegistry.BLAZE_FIBER),
+                ItemStack.EMPTY, new ItemStack(ItemsRegistry.BLAZE_FIBER), ItemStack.EMPTY,
 
-                new ItemStack((ItemLike) ItemsRegistry.manaGem),
+                new ItemStack(ItemsRegistry.SOURCE_GEM),
                 new ItemStack(Registry.ENDER_CALX.get()),
-                new ItemStack((ItemLike) ItemsRegistry.manaGem),
+                new ItemStack(ItemsRegistry.SOURCE_GEM),
                 new ItemStack(Registry.ENDER_CALX.get())
         );
 
