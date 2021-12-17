@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "#forge:ingots/hexium"
+    "hexblades:nether_magma_bricks"
   ]
 }

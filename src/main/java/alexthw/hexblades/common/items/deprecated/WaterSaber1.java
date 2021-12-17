@@ -1,4 +1,4 @@
-package alexthw.hexblades.common.items.tier1;
+package alexthw.hexblades.common.items.deprecated;
 
 import alexthw.hexblades.common.items.HexSwordItem;
 import alexthw.hexblades.util.Constants;
@@ -27,12 +27,7 @@ public class WaterSaber1 extends HexSwordItem {
     }
 
     @Override
-    public boolean hasBonus() {
-        return true;
-    }
-
-    @Override
-    public void applyHexBonus(Player entity, boolean awakened) {
+    public void applyHexBonus(Player entity, boolean awakened, int souls) {
         if (awakened) entity.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 200, 0, false, false));
     }
 
@@ -42,7 +37,7 @@ public class WaterSaber1 extends HexSwordItem {
 
         boolean awakening = setAwakenedState(weapon, !getAwakened(weapon));
 
-        setAttackPower(weapon, awakening, devotion / COMMON.SaberDS1.get());
+        setAttackPower(weapon, devotion , COMMON.SaberDS1.get());
         setShielding(weapon, awakening, (float) (devotion / COMMON.SaberSH1.get()));
     }
 

@@ -1,6 +1,6 @@
 package alexthw.hexblades.network;
 
-import alexthw.hexblades.common.items.tier1.EarthHammer1;
+import alexthw.hexblades.common.items.deprecated.EarthHammer1;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;

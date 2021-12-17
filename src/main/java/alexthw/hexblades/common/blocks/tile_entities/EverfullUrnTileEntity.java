@@ -22,6 +22,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,11 +52,11 @@ public class EverfullUrnTileEntity extends TileEntityBase implements BucketPicku
         if (level == null) return;
 
         if (level.isClientSide() && (level.getGameTime() % 2 == 0)) {
-            //Particles.create(Registry.BUBBLE_PARTICLE).setScale(0.05F).setLifetime(10).randomOffset(0.125D, 0.0D).addVelocity(0, 0.05, 0).randomVelocity(0.0D, 0.15D).setColor(0.25F, 0.5F, 1).setAlpha(1.0F, 0.75F).setSpin(0.05F).spawn(this.level, (double) this.worldPosition.getX() + 0.5, (double) this.worldPosition.getY() + 0.9D, (double) this.worldPosition.getZ() + 0.5);
+            Particles.create(Registry.BUBBLE_PARTICLE).setScale(0.05F).setLifetime(10).randomOffset(0.125D, 0.0D).addVelocity(0, 0.05, 0).randomVelocity(0.0D, 0.15D).setColor(0.25F, 0.5F, 1).setAlpha(1.0F, 0.75F).setSpin(0.05F).spawn(this.level, (double) this.worldPosition.getX() + 0.5, (double) this.worldPosition.getY() + 0.9D, (double) this.worldPosition.getZ() + 0.5);
         } else if (level.getGameTime() % COMMON.UrnTickRate.get() == 0) {
 
             crucibles = getTilesWithinAABB(CrucibleTileEntity.class, getLevel(), new AABB(worldPosition.offset(-2, -1, -2), worldPosition.offset(3, 2, 3)));
-            cauldrons = getCauldrons(getLevel(), new AABB(worldPosition.offset(-2, -1, -2), worldPosition.offset(3, 2, 3)));
+            //cauldrons = getCauldrons(getLevel(), new AABB(worldPosition.offset(-2, -1, -2), worldPosition.offset(3, 2, 3)));
 
             if (isBotaniaLoaded()) {
                 BotaniaCompat.refillApotecaries(getLevel(), worldPosition);
@@ -102,12 +103,12 @@ public class EverfullUrnTileEntity extends TileEntityBase implements BucketPicku
     }
 
     @Override
-    public ItemStack pickupBlock(LevelAccessor p_152719_, BlockPos p_152720_, BlockState p_152721_) {
+    public @NotNull ItemStack pickupBlock(@NotNull LevelAccessor p_152719_, @NotNull BlockPos p_152720_, @NotNull BlockState p_152721_) {
         return new ItemStack(Fluids.WATER.getBucket());
     }
 
     @Override
-    public Optional<SoundEvent> getPickupSound() {
+    public @NotNull Optional<SoundEvent> getPickupSound() {
         return Optional.of(SoundEvents.BUCKET_FILL);
     }
 }

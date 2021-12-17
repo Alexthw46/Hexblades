@@ -1,6 +1,6 @@
 package alexthw.hexblades.compat;
 
-import alexthw.hexblades.client.render.entity.ArmorRenderer;
+import alexthw.hexblades.client.render.entity.HexArmorRenderer;
 import alexthw.hexblades.common.items.armors.ArsBotaniaArmor;
 import alexthw.hexblades.common.items.armors.HexWArmor;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -16,7 +16,7 @@ public class ArsBotaniaHandler {
 
     @OnlyIn(Dist.CLIENT)
     public static void renderer() {
-        GeoArmorRenderer.registerArmorRenderer(ArsBotaniaArmor.class, new ArmorRenderer());
+        GeoArmorRenderer.registerArmorRenderer(ArsBotaniaArmor.class, new HexArmorRenderer());
     }
 
 }

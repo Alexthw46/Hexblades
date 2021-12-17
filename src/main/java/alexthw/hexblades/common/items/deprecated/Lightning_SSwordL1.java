@@ -1,4 +1,4 @@
-package alexthw.hexblades.common.items.tier1;
+package alexthw.hexblades.common.items.deprecated;
 
 import alexthw.hexblades.common.entity.FulgorProjectileEntity;
 import alexthw.hexblades.common.items.HexSwordItem;
@@ -97,8 +97,8 @@ public class Lightning_SSwordL1 extends HexSwordItem {
     public void recalculatePowers(ItemStack weapon, Level world, Player player) {
         boolean awakening = getAwakened(weapon);
         double devotion = getDevotion(player);
-        setAttackPower(weapon, awakening, devotion / COMMON.DualsDS1.get());
-        setAttackSpeed(weapon, awakening, devotion / COMMON.DualsAS1.get());
+        setAttackPower(weapon, devotion , COMMON.DualsDS1.get());
+        setAttackSpeed(weapon, devotion , COMMON.DualsAS1.get() );
 
     }
 

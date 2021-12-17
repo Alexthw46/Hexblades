@@ -2,7 +2,7 @@ package alexthw.hexblades.spells;
 
 import alexthw.hexblades.deity.HexDeities;
 import alexthw.hexblades.registers.HexItem;
-import elucent.eidolon.capability.ReputationProvider;
+import elucent.eidolon.capability.IReputation;
 import elucent.eidolon.network.MagicBurstEffectPacket;
 import elucent.eidolon.network.Networking;
 import elucent.eidolon.spell.Sign;
@@ -32,7 +32,7 @@ public class HexTouchSpell extends StaticSpell {
 
     @Override
     public boolean canCast(Level world, BlockPos pos, Player player) {
-        if (!world.getCapability(ReputationProvider.CAPABILITY).isPresent()) return false;
+        if (!world.getCapability(IReputation.INSTANCE).isPresent()) return false;
 
         Vec3 v = getVector(world, player);
         List<ItemEntity> items = world.getEntitiesOfClass(ItemEntity.class, new AABB(v.x - 1.5, v.y - 1.5, v.z - 1.5, v.x + 1.5, v.y + 1.5, v.z + 1.5));

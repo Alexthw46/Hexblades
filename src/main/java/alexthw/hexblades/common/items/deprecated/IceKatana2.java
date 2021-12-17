@@ -1,6 +1,6 @@
-package alexthw.hexblades.common.items.tier2;
+package alexthw.hexblades.common.items.deprecated;
 
-import alexthw.hexblades.common.items.tier1.IceKatana1;
+import alexthw.hexblades.common.items.deprecated.IceKatana1;
 import elucent.eidolon.Registry;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -36,7 +36,7 @@ public class IceKatana2 extends IceKatana1 {
 
         boolean awakening = setAwakenedState(weapon, !getAwakened(weapon));
 
-        setAttackPower(weapon, awakening, devotion / COMMON.KatanaDS2.get());
-        setAttackSpeed(weapon, awakening, devotion / COMMON.KatanaAS2.get());
+        setAttackPower(weapon, devotion , COMMON.KatanaDS2.get() );
+        setAttackSpeed(weapon, devotion , COMMON.KatanaAS2.get() );
     }
 }

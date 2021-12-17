@@ -1,4 +1,4 @@
-package alexthw.hexblades.common.items.tier1;
+package alexthw.hexblades.common.items.deprecated;
 
 import alexthw.hexblades.common.items.HexSwordItem;
 import alexthw.hexblades.registers.HexItem;
@@ -37,8 +37,8 @@ public class Lightning_SSwordR1 extends HexSwordItem {
 
         boolean awakening = getAwakened(weapon);
 
-        setAttackPower(weapon, awakening, devotion / COMMON.DualsDS1.get());
-        setAttackSpeed(weapon, awakening, devotion / COMMON.DualsAS1.get());
+        setAttackPower(weapon, devotion , COMMON.DualsDS1.get() );
+        setAttackSpeed(weapon, devotion, COMMON.DualsAS1.get());
 
     }
 

@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "hexblades:hexed_ingot"
+            "items": [
+              "hexblades:hexed_ingot"
+            ]
           }
         ]
       }

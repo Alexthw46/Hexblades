@@ -1,11 +1,10 @@
 package alexthw.hexblades.compat;
 
-import alexthw.hexblades.client.render.entity.ArmorRenderer;
+import alexthw.hexblades.client.render.entity.HexArmorRenderer;
 import alexthw.hexblades.common.items.armors.HexWArmor;
 import alexthw.hexblades.common.items.armors.NouveauArmor;
 import alexthw.hexblades.registers.HexItem;
 import com.hollingsworth.arsnouveau.api.item.ICasterTool;
-import com.hollingsworth.arsnouveau.common.items.SpellBook;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import elucent.eidolon.Registry;
 import elucent.eidolon.codex.Page;
@@ -36,7 +35,7 @@ public class ArsNouveauCompat {
 
     @OnlyIn(Dist.CLIENT)
     public static void renderer() {
-        GeoArmorRenderer.registerArmorRenderer(NouveauArmor.class, new ArmorRenderer());
+        GeoArmorRenderer.registerArmorRenderer(NouveauArmor.class, new HexArmorRenderer());
     }
     public static Page[] makeCodex() {
 

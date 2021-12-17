@@ -18,7 +18,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.SwordItem;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.network.chat.Component;
@@ -88,7 +87,7 @@ public class HexSwordItem extends SwordItem implements IHexblade {
     //Only apply special effects if wielded by a Player
 
     @Override
-    public void applyHexBonus(Player user, boolean awakened) {
+    public void applyHexBonus(Player user, boolean awakened, int level) {
     }
 
     @Override
@@ -101,56 +100,9 @@ public class HexSwordItem extends SwordItem implements IHexblade {
         return rechargeTick;
     }
 
-    public int getEnergyLeft(ItemStack stack) {
-        return (getMaxDamage(stack) - stack.getDamageValue());
-    }
-
-    //set or reset awakened state & buffs
-    public void recalculatePowers(ItemStack weapon, Level world, Player player) {
-        double devotion = getDevotion(player);
-
-        boolean awakening = setAwakenedState(weapon, !getAwakened(weapon));
-
-        setAttackPower(weapon, awakening, devotion);
-        setAttackSpeed(weapon, awakening, devotion);
-
-    }
-
-    public void setAttackPower(ItemStack weapon, boolean awakening, double extradamage) {
-
-        CompoundTag tag = weapon.getOrCreateTag();
-        if (awakening) {
-            tag.putDouble(Constants.NBT.EXTRA_DAMAGE, baseAttack + extradamage);
-        } else {
-            tag.putDouble(Constants.NBT.EXTRA_DAMAGE, baseAttack);
-        }
-    }
-
-    public void setAttackSpeed(ItemStack weapon, boolean awakening, double extraspeed) {
-
-        CompoundTag tag = weapon.getOrCreateTag();
-
-        if (awakening) {
-            tag.putDouble(Constants.NBT.EXTRA_ATTACK_SPEED, baseSpeed + extraspeed);
-        } else {
-            tag.putDouble(Constants.NBT.EXTRA_ATTACK_SPEED, baseSpeed);
-        }
-    }
-
-    public double getAttackPower(ItemStack weapon) {
-
-        double AP = weapon.getOrCreateTag().getDouble(Constants.NBT.EXTRA_DAMAGE);
-
-        return AP > 0 ? AP : baseAttack;
-
-    }
-
-    public double getAttackSpeed(ItemStack weapon) {
-
-        double AS = weapon.getOrCreateTag().getDouble(Constants.NBT.EXTRA_ATTACK_SPEED);
-
-        return AS != 0 ? AS : baseSpeed;
-
+    @Override
+    public void updateElementalDamage(ItemStack weapon, double devotion, int scaling) {
+        weapon.getOrCreateTag().putDouble(Constants.NBT.SOUL_LEVEL, devotion);
     }
 
     @Override
@@ -162,16 +114,22 @@ public class HexSwordItem extends SwordItem implements IHexblade {
 
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
-        Multimap<Attribute, AttributeModifier> multimap = HashMultimap.create();
-        if (slot == EquipmentSlot.MAINHAND) {
-            multimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", getAttackPower(stack), AttributeModifier.Operation.ADDITION));
-            multimap.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", getAttackSpeed(stack), AttributeModifier.Operation.ADDITION));
+        if (getAwakened(stack)) {
+            return getCustomAttributeModifiers(slot,stack);
         }
-
-        return multimap;
+        return super.getAttributeModifiers(slot,stack);
     }
 
     public void talk(Player player) {
         player.sendMessage(new TranslatableComponent(this.getDescriptionId() + ".dialogue." + player.level.getRandom().nextInt(dialogueLines)).setStyle(Style.EMPTY.withItalic(true)), player.getUUID());
+    }
+
+    public Multimap<Attribute, AttributeModifier> getCustomAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
+        Multimap<Attribute, AttributeModifier> multimap = HashMultimap.create();
+        if (slot == EquipmentSlot.MAINHAND) {
+            multimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", baseAttack + getAttackPower(stack), AttributeModifier.Operation.ADDITION));
+            multimap.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", baseSpeed + getAttackSpeed(stack), AttributeModifier.Operation.ADDITION));
+        }
+        return multimap;
     }
 }

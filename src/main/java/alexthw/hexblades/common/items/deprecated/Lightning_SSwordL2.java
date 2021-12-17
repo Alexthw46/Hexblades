@@ -1,6 +1,5 @@
-package alexthw.hexblades.common.items.tier2;
+package alexthw.hexblades.common.items.deprecated;
 
-import alexthw.hexblades.common.items.tier1.Lightning_SSwordL1;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -18,8 +17,8 @@ public class Lightning_SSwordL2 extends Lightning_SSwordL1 {
         boolean awakening = getAwakened(weapon);
         double devotion = getDevotion(player);
 
-        setAttackPower(weapon, awakening, devotion / COMMON.DualsDS2.get());
-        setAttackSpeed(weapon, awakening, devotion / COMMON.DualsAS2.get());
+        setAttackPower(weapon, devotion , COMMON.DualsDS2.get() );
+        setAttackSpeed(weapon, devotion , COMMON.DualsAS2.get() );
     }
 
     @Override

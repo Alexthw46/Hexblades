@@ -1,6 +1,6 @@
-package alexthw.hexblades.common.items.tier2;
+package alexthw.hexblades.common.items.deprecated;
 
-import alexthw.hexblades.common.items.tier1.WaterSaber1;
+import alexthw.hexblades.common.items.deprecated.WaterSaber1;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
@@ -33,7 +33,7 @@ public class WaterSaber2 extends WaterSaber1 {
     }
 
     @Override
-    public void applyHexBonus(Player entity, boolean awakened) {
+    public void applyHexBonus(Player entity, boolean awakened, int souls) {
         if (awakened) {
             entity.addEffect(new MobEffectInstance(MobEffects.CONDUIT_POWER, 200, 0, false, false));
         } else {
@@ -48,7 +48,7 @@ public class WaterSaber2 extends WaterSaber1 {
 
         boolean awakening = setAwakenedState(weapon, !getAwakened(weapon));
 
-        setAttackPower(weapon, awakening, devotion / COMMON.SaberDS2.get());
+        setAttackPower(weapon, devotion , COMMON.SaberDS2.get() );
         setShielding(weapon, awakening, (float) (devotion / COMMON.SaberSH2.get()));
     }
 

@@ -1,4 +1,4 @@
-package alexthw.hexblades.common.items.tier1;
+package alexthw.hexblades.common.items.deprecated;
 
 import alexthw.hexblades.common.items.HexSwordItem;
 import alexthw.hexblades.util.HexUtils;
@@ -38,7 +38,7 @@ public class FireBroad1 extends HexSwordItem {
 
         boolean awakening = setAwakenedState(weapon, !getAwakened(weapon));
 
-        setAttackPower(weapon, awakening, devotion / COMMON.SwordDS1.get());
+        setAttackPower(weapon, devotion , COMMON.SwordDS1.get() );
     }
 
     @Override

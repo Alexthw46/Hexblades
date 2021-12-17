@@ -127,7 +127,7 @@ public class Hexblades {
                 // Skip all ocean, end, nether, and none category biomes.
                 // You can do checks for other traits that the biome has.
                 Biome.BiomeCategory biomeCategory = biomeEntry.getValue().getBiomeCategory();
-                if (biomeCategory != Biome.BiomeCategory.OCEAN && biomeCategory != Biome.BiomeCategory.THEEND && biomeCategory != Biome.BiomeCategory.NETHER && biomeCategory != Biome.BiomeCategory.NONE) {
+                if (biomeCategory == Biome.BiomeCategory.NETHER) {
                     tempConfiguredStructureBiomeMultiMap.put(ConfiguredStructures.CONFIGURED_FIRE_TEMPLE, biomeEntry.getKey());
                 }
             }

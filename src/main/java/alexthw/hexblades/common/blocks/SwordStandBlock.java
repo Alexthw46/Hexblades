@@ -1,20 +1,28 @@
 package alexthw.hexblades.common.blocks;
 
+import alexthw.hexblades.common.blocks.tile_entities.SwordStandTileEntity;
 import elucent.eidolon.block.HorizontalBlockBase;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.BooleanOp;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-import org.jetbrains.annotations.NotNull;
+public class SwordStandBlock extends HorizontalBlockBase implements EntityBlock {
 
-public class SwordStandBlock extends HorizontalBlockBase {
-
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
+        return new SwordStandTileEntity(pos, state);
+    }
     public SwordStandBlock(Properties properties) {
         super(properties);
         VoxelShape VSHAPE = Stream.of(

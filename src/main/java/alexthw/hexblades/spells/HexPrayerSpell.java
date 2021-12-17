@@ -2,7 +2,7 @@ package alexthw.hexblades.spells;
 
 import elucent.eidolon.Registry;
 import elucent.eidolon.block.HorizontalBlockBase;
-import elucent.eidolon.capability.ReputationProvider;
+import elucent.eidolon.capability.IReputation;
 import elucent.eidolon.deity.Deity;
 import elucent.eidolon.particle.Particles;
 import elucent.eidolon.ritual.Ritual;
@@ -32,9 +32,9 @@ public class HexPrayerSpell extends StaticSpell {
     }
 
     public boolean canCast(Level world, BlockPos pos, Player player) {
-        if (world.getCapability(ReputationProvider.CAPABILITY).resolve().isEmpty()) {
+        if (world.getCapability(IReputation.INSTANCE).resolve().isEmpty()) {
             return false;
-        } else if (world.getCapability(ReputationProvider.CAPABILITY).resolve().get().canPray(player, world.getGameTime())) {
+        } else if (world.getCapability(IReputation.INSTANCE).resolve().get().canPray(player, this.getRegistryName(),world.getGameTime())) {
             return false;
         } else {
             List<EffigyTileEntity> effigies = Ritual.getTilesWithinAABB(EffigyTileEntity.class, world, new AABB(pos.offset(-4, -4, -4), pos.offset(5, 5, 5)));
@@ -54,8 +54,8 @@ public class HexPrayerSpell extends StaticSpell {
             if (!world.isClientSide) {
                 effigy.pray();
                 AltarInfo info = AltarInfo.getAltarInfo(world, effigy.getBlockPos());
-                world.getCapability(ReputationProvider.CAPABILITY, null).ifPresent((rep) -> {
-                    rep.pray(player, world.getGameTime());
+                world.getCapability(IReputation.INSTANCE, null).ifPresent((rep) -> {
+                    rep.pray(player, this.getRegistryName(), world.getGameTime());
                     double prev = rep.getReputation(player, this.deity.getId());
                     rep.addReputation(player, this.deity.getId(), 1.0D + 0.25D * info.getPower());
                     this.deity.onReputationChange(player, rep, prev, rep.getReputation(player, this.deity.getId()));

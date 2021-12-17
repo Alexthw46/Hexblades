@@ -3,26 +3,26 @@ package alexthw.hexblades;
 import alexthw.hexblades.common.items.HexSwordItem;
 import alexthw.hexblades.common.items.IHexblade;
 import alexthw.hexblades.common.items.armors.HexWArmor;
-import alexthw.hexblades.common.items.tier1.WaterSaber1;
+import alexthw.hexblades.common.items.hexblades.WaterSaber;
 import alexthw.hexblades.deity.HexDeities;
 import alexthw.hexblades.network.FlameEffectPacket;
 import alexthw.hexblades.registers.HexItem;
 import alexthw.hexblades.util.HexUtils;
-import elucent.eidolon.capability.ReputationProvider;
+import elucent.eidolon.capability.IReputation;
 import elucent.eidolon.deity.Deity;
 import elucent.eidolon.event.SpeedFactorEvent;
 import elucent.eidolon.network.Networking;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Drowned;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.FakePlayer;
@@ -129,8 +129,8 @@ public class Events {
         LivingEntity damaged = event.getEntityLiving();
         if (damaged instanceof Player) {
             ItemStack item = damaged.getItemBySlot(EquipmentSlot.MAINHAND);
-            if (item.getItem() instanceof WaterSaber1) {
-                float shield = ((WaterSaber1) item.getItem()).getShielding(item);
+            if (item.getItem() instanceof WaterSaber saber && saber.getAwakened(item)) {
+                float shield = saber.getShielding(item);
                 event.setAmount(Math.min(1, event.getAmount() - shield));
             }
         }
@@ -139,18 +139,18 @@ public class Events {
 
     @SubscribeEvent
     public void onKill(LivingDeathEvent event) {
-        if (event.getSource().getEntity() instanceof Player player && event.getEntity() instanceof Monster) {
+        if (event.getSource().getEntity() instanceof Player player && event.getEntityLiving() instanceof Monster enemy) {
             Item item = player.getItemBySlot(EquipmentSlot.MAINHAND).getItem();
-            if (item instanceof HexSwordItem && !player.level.isClientSide()) {
-                if (HexUtils.chance((int) (5 + (event.getEntityLiving().getMaxHealth() / 4)), event.getEntity().getCommandSenderWorld())) {
+            if (item instanceof HexSwordItem hexblade && !player.level.isClientSide()) {
+                if (HexUtils.chance((int) (5 + (enemy.getMaxHealth() / 4)), enemy.getCommandSenderWorld())) {
                     Deity HexDeity = HexDeities.HEX_DEITY;
-                    event.getEntity().getCommandSenderWorld().getCapability(ReputationProvider.CAPABILITY, null).ifPresent((rep) -> {
+                    player.getCommandSenderWorld().getCapability(IReputation.INSTANCE, null).ifPresent((rep) -> {
                         double prev = rep.getReputation(player, HexDeity.getId());
                         rep.addReputation(player, HexDeity.getId(), 0.5D);
                         HexDeity.onReputationChange(player, rep, prev, rep.getReputation(player, HexDeities.HEX_DEITY.getId()));
                     });
-                    Networking.sendToTracking(player.level, event.getEntity().blockPosition(), new FlameEffectPacket(event.getEntity().blockPosition()));
-                    ((HexSwordItem) item).talk(player);
+                    Networking.sendToTracking(player.level, enemy.blockPosition(), new FlameEffectPacket(enemy.blockPosition()));
+                    hexblade.talk(player);
                 }
             }
         }

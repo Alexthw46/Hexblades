@@ -1,8 +1,7 @@
-package alexthw.hexblades.common.items.tier1;
+package alexthw.hexblades.common.items.deprecated;
 
 import alexthw.hexblades.common.items.HexSwordItem;
 import alexthw.hexblades.util.HexUtils;
-import elucent.eidolon.Registry;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -40,10 +39,10 @@ public class IceKatana1 extends HexSwordItem {
     public void recalculatePowers(ItemStack weapon, Level world, Player player) {
         double devotion = getDevotion(player);
 
-        boolean awakening = setAwakenedState(weapon, !getAwakened(weapon));
-
-        setAttackPower(weapon, awakening, devotion / COMMON.KatanaDS1.get());
-        setAttackSpeed(weapon, awakening, devotion / COMMON.KatanaAS1.get());
+        if (setAwakenedState(weapon, !getAwakened(weapon))) {
+            setAttackPower(weapon, devotion, COMMON.KatanaDS1.get());
+            setAttackSpeed(weapon, devotion, COMMON.KatanaAS1.get());
+        }
     }
 
     @Override

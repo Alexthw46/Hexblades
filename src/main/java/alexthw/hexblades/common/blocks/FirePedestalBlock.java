@@ -1,14 +1,24 @@
 package alexthw.hexblades.common.blocks;
 
+import alexthw.hexblades.common.blocks.tile_entities.EverfullUrnTileEntity;
+import alexthw.hexblades.common.blocks.tile_entities.FirePedestalTileEntity;
 import elucent.eidolon.block.HorizontalBlockBase;
+import elucent.eidolon.tile.BrazierTileEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class FirePedestalBlock extends HorizontalBlockBase {
+public class FirePedestalBlock extends HorizontalBlockBase implements EntityBlock {
 
 
     public FirePedestalBlock(Properties properties) {
@@ -29,4 +39,15 @@ public class FirePedestalBlock extends HorizontalBlockBase {
         return shape;
     }
 
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
+        return new FirePedestalTileEntity(pos, state);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
+        return (level1, pos, state1, tile) -> ((FirePedestalTileEntity) tile).tick();
+    }
 }

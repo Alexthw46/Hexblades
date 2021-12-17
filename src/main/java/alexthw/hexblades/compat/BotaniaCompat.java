@@ -1,21 +1,12 @@
 package alexthw.hexblades.compat;
 
-import alexthw.hexblades.client.render.entity.ArmorRenderer;
+import alexthw.hexblades.client.render.entity.HexArmorRenderer;
 import alexthw.hexblades.common.items.armors.BotaniaArmor;
 import alexthw.hexblades.common.items.armors.HexWArmor;
-import alexthw.hexblades.network.RefillEffectPacket;
-import alexthw.hexblades.registers.HexItem;
-import alexthw.hexblades.util.HexUtils;
-import elucent.eidolon.codex.Page;
-import elucent.eidolon.codex.TitlePage;
-import elucent.eidolon.codex.WorktablePage;
-import elucent.eidolon.network.Networking;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
@@ -23,11 +14,6 @@ import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 //import vazkii.botania.common.block.tile.TileAltar;
 //import vazkii.botania.common.item.ModItems;
 
-import java.util.List;
-
-import static alexthw.hexblades.ConfigHandler.COMMON;
-import static alexthw.hexblades.codex.CodexHexChapters.makePageKey;
-import static alexthw.hexblades.codex.CodexHexChapters.nukeRecipe;
 
 public class BotaniaCompat {
 
@@ -51,7 +37,7 @@ public class BotaniaCompat {
 
     @OnlyIn(Dist.CLIENT)
     public static void renderer() {
-        GeoArmorRenderer.registerArmorRenderer(BotaniaArmor.class, new ArmorRenderer());
+        GeoArmorRenderer.registerArmorRenderer(BotaniaArmor.class, new HexArmorRenderer());
     }
 
     /* TODO reneable when ported

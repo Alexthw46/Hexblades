@@ -2,7 +2,7 @@ package alexthw.hexblades.client;
 
 import alexthw.hexblades.Hexblades;
 import alexthw.hexblades.client.render.EmptyRenderer;
-import alexthw.hexblades.client.render.entity.ArmorRenderer;
+import alexthw.hexblades.client.render.entity.HexArmorRenderer;
 import alexthw.hexblades.client.render.entity.FireElementalER;
 import alexthw.hexblades.client.render.tile.FirePedestalRenderer;
 import alexthw.hexblades.client.render.tile.SwordStandRenderer;
@@ -60,21 +60,24 @@ public class ClientEvents {
 
     }
 
-
     @SubscribeEvent
-    public static void bindTERs(final EntityRenderersEvent.RegisterRenderers event) {
+    public static void registerRenderers(final EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(HexTileEntityType.SWORD_STAND_TILE_ENTITY, SwordStandRenderer::new);
         event.registerBlockEntityRenderer(HexTileEntityType.FIRE_PEDESTAL_TILE_ENTITY, FirePedestalRenderer::new);
         BlockEntityRenderers.register(HexTileEntityType.EVERFULL_URN_TILE_ENTITY, Urn_Renderer::new);
-        GeoArmorRenderer.registerArmorRenderer(HexWArmor.class, new ArmorRenderer());
-        attachRenderers();
+
         EntityRenderers.register(HexEntityType.FULGOR_PROJECTILE.get(), EmptyRenderer::new);
         EntityRenderers.register(HexEntityType.MAGMA_PROJECTILE.get(), EmptyRenderer::new);
         event.registerEntityRenderer(HexEntityType.FIRE_ELEMENTAL.get(), FireElementalER::new);
 
     }
 
-    @SuppressWarnings("deprecation")
+    @SubscribeEvent
+    public static void armorRenderers(final EntityRenderersEvent.AddLayers event){
+        GeoArmorRenderer.registerArmorRenderer(HexWArmor.class, new HexArmorRenderer());
+        attachRenderers();
+    }
+
     @SubscribeEvent
     public static void initClientEvents(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
@@ -102,6 +105,10 @@ public class ClientEvents {
 
     public static void registerToggleAnimation(Item item) {
         ItemProperties.register(item, prefix(Constants.NBT.AW_State), (stack, world, entity,idk) -> ((IHexblade) stack.getItem()).getAwakened(stack) ? 1.0F : 0.0F);
+    }
+
+    public static void registerAwakenedLevel(Item item) {
+        ItemProperties.register(item, prefix(Constants.NBT.AW_Level), (stack, world, entity,idk) -> ((IHexblade) stack.getItem()).getAwakening(stack));
     }
 
     public static void registerToggleDrillAnimation(Item item) {

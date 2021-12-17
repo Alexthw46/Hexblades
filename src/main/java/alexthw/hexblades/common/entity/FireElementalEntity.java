@@ -197,11 +197,7 @@ public class FireElementalEntity extends BaseElementalEntity implements RangedAt
         AnimationController<FireElementalEntity> combat = new AnimationController<>(this, "attack_controller", 5, this::attackPredicate);
         data.addAnimationController(combat);
         data.addAnimationController(new AnimationController<>(this, "idle", 0, this::idleP));
-        combat.registerParticleListener(this::particleListener);
         super.registerControllers(data);
-    }
-
-    private void particleListener(ParticleKeyFrameEvent<FireElementalEntity> particleKeyFrameEvent) {
     }
 
     private <T extends IAnimatable> PlayState idleP(AnimationEvent<T> event) {

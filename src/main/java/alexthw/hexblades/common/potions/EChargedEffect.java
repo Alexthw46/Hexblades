@@ -1,7 +1,7 @@
 package alexthw.hexblades.common.potions;
 
 import alexthw.hexblades.Hexblades;
-import alexthw.hexblades.common.items.tier1.Lightning_SSwordR1;
+import alexthw.hexblades.common.items.deprecated.Lightning_SSwordR1;
 import alexthw.hexblades.util.HexUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -30,8 +30,7 @@ public class EChargedEffect extends MobEffect implements IForgeMobEffect {
     protected static final ResourceLocation EFFECT_TEXTURE = new ResourceLocation(Hexblades.MODID, "textures/mob_effect/electro_charged.png");
 
     public void shock(LivingHurtEvent event) {
-        if (event.getSource().getEntity() instanceof LivingEntity && event.getSource() != DamageSource.LIGHTNING_BOLT) {
-            LivingEntity source = (LivingEntity) event.getSource().getEntity();
+        if (event.getSource().getEntity() instanceof LivingEntity source && event.getSource() != DamageSource.LIGHTNING_BOLT) {
             if ((source.getItemBySlot(EquipmentSlot.MAINHAND).getItem() instanceof Lightning_SSwordR1) || event.getEntityLiving().isInWaterOrRain()) {
                 if (event.getEntityLiving().hasEffect(this)) {
                     event.setAmount(event.getAmount() + 2.0F);

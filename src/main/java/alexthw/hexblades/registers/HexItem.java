@@ -5,8 +5,8 @@ import alexthw.hexblades.common.items.ArmorFocus;
 import alexthw.hexblades.common.items.ElementalSoul;
 import alexthw.hexblades.common.items.HexSwordItem;
 import alexthw.hexblades.common.items.dulls.*;
-import alexthw.hexblades.common.items.tier1.*;
-import alexthw.hexblades.common.items.tier2.*;
+import alexthw.hexblades.common.items.hexblades.SanguineSword;
+import alexthw.hexblades.common.items.deprecated.*;
 import alexthw.hexblades.compat.ArmorCompatHandler;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
@@ -98,11 +98,11 @@ public class HexItem {
         FOCUS_NOUVEAU = ITEMS.register("ars_nouveau_focus", () -> new ArmorFocus(addTabProp(), "ars nouveau"));
 
         //Dull Sword/Tools
-        DULL_KATANA = ITEMS.register("katana_dull", () -> new Katana_dull(2, -2.5F, addTabProp().stacksTo(1)));
-        DULL_BROADSWORD = ITEMS.register("sword_dull", () -> new BroadSword_dull(2, -2.6F, addTabProp().stacksTo(1)));
-        DULL_SABER = ITEMS.register("saber_dull", () -> new Saber_dull(2, -2.4F, addTabProp().stacksTo(1)));
-        DULL_HAMMER = ITEMS.register("hammer_dull", () -> new Hammer_dull(3, -3.4F, addTabProp().stacksTo(1)));
-        DULL_DAGGER = ITEMS.register("dagger_dull", () -> new Dagger_dull(0, -1.5F, addTabProp().stacksTo(1)));
+        DULL_KATANA = ITEMS.register("katana_dull", () -> new DullSwordItem(2, -2.5F, addTabProp().stacksTo(1)));
+        DULL_BROADSWORD = ITEMS.register("sword_dull", () -> new DullSwordItem(2, -2.6F, addTabProp().stacksTo(1)));
+        DULL_SABER = ITEMS.register("saber_dull", () -> new DullSwordItem(2, -2.4F, addTabProp().stacksTo(1)));
+        DULL_HAMMER = ITEMS.register("hammer_dull", () -> new HammerDull(3, -3.4F, addTabProp().stacksTo(1)));
+        DULL_DAGGER = ITEMS.register("dagger_dull", () -> new DullSwordItem(0, -1.5F, addTabProp().stacksTo(1)));
 
         //Hexblades
         DEV_SWORD = ITEMS.register("dev_sword_1", () -> new HexSwordItem(3, -1.6F, addTabProp().stacksTo(1)));

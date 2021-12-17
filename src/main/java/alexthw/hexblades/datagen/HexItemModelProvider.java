@@ -2,9 +2,9 @@ package alexthw.hexblades.datagen;
 
 import alexthw.hexblades.Hexblades;
 import alexthw.hexblades.common.items.IHexblade;
-import alexthw.hexblades.common.items.dulls.Hammer_dull;
-import alexthw.hexblades.common.items.tier1.EarthHammer1;
-import alexthw.hexblades.common.items.tier1.Lightning_SSwordL1;
+import alexthw.hexblades.common.items.dulls.HammerDull;
+import alexthw.hexblades.common.items.deprecated.EarthHammer1;
+import alexthw.hexblades.common.items.deprecated.Lightning_SSwordL1;
 import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -30,6 +30,7 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("deprecation")
 public class HexItemModelProvider extends ItemModelProvider {
 
     private static final ResourceLocation GENERATED = new ResourceLocation("item/generated");
@@ -46,7 +47,7 @@ public class HexItemModelProvider extends ItemModelProvider {
         takeAll(items, i -> i.get() instanceof BlockItem && ((BlockItem) i.get()).getBlock() instanceof FenceBlock).forEach(this::fenceBlockItem);
         takeAll(items, i -> i.get() instanceof BlockItem).forEach(this::blockItem);
         takeAll(items, i -> i.get() instanceof DiggerItem).forEach(this::handheldItem);
-        takeAll(items, i -> i.get() instanceof Hammer_dull);
+        takeAll(items, i -> i.get() instanceof HammerDull);
         takeAll(items, i -> i.get() instanceof EarthHammer1);
         takeAll(items, i -> i.get() instanceof Lightning_SSwordL1).forEach(this::awakenThrowItem);
         takeAll(items, i -> i.get() instanceof IHexblade).forEach(this::awakenableItem);

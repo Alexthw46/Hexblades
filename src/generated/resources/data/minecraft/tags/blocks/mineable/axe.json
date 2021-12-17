@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "hexblades:dark_polished_planks",
+    "hexblades:dark_polished_planks_slab",
+    "hexblades:dark_polished_planks_stairs",
+    "hexblades:dark_polished_planks_fence",
+    "hexblades:dark_polished_planks_fence_gate"
+  ]
+}

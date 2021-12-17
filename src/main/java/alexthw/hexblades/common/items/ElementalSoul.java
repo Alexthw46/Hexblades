@@ -3,7 +3,7 @@ package alexthw.hexblades.common.items;
 import alexthw.hexblades.deity.DeityLocks;
 import alexthw.hexblades.deity.HexDeities;
 import alexthw.hexblades.deity.HexFacts;
-import elucent.eidolon.capability.ReputationProvider;
+import elucent.eidolon.capability.IReputation;
 import elucent.eidolon.deity.Deity;
 import elucent.eidolon.spell.KnowledgeUtil;
 import net.minecraft.world.entity.Entity;
@@ -25,7 +25,7 @@ public class ElementalSoul extends Item {
 
         if (!world.isClientSide() && entityIn instanceof Player player) {
             if (!KnowledgeUtil.knowsFact(player, HexFacts.EVOLVE_RITUAL)) {
-                world.getCapability(ReputationProvider.CAPABILITY, null).ifPresent(rep -> {
+                world.getCapability(IReputation.INSTANCE, null).ifPresent(rep -> {
                     Deity deity = HexDeities.HEX_DEITY;
                     if (rep.unlock(player, deity.getId(), DeityLocks.EVOLVED_WEAPON)) {
                         deity.onReputationUnlock(player, rep, DeityLocks.EVOLVED_WEAPON);

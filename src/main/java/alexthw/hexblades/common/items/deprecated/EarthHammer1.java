@@ -1,4 +1,4 @@
-package alexthw.hexblades.common.items.tier1;
+package alexthw.hexblades.common.items.deprecated;
 
 import alexthw.hexblades.common.items.HexSwordItem;
 import alexthw.hexblades.registers.Tiers;
@@ -105,7 +105,7 @@ public class EarthHammer1 extends HexSwordItem {
 
         boolean awakening = getAwakened(weapon);
 
-        setAttackPower(weapon, awakening || mineSwitch, mineSwitch ? -6 : (devotion / COMMON.HammerDS1.get()));
+        setAttackPower(weapon, mineSwitch ? -6 : devotion , COMMON.HammerDS1.get() );
         setMiningSpeed(weapon, awakening, (float) (devotion / COMMON.HammerMS1.get()));
 
     }

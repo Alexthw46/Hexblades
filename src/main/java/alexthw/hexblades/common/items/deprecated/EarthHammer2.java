@@ -1,7 +1,6 @@
-package alexthw.hexblades.common.items.tier2;
+package alexthw.hexblades.common.items.deprecated;
 
-import alexthw.hexblades.common.items.tier1.EarthHammer1;
-import alexthw.hexblades.registers.Tiers;
+import alexthw.hexblades.common.items.deprecated.EarthHammer1;
 import alexthw.hexblades.util.Constants;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -13,8 +12,6 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class EarthHammer2 extends EarthHammer1 {
 
@@ -53,7 +50,7 @@ public class EarthHammer2 extends EarthHammer1 {
 
         boolean awakening = getAwakened(weapon);
 
-        setAttackPower(weapon, awakening || mineSwitch, mineSwitch ? -8 : (devotion / COMMON.HammerDS2.get()));
+        setAttackPower(weapon, mineSwitch ? -8 : devotion , COMMON.HammerDS2.get());
         setMiningSpeed(weapon, awakening, (float) (devotion / COMMON.HammerMS2.get()));
     }
 

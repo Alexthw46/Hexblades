@@ -1,4 +1,4 @@
-package alexthw.hexblades.common.items.tier1;
+package alexthw.hexblades.common.items.hexblades;
 
 import alexthw.hexblades.common.items.IHexblade;
 import alexthw.hexblades.registers.Tiers;
@@ -39,7 +39,7 @@ import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.common.ToolAction;
 import org.jetbrains.annotations.NotNull;
 
-public class EarthHammer1var extends PickaxeItem implements IHexblade {
+public class EarthHammer extends PickaxeItem implements IHexblade {
 
     protected final double baseAttack;
     protected final double baseAttackSpeed;
@@ -48,11 +48,11 @@ public class EarthHammer1var extends PickaxeItem implements IHexblade {
     protected int rechargeTick = 5;
     protected int dialogueLines = 3;
 
-    public EarthHammer1var(Properties props) {
+    public EarthHammer(Properties props) {
         this(Tiers.PatronWeaponTier.INSTANCE, 7, -3.2F, props);
     }
 
-    public EarthHammer1var(Tier tier, int attackDamageIn, float attackSpeedIn, Properties builder) {
+    public EarthHammer(Tier tier, int attackDamageIn, float attackSpeedIn, Properties builder) {
         super(tier, attackDamageIn, attackSpeedIn, builder);
         baseAttack = attackDamageIn;
         baseAttackSpeed = attackSpeedIn;
@@ -65,16 +65,9 @@ public class EarthHammer1var extends PickaxeItem implements IHexblade {
         weapon.setTag(tag);
     }
 
-    public void setAttackPower(ItemStack weapon, boolean awakening, double extradamage) {
+    @Override
+    public void updateElementalDamage(ItemStack weapon, double devotion, int scaling) {
 
-        CompoundTag tag = weapon.getOrCreateTag();
-        tag.putDouble(Constants.NBT.EXTRA_DAMAGE, awakening ? baseAttack + extradamage : baseAttack);
-    }
-
-    public void setAttackSpeed(ItemStack weapon, boolean awakening, double extraspeed) {
-
-        CompoundTag tag = weapon.getOrCreateTag();
-        tag.putDouble(Constants.NBT.EXTRA_ATTACK_SPEED, awakening ? baseAttackSpeed + extraspeed : baseAttackSpeed);
     }
 
     public void setMiningSpeed(ItemStack weapon, boolean awakening, float extra_mining) {
@@ -95,22 +88,6 @@ public class EarthHammer1var extends PickaxeItem implements IHexblade {
         tag.putFloat(Constants.NBT.EXTRA_MINING_SPEED, newMiningSpeed);
 
         weapon.setTag(tag);
-    }
-
-
-    public double getAttackPower(ItemStack weapon) {
-
-        double AP = weapon.getOrCreateTag().getDouble(Constants.NBT.EXTRA_DAMAGE);
-
-        return AP > 0 ? AP : baseAttack;
-
-    }
-
-    public double getAttackSpeed(ItemStack weapon) {
-
-        double AS = weapon.getOrCreateTag().getDouble(Constants.NBT.EXTRA_ATTACK_SPEED);
-        return AS != 0 ? AS : baseAttackSpeed;
-
     }
 
     @Override
@@ -151,11 +128,6 @@ public class EarthHammer1var extends PickaxeItem implements IHexblade {
     }
 
     @Override
-    public int getEnergyLeft(ItemStack stack) {
-        return getMaxDamage(stack) - stack.getDamageValue();
-    }
-
-    @Override
     public double getDevotion(Player player) {
         return IHexblade.super.getDevotion(player);
     }
@@ -170,13 +142,13 @@ public class EarthHammer1var extends PickaxeItem implements IHexblade {
 
         boolean awakening = getAwakened(weapon);
 
-        setAttackPower(weapon, awakening, mineSwitch ? -6 : (devotion / COMMON.HammerDS1.get()));
+        setAttackPower(weapon, mineSwitch ? -6 : devotion, COMMON.HammerDS1.get() );
         setMiningSpeed(weapon, awakening, (float) (devotion / COMMON.HammerMS1.get()));
 
     }
 
     @Override
-    public void applyHexBonus(Player user, boolean awakened) {
+    public void applyHexBonus(Player user, boolean awakened, int souls) {
     }
 
     @Override

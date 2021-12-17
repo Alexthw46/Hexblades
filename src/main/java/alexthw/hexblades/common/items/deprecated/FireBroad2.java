@@ -1,6 +1,6 @@
-package alexthw.hexblades.common.items.tier2;
+package alexthw.hexblades.common.items.deprecated;
 
-import alexthw.hexblades.common.items.tier1.FireBroad1;
+import alexthw.hexblades.common.items.deprecated.FireBroad1;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -21,12 +21,7 @@ public class FireBroad2 extends FireBroad1 {
     }
 
     @Override
-    public boolean hasBonus() {
-        return true;
-    }
-
-    @Override
-    public void applyHexBonus(Player user, boolean awakened) {
+    public void applyHexBonus(Player user, boolean awakened, int souls) {
         user.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 200, 0, false, false));
     }
 
@@ -34,9 +29,10 @@ public class FireBroad2 extends FireBroad1 {
     public void recalculatePowers(ItemStack weapon, Level world, Player player) {
         double devotion = getDevotion(player);
 
-        boolean awakening = setAwakenedState(weapon, !getAwakened(weapon));
-
-        setAttackPower(weapon, awakening, devotion / COMMON.SwordDS2.get());
+        if (setAwakenedState(weapon, !getAwakened(weapon))) {
+            updateElementalDamage(weapon, devotion, getSouls(weapon));
+            setAttackPower(weapon, devotion , COMMON.SwordDS2.get() );
+        }
     }
 
     @Override

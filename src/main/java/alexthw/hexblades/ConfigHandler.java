@@ -6,29 +6,33 @@ import org.apache.commons.lang3.tuple.Pair;
 public class ConfigHandler {
 
     public static class Common {
+        public final ForgeConfigSpec.ConfigValue<Integer> SwordBD;
         public final ForgeConfigSpec.ConfigValue<Integer> SwordDS1;
         public final ForgeConfigSpec.ConfigValue<Integer> SwordDS2;
         public final ForgeConfigSpec.ConfigValue<Integer> SwordED1;
         public final ForgeConfigSpec.ConfigValue<Integer> SwordED2;
 
-
+        public final ForgeConfigSpec.ConfigValue<Integer> KatanaBD;
         public final ForgeConfigSpec.ConfigValue<Integer> KatanaDS1;
         public final ForgeConfigSpec.ConfigValue<Integer> KatanaDS2;
         public final ForgeConfigSpec.ConfigValue<Integer> KatanaAS1;
         public final ForgeConfigSpec.ConfigValue<Integer> KatanaAS2;
         public final ForgeConfigSpec.ConfigValue<Integer> KatanaED;
 
+        public final ForgeConfigSpec.ConfigValue<Integer> SaberBD;
         public final ForgeConfigSpec.ConfigValue<Integer> SaberDS1;
         public final ForgeConfigSpec.ConfigValue<Integer> SaberDS2;
         public final ForgeConfigSpec.ConfigValue<Integer> SaberSH1;
         public final ForgeConfigSpec.ConfigValue<Integer> SaberSH2;
         public final ForgeConfigSpec.ConfigValue<Integer> SaberED2;
 
-
+        public final ForgeConfigSpec.ConfigValue<Integer> DualsBD;
         public final ForgeConfigSpec.ConfigValue<Integer> DualsDS1;
         public final ForgeConfigSpec.ConfigValue<Integer> DualsAS1;
+        public final ForgeConfigSpec.ConfigValue<Integer> DualsFD1;
         public final ForgeConfigSpec.ConfigValue<Integer> DualsDS2;
         public final ForgeConfigSpec.ConfigValue<Integer> DualsAS2;
+        public final ForgeConfigSpec.ConfigValue<Integer> DualsFD2;
         public final ForgeConfigSpec.ConfigValue<Integer> DualsRR;
 
 
@@ -60,6 +64,9 @@ public class ConfigHandler {
             builder.comment("Adjust these values to balance the bonus from devotion an Hexblade gets while awakened. Max devotion : 60")
                     .push("Weapon scaling - Sword");
 
+            SwordBD = builder
+                    .comment("Set the base damage of the fire sword")
+                    .define("Sword base damage", 6);
             SwordDS1 = builder
                     .comment("Set the ratio of devotion -> attack power of the fire sword Tier 1.")
                     .define("SwDS1 divide by", 20);
@@ -75,6 +82,10 @@ public class ConfigHandler {
             builder.pop();
 
             builder.push("Weapon scaling - Katana");
+
+            KatanaBD = builder
+                    .comment("Set the base damage of the ice katana")
+                    .define("Katana base damage", 5);
             KatanaDS1 = builder
                     .comment("Set the ratio of devotion -> attack power of the ice katana Tier 1.")
                     .define("KDS1 divide by", 25);
@@ -93,6 +104,9 @@ public class ConfigHandler {
             builder.pop();
 
             builder.push("Weapon scaling - Saber");
+            SaberBD = builder
+                    .comment("Set the base damage of the water saber")
+                    .define("Saber base damage", 5);
             SaberDS1 = builder
                     .comment("Set the ratio of devotion -> attack power of the water saber Tier 1.")
                     .define("SaDS1 divide by", 25);
@@ -111,18 +125,27 @@ public class ConfigHandler {
             builder.pop();
 
             builder.push("Weapon scaling - Dual");
+            DualsBD = builder
+                    .comment("Set the base damage of the thunder dagger")
+                    .define("Dagger base damage", 4);
             DualsDS1 = builder
                     .comment("Set the ratio of devotion -> attack power of the thunder duals Tier 1.")
                     .define("DDS1 divide by", 30);
             DualsAS1 = builder
                     .comment("Set the ratio of devotion -> attack speed of the thunder duals Tier 1.")
                     .define("DAS1 divide by", 60);
+            DualsFD1 = builder
+                    .comment("Set the ratio of devotion -> damage of the lightning dagger projectile Tier 1.")
+                    .define("FulgorDamage1 divide by", 60);
             DualsDS2 = builder
                     .comment("Set the ratio of devotion -> attack power of the thunder duals Tier 2.")
                     .define("DDS2 divide by", 20);
             DualsAS2 = builder
                     .comment("Set the ratio of devotion -> attack speed of the thunder duals Tier 2.")
                     .define("DAS2 divide by", 40);
+            DualsFD2 = builder
+                    .comment("Set the ratio of devotion -> damage of the lightning dagger projectile Tier 2.")
+                    .define("FulgorDamage2 divide by", 60);
             DualsRR = builder
                     .comment("Set the ratio of devotion -> recharge rate of the left thunder dual.")
                     .define("DRR divide by", 10);

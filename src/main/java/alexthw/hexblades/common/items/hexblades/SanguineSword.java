@@ -1,14 +1,12 @@
-package alexthw.hexblades.common.items.tier2;
+package alexthw.hexblades.common.items.hexblades;
 
 import alexthw.hexblades.common.items.IHexblade;
 import alexthw.hexblades.compat.ArsNouveauCompat;
-import alexthw.hexblades.util.Constants;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import elucent.eidolon.item.SappingSwordItem;
 import elucent.eidolon.network.LifestealEffectPacket;
 import elucent.eidolon.network.Networking;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
@@ -48,11 +46,6 @@ public class SanguineSword extends SappingSwordItem implements IHexblade {
     }
 
     @Override
-    public boolean hasBonus() {
-        return true;
-    }
-
-    @Override
     public boolean onHitEffects() {
         return true;
     }
@@ -63,7 +56,7 @@ public class SanguineSword extends SappingSwordItem implements IHexblade {
     }
 
     @Override
-    public void applyHexBonus(Player user, boolean awakened) {
+    public void applyHexBonus(Player user, boolean awakened, int souls) {
         if (awakened) user.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 400, 0, false, false));
     }
 
@@ -90,10 +83,9 @@ public class SanguineSword extends SappingSwordItem implements IHexblade {
     public void recalculatePowers(ItemStack weapon, Level world, Player player) {
         double devotion = getDevotion(player);
 
-        boolean awakening = setAwakenedState(weapon, !getAwakened(weapon));
-
-        setAttackPower(weapon, awakening, devotion / COMMON.BloodDS.get());
-
+        if (setAwakenedState(weapon, !getAwakened(weapon))) {
+            setAttackPower(weapon, devotion , COMMON.BloodDS.get() );
+        }
     }
 
     @Override
@@ -119,46 +111,14 @@ public class SanguineSword extends SappingSwordItem implements IHexblade {
         player.sendMessage(new TranslatableComponent(this.getDescriptionId() + ".dialogue." + player.level.getRandom().nextInt(dialogueLines)).setStyle(Style.EMPTY.withItalic(true)), player.getUUID());
     }
 
+    @Override
+    public void updateElementalDamage(ItemStack weapon, double devotion, int scaling) {
+
+    }
+
     //data getters
     public int getRechargeTicks() {
         return rechargeTick;
-    }
-
-    public int getEnergyLeft(ItemStack stack) {
-        return getMaxDamage(stack) - stack.getDamageValue();
-    }
-
-    //NBT GETTERS
-    public double getAttackPower(ItemStack weapon) {
-
-        double AP = weapon.getOrCreateTag().getDouble(Constants.NBT.EXTRA_DAMAGE);
-
-        return AP > 0 ? AP : baseAttack;
-
-    }
-
-    public double getAttackSpeed(ItemStack weapon) {
-
-        double AS = weapon.getOrCreateTag().getDouble(Constants.NBT.EXTRA_ATTACK_SPEED);
-
-        return AS != 0 ? AS : baseAttackSpeed;
-
-    }
-
-    //NBT SETTERS
-
-    public void setAttackPower(ItemStack weapon, boolean awakening, double extradamage) {
-
-        CompoundTag tag = weapon.getOrCreateTag();
-
-        tag.putDouble(Constants.NBT.EXTRA_DAMAGE, awakening ? baseAttack + extradamage : baseAttack);
-    }
-
-    public void setAttackSpeed(ItemStack weapon, boolean awakening, double extraspeed) {
-
-        CompoundTag tag = weapon.getOrCreateTag();
-
-        tag.putDouble(Constants.NBT.EXTRA_ATTACK_SPEED, awakening ? baseAttackSpeed + extraspeed : baseAttackSpeed);
     }
 
     @Override
