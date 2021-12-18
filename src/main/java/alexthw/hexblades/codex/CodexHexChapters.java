@@ -326,7 +326,7 @@ public class CodexHexChapters {
         if (CompatUtil.isMalumLoaded()) {
             //return new IndexPage.IndexEntry(COMPAT, new ItemStack(MalumItems.BLUE_ETHER.get()));
         } else {
-            return new IndexPage.IndexEntry(COMPAT, new ItemStack(Items.CAMPFIRE));
+            return new IndexPage.IndexEntry(COMPAT, new ItemStack(Items.CANDLE));
         }
         return null;
     }
@@ -394,12 +394,9 @@ public class CodexHexChapters {
                 )
         );
 
-        List<Category> CCategories = getPrivateValue(CodexChapters.class, new CodexChapters(), "categories");
+        CodexChapters.categories.add(HEXBLADES = new Category(Hexblades.MODID, new ItemStack(HexItem.PATRON_SOUL.get()), ColorUtil.packColor(220, 0, 30, 66), HEXBLADES_INDEX));
+        CodexChapters.categories.add(HEXBLADES_WEAPONS = new Category("hexblades_weapons", new ItemStack(HexItem.DEV_SWORD.get()), ColorUtil.packColor(220, 0, 0, 46), HEXBLADES_WINDEX));
 
-        if (CCategories != null) {
-            CCategories.add(HEXBLADES = new Category(Hexblades.MODID, new ItemStack(HexItem.PATRON_SOUL.get()), ColorUtil.packColor(220, 0, 30, 66), HEXBLADES_INDEX));
-            CCategories.add(HEXBLADES_WEAPONS = new Category("hexblades_weapons", new ItemStack(HexItem.DEV_SWORD.get()), ColorUtil.packColor(220, 0, 0, 46), HEXBLADES_WINDEX));
-        }
     }
 
     public static Page nukeRecipe(boolean flag, Page page) {

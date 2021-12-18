@@ -3,8 +3,13 @@ package alexthw.hexblades.common.items.hexblades;
 import alexthw.hexblades.common.items.IHexblade;
 import alexthw.hexblades.registers.Tiers;
 import alexthw.hexblades.util.Constants;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.level.block.state.BlockState;
@@ -44,7 +49,7 @@ public class EarthHammer extends PickaxeItem implements IHexblade {
     protected final double baseAttack;
     protected final double baseAttackSpeed;
     protected final float baseMiningSpeed;
-    protected TranslatableComponent tooltipText = new TranslatableComponent("tooltip.HexSwordItem.earth_hammer");
+    protected TranslatableComponent tooltipText = new TranslatableComponent("tooltip.hexblades.earth_hammer");
     protected int rechargeTick = 5;
     protected int dialogueLines = 3;
 
@@ -62,12 +67,6 @@ public class EarthHammer extends PickaxeItem implements IHexblade {
     public void switchMining(ItemStack weapon) {
         CompoundTag tag = weapon.getOrCreateTag();
         tag.putBoolean(Constants.NBT.MiningSwitch, !tag.getBoolean(Constants.NBT.MiningSwitch));
-        weapon.setTag(tag);
-    }
-
-    @Override
-    public void updateElementalDamage(ItemStack weapon, double devotion, int scaling) {
-
     }
 
     public void setMiningSpeed(ItemStack weapon, boolean awakening, float extra_mining) {
@@ -87,7 +86,6 @@ public class EarthHammer extends PickaxeItem implements IHexblade {
         }
         tag.putFloat(Constants.NBT.EXTRA_MINING_SPEED, newMiningSpeed);
 
-        weapon.setTag(tag);
     }
 
     @Override
@@ -117,8 +115,8 @@ public class EarthHammer extends PickaxeItem implements IHexblade {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, @NotNull Level worldIn, @NotNull Entity user, int itemSlot, boolean isSelected) {
-        if (stack.getOrCreateTag().getBoolean(Constants.NBT.MiningSwitch)) return;
+    public void inventoryTick(@NotNull ItemStack stack, @NotNull Level worldIn, @NotNull Entity user, int itemSlot, boolean isSelected) {
+        if (MineSwitchCheck(stack)) return;
         this.inventoryTick(stack, worldIn, user);
     }
 
@@ -128,27 +126,25 @@ public class EarthHammer extends PickaxeItem implements IHexblade {
     }
 
     @Override
-    public double getDevotion(Player player) {
-        return IHexblade.super.getDevotion(player);
-    }
-
-    @Override
     public void recalculatePowers(ItemStack weapon, Level world, Player player) {
-        double devotion = getDevotion(player);
+        int souls = getSouls(weapon);
 
-        boolean mineSwitch = weapon.getOrCreateTag().getBoolean(Constants.NBT.MiningSwitch);
+        boolean mineSwitch = MineSwitchCheck(weapon);
 
         if (!mineSwitch) setAwakenedState(weapon, !getAwakened(weapon));
 
         boolean awakening = getAwakened(weapon);
 
-        setAttackPower(weapon, mineSwitch ? -6 : devotion, COMMON.HammerDS1.get() );
-        setMiningSpeed(weapon, awakening, (float) (devotion / COMMON.HammerMS1.get()));
+        setAttackPower(weapon, mineSwitch ? -6 : souls, COMMON.HammerDS1.get() );
+        setMiningSpeed(weapon, awakening, (float) (souls / COMMON.HammerMS1.get()));
+    }
 
+    private boolean MineSwitchCheck(ItemStack weapon) {
+        return weapon.getOrCreateTag().getBoolean(Constants.NBT.MiningSwitch);
     }
 
     @Override
-    public void applyHexBonus(Player user, boolean awakened, int souls) {
+    public void applyHexBonus(Player user, int souls) {
     }
 
     @Override
@@ -158,12 +154,12 @@ public class EarthHammer extends PickaxeItem implements IHexblade {
 
     @Override
     public boolean mineBlock(@NotNull ItemStack stack, Level worldIn, @NotNull BlockState state, @NotNull BlockPos pos, @NotNull LivingEntity entityLiving) {
-        if (!worldIn.isClientSide && (state.getDestroySpeed(worldIn, pos) != 0.0F) && entityLiving instanceof Player) {
-            if (stack.getMaxDamage() - stack.getDamageValue() < 101) {
+        if (!worldIn.isClientSide && state.getDestroySpeed(worldIn, pos) > 0.0F && entityLiving instanceof Player player) {
+            if (stack.getMaxDamage() - stack.getDamageValue() < 26) {
                 switchMining(stack);
-                recalculatePowers(stack, worldIn, (Player) entityLiving);
+                recalculatePowers(stack, worldIn, player);
             } else {
-                stack.hurtAndBreak(100, entityLiving, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+                stack.hurtAndBreak(25, entityLiving, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
             }
         }
         return true;
@@ -223,7 +219,21 @@ public class EarthHammer extends PickaxeItem implements IHexblade {
     @Override
     public void talk(Player player) {
         player.sendMessage(new TranslatableComponent(this.getDescriptionId() + ".dialogue." + player.level.getRandom().nextInt(dialogueLines)).setStyle(Style.EMPTY.withItalic(true)), player.getUUID());
-
     }
 
+    @Override
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
+        CompoundTag tag = stack.getOrCreateTag();
+        if (!tag.getBoolean(Constants.NBT.MiningSwitch) && !tag.getBoolean(Constants.NBT.AW_State)){
+            return getDefaultAttributeModifiers(slot);
+        }
+        else{
+            Multimap<Attribute, AttributeModifier> multimap = HashMultimap.create();
+            if (slot == EquipmentSlot.MAINHAND) {
+                multimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", baseAttack + getAttackPower(stack), AttributeModifier.Operation.ADDITION));
+                multimap.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", baseAttackSpeed, AttributeModifier.Operation.ADDITION));
+            }
+            return multimap;
+        }
+    }
 }

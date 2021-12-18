@@ -22,21 +22,12 @@ import java.util.Set;
 
 public class MalumCompat {
 
-    public static void altar() throws InvocationTargetException, InstantiationException, IllegalAccessException {
+    public static void altar(){
 
-        Map<BlockState, AltarEntry> AltarEntriesCopy = ObfuscationReflectionHelper.getPrivateValue(elucent.eidolon.spell.AltarEntries.class, new AltarEntries(), "entries");
-
-        Constructor<AltarEntry> altarEntryConstructor = ObfuscationReflectionHelper.findConstructor(AltarEntry.class, ResourceLocation.class);
-        Method setPowerMethod = ObfuscationReflectionHelper.findMethod(AltarEntry.class, "setPower", double.class);
-
-        /* TODO Hope that elu make it private || cope
-        if (AltarEntriesCopy != null) {
-
-            Set<RegistryObject<Block>> blocks = new HashSet<>(MalumBlocks.BLOCKS.getEntries());
-            for (RegistryObject<Block> block : HexUtils.takeAll(blocks, b -> b.get() instanceof EtherBrazierBlock)) {
-                AltarEntriesCopy.put(block.get().defaultBlockState(), (AltarEntry) setPowerMethod.invoke(altarEntryConstructor.newInstance(AltarKeys.LIGHT_KEY), 1.5D));
-            }
-
+        /*
+        Set<RegistryObject<Block>> blocks = new HashSet<>(MalumBlocks.BLOCKS.getEntries());
+        for (RegistryObject<Block> block : HexUtils.takeAll(blocks, b -> b.get() instanceof EtherBrazierBlock)) {
+            AltarEntries.entries.put(block.get().defaultBlockState(), new AltarEntry(AltarKeys.LIGHT_KEY).setPower(1.5D).setCapacity(1.5D));
         }
         */
     }

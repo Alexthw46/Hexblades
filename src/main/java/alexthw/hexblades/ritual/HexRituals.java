@@ -98,7 +98,7 @@ public class HexRituals {
 
         //evolve
         EVOLVE_SWORD = RitualRegistry.register(new MultiItemSacrifice(HexItem.FIRE_BRAND.get(), HexItem.PATRON_SOUL.get()),
-                (new EvolveRitual(new ItemStack(HexItem.FIRE_BRAND1.get()), fireColor)
+                (new EvolveRitual(new ItemStack(HexItem.FIRE_BRAND.get()), fireColor)
                         .setRegistryName(Hexblades.MODID, "evolve_flame_sword")
                         .addRequirement(new ItemRequirement(Registry.SHADOW_GEM.get()))
                         .addRequirement(new ItemRequirement(HexItem.PATRON_SOUL.get()))
@@ -107,7 +107,7 @@ public class HexRituals {
         );
 
         EVOLVE_KATANA = RitualRegistry.register(new MultiItemSacrifice(HexItem.FROST_RAZOR.get(), HexItem.PATRON_SOUL.get()),
-                (new EvolveRitual(new ItemStack(HexItem.FROST_RAZOR1.get()), iceColor)
+                (new EvolveRitual(new ItemStack(HexItem.FROST_RAZOR.get()), iceColor)
                         .setRegistryName(Hexblades.MODID, "evolve_ice_katana")
                         .addRequirement(new ItemRequirement(Items.QUARTZ))
                         .addRequirement(new ItemRequirement(PotionUtils.setPotion(new ItemStack(Items.POTION), Registry.CHILLED_POTION.get())))
@@ -119,7 +119,7 @@ public class HexRituals {
         );
 
         EVOLVE_SABER = RitualRegistry.register(new MultiItemSacrifice(HexItem.WATER_SABER.get(), HexItem.PATRON_SOUL.get()),
-                (new EvolveRitual(new ItemStack(HexItem.WATER_SABER1.get()), waterColor)
+                (new EvolveRitual(new ItemStack(HexItem.WATER_SABER.get()), waterColor)
                         .setRegistryName(Hexblades.MODID, "evolve_water_saber")
                         .addRequirement(new ItemRequirement(Items.PRISMARINE_CRYSTALS))
                         .addRequirement(new ItemRequirement(Items.HEART_OF_THE_SEA))
@@ -131,7 +131,7 @@ public class HexRituals {
         );
 
         EVOLVE_HAMMER = RitualRegistry.register(new MultiItemSacrifice(HexItem.EARTH_HAMMER.get(), HexItem.PATRON_SOUL.get()),
-                (new EvolveRitual(new ItemStack(HexItem.EARTH_HAMMER1.get()), earthColor)
+                (new EvolveRitual(new ItemStack(HexItem.EARTH_HAMMER.get()), earthColor)
                         .setRegistryName(Hexblades.MODID, "evolve_earth_hammer")
                         .addRequirement(new ItemRequirement(Registry.ARCANE_GOLD_BLOCK.get()))
                         .addRequirement(new ItemRequirement(HexItem.PATRON_SOUL.get()))
@@ -140,7 +140,7 @@ public class HexRituals {
         );
 
         EVOLVE_DAGGERS = RitualRegistry.register(new MultiItemSacrifice(HexItem.PATRON_SOUL.get(), HexItem.LIGHTNING_DAGGER_R.get(), HexItem.LIGHTNING_DAGGER_L.get()),
-                (new EvolveRitual(new ItemStack(HexItem.LIGHTNING_SSWORD_L.get()), thunderColor)
+                (new EvolveRitual(new ItemStack(HexItem.LIGHTNING_DAGGER_L.get()), thunderColor)
                         .setRegistryName(Hexblades.MODID, "evolve_duals")
                         .addRequirement(new ItemRequirement(Registry.ARCANE_GOLD_INGOT.get()))
                         .addRequirement(new ItemRequirement(Items.LIGHTNING_ROD))

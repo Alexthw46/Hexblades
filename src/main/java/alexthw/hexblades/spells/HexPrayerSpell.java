@@ -23,6 +23,8 @@ import net.minecraft.world.level.Level;
 import java.util.Comparator;
 import java.util.List;
 
+import static alexthw.hexblades.util.HexUtils.getTilesWithinAABB;
+
 public class HexPrayerSpell extends StaticSpell {
     Deity deity;
 
@@ -37,7 +39,7 @@ public class HexPrayerSpell extends StaticSpell {
         } else if (world.getCapability(IReputation.INSTANCE).resolve().get().canPray(player, this.getRegistryName(),world.getGameTime())) {
             return false;
         } else {
-            List<EffigyTileEntity> effigies = Ritual.getTilesWithinAABB(EffigyTileEntity.class, world, new AABB(pos.offset(-4, -4, -4), pos.offset(5, 5, 5)));
+            List<EffigyTileEntity> effigies = getTilesWithinAABB(EffigyTileEntity.class, world, new AABB(pos.offset(-4, -4, -4), pos.offset(5, 5, 5)));
             if (effigies.size() == 0) {
                 return false;
             } else {
@@ -48,7 +50,7 @@ public class HexPrayerSpell extends StaticSpell {
     }
 
     public void cast(Level world, BlockPos pos, Player player) {
-        List<EffigyTileEntity> effigies = Ritual.getTilesWithinAABB(EffigyTileEntity.class, world, new AABB(pos.offset(-4, -4, -4), pos.offset(5, 5, 5)));
+        List<EffigyTileEntity> effigies = getTilesWithinAABB(EffigyTileEntity.class, world, new AABB(pos.offset(-4, -4, -4), pos.offset(5, 5, 5)));
         if (effigies.size() != 0) {
             EffigyTileEntity effigy = effigies.stream().min(Comparator.comparingDouble((e) -> e.getBlockPos().distSqr(pos))).get();
             if (!world.isClientSide) {

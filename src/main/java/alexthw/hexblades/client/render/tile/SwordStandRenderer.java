@@ -4,7 +4,7 @@ import alexthw.hexblades.Hexblades;
 import alexthw.hexblades.common.blocks.tile_entities.SwordStandTileEntity;
 import alexthw.hexblades.common.items.IHexblade;
 import alexthw.hexblades.common.items.dulls.HammerDull;
-import alexthw.hexblades.common.items.deprecated.EarthHammer1;
+import alexthw.hexblades.common.items.hexblades.EarthHammer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -53,7 +53,7 @@ public class SwordStandRenderer extends GeoBlockRenderer<SwordStandTileEntity> {
         if (!iStack.isEmpty() && mc.level != null) {
             matrixStack.pushPose();
             Item item = iStack.getItem();
-            if ((item instanceof EarthHammer1) || (item instanceof HammerDull)) {
+            if ((item instanceof EarthHammer) || (item instanceof HammerDull)) {
                 matrixStack.translate(0.5D, 0.3D, 0.5D);
                 //matrixStackIn.rotate(Vector3f.YP.rotationDegrees(90.0F));
             } else if (item instanceof SwordItem || item instanceof IHexblade) {

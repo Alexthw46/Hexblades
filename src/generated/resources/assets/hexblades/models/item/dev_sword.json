@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "hexblades:item/dev_sword"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "hexblades:awakened": 0.0
+      },
+      "model": "hexblades:item/variants/dev_sword"
+    },
+    {
+      "predicate": {
+        "hexblades:awakened": 1.0,
+        "hexblades:awakening": 0.0
+      },
+      "model": "hexblades:item/variants/dev_sword_stage1"
+    },
+    {
+      "predicate": {
+        "hexblades:awakened": 1.0,
+        "hexblades:awakening": 1.0
+      },
+      "model": "hexblades:item/variants/dev_sword_stage2"
+    },
+    {
+      "predicate": {
+        "hexblades:awakened": 1.0,
+        "hexblades:awakening": 2.0
+      },
+      "model": "hexblades:item/variants/dev_sword_stage3"
+    }
+  ]
+}

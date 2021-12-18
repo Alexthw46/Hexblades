@@ -38,7 +38,7 @@ public class HexBlock {
         ));
 
         FIRE_PEDESTAL = addBlock("fire_pedestal", new FirePedestalBlock(blockProps(Material.STONE, MaterialColor.COLOR_BROWN)
-                .noOcclusion().noDrops().strength(50.0F, 1200.0F)
+                .noOcclusion().strength(50.0F, 1200.0F)
         ));
 
         EVERFULL_URN = addBlock("everfull_urn", new EverfullUrnBlock(blockProps(Material.STONE, MaterialColor.COLOR_RED)

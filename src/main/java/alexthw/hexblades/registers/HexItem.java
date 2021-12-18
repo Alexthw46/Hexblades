@@ -5,8 +5,7 @@ import alexthw.hexblades.common.items.ArmorFocus;
 import alexthw.hexblades.common.items.ElementalSoul;
 import alexthw.hexblades.common.items.HexSwordItem;
 import alexthw.hexblades.common.items.dulls.*;
-import alexthw.hexblades.common.items.hexblades.SanguineSword;
-import alexthw.hexblades.common.items.deprecated.*;
+import alexthw.hexblades.common.items.hexblades.*;
 import alexthw.hexblades.compat.ArmorCompatHandler;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
@@ -62,17 +61,11 @@ public class HexItem {
 
     //AWAKENED
     public static final RegistryObject<Item> FROST_RAZOR;
-    public static final RegistryObject<Item> FROST_RAZOR1;
     public static final RegistryObject<Item> FIRE_BRAND;
-    public static final RegistryObject<Item> FIRE_BRAND1;
     public static final RegistryObject<Item> WATER_SABER;
-    public static final RegistryObject<Item> WATER_SABER1;
     public static final RegistryObject<Item> EARTH_HAMMER;
-    public static final RegistryObject<Item> EARTH_HAMMER1;
     public static final RegistryObject<Item> LIGHTNING_DAGGER_R;
     public static final RegistryObject<Item> LIGHTNING_DAGGER_L;
-    public static final RegistryObject<Item> LIGHTNING_SSWORD_R;
-    public static final RegistryObject<Item> LIGHTNING_SSWORD_L;
 
     static {
 
@@ -105,26 +98,44 @@ public class HexItem {
         DULL_DAGGER = ITEMS.register("dagger_dull", () -> new DullSwordItem(0, -1.5F, addTabProp().stacksTo(1)));
 
         //Hexblades
-        DEV_SWORD = ITEMS.register("dev_sword_1", () -> new HexSwordItem(3, -1.6F, addTabProp().stacksTo(1)));
+        DEV_SWORD = ITEMS.register("dev_sword", () -> new HexSwordItem(3, -1.6F, addTabProp().stacksTo(1)));
         BLOOD_SWORD = ITEMS.register("blood_sword", () -> new SanguineSword(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.RARE)));
 
-        FROST_RAZOR = ITEMS.register("ice_katana_1", () -> new IceKatana1(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.UNCOMMON)));
-        FROST_RAZOR1 = ITEMS.register("ice_katana_2", () -> new IceKatana2(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.RARE)));
+        FIRE_BRAND = ITEMS.register("flame_sword", () -> new FireSword(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.UNCOMMON)));
+        FROST_RAZOR = ITEMS.register("ice_katana", () -> new IceKatana(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.UNCOMMON)));
+        WATER_SABER = ITEMS.register("water_saber", () -> new WaterSaber(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.UNCOMMON)));
+        EARTH_HAMMER = ITEMS.register("earth_hammer", () -> new EarthHammer(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.UNCOMMON)));
 
-        FIRE_BRAND = ITEMS.register("flame_sword_1", () -> new FireBroad1(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.UNCOMMON)));
-        FIRE_BRAND1 = ITEMS.register("flame_sword_2", () -> new FireBroad2(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.RARE)));
+        LIGHTNING_DAGGER_R = ITEMS.register("thunder_dagger", () -> new ThunderSSword(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.UNCOMMON)));
+        LIGHTNING_DAGGER_L = ITEMS.register("lightning_dagger", () -> new LightningSSword(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.UNCOMMON)));
 
-        WATER_SABER = ITEMS.register("water_saber_1", () -> new WaterSaber1(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.UNCOMMON)));
-        WATER_SABER1 = ITEMS.register("water_saber_2", () -> new WaterSaber2(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.RARE)));
 
-        EARTH_HAMMER = ITEMS.register("earth_hammer_1", () -> new EarthHammer1(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.UNCOMMON)));
-        EARTH_HAMMER1 = ITEMS.register("earth_hammer_2", () -> new EarthHammer2(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.RARE)));
+        /*
 
-        LIGHTNING_DAGGER_R = ITEMS.register("thunder_knives_right1", () -> new Lightning_SSwordR1(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.UNCOMMON)));
-        LIGHTNING_DAGGER_L = ITEMS.register("thunder_knives_left1", () -> new Lightning_SSwordL1(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.UNCOMMON)));
-        LIGHTNING_SSWORD_R = ITEMS.register("thunder_knives_right2", () -> new Lightning_SSwordR2(addTabProp().fireResistant().rarity(Rarity.RARE)));
-        LIGHTNING_SSWORD_L = ITEMS.register("thunder_knives_left2", () -> new Lightning_SSwordL2(addTabProp().fireResistant().rarity(Rarity.RARE)));
+         public static final RegistryObject<Item> FROST_RAZOR1;
+         public static final RegistryObject<Item> FIRE_BRAND1;
+         public static final RegistryObject<Item> WATER_SABER1;
+         public static final RegistryObject<Item> EARTH_HAMMER1;
+         public static final RegistryObject<Item> LIGHTNING_SSWORD_R;
+         public static final RegistryObject<Item> LIGHTNING_SSWORD_L;
 
+         FROST_RAZOR = ITEMS.register("ice_katana_1", () -> new IceKatana1(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.UNCOMMON)));
+         FROST_RAZOR1 = ITEMS.register("ice_katana_2", () -> new IceKatana2(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.RARE)));
+
+         FIRE_BRAND = ITEMS.register("flame_sword_1", () -> new FireBroad1(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.UNCOMMON)));
+         FIRE_BRAND1 = ITEMS.register("flame_sword_2", () -> new FireBroad2(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.RARE)));
+
+         WATER_SABER = ITEMS.register("water_saber_1", () -> new WaterSaber1(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.UNCOMMON)));
+         WATER_SABER1 = ITEMS.register("water_saber_2", () -> new WaterSaber2(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.RARE)));
+
+         EARTH_HAMMER = ITEMS.register("earth_hammer_1", () -> new EarthHammer1(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.UNCOMMON)));
+         EARTH_HAMMER1 = ITEMS.register("earth_hammer_2", () -> new EarthHammer2(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.RARE)));
+
+         LIGHTNING_DAGGER_R = ITEMS.register("thunder_knives_right1", () -> new Lightning_SSwordR1(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.UNCOMMON)));
+         LIGHTNING_DAGGER_L = ITEMS.register("thunder_knives_left1", () -> new Lightning_SSwordL1(addTabProp().stacksTo(1).fireResistant().rarity(Rarity.UNCOMMON)));
+         LIGHTNING_SSWORD_R = ITEMS.register("thunder_knives_right2", () -> new Lightning_SSwordR2(addTabProp().fireResistant().rarity(Rarity.RARE)));
+         LIGHTNING_SSWORD_L = ITEMS.register("thunder_knives_left2", () -> new Lightning_SSwordL2(addTabProp().fireResistant().rarity(Rarity.RARE)));
+        */
     }
 
 }

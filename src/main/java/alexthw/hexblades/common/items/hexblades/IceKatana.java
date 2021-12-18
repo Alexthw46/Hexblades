@@ -29,33 +29,41 @@ public class IceKatana extends HexSwordItem {
 
         if (setAwakenedState(weapon, !getAwakened(weapon))){
             double devotion = getDevotion(player);
+            int souls = getSouls(weapon);
             int level = getAwakening(weapon);
 
-            applyHexBonus(player, true, level);
+            applyHexBonus(player, level);
 
             switch (level) {
-                default -> setAttackPower(weapon, devotion, COMMON.KatanaDS1.get());
+                default -> setAttackPower(weapon, souls, COMMON.KatanaDS1.get());
                 case (1) -> {
                     updateElementalDamage(weapon, devotion, COMMON.KatanaED.get());
-                    setAttackPower(weapon, devotion, COMMON.KatanaDS1.get());
-                    setAttackSpeed(weapon, devotion, COMMON.KatanaAS1.get());
+                    setAttackPower(weapon, souls, COMMON.KatanaDS1.get());
+                    setAttackSpeed(weapon, souls, COMMON.KatanaAS1.get());
                 }
                 case (2) -> {
                     updateElementalDamage(weapon, devotion, COMMON.KatanaED.get());
-                    setAttackPower(weapon, devotion, COMMON.KatanaDS2.get());
-                    setAttackSpeed(weapon, devotion, COMMON.KatanaAS2.get());
+                    setAttackPower(weapon, souls, COMMON.KatanaDS2.get());
+                    setAttackSpeed(weapon, souls, COMMON.KatanaAS2.get());
                 }
             }
         }
     }
 
     @Override
+    public boolean onHitEffects() {
+        return true;
+    }
+
+    @Override
     public void applyHexEffects(ItemStack stack, LivingEntity target, Player attacker, boolean awakened) {
         if (awakened) {
-            target.hurt(new EntityDamageSource(DamageSource.FREEZE.getMsgId(), attacker).bypassArmor(), (float) (getDevotion(attacker) / COMMON.KatanaED.get()));
-            target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 200, 0));
-        }
-        if (awakened) {
+            int level = getAwakening(stack);
+            if (level > 0) {
+                target.hurt(new EntityDamageSource(DamageSource.FREEZE.getMsgId(), attacker).bypassArmor(), getElementalDamage(stack));
+                target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 200, 0));
+            }
+            if (level == 2)
             target.addEffect(new MobEffectInstance(Registry.CHILLED_EFFECT.get(), 100, 0));
         }
     }

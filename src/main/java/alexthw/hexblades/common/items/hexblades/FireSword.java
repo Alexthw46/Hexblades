@@ -23,17 +23,22 @@ public class FireSword extends HexSwordItem {
     }
 
     @Override
+    public boolean onHitEffects() {
+        return true;
+    }
+
+    @Override
     public void applyHexEffects(ItemStack weapon, LivingEntity target, Player attacker, boolean awakened) {
+        int level = getAwakening(weapon);
         if (awakened) {
-            int level = getAwakening(weapon);
-            if (level > 1) {
+            if (level > 0) {
                 target.hurt(new EntityDamageSource("lava", attacker).bypassArmor(), getElementalDamage(weapon));
             }
-            if (level > 3) {
-                target.hurt(new EntityDamageSource("magic", attacker).bypassArmor(), getElementalDamage(weapon));
+            if (level == 2) {
+                target.hurt(new EntityDamageSource("magic", attacker).setMagic(), getElementalDamage(weapon));
             }
         }
-        target.setSecondsOnFire(3);
+        if (!target.isOnFire()) target.setSecondsOnFire(3*level);
     }
 
     @Override
@@ -41,27 +46,28 @@ public class FireSword extends HexSwordItem {
 
         if (setAwakenedState(weapon, !getAwakened(weapon))){
             double devotion = getDevotion(player);
+            int souls = getSouls(weapon);
             int level = getAwakening(weapon);
 
-            applyHexBonus(player, true, level);
+            applyHexBonus(player, level);
 
             switch (level) {
-                default -> setAttackPower(weapon, devotion, COMMON.SwordDS1.get());
+                default -> setAttackPower(weapon, souls, COMMON.SwordDS1.get());
                 case (1) -> {
                     updateElementalDamage(weapon, devotion, COMMON.SwordED1.get());
-                    setAttackPower(weapon, devotion, COMMON.SwordDS1.get());
+                    setAttackPower(weapon, souls, COMMON.SwordDS1.get());
                 }
                 case (2) -> {
                     updateElementalDamage(weapon, devotion, COMMON.SwordED2.get());
-                    setAttackPower(weapon, devotion, COMMON.SwordDS2.get());
+                    setAttackPower(weapon, souls, COMMON.SwordDS2.get());
                 }
             }
         }
     }
 
     @Override
-    public void applyHexBonus(Player user, boolean awakened, int level) {
-        if (awakened && level > 0)
+    public void applyHexBonus(Player user, int level) {
+        if (level > 1)
         user.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 200, 0, false, false));
     }
 

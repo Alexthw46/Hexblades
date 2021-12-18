@@ -58,8 +58,14 @@ public interface IHexblade {
         return false;
     }
 
-    default void absorbSoul(ItemStack weapon){
-        weapon.getOrCreateTag().putInt(Constants.NBT.SOUL_LEVEL, getSouls(weapon)+1);
+    default void absorbSoul(ItemStack weapon, Player owner){
+        int souls = getSouls(weapon);
+        weapon.getOrCreateTag().putInt(Constants.NBT.SOUL_LEVEL, souls+1);
+        talk(owner);
+        if (souls > 1){
+            int level = souls % 3;
+            weapon.getOrCreateTag().putInt(Constants.NBT.AW_Level, level);
+        }
     }
 
     // data getters
@@ -119,19 +125,18 @@ public interface IHexblade {
             double devotion = getDevotion(player);
             int level = getAwakening(weapon);
 
-            applyHexBonus(player, true, level);
+            applyHexBonus(player, level);
             setAttackPower(weapon, devotion, 1);
             setAttackSpeed(weapon, devotion, 1);
         }
     }
 
     /**
-     * Should only be called if hasBonus returns true
+     * Used to give the player buffs when they awaken the hexblade
      * @param user player
-     * @param awakened if the hexblade is awakened or not
      * @param level max awakening level of the hexblade
      */
-    void applyHexBonus(Player user, boolean awakened, int level);
+    void applyHexBonus(Player user, int level);
 
     /**
      * @return whether if the hexblade calls applyHexEffects or not

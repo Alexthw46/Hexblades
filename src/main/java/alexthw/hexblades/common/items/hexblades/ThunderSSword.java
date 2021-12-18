@@ -1,7 +1,6 @@
 package alexthw.hexblades.common.items.hexblades;
 
 import alexthw.hexblades.common.items.HexSwordItem;
-import alexthw.hexblades.registers.HexItem;
 import alexthw.hexblades.util.HexUtils;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
@@ -35,16 +34,18 @@ public class ThunderSSword extends HexSwordItem {
 
         if (isAwakened) {
             int level = getAwakening(weapon);
-            double devotion = getDevotion(player);
+            double devotion = getDevotion(player) + (double)getSouls(weapon) / 2;
 
             switch (level){
                 default -> {
                 }
                 case(1) ->{
+                    applyHexBonus(player,level);
                     setAttackPower(weapon, devotion, COMMON.DualsDS1.get());
                     setAttackSpeed(weapon, devotion, COMMON.DualsAS1.get());
                 }
                 case(2) ->{
+                    applyHexBonus(player, level);
                     setAttackPower(weapon, devotion, COMMON.DualsDS2.get());
                     setAttackSpeed(weapon, devotion, COMMON.DualsAS2.get());
                 }
@@ -57,9 +58,9 @@ public class ThunderSSword extends HexSwordItem {
     }
 
     @Override
-    public void applyHexBonus(Player user, boolean awakened, int souls) {
+    public void applyHexBonus(Player user, int level) {
         if (hasTwin(user)) {
-            if (awakened) {
+            if (level == 2) {
                 user.addEffect(new MobEffectInstance(MobEffects.JUMP, 200, 0, false, false));
                 user.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 200, 1, false, false));
             } else {

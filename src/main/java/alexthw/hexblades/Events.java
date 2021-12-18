@@ -1,6 +1,5 @@
 package alexthw.hexblades;
 
-import alexthw.hexblades.common.items.HexSwordItem;
 import alexthw.hexblades.common.items.IHexblade;
 import alexthw.hexblades.common.items.armors.HexWArmor;
 import alexthw.hexblades.common.items.hexblades.WaterSaber;
@@ -21,7 +20,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Drowned;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeHooks;
@@ -140,17 +138,11 @@ public class Events {
     @SubscribeEvent
     public void onKill(LivingDeathEvent event) {
         if (event.getSource().getEntity() instanceof Player player && event.getEntityLiving() instanceof Monster enemy) {
-            Item item = player.getItemBySlot(EquipmentSlot.MAINHAND).getItem();
-            if (item instanceof HexSwordItem hexblade && !player.level.isClientSide()) {
-                if (HexUtils.chance((int) (5 + (enemy.getMaxHealth() / 4)), enemy.getCommandSenderWorld())) {
-                    Deity HexDeity = HexDeities.HEX_DEITY;
-                    player.getCommandSenderWorld().getCapability(IReputation.INSTANCE, null).ifPresent((rep) -> {
-                        double prev = rep.getReputation(player, HexDeity.getId());
-                        rep.addReputation(player, HexDeity.getId(), 0.5D);
-                        HexDeity.onReputationChange(player, rep, prev, rep.getReputation(player, HexDeities.HEX_DEITY.getId()));
-                    });
+            ItemStack item = player.getItemBySlot(EquipmentSlot.MAINHAND);
+            if (item.getItem() instanceof IHexblade hexblade && !player.level.isClientSide()) {
+                if (HexUtils.chance((int) (5 + (enemy.getMaxHealth())), enemy.getCommandSenderWorld())) {
                     Networking.sendToTracking(player.level, enemy.blockPosition(), new FlameEffectPacket(enemy.blockPosition()));
-                    hexblade.talk(player);
+                    hexblade.absorbSoul(item,player);
                 }
             }
         }

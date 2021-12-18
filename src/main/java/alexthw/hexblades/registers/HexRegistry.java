@@ -12,12 +12,11 @@ import alexthw.hexblades.network.WeaponAwakenPacket;
 import alexthw.hexblades.ritual.HexRituals;
 import alexthw.hexblades.spells.HexSpells;
 import alexthw.hexblades.util.CompatUtil;
+import elucent.eidolon.Registry;
 import elucent.eidolon.mixin.PotionBrewingMixin;
 import elucent.eidolon.network.Networking;
 
-import java.lang.reflect.InvocationTargetException;
 import static alexthw.hexblades.util.CompatUtil.isMalumLoaded;
-import static elucent.eidolon.Registry.DEATH_ESSENCE;
 
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -72,17 +71,14 @@ public class HexRegistry {
         HexRituals.init();
         CompatUtil.check(); //may be useless, already checked before
         if (isMalumLoaded()) {
-            try {
-                MalumCompat.altar();
-            } catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
-                e.printStackTrace();
-            }
+            MalumCompat.altar();
         }
         CodexHexChapters.init();
-        PotionBrewingMixin.callAddMix(Potions.HARMING, DEATH_ESSENCE.get(), WITHER_POTION.get());
+        PotionBrewingMixin.callAddMix(Potions.HARMING, Registry.DEATH_ESSENCE.get(), WITHER_POTION.get());
     }
 
     private static void Network() {
+        //TODO stop leeching elu's network
         Networking.INSTANCE.registerMessage(90, FlameEffectPacket.class, FlameEffectPacket::encode, FlameEffectPacket::decode, FlameEffectPacket::consume);
         Networking.INSTANCE.registerMessage(91, RefillEffectPacket.class, RefillEffectPacket::encode, RefillEffectPacket::decode, RefillEffectPacket::consume);
         Networking.INSTANCE.registerMessage(98, MiningSwitchPacket.class, MiningSwitchPacket::encode, MiningSwitchPacket::decode, MiningSwitchPacket::consume);

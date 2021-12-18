@@ -3,21 +3,29 @@ package alexthw.hexblades.common.blocks;
 import alexthw.hexblades.common.blocks.tile_entities.EverfullUrnTileEntity;
 import elucent.eidolon.block.HorizontalWaterloggableBlock;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class EverfullUrnBlock extends HorizontalWaterloggableBlock implements EntityBlock {
+import java.util.Optional;
+
+public class EverfullUrnBlock extends HorizontalWaterloggableBlock implements EntityBlock, BucketPickup {
 
     public EverfullUrnBlock(Properties properties) {
         super(properties);
@@ -43,5 +51,15 @@ public class EverfullUrnBlock extends HorizontalWaterloggableBlock implements En
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
         return (level1, pos, state1, tile) -> ((EverfullUrnTileEntity)tile).tick();
+    }
+
+    @Override
+    public @NotNull ItemStack pickupBlock(@NotNull LevelAccessor p_152719_, @NotNull BlockPos p_152720_, @NotNull BlockState p_152721_) {
+        return new ItemStack(Fluids.WATER.getBucket());
+    }
+
+    @Override
+    public @NotNull Optional<SoundEvent> getPickupSound() {
+        return Optional.of(SoundEvents.BUCKET_FILL);
     }
 }

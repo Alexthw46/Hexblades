@@ -35,16 +35,14 @@ import org.jetbrains.annotations.NotNull;
 
 public class HexSwordItem extends SwordItem implements IHexblade {
 
-    protected final double baseAttack;
     protected final double baseSpeed;
 
     protected TranslatableComponent tooltipText = new TranslatableComponent("The Dev Sword, you shouldn't read this");
     protected int rechargeTick = 5;
-    protected final int dialogueLines = 3;
+    protected final int dialogueLines = 7;
 
     public HexSwordItem(int attackDamage, float attackSpeed, Properties properties) {
         super(Tiers.PatronWeaponTier.INSTANCE, attackDamage, attackSpeed, properties);
-        baseAttack = attackDamage;
         baseSpeed = attackSpeed;
     }
 
@@ -87,7 +85,7 @@ public class HexSwordItem extends SwordItem implements IHexblade {
     //Only apply special effects if wielded by a Player
 
     @Override
-    public void applyHexBonus(Player user, boolean awakened, int level) {
+    public void applyHexBonus(Player user, int level) {
     }
 
     @Override
@@ -117,7 +115,7 @@ public class HexSwordItem extends SwordItem implements IHexblade {
         if (getAwakened(stack)) {
             return getCustomAttributeModifiers(slot,stack);
         }
-        return super.getAttributeModifiers(slot,stack);
+        return getDefaultAttributeModifiers(slot);
     }
 
     public void talk(Player player) {
@@ -127,7 +125,7 @@ public class HexSwordItem extends SwordItem implements IHexblade {
     public Multimap<Attribute, AttributeModifier> getCustomAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
         Multimap<Attribute, AttributeModifier> multimap = HashMultimap.create();
         if (slot == EquipmentSlot.MAINHAND) {
-            multimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", baseAttack + getAttackPower(stack), AttributeModifier.Operation.ADDITION));
+            multimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", getDamage() + getAttackPower(stack), AttributeModifier.Operation.ADDITION));
             multimap.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", baseSpeed + getAttackSpeed(stack), AttributeModifier.Operation.ADDITION));
         }
         return multimap;

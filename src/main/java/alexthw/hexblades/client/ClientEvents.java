@@ -22,6 +22,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.event.TickEvent;
@@ -64,7 +65,7 @@ public class ClientEvents {
     public static void registerRenderers(final EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(HexTileEntityType.SWORD_STAND_TILE_ENTITY, SwordStandRenderer::new);
         event.registerBlockEntityRenderer(HexTileEntityType.FIRE_PEDESTAL_TILE_ENTITY, FirePedestalRenderer::new);
-        BlockEntityRenderers.register(HexTileEntityType.EVERFULL_URN_TILE_ENTITY, Urn_Renderer::new);
+        BlockEntityRenderers.register(HexTileEntityType.EVERFULL_URN_TILE_ENTITY, rendererDispatcherIn -> new Urn_Renderer());
 
         EntityRenderers.register(HexEntityType.FULGOR_PROJECTILE.get(), EmptyRenderer::new);
         EntityRenderers.register(HexEntityType.MAGMA_PROJECTILE.get(), EmptyRenderer::new);
@@ -83,22 +84,15 @@ public class ClientEvents {
         event.enqueueWork(() -> {
 
             //Awakening Toggles
-            registerToggleAnimation(HexItem.FROST_RAZOR.get());
-            registerToggleAnimation(HexItem.FROST_RAZOR1.get());
-            registerToggleAnimation(HexItem.FIRE_BRAND.get());
-            registerToggleAnimation(HexItem.FIRE_BRAND1.get());
-            registerToggleAnimation(HexItem.WATER_SABER.get());
-            registerToggleAnimation(HexItem.WATER_SABER1.get());
-            registerToggleAnimation(HexItem.EARTH_HAMMER.get());
-            registerToggleAnimation(HexItem.EARTH_HAMMER1.get());
-            registerToggleAnimation(HexItem.LIGHTNING_DAGGER_L.get());
-            registerToggleAnimation(HexItem.LIGHTNING_DAGGER_R.get());
-            registerToggleAnimation(HexItem.LIGHTNING_SSWORD_L.get());
-            registerToggleAnimation(HexItem.LIGHTNING_SSWORD_R.get());
+            registerAwakenedForm(HexItem.FROST_RAZOR.get());
+            registerAwakenedForm(HexItem.FIRE_BRAND.get());
+            registerAwakenedForm(HexItem.WATER_SABER.get());
+            registerAwakenedForm(HexItem.EARTH_HAMMER.get());
+            registerAwakenedForm(HexItem.LIGHTNING_DAGGER_L.get());
+            registerAwakenedForm(HexItem.LIGHTNING_DAGGER_R.get());
             registerToggleAnimation(HexItem.BLOOD_SWORD.get());
 
             registerToggleDrillAnimation(HexItem.EARTH_HAMMER.get());
-            registerToggleDrillAnimation(HexItem.EARTH_HAMMER1.get());
         });
 
     }
@@ -107,8 +101,19 @@ public class ClientEvents {
         ItemProperties.register(item, prefix(Constants.NBT.AW_State), (stack, world, entity,idk) -> ((IHexblade) stack.getItem()).getAwakened(stack) ? 1.0F : 0.0F);
     }
 
-    public static void registerAwakenedLevel(Item item) {
-        ItemProperties.register(item, prefix(Constants.NBT.AW_Level), (stack, world, entity,idk) -> ((IHexblade) stack.getItem()).getAwakening(stack));
+    public static void registerAwakenedForm(Item item) {
+        ItemProperties.register(item, prefix(Constants.NBT.AW_State), (stack, world, entity,idk) -> ((IHexblade) stack.getItem()).getAwakened(stack) ? 1.0F : 0.0F);
+        ItemProperties.register(item, prefix(Constants.NBT.AW_Level), (stack, world, entity,idk) -> (getAwakening(stack)));
+    }
+
+    //TODO try to remove this
+    private static float getAwakening(ItemStack stack){
+        int toFloat = ((IHexblade) stack.getItem()).getAwakening(stack);
+        return switch (toFloat){
+            default ->  0.0F;
+            case 1 ->  1.0F;
+            case 2 ->  2.0F;
+        };
     }
 
     public static void registerToggleDrillAnimation(Item item) {

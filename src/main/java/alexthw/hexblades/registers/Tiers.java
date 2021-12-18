@@ -51,7 +51,7 @@ public class Tiers {
         }
 
         public float getAttackDamageBonus() {
-            return 3.0F;
+            return 0F;
         }
 
         public int getLevel() {

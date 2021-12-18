@@ -64,15 +64,6 @@ public class LightningSSword extends HexSwordItem {
     }
 
     @Override
-    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker, boolean hex) {
-        if (attacker instanceof Player) {
-            applyHexEffects(stack, target, (Player) attacker, getAwakened(stack));
-            stack.setDamageValue(Math.max(stack.getDamageValue() - 10, 0));
-        }
-        return true;
-    }
-
-    @Override
     public @NotNull InteractionResultHolder<ItemStack> use(Level worldIn, @NotNull Player playerIn, @NotNull InteractionHand handIn) {
         ItemStack stack = playerIn.getItemInHand(handIn);
         if (handIn == InteractionHand.OFF_HAND && hasTwin(playerIn) && (getEnergyLeft(stack) > projectileCost)) {
@@ -141,6 +132,7 @@ public class LightningSSword extends HexSwordItem {
 
     @Override
     public void applyHexEffects(ItemStack stack, LivingEntity target, Player attacker, boolean awakened) {
+        if (getAwakening(stack) > 0)
         target.addEffect(new MobEffectInstance(HexRegistry.CHARGED_EFFECT.get(), 100, 0));
     }
 

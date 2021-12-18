@@ -34,7 +34,7 @@ import static alexthw.hexblades.util.HexUtils.getTilesWithinAABB;
 import static net.minecraftforge.fml.util.ObfuscationReflectionHelper.getPrivateValue;
 import static net.minecraftforge.fml.util.ObfuscationReflectionHelper.setPrivateValue;
 
-public class EverfullUrnTileEntity extends TileEntityBase implements BucketPickup {
+public class EverfullUrnTileEntity extends TileEntityBase {
 
     //Lists declared if shifting to subscribe scan is needed, do not access to them since they will be overwritten
 
@@ -64,10 +64,8 @@ public class EverfullUrnTileEntity extends TileEntityBase implements BucketPicku
 
             for (CrucibleTileEntity fillable : crucibles) {
 
-                @SuppressWarnings("ConstantConditions") boolean hasWater = getPrivateValue(CrucibleTileEntity.class, fillable, "hasWater");
-
-                if (!hasWater) {
-                    setPrivateValue(CrucibleTileEntity.class, fillable, true, "hasWater");
+                if (!fillable.hasWater) {
+                    fillable.hasWater = true;
                     fillable.sync();
                     Networking.sendToTracking(this.level, this.worldPosition, new RefillEffectPacket(fillable.getBlockPos(), 1));
                 }
@@ -102,13 +100,6 @@ public class EverfullUrnTileEntity extends TileEntityBase implements BucketPicku
         return blockList;
     }
 
-    @Override
-    public @NotNull ItemStack pickupBlock(@NotNull LevelAccessor p_152719_, @NotNull BlockPos p_152720_, @NotNull BlockState p_152721_) {
-        return new ItemStack(Fluids.WATER.getBucket());
-    }
 
-    @Override
-    public @NotNull Optional<SoundEvent> getPickupSound() {
-        return Optional.of(SoundEvents.BUCKET_FILL);
-    }
+
 }

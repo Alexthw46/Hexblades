@@ -2,6 +2,7 @@ package alexthw.hexblades.common.items.hexblades;
 
 import alexthw.hexblades.common.items.IHexblade;
 import alexthw.hexblades.compat.ArsNouveauCompat;
+import alexthw.hexblades.util.Constants;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import elucent.eidolon.item.SappingSwordItem;
@@ -31,7 +32,6 @@ import static alexthw.hexblades.util.CompatUtil.isArsNovLoaded;
 
 public class SanguineSword extends SappingSwordItem implements IHexblade {
 
-    protected final double baseAttack;
     protected final double baseAttackSpeed;
 
     protected String tooltipText = "tooltip.hexblades.sanguine_sword";
@@ -41,7 +41,6 @@ public class SanguineSword extends SappingSwordItem implements IHexblade {
     public SanguineSword(Properties builderIn) {
         super(builderIn);
         setLore(tooltipText);
-        baseAttack = 4;
         baseAttackSpeed = -2.4F;
     }
 
@@ -51,13 +50,19 @@ public class SanguineSword extends SappingSwordItem implements IHexblade {
     }
 
     @Override
+    public void absorbSoul(ItemStack weapon, Player owner){
+        int souls = getSouls(weapon);
+        weapon.getOrCreateTag().putInt(Constants.NBT.SOUL_LEVEL, souls+1);
+    }
+
+    @Override
     public void inventoryTick(@NotNull ItemStack pStack, @NotNull Level pLevel, @NotNull Entity pEntity, int pItemSlot, boolean pIsSelected) {
         this.inventoryTick(pStack, pLevel, pEntity);
     }
 
     @Override
-    public void applyHexBonus(Player user, boolean awakened, int souls) {
-        if (awakened) user.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 400, 0, false, false));
+    public void applyHexBonus(Player user, int souls) {
+        user.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 400, 0, false, false));
     }
 
     /**
@@ -81,10 +86,11 @@ public class SanguineSword extends SappingSwordItem implements IHexblade {
 
     @Override
     public void recalculatePowers(ItemStack weapon, Level world, Player player) {
-        double devotion = getDevotion(player);
+        double devotion = getDevotion(player) + getSouls(weapon);
 
         if (setAwakenedState(weapon, !getAwakened(weapon))) {
-            setAttackPower(weapon, devotion , COMMON.BloodDS.get() );
+            setAttackPower(weapon, devotion, COMMON.BloodDS.get() );
+            applyHexBonus(player,0);
         }
     }
 
@@ -129,6 +135,8 @@ public class SanguineSword extends SappingSwordItem implements IHexblade {
 
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
+        if (!getAwakened(stack)) return getDefaultAttributeModifiers(slot);
+
         Multimap<Attribute, AttributeModifier> multimap = HashMultimap.create();
         if (slot == EquipmentSlot.MAINHAND) {
             multimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", getAttackPower(stack), AttributeModifier.Operation.ADDITION));

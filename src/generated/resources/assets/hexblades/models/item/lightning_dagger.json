@@ -1,0 +1,36 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "hexblades:item/lightning_dagger"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "hexblades:awakened": 0.0,
+        "hexblades:awakening": 0.0
+      },
+      "model": "hexblades:item/variants/lightning_dagger_deactivated"
+    },
+    {
+      "predicate": {
+        "hexblades:awakened": 0.0,
+        "hexblades:awakening": 1.0
+      },
+      "model": "hexblades:item/variants/lightning_dagger_deactivated2"
+    },
+    {
+      "predicate": {
+        "hexblades:awakened": 1.0,
+        "hexblades:awakening": 0.0
+      },
+      "model": "hexblades:item/variants/lightning_dagger_activated"
+    },
+    {
+      "predicate": {
+        "hexblades:awakened": 1.0,
+        "hexblades:awakening": 1.0
+      },
+      "model": "hexblades:item/variants/lightning_dagger_activated2"
+    }
+  ]
+}

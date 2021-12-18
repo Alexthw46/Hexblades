@@ -144,23 +144,23 @@ dependencies {
     //compileOnly fg.deobf("vazkii.botania:Botania:1.16.5-420")
 
     //compileOnly fg.deobf("curse.maven:malum-484064:3374475") //0.3
-    implementation fg.deobf("com.hollingsworth:ars_nouveau:1.18-2.0.0-BETA2")
     //compileOnly fg.deobf("curse.maven:ars_nouveau-401955:3527164")//1.24.0
 
     //dependencies
     implementation fg.deobf("elucent:eidolon:0.3")
-    implementation fg.deobf("software.bernie.geckolib:geckolib-${mc_version}:${gecko_version}")
+    implementation fg.deobf("software.bernie.geckolib:geckolib-1.18-forge:${gecko_version}")
     implementation fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}") // Adds the full JEI mod as a full dependency
-
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curio_version}")
+
+    implementation fg.deobf("com.hollingsworth:ars_nouveau:1.18.1-2.0.0-beta4")
+
 
     //testers
     //runtimeOnly fg.deobf("vazkii.botania:Botania:1.16.5-420")
-    //runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-53.1")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.18.1-61")
     //runtimeOnly fg.deobf("curse.maven:malum-484064:3374475")
     //runtimeOnly fg.deobf("curse.maven:ars_nouveau-401955:3527164")
     //runtimeOnly fg.deobf("curse.maven:exp-407174:3188120")  // Shutup experimental settings
-    //runtimeOnly fg.deobf("com.telepathicgrunt:Blame:${mc_version}-3.2.0-forge")
 
 }
 

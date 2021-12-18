@@ -14,7 +14,7 @@
   "reagents": "meme",
   "key": {
     "m": {
-      "item": "ars_nouveau:mana_gem"
+      "item": "ars_nouveau:source_gem"
     },
     "f": {
       "item": "hexblades:blank_focus"
@@ -23,7 +23,7 @@
       "item": "ars_nouveau:blaze_fiber"
     },
     "e": {
-      "item": "eidolon:end_calx"
+      "item": "eidolon:ender_calx"
     }
   },
   "result": {

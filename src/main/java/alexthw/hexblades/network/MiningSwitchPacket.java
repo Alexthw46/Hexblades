@@ -1,6 +1,6 @@
 package alexthw.hexblades.network;
 
-import alexthw.hexblades.common.items.deprecated.EarthHammer1;
+import alexthw.hexblades.common.items.hexblades.EarthHammer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
@@ -30,7 +30,7 @@ public class MiningSwitchPacket {
 
             if (player != null && !player.level.isClientSide()) {
                 ItemStack IStack = player.getItemInHand(InteractionHand.MAIN_HAND);
-                if (IStack.getItem() instanceof EarthHammer1 hexblade) {
+                if (IStack.getItem() instanceof EarthHammer hexblade) {
                     hexblade.switchMining(IStack);
                     hexblade.recalculatePowers(IStack, player.level, player);
                 }
