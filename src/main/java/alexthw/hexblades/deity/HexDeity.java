@@ -12,8 +12,6 @@ import net.minecraft.world.level.Level;
 
 public class HexDeity extends Deity {
 
-    final ResourceLocation id = HexDeities.temp_id;
-
     public HexDeity(ResourceLocation id, int red, int green, int blue) {
         super(id, red, green, blue);
     }
@@ -34,12 +32,12 @@ public class HexDeity extends Deity {
             Level world = player.getCommandSenderWorld();
             world.addFreshEntity(new ItemEntity(world, player.getX() + 0.5D, player.getY() + 2.5D, player.getZ() + 0.5D, new ItemStack(HexItem.ELEMENTAL_CORE.get())));
         } else if (!KnowledgeUtil.knowsFact(player, HexFacts.EVOLVE_RITUAL) && current >= 30.0D) {
-            rep.setReputation(player, id, 30.0D);
-            rep.lock(player, id, DeityLocks.EVOLVED_WEAPON);
+            rep.setReputation(player, getId(), 30.0D);
+            rep.lock(player, getId(), DeityLocks.EVOLVED_WEAPON);
             KnowledgeUtil.grantFact(player, HexFacts.ELEMENTAL_SUMMON);
         } else if (current >= 60.0D) {
-            rep.setReputation(player, id, 60.0D);
-            rep.lock(player, id, DeityLocks.MAXDAMAGE);
+            rep.setReputation(player, getId(), 60.0D);
+            rep.lock(player, getId(), DeityLocks.MAXDAMAGE);
         }
     }
 

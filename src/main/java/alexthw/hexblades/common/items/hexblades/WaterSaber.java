@@ -3,7 +3,8 @@ package alexthw.hexblades.common.items.hexblades;
 import alexthw.hexblades.common.items.HexSwordItem;
 import alexthw.hexblades.util.Constants;
 import alexthw.hexblades.util.HexUtils;
-import elucent.eidolon.Registry;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -17,13 +18,25 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
+import java.util.List;
+
 import static alexthw.hexblades.ConfigHandler.COMMON;
 
 public class WaterSaber extends HexSwordItem {
 
     public WaterSaber(Properties props) {
         super(5, -2.4F, props);
-        tooltipText = new TranslatableComponent("tooltip.hexblades.water_saber");
+        loreText = new TranslatableComponent("tooltip.hexblades.water_saber");
+        textColor = ChatFormatting.DARK_AQUA;
+    }
+
+    @Override
+    protected void addShiftText(ItemStack stack, List<Component> tooltip) {
+        switch (getAwakening(stack)){
+            default-> tooltip.add(new TranslatableComponent("tooltip.hexblades.water_saber_shift"));
+            case 1 -> tooltip.add(new TranslatableComponent("tooltip.hexblades.water_saber_shift_1"));
+            case 2 -> tooltip.add(new TranslatableComponent("tooltip.hexblades.water_saber_shift_2"));
+        }
     }
 
     @Override
@@ -36,8 +49,12 @@ public class WaterSaber extends HexSwordItem {
             applyHexBonus(player, level);
 
             switch (level) {
-                default -> setAttackPower(weapon, souls, COMMON.SaberDS1.get());
+                default -> {
+                    setAttackPower(weapon, souls, COMMON.SaberDS1.get());
+                    setShielding(weapon, devotion, COMMON.SaberSH1.get());
+                }
                 case (1) -> {
+                    updateElementalDamage(weapon, devotion, COMMON.SaberED1.get());
                     setAttackPower(weapon, souls, COMMON.SaberDS1.get());
                     setShielding(weapon, devotion, COMMON.SaberSH1.get());
                 }
@@ -66,9 +83,10 @@ public class WaterSaber extends HexSwordItem {
 
     @Override
     public void applyHexBonus(Player entity, int level) {
-        entity.addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 200, 0, false, false));
-        if (level == 1) entity.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 200, 0, false, false));
-        if (level == 2) entity.addEffect(new MobEffectInstance(MobEffects.CONDUIT_POWER, 200, 0, false, false));
+        if (level == 0) return;
+        entity.addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 2000, 0, false, false));
+        if (level == 1) entity.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 2000, 0, false, false));
+        if (level == 2) entity.addEffect(new MobEffectInstance(MobEffects.CONDUIT_POWER, 2000, 0, false, false));
     }
 
     @Override

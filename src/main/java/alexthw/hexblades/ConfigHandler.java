@@ -24,6 +24,7 @@ public class ConfigHandler {
         public final ForgeConfigSpec.ConfigValue<Integer> SaberDS2;
         public final ForgeConfigSpec.ConfigValue<Integer> SaberSH1;
         public final ForgeConfigSpec.ConfigValue<Integer> SaberSH2;
+        public final ForgeConfigSpec.ConfigValue<Integer> SaberED1;
         public final ForgeConfigSpec.ConfigValue<Integer> SaberED2;
 
         public final ForgeConfigSpec.ConfigValue<Integer> DualsBD;
@@ -57,6 +58,7 @@ public class ConfigHandler {
         public final ForgeConfigSpec.ConfigValue<Boolean> NUKE_RITUALS;
         public final ForgeConfigSpec.ConfigValue<Boolean> NUKE_CRUCIBLE;
         public final ForgeConfigSpec.ConfigValue<Boolean> NUKE_WORKBENCH;
+
 
 
         public Common(ForgeConfigSpec.Builder builder) {
@@ -119,6 +121,9 @@ public class ConfigHandler {
             SaberSH2 = builder
                     .comment("Set the ratio of devotion -> damage reduction of the water saber Tier 2.")
                     .define("SaSH2 divide by", 15);
+            SaberED1 = builder
+                    .comment("Set the ratio of devotion -> elemental damage of the water saber Tier 1.")
+                    .define("SaED1 divide by", 15);
             SaberED2 = builder
                     .comment("Set the ratio of devotion -> elemental damage of the water saber Tier 2.")
                     .define("SaED2 divide by", 15);

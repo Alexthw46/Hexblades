@@ -62,10 +62,6 @@ public interface IHexblade {
         int souls = getSouls(weapon);
         weapon.getOrCreateTag().putInt(Constants.NBT.SOUL_LEVEL, souls+1);
         talk(owner);
-        if (souls > 1){
-            int level = souls % 3;
-            weapon.getOrCreateTag().putInt(Constants.NBT.AW_Level, level);
-        }
     }
 
     // data getters

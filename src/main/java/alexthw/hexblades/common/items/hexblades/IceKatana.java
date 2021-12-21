@@ -3,6 +3,8 @@ package alexthw.hexblades.common.items.hexblades;
 import alexthw.hexblades.common.items.HexSwordItem;
 import alexthw.hexblades.util.HexUtils;
 import elucent.eidolon.Registry;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -15,13 +17,25 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
+import java.util.List;
+
 import static alexthw.hexblades.ConfigHandler.COMMON;
 
 public class IceKatana extends HexSwordItem {
 
     public IceKatana(Properties props) {
         super(COMMON.KatanaBD.get(), -2.5F, props);
-        tooltipText = new TranslatableComponent("tooltip.hexblades.ice_katana");
+        loreText = new TranslatableComponent("tooltip.hexblades.ice_katana");
+        textColor = ChatFormatting.AQUA;
+    }
+
+    @Override
+    protected void addShiftText(ItemStack stack, List<Component> tooltip) {
+        switch (getAwakening(stack)){
+            default-> tooltip.add(new TranslatableComponent("tooltip.hexblades.ice_katana_shift"));
+            case 1 -> tooltip.add(new TranslatableComponent("tooltip.hexblades.ice_katana_shift_1"));
+            case 2 -> tooltip.add(new TranslatableComponent("tooltip.hexblades.ice_katana_shift_2"));
+        }
     }
 
     @Override
@@ -35,7 +49,10 @@ public class IceKatana extends HexSwordItem {
             applyHexBonus(player, level);
 
             switch (level) {
-                default -> setAttackPower(weapon, souls, COMMON.KatanaDS1.get());
+                default -> {
+                    updateElementalDamage(weapon, devotion, COMMON.KatanaED.get());
+                    setAttackPower(weapon, souls, COMMON.KatanaDS1.get());
+                }
                 case (1) -> {
                     updateElementalDamage(weapon, devotion, COMMON.KatanaED.get());
                     setAttackPower(weapon, souls, COMMON.KatanaDS1.get());
@@ -61,7 +78,7 @@ public class IceKatana extends HexSwordItem {
             int level = getAwakening(stack);
             if (level > 0) {
                 target.hurt(new EntityDamageSource(DamageSource.FREEZE.getMsgId(), attacker).bypassArmor(), getElementalDamage(stack));
-                target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 200, 0));
+                target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 200, level));
             }
             if (level == 2)
             target.addEffect(new MobEffectInstance(Registry.CHILLED_EFFECT.get(), 100, 0));

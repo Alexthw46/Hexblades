@@ -5,6 +5,9 @@ import alexthw.hexblades.registers.Tiers;
 import alexthw.hexblades.util.Constants;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -37,7 +40,8 @@ public class HexSwordItem extends SwordItem implements IHexblade {
 
     protected final double baseSpeed;
 
-    protected TranslatableComponent tooltipText = new TranslatableComponent("The Dev Sword, you shouldn't read this");
+    protected TranslatableComponent loreText = new TranslatableComponent("The Dev Sword, you shouldn't read this");
+    protected ChatFormatting textColor = ChatFormatting.GOLD;
     protected int rechargeTick = 5;
     protected final int dialogueLines = 7;
 
@@ -107,7 +111,25 @@ public class HexSwordItem extends SwordItem implements IHexblade {
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(@NotNull ItemStack stack, Level worldIn, @NotNull List<Component> tooltip, @NotNull TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        tooltip.add(tooltipText);
+        tooltip.add(loreText.withStyle(ChatFormatting.ITALIC).withStyle(textColor));
+        tooltip.add(new TextComponent(""));
+        if (Screen.hasShiftDown()) {
+            addShiftText(stack,tooltip);
+        }else if (Screen.hasControlDown()){
+            addControlText(stack,tooltip);
+        }else{
+            tooltip.add(new TranslatableComponent("Press [Shift] or [Ctrl] for more info"));
+        }
+    }
+
+    protected void addControlText(@NotNull ItemStack stack, List<Component> tooltip) {
+        tooltip.add(new TranslatableComponent("Debug infos"));
+        tooltip.add(new TextComponent("Absorbed souls : " + getSouls(stack)));
+        tooltip.add(new TextComponent("Awakening level : " + getAwakening(stack)));
+    }
+
+    protected void addShiftText(ItemStack stack, List<Component> tooltip) {
+        tooltip.add(new TranslatableComponent("TODO: Add description"));
     }
 
     @Override

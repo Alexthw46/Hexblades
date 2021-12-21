@@ -97,7 +97,7 @@ public class EarthHammer extends PickaxeItem implements IHexblade {
     public void applyHexEffects(ItemStack stack, LivingEntity target, Player attacker, boolean awakened) {
         float power = 1.0F;
         if (awakened) {
-            target.hurt(new EntityDamageSource("anvil", attacker).bypassArmor(), COMMON.HammerED1.get().floatValue());
+            if (getAwakening(stack) > 0) target.hurt(new EntityDamageSource("anvil", attacker).bypassArmor(), COMMON.HammerED1.get().floatValue());
             power = (float) (1.0F + getDevotion(attacker) / 30);
         }
         double X = attacker.getX() - target.getX();
@@ -128,7 +128,7 @@ public class EarthHammer extends PickaxeItem implements IHexblade {
     @Override
     public void recalculatePowers(ItemStack weapon, Level world, Player player) {
         int souls = getSouls(weapon);
-
+        //TODO balance this : elemental dmg only on tier 1+
         boolean mineSwitch = MineSwitchCheck(weapon);
 
         if (!mineSwitch) setAwakenedState(weapon, !getAwakened(weapon));

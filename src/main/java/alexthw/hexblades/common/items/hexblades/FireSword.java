@@ -2,6 +2,8 @@ package alexthw.hexblades.common.items.hexblades;
 
 import alexthw.hexblades.common.items.HexSwordItem;
 import alexthw.hexblades.util.HexUtils;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -13,13 +15,25 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
+import java.util.List;
+
 import static alexthw.hexblades.ConfigHandler.COMMON;
 
 public class FireSword extends HexSwordItem {
 
     public FireSword(Properties props) {
         super(COMMON.SwordBD.get(), -2.7F, props);
-        tooltipText = new TranslatableComponent("tooltip.hexblades.flame_sword");
+        loreText = new TranslatableComponent("tooltip.hexblades.flame_sword");
+        textColor = ChatFormatting.RED;
+    }
+
+    @Override
+    protected void addShiftText(ItemStack stack, List<Component> tooltip) {
+        switch (getAwakening(stack)){
+            default-> tooltip.add(new TranslatableComponent("tooltip.hexblades.flame_sword_shift"));
+            case 1 -> tooltip.add(new TranslatableComponent("tooltip.hexblades.flame_sword_shift_1"));
+            case 2 -> tooltip.add(new TranslatableComponent("tooltip.hexblades.flame_sword_shift_2"));
+        }
     }
 
     @Override
@@ -67,8 +81,8 @@ public class FireSword extends HexSwordItem {
 
     @Override
     public void applyHexBonus(Player user, int level) {
-        if (level > 1)
-        user.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 200, 0, false, false));
+        if (level > 0)
+        user.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, level * 200, 0, false, false));
     }
 
     @Override

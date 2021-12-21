@@ -3,9 +3,11 @@ package alexthw.hexblades.common.blocks.tile_entities;
 import alexthw.hexblades.common.items.IHexblade;
 import alexthw.hexblades.registers.HexTileEntityType;
 import alexthw.hexblades.util.Constants;
+import elucent.eidolon.item.SappingSwordItem;
 import elucent.eidolon.tile.TileEntityBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -95,18 +97,32 @@ public class SwordStandTileEntity extends TileEntityBase implements IAnimatable 
         return true;
     }
 
-    public void pray() {
+    public void pray(Player player) {
         if (this.level != null && !this.level.isClientSide) {
             if (this.stack.getItem() instanceof IHexblade hexblade){
-                if (hexblade.getSouls(this.stack) >= 20)
-                    if (hexblade.getAwakening(this.stack) == 0) {
-                        CompoundTag tag = this.stack.getOrCreateTag();
-                        tag.putInt(Constants.NBT.AW_Level, 1);
-                        tag.putInt(Constants.NBT.SOUL_LEVEL, 0);
+                if (hexblade instanceof SappingSwordItem) return;
+                CompoundTag tag = this.stack.getOrCreateTag();
+                switch (tag.getInt(Constants.NBT.AW_Level)) {
+                    case 0 -> {
+                        if (tag.getInt(Constants.NBT.SOUL_LEVEL) >= 20) {
+                            tag.putInt(Constants.NBT.AW_Level, 1);
+                            tag.putInt(Constants.NBT.SOUL_LEVEL, 0);
+                        }else{
+                            player.sendMessage(new TextComponent("Not enough souls"), player.getUUID());
+                        }
                     }
+                    case 1 -> {
+                        if (tag.getInt(Constants.NBT.SOUL_LEVEL) >= 50) {
+                            tag.putInt(Constants.NBT.AW_Level, 2);
+                            tag.putInt(Constants.NBT.SOUL_LEVEL, 0);
+                        }else{
+                            player.sendMessage(new TextComponent("Not enough souls"), player.getUUID());
+                        }
+                    }
+                    default -> player.sendMessage(new TextComponent("Already maxed"), player.getUUID());
+                }
             }
         }
-
     }
 
 

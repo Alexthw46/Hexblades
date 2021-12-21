@@ -17,7 +17,7 @@ public class ThunderSSword extends HexSwordItem {
 
     public ThunderSSword(Properties props) {
         super(4, -1.5F, props);
-        tooltipText = new TranslatableComponent("tooltip.hexblades.thunder_knives");
+        loreText = new TranslatableComponent("tooltip.hexblades.thunder_knives");
     }
 
     @Override

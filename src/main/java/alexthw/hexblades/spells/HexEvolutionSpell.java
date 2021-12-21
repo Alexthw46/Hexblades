@@ -5,7 +5,6 @@ import alexthw.hexblades.deity.HexDeities;
 import elucent.eidolon.capability.IReputation;
 import elucent.eidolon.spell.Sign;
 import elucent.eidolon.spell.StaticSpell;
-import elucent.eidolon.tile.EffigyTileEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
@@ -43,7 +42,7 @@ public class HexEvolutionSpell extends StaticSpell {
             SwordStandTileEntity nearest = stands.stream().filter((e)-> !e.isEmpty()).min(Comparator.comparingDouble((e) -> e.getBlockPos().distSqr(pos))).orElse(null);
             if (nearest == null) return;
             if (!level.isClientSide) {
-                nearest.pray();
+                nearest.pray(player);
            } else {
                level.playSound(player, nearest.getBlockPos(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.NEUTRAL, 10000.0F, 0.6F + level.random.nextFloat() * 0.2F);
                level.playSound(player, nearest.getBlockPos(), SoundEvents.LIGHTNING_BOLT_IMPACT, SoundSource.NEUTRAL, 2.0F, 0.5F + level.random.nextFloat() * 0.2F);
