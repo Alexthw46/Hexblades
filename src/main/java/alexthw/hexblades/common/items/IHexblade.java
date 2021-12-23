@@ -21,10 +21,21 @@ public interface IHexblade {
 
     double getAttackPower(ItemStack weapon);
 
+    default float getElementalPower(ItemStack weapon) {
+        float EP = weapon.getOrCreateTag().getFloat(Constants.NBT.ELEMENTAL_DAMAGE);
+
+        return EP > 0 ? EP : 0;
+    }
+
     //NBT SETTERS
     void setAttackPower(ItemStack weapon, boolean awakening, double extradamage);
 
     void setAttackSpeed(ItemStack weapon, boolean awakening, double extraspeed);
+
+    default void updateElementalPower(ItemStack weapon, float ratio, double devotion) {
+        float EP = (float) (devotion / ratio);
+        weapon.getOrCreateTag().putFloat(Constants.NBT.ELEMENTAL_DAMAGE, EP);
+    }
 
     // data getters
     int getRechargeTicks();

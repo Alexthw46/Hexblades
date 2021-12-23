@@ -9,9 +9,9 @@ import alexthw.hexblades.network.FlameEffectPacket;
 import alexthw.hexblades.network.MiningSwitchPacket;
 import alexthw.hexblades.network.RefillEffectPacket;
 import alexthw.hexblades.network.WeaponAwakenPacket;
+import alexthw.hexblades.recipes.TempRecipes;
 import alexthw.hexblades.ritual.HexRituals;
 import alexthw.hexblades.spells.HexSpells;
-import alexthw.hexblades.recipes.TempRecipes;
 import alexthw.hexblades.util.CompatUtil;
 import elucent.eidolon.mixin.PotionBrewingMixin;
 import elucent.eidolon.network.Networking;
@@ -51,6 +51,8 @@ public class HexRegistry {
         HexRituals.init();
         CompatUtil.check(); //may be useless, already checked before
         CrucibleCompatHandler.start();
+        CodexHexChapters.init();
+        PotionBrewingMixin.callAddMix(Potions.HARMING, DEATH_ESSENCE.get(), WITHER_POTION.get());
         if (isMalumLoaded()) {
             try {
                 MalumCompat.altar();
@@ -58,8 +60,6 @@ public class HexRegistry {
                 e.printStackTrace();
             }
         }
-        CodexHexChapters.init();
-        PotionBrewingMixin.callAddMix(Potions.HARMING, DEATH_ESSENCE.get(), WITHER_POTION.get());
     }
 
     private static void Network() {

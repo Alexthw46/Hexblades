@@ -42,7 +42,7 @@ public class SanguineSword extends SappingSwordItem implements IHexblade {
     public SanguineSword(Properties builderIn) {
         super(builderIn);
         setLore(tooltipText);
-        baseAttack = 4;
+        baseAttack = COMMON.BloodBD.get();
         baseAttackSpeed = -2.4F;
     }
 

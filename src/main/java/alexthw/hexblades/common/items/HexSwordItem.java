@@ -5,9 +5,8 @@ import alexthw.hexblades.registers.Tiers;
 import alexthw.hexblades.util.Constants;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
@@ -21,9 +20,7 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -36,6 +33,7 @@ public class HexSwordItem extends SwordItem implements IHexblade {
 
     protected final double baseAttack;
     protected final double baseSpeed;
+    protected TextFormatting textColor = TextFormatting.GOLD;
 
     protected TranslationTextComponent tooltipText = new TranslationTextComponent("The Dev Sword, you shouldn't read this");
     protected int rechargeTick = 5;
@@ -45,12 +43,6 @@ public class HexSwordItem extends SwordItem implements IHexblade {
         super(Tiers.PatronWeaponTier.INSTANCE, attackDamage, attackSpeed, properties);
         baseAttack = attackDamage;
         baseSpeed = attackSpeed;
-    }
-
-    @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        if (enchantment.category == EnchantmentType.BREAKABLE) return false;
-        return super.canApplyAtEnchantingTable(stack, enchantment);
     }
 
     @Override
@@ -155,7 +147,18 @@ public class HexSwordItem extends SwordItem implements IHexblade {
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        tooltip.add(tooltipText);
+        tooltip.add(tooltipText.withStyle(TextFormatting.ITALIC).withStyle(textColor));
+        tooltip.add(new StringTextComponent(""));
+        if (Screen.hasShiftDown()) {
+            tooltip.add(new TranslationTextComponent("tooltip.hexblades.awakened").withStyle(TextFormatting.BLUE));
+            addShiftTooltip(stack, tooltip);
+        } else {
+            tooltip.add(new TranslationTextComponent("tooltip.hexblades.shift"));
+        }
+
+    }
+
+    protected void addShiftTooltip(ItemStack stack, List<ITextComponent> tooltip) {
     }
 
     @Override

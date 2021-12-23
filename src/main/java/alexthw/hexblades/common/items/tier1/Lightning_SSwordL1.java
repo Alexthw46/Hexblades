@@ -23,8 +23,13 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
 import static java.lang.Math.min;
@@ -34,8 +39,9 @@ public class Lightning_SSwordL1 extends HexSwordItem {
     protected int projectileCost = getMaxDamage() / 3;
 
     public Lightning_SSwordL1(Item.Properties props) {
-        super(1, -1.5F, props);
+        super(COMMON.DaggerBDL.get(), -1.5F, props);
         tooltipText = new TranslationTextComponent("tooltip.hexblades.thunder_knives");
+        textColor = TextFormatting.YELLOW;
     }
 
     @Override
@@ -99,7 +105,6 @@ public class Lightning_SSwordL1 extends HexSwordItem {
         double devotion = getDevotion(player);
         setAttackPower(weapon, awakening, devotion / COMMON.DualsDS1.get());
         setAttackSpeed(weapon, awakening, devotion / COMMON.DualsAS1.get());
-
     }
 
     public int getUseDuration(ItemStack stack) {
@@ -116,7 +121,7 @@ public class Lightning_SSwordL1 extends HexSwordItem {
             Vector3d vel = entity.getEyePosition(0.0F).add(entity.getLookAngle().scale(40.0D)).subtract(pos).scale(0.05D);
             world.addFreshEntity((new FulgorProjectileEntity(HexEntityType.FULGOR_PROJECTILE.get(), world)).shoot(pos.x, pos.y, pos.z, vel.x, vel.y, vel.z, entity.getUUID()));
             world.playSound(null, pos.x, pos.y, pos.z, Registry.CAST_SOULFIRE_EVENT.get(), SoundCategory.NEUTRAL, 0.75F, random.nextFloat() * 0.2F + 0.9F);
-            if (!(player.abilities.instabuild)) {
+            if (!(player.isCreative())) {
                 stack.setDamageValue(min(stack.getDamageValue() + projectileCost, stack.getMaxDamage() - 1));
             }
         }
@@ -141,7 +146,6 @@ public class Lightning_SSwordL1 extends HexSwordItem {
             multimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", getAttackPower(stack), AttributeModifier.Operation.ADDITION));
             multimap.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", getAttackSpeed(stack), AttributeModifier.Operation.ADDITION));
         }
-
         return multimap;
     }
 
@@ -149,4 +153,9 @@ public class Lightning_SSwordL1 extends HexSwordItem {
     public void talk(PlayerEntity player) {
     }
 
+    @Override
+    protected void addShiftTooltip(ItemStack stack, List<ITextComponent> tooltip) {
+        tooltip.add(new StringTextComponent("Hold use to fire a fulgor"));
+        tooltip.add(new StringTextComponent("Can overcharge enemies"));
+    }
 }

@@ -143,11 +143,11 @@ public class Events {
             PlayerEntity player = (PlayerEntity) event.getSource().getEntity();
             Item item = player.getItemBySlot(EquipmentSlotType.MAINHAND).getItem();
             if (item instanceof HexSwordItem && !player.level.isClientSide()) {
-                if (HexUtils.chance((int) (5 + (event.getEntityLiving().getMaxHealth() / 4)), event.getEntity().getCommandSenderWorld())) {
+                if (HexUtils.chance((int) (5 + (event.getEntityLiving().getMaxHealth() / 2)), event.getEntity().getCommandSenderWorld())) {
                     Deity HexDeity = HexDeities.HEX_DEITY;
                     event.getEntity().getCommandSenderWorld().getCapability(ReputationProvider.CAPABILITY, null).ifPresent((rep) -> {
                         double prev = rep.getReputation(player, HexDeity.getId());
-                        rep.addReputation(player, HexDeity.getId(), 0.5D);
+                        rep.addReputation(player, HexDeity.getId(), 1.0D);
                         HexDeity.onReputationChange(player, rep, prev, rep.getReputation(player, HexDeities.HEX_DEITY.getId()));
                     });
                     Networking.sendToTracking(player.level, event.getEntity().blockPosition(), new FlameEffectPacket(event.getEntity().blockPosition()));

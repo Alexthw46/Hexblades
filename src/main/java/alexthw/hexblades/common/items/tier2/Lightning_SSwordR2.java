@@ -6,7 +6,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
 
@@ -53,5 +57,13 @@ public class Lightning_SSwordR2 extends Lightning_SSwordR1 {
                 user.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, 200, 0, false, false));
             }
         }
+    }
+
+    @Override
+    protected void addShiftTooltip(ItemStack stack, List<ITextComponent> tooltip) {
+        tooltip.add(new StringTextComponent("Needs its twin to awaken"));
+        tooltip.add(new StringTextComponent("Will electrocute charged enemies for extra damage"));
+        tooltip.add(new StringTextComponent("Gives movement and jump boosts"));
+
     }
 }

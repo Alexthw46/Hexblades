@@ -9,28 +9,30 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.text.Color;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
 
 public class IceKatana1 extends HexSwordItem {
 
     public IceKatana1(Properties props) {
-        super(5, -2.5F, props);
+        super(COMMON.KatanaBD1.get(), -2.5F, props);
         tooltipText = new TranslationTextComponent("tooltip.hexblades.ice_katana");
+        textColor = TextFormatting.AQUA;
     }
 
     public IceKatana1(int attackDamage, float attackSpeed, Properties props) {
         super(attackDamage, attackSpeed, props);
+        textColor = TextFormatting.AQUA;
     }
 
     @Override
     public void applyHexEffects(ItemStack stack, LivingEntity target, PlayerEntity attacker, boolean awakened) {
         if (awakened) {
-            target.hurt(new EntityDamageSource(Registry.FROST_DAMAGE.getMsgId(), attacker).bypassArmor(), (float) (getDevotion(attacker) / COMMON.KatanaED.get()));
+            target.hurt(new EntityDamageSource(Registry.FROST_DAMAGE.getMsgId(), attacker).bypassArmor(), getElementalPower(stack));
             target.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 200, 0));
         }
     }
@@ -40,6 +42,7 @@ public class IceKatana1 extends HexSwordItem {
         double devotion = getDevotion(player);
 
         boolean awakening = setAwakenedState(weapon, !getAwakened(weapon));
+        if (awakening) updateElementalPower(weapon, COMMON.KatanaED.get(), devotion);
 
         setAttackPower(weapon, awakening, devotion / COMMON.KatanaDS1.get());
         setAttackSpeed(weapon, awakening, devotion / COMMON.KatanaAS1.get());
@@ -50,4 +53,9 @@ public class IceKatana1 extends HexSwordItem {
         player.sendMessage(new TranslationTextComponent(this.getDescriptionId() + ".dialogue." + player.level.getRandom().nextInt(dialogueLines)).setStyle(Style.EMPTY.withItalic(true).withColor(Color.fromRgb(HexUtils.iceColor))), player.getUUID());
     }
 
+    @Override
+    protected void addShiftTooltip(ItemStack stack, List<ITextComponent> tooltip) {
+        tooltip.add(new StringTextComponent("Armor piercing damage: " + getElementalPower(stack)));
+        tooltip.add(new StringTextComponent("Slows enemies"));
+    }
 }

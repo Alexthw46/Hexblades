@@ -8,22 +8,24 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.util.text.Color;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
 
 public class WaterSaber1 extends HexSwordItem {
 
     public WaterSaber1(Properties props) {
-        super(5, -2.4F, props);
+        super(COMMON.SaberBD1.get(), -2.4F, props);
         tooltipText = new TranslationTextComponent("tooltip.hexblades.water_saber");
+        textColor = TextFormatting.DARK_AQUA;
     }
 
     public WaterSaber1(int attackDamage, float attackSpeed, Properties props) {
         super(attackDamage, attackSpeed, props);
+        textColor = TextFormatting.DARK_AQUA;
     }
 
     @Override
@@ -58,5 +60,11 @@ public class WaterSaber1 extends HexSwordItem {
 
     public float getShielding(ItemStack weapon) {
         return weapon.getOrCreateTag().getFloat(Constants.NBT.SHIELDING);
+    }
+
+    @Override
+    protected void addShiftTooltip(ItemStack stack, List<ITextComponent> tooltip) {
+        tooltip.add(new StringTextComponent("Damage reduction: " + getShielding(stack)));
+        tooltip.add(new StringTextComponent("Gives water breathing"));
     }
 }
