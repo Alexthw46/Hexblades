@@ -13,8 +13,14 @@ public class HexTags {
 
     public static final class Blocks {
 
+        public static final ITag.INamedTag<Block> CRUCIBLE_HOT_BLOCKS = mod("crucible_heat_source");
+
         private static ITag.INamedTag<Block> forge(String path) {
             return BlockTags.bind(new ResourceLocation("forge", path).toString());
+        }
+
+        private static ITag.INamedTag<Block> mod(String path) {
+            return BlockTags.bind(new ResourceLocation(Hexblades.MODID, path).toString());
         }
     }
 

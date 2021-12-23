@@ -1,5 +1,6 @@
 package alexthw.hexblades.spells;
 
+import alexthw.hexblades.mixin.BrazierTileEntityMixin;
 import elucent.eidolon.network.IgniteEffectPacket;
 import elucent.eidolon.network.Networking;
 import elucent.eidolon.spell.Sign;
@@ -18,14 +19,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Comparator;
 import java.util.List;
 
 import static alexthw.hexblades.util.HexUtils.getTilesWithinAABB;
 import static alexthw.hexblades.util.HexUtils.getVector;
-import static net.minecraftforge.fml.common.ObfuscationReflectionHelper.findMethod;
 
 
 public class FireTouchSpell extends StaticSpell {
@@ -54,14 +52,10 @@ public class FireTouchSpell extends StaticSpell {
             if (braziers.size() > 0) {
 
                 BrazierTileEntity b = braziers.stream().min(Comparator.comparingDouble((e) -> e.getBlockPos().distSqr(blockPos))).get();
-                Method burn = findMethod(BrazierTileEntity.class, "startBurning");
 
-                try {
-                    burn.invoke(b);
-                    world.playSound(player, blockPos, SoundEvents.FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, world.getRandom().nextFloat() * 0.4F + 0.8F);
-                } catch (IllegalAccessException | InvocationTargetException e) {
-                    e.printStackTrace();
-                }
+                ((BrazierTileEntityMixin) b).callStartBurning();
+                world.playSound(player, blockPos, SoundEvents.FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, world.getRandom().nextFloat() * 0.4F + 0.8F);
+
             } else if (campfires.size() > 0) {
 
                 CampfireTileEntity c = campfires.stream().min(Comparator.comparingDouble((e) -> e.getBlockPos().distSqr(blockPos))).get();

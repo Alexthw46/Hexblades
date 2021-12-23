@@ -9,15 +9,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
 
 public class EarthHammer2 extends EarthHammer1 {
 
     public EarthHammer2(Properties props) {
-        super(8, -3.2F,
+        super(COMMON.HammerBD2.get(), -3.2F,
                 props.addToolType(net.minecraftforge.common.ToolType.PICKAXE, Tiers.PatronWeaponTier.INSTANCE.getLevel()));
         baseMiningSpeed = 8.0F;
         tooltipText = new TranslationTextComponent("tooltip.hexblades.earth_hammer2");
@@ -56,4 +60,9 @@ public class EarthHammer2 extends EarthHammer1 {
         setMiningSpeed(weapon, awakening, (float) (devotion / COMMON.HammerMS2.get()));
     }
 
+    @Override
+    protected void addShiftTooltip(ItemStack stack, List<ITextComponent> tooltip) {
+        tooltip.add(new StringTextComponent("Armor piercing damage: " + COMMON.HammerED2.get()));
+        tooltip.add(new StringTextComponent("Massive knockback, weakens enemies"));
+    }
 }

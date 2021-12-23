@@ -9,6 +9,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -44,6 +45,7 @@ public class ArmorFocus extends Item {
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable World pLevel, List<ITextComponent> pTooltip, ITooltipFlag pFlag) {
         super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
-        if (!modFocus.equals("eidolon")) pTooltip.add(new StringTextComponent("Requires " + modFocus));
+        if (!modFocus.equals("eidolon"))
+            pTooltip.add(new StringTextComponent("Requires " + modFocus).withStyle(TextFormatting.ITALIC));
     }
 }

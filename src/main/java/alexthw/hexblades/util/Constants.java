@@ -8,6 +8,7 @@ public class Constants {
         public static final String AW_State = "awakened";
         public static final String MiningSwitch = "mining";
 
+        public static final String ELEMENTAL_DAMAGE = "hexElementalDamage";
         public static final String EXTRA_DAMAGE = "hexSwordDamage";
         public static final String EXTRA_ATTACK_SPEED = "hexSwordAttackSpeed";
         public static final String EXTRA_MINING_SPEED = "hexDrillMiningSpeed";

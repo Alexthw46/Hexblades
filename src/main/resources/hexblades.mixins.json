@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "alexthw.hexblades.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "hexblades.refmap.json",
+  "mixins": [
+    "AltarEntryMixin",
+    "BrazierTileEntityMixin"
+  ],
+  "minVersion": "0.8"
+}

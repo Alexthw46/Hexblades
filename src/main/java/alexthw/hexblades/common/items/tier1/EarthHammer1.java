@@ -19,10 +19,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.Color;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -35,7 +32,7 @@ public class EarthHammer1 extends HexSwordItem {
     protected float baseMiningSpeed;
 
     public EarthHammer1(Properties props) {
-        this(7, -3.2F,
+        this(COMMON.HammerBD1.get(), -3.2F,
                 props.addToolType(net.minecraftforge.common.ToolType.PICKAXE, Tiers.PatronWeaponTier.INSTANCE.getLevel()));
         baseMiningSpeed = 8.0F;
         tooltipText = new TranslationTextComponent("tooltip.hexblades.earth_hammer");
@@ -184,7 +181,11 @@ public class EarthHammer1 extends HexSwordItem {
     @Override
     public void talk(PlayerEntity player) {
         player.sendMessage(new TranslationTextComponent(this.getDescriptionId() + ".dialogue." + player.level.getRandom().nextInt(dialogueLines)).setStyle(Style.EMPTY.withItalic(true).withColor(Color.fromRgb(HexUtils.earthColor))), player.getUUID());
-
     }
 
+    @Override
+    protected void addShiftTooltip(ItemStack stack, List<ITextComponent> tooltip) {
+        tooltip.add(new StringTextComponent("Armor piercing damage: " + COMMON.HammerED1.get()));
+        tooltip.add(new StringTextComponent("Strong knockback"));
+    }
 }

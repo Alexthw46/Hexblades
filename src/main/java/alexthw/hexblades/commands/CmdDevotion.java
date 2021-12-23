@@ -23,13 +23,13 @@ public class CmdDevotion {
 
     public static ArgumentBuilder<CommandSource, ?> register(CommandDispatcher<CommandSource> dispatcher) {
         return Commands.literal("devotion")
-                .requires(cs -> cs.hasPermission(2))
                 .then(Commands.argument("player", EntityArgument.player())
                         .then(Commands.literal("get")
                                 .then(Commands.argument("deity", new DeityArgumentType())
                                         .executes(ctx -> CMD.getDevotion(ctx, EntityArgument.getPlayer(ctx, "player"), ctx.getArgument("deity", String.class))))
                         )
                         .then(Commands.literal("set")
+                                .requires(cs -> cs.hasPermission(2))
                                 .then(Commands.argument("deity", new DeityArgumentType())
                                         .then(Commands.argument("qt", DoubleArgumentType.doubleArg(0, 60))
                                                 .executes(ctx -> CMD.setDevotion(EntityArgument.getPlayer(ctx, "player"), ctx.getArgument("deity", String.class), DoubleArgumentType.getDouble(ctx, "qt")))))

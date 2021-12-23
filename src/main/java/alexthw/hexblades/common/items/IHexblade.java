@@ -9,7 +9,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
 public interface IHexblade {
@@ -21,10 +20,21 @@ public interface IHexblade {
 
     double getAttackPower(ItemStack weapon);
 
+    default float getElementalPower(ItemStack weapon) {
+        float EP = weapon.getOrCreateTag().getFloat(Constants.NBT.ELEMENTAL_DAMAGE);
+
+        return EP > 0 ? EP : 0;
+    }
+
     //NBT SETTERS
     void setAttackPower(ItemStack weapon, boolean awakening, double extradamage);
 
     void setAttackSpeed(ItemStack weapon, boolean awakening, double extraspeed);
+
+    default void updateElementalPower(ItemStack weapon, float ratio, double devotion) {
+        float EP = (float) (devotion / ratio);
+        weapon.getOrCreateTag().putFloat(Constants.NBT.ELEMENTAL_DAMAGE, EP);
+    }
 
     // data getters
     int getRechargeTicks();
@@ -47,7 +57,7 @@ public interface IHexblade {
                 if (getEnergyLeft(stack) > getRechargeTicks() + 1) {
                     stack.hurtAndBreak(2, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
                 } else {
-                    recalculatePowers(player.getItemInHand(Hand.MAIN_HAND), worldIn, player);
+                    recalculatePowers(stack, worldIn, player);
                 }
             } else if (stack.getDamageValue() > 0) {
                 stack.setDamageValue(Math.max(stack.getDamageValue() - getRechargeTicks(), 0));
