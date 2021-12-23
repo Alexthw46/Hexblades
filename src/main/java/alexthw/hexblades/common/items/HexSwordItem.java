@@ -102,6 +102,26 @@ public class HexSwordItem extends SwordItem implements IHexblade {
         return rechargeTick;
     }
 
+    /**
+     * This method is called when the keybind is pressed, it will switch (or attempt to) between awakened and dormant
+     * state and update values accordingly. This is an example to override.
+     *
+     * @param weapon hexblade in hand
+     * @param world  world of player
+     * @param player player
+     */
+    @Override
+    public void recalculatePowers(ItemStack weapon, Level world, Player player) {
+        if (setAwakenedState(weapon, !getAwakened(weapon))) {
+            double devotion = getDevotion(player);
+            int level = getAwakening(weapon);
+
+            applyHexBonus(player, level);
+            setAttackPower(weapon, devotion, 1);
+            setAttackSpeed(weapon, devotion, 1);
+        }
+    }
+
     @Override
     public void updateElementalDamage(ItemStack weapon, double devotion, int scaling) {
         weapon.getOrCreateTag().putDouble(Constants.NBT.SOUL_LEVEL, devotion);
@@ -118,18 +138,8 @@ public class HexSwordItem extends SwordItem implements IHexblade {
         }else if (Screen.hasControlDown()){
             addControlText(stack,tooltip);
         }else{
-            tooltip.add(new TranslatableComponent("Press [Shift] or [Ctrl] for more info"));
+            tooltip.add(new TranslatableComponent("Awaken with [H], press [Shift] or [Ctrl] for more info"));
         }
-    }
-
-    protected void addControlText(@NotNull ItemStack stack, List<Component> tooltip) {
-        tooltip.add(new TranslatableComponent("Debug infos"));
-        tooltip.add(new TextComponent("Absorbed souls : " + getSouls(stack)));
-        tooltip.add(new TextComponent("Awakening level : " + getAwakening(stack)));
-    }
-
-    protected void addShiftText(ItemStack stack, List<Component> tooltip) {
-        tooltip.add(new TranslatableComponent("TODO: Add description"));
     }
 
     @Override

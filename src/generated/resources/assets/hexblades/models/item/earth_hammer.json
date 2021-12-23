@@ -6,17 +6,9 @@
   "overrides": [
     {
       "predicate": {
-        "hexblades:awakened": 0.0,
-        "hexblades:mining": 0.0
+        "hexblades:awakened": 0.0
       },
       "model": "hexblades:item/variants/earth_hammer"
-    },
-    {
-      "predicate": {
-        "hexblades:awakened": 0.0,
-        "hexblades:mining": 1.0
-      },
-      "model": "hexblades:item/variants/earth_hammer_mining"
     },
     {
       "predicate": {
@@ -24,20 +16,6 @@
         "hexblades:awakening": 0.0
       },
       "model": "hexblades:item/variants/earth_hammer_1"
-    },
-    {
-      "predicate": {
-        "hexblades:awakened": 1.0,
-        "hexblades:awakening": 1.0
-      },
-      "model": "hexblades:item/variants/earth_hammer_2"
-    },
-    {
-      "predicate": {
-        "hexblades:awakened": 1.0,
-        "hexblades:awakening": 2.0
-      },
-      "model": "hexblades:item/variants/earth_hammer_3"
     },
     {
       "predicate": {
@@ -50,10 +28,24 @@
     {
       "predicate": {
         "hexblades:awakened": 1.0,
+        "hexblades:awakening": 1.0
+      },
+      "model": "hexblades:item/variants/earth_hammer_2"
+    },
+    {
+      "predicate": {
+        "hexblades:awakened": 1.0,
         "hexblades:awakening": 1.0,
         "hexblades:mining": 1.0
       },
       "model": "hexblades:item/variants/earth_hammer_mining_2"
+    },
+    {
+      "predicate": {
+        "hexblades:awakened": 1.0,
+        "hexblades:awakening": 2.0
+      },
+      "model": "hexblades:item/variants/earth_hammer_3"
     },
     {
       "predicate": {

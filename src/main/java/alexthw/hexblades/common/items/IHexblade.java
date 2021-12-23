@@ -4,6 +4,9 @@ import alexthw.hexblades.deity.HexDeities;
 import alexthw.hexblades.util.Constants;
 import elucent.eidolon.capability.IReputation;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -11,7 +14,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface IHexblade {
@@ -92,7 +97,7 @@ public interface IHexblade {
                 if (getEnergyLeft(stack) > getRechargeTicks() + 1) {
                     stack.hurtAndBreak(2, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
                 } else {
-                    recalculatePowers(player.getItemInHand(InteractionHand.MAIN_HAND), worldIn, player);
+                    recalculatePowers(stack, worldIn, player);
                 }
             } else if (stack.getDamageValue() > 0) {
                 stack.setDamageValue(Math.max(stack.getDamageValue() - getRechargeTicks(), 0));
@@ -111,21 +116,12 @@ public interface IHexblade {
 
     /**
      * This method is called when the keybind is pressed, it will switch (or attempt to) between awakened and dormant
-     * state and update values accordingly. This is an example, override this.
+     * state and update values accordingly. An example is in HexSwordItem.
      * @param weapon hexblade in hand
      * @param world world of player
      * @param player player
      */
-    default void recalculatePowers(ItemStack weapon, Level world, Player player) {
-        if (setAwakenedState(weapon, !getAwakened(weapon))) {
-            double devotion = getDevotion(player);
-            int level = getAwakening(weapon);
-
-            applyHexBonus(player, level);
-            setAttackPower(weapon, devotion, 1);
-            setAttackSpeed(weapon, devotion, 1);
-        }
-    }
+    void recalculatePowers(ItemStack weapon, Level world, Player player);
 
     /**
      * Used to give the player buffs when they awaken the hexblade
@@ -150,7 +146,6 @@ public interface IHexblade {
      */
     void applyHexEffects(ItemStack stack, LivingEntity target, Player attacker, boolean awakened);
 
-
     /**
      * If attacker is a player, the weapon regains durability. If onHitEffects is true, calls applyHexEffects
      * @param stack weapon
@@ -168,6 +163,17 @@ public interface IHexblade {
             stack.setDamageValue(Math.max(stack.getDamageValue() - 10, 0));
         }
         return true;
+    }
+
+    //tooltips
+    default void addControlText(@NotNull ItemStack stack, List<Component> tooltip) {
+        tooltip.add(new TranslatableComponent("Debug info"));
+        tooltip.add(new TextComponent("Absorbed souls : " + getSouls(stack)));
+        tooltip.add(new TextComponent("Awakening level : " + getAwakening(stack)));
+    }
+
+    default void addShiftText(ItemStack stack, List<Component> tooltip) {
+        tooltip.add(new TranslatableComponent("Placeholder description"));
     }
 
 }

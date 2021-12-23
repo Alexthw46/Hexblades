@@ -47,7 +47,7 @@ public class Tiers {
 
         @Override
         public float getSpeed() {
-            return 8.0F;
+            return 6.0F;
         }
 
         public float getAttackDamageBonus() {

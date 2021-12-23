@@ -31,7 +31,7 @@ public class WaterSaber extends HexSwordItem {
     }
 
     @Override
-    protected void addShiftText(ItemStack stack, List<Component> tooltip) {
+    public void addShiftText(ItemStack stack, List<Component> tooltip) {
         switch (getAwakening(stack)){
             default-> tooltip.add(new TranslatableComponent("tooltip.hexblades.water_saber_shift"));
             case 1 -> tooltip.add(new TranslatableComponent("tooltip.hexblades.water_saber_shift_1"));

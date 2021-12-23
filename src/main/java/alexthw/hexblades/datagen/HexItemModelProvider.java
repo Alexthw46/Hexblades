@@ -130,13 +130,12 @@ public class HexItemModelProvider extends ItemModelProvider {
         ModelFile miningForm_3 = getExistingFile(modLoc("item/variants/" + path + "_mining_3"));
 
         getBuilder(path)
-                .override().predicate(prefix(Constants.NBT.AW_State), 0).predicate(prefix(Constants.NBT.MiningSwitch), 0).model(deactivatedForm).end()
-                .override().predicate(prefix(Constants.NBT.AW_State), 0).predicate(prefix(Constants.NBT.MiningSwitch), 1).model(deactivatedMiningForm).end()
+                .override().predicate(prefix(Constants.NBT.AW_State), 0).model(deactivatedForm).end()
                 .override().predicate(prefix(Constants.NBT.AW_State), 1).predicate(prefix(Constants.NBT.AW_Level), 0).model(damageForm_1).end()
-                .override().predicate(prefix(Constants.NBT.AW_State), 1).predicate(prefix(Constants.NBT.AW_Level), 1).model(damageForm_2).end()
-                .override().predicate(prefix(Constants.NBT.AW_State), 1).predicate(prefix(Constants.NBT.AW_Level), 2).model(damageForm_3).end()
                 .override().predicate(prefix(Constants.NBT.AW_State), 1).predicate(prefix(Constants.NBT.AW_Level), 0).predicate(prefix(Constants.NBT.MiningSwitch), 1).model(miningForm_1).end()
+                .override().predicate(prefix(Constants.NBT.AW_State), 1).predicate(prefix(Constants.NBT.AW_Level), 1).model(damageForm_2).end()
                 .override().predicate(prefix(Constants.NBT.AW_State), 1).predicate(prefix(Constants.NBT.AW_Level), 1).predicate(prefix(Constants.NBT.MiningSwitch), 1).model(miningForm_2).end()
+                .override().predicate(prefix(Constants.NBT.AW_State), 1).predicate(prefix(Constants.NBT.AW_Level), 2).model(damageForm_3).end()
                 .override().predicate(prefix(Constants.NBT.AW_State), 1).predicate(prefix(Constants.NBT.AW_Level), 2).predicate(prefix(Constants.NBT.MiningSwitch), 1).model(miningForm_3).end();
     }
 

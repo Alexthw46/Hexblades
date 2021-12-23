@@ -11,10 +11,8 @@ import elucent.eidolon.tile.TileEntityBase;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.CauldronBlock;
-import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -31,6 +29,7 @@ import java.util.Optional;
 import static alexthw.hexblades.ConfigHandler.COMMON;
 import static alexthw.hexblades.util.CompatUtil.isBotaniaLoaded;
 import static alexthw.hexblades.util.HexUtils.getTilesWithinAABB;
+import static net.minecraft.core.cauldron.CauldronInteraction.FILL_WATER;
 import static net.minecraftforge.fml.util.ObfuscationReflectionHelper.getPrivateValue;
 import static net.minecraftforge.fml.util.ObfuscationReflectionHelper.setPrivateValue;
 
@@ -56,28 +55,24 @@ public class EverfullUrnTileEntity extends TileEntityBase {
         } else if (level.getGameTime() % COMMON.UrnTickRate.get() == 0) {
 
             crucibles = getTilesWithinAABB(CrucibleTileEntity.class, getLevel(), new AABB(worldPosition.offset(-2, -1, -2), worldPosition.offset(3, 2, 3)));
-            //cauldrons = getCauldrons(getLevel(), new AABB(worldPosition.offset(-2, -1, -2), worldPosition.offset(3, 2, 3)));
+            cauldrons = getCauldrons(getLevel(), new AABB(worldPosition.offset(-2, -1, -2), worldPosition.offset(3, 2, 3)));
 
             if (isBotaniaLoaded()) {
                 BotaniaCompat.refillApotecaries(getLevel(), worldPosition);
             }
 
             for (CrucibleTileEntity fillable : crucibles) {
-
                 if (!fillable.hasWater) {
                     fillable.hasWater = true;
                     fillable.sync();
                     Networking.sendToTracking(this.level, this.worldPosition, new RefillEffectPacket(fillable.getBlockPos(), 1));
                 }
             }
-            /*
-            for (BlockPos fillable : cauldrons) {
-                CauldronBlock cauldron = (CauldronBlock) level.getBlockState(fillable).getBlock();
-                cauldron.setWaterLevel(level, fillable, level.getBlockState(fillable), 3);
-                Networking.sendToTracking(this.level, this.worldPosition, new RefillEffectPacket(fillable, 1));
 
+            for (BlockPos fillable : cauldrons) {
+                level.setBlockAndUpdate(fillable, Blocks.WATER_CAULDRON.defaultBlockState().setValue(LayeredCauldronBlock.LEVEL, 3));
+                Networking.sendToTracking(this.level, this.worldPosition, new RefillEffectPacket(fillable, 1));
             }
-             */
 
         }
 
@@ -85,21 +80,19 @@ public class EverfullUrnTileEntity extends TileEntityBase {
 
     private List<BlockPos> getCauldrons(Level world, AABB bb) {
         List<BlockPos> blockList = new ArrayList<>();
-        for (int i = (int) Math.floor(bb.minX); i < (int) Math.ceil(bb.maxX); i++) {
-            for (int j = (int) Math.floor(bb.minZ); j < (int) Math.ceil(bb.maxZ); j++) {
-                for (int k = (int) Math.floor(bb.minY); k < (int) Math.ceil(bb.maxY); k++) {
+        for (double i = Math.floor(bb.minX); i < Math.ceil(bb.maxX); i++) {
+            for (double j = Math.floor(bb.minZ); j < Math.ceil(bb.maxZ); j++) {
+                for (double k = Math.floor(bb.minY); k < Math.ceil(bb.maxY); k++) {
                     BlockPos scan = new BlockPos(i, k, j);
                     BlockState state = world.getBlockState(scan);
                     Block block = state.getBlock();
                     if (block instanceof CauldronBlock) {
-                        if (state.getValue(BlockStateProperties.LEVEL_CAULDRON) < 3) blockList.add(scan);
+                        blockList.add(scan);
                     }
                 }
             }
         }
         return blockList;
     }
-
-
 
 }

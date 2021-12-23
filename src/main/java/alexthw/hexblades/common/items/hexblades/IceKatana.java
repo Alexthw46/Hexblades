@@ -30,7 +30,7 @@ public class IceKatana extends HexSwordItem {
     }
 
     @Override
-    protected void addShiftText(ItemStack stack, List<Component> tooltip) {
+    public void addShiftText(ItemStack stack, List<Component> tooltip) {
         switch (getAwakening(stack)){
             default-> tooltip.add(new TranslatableComponent("tooltip.hexblades.ice_katana_shift"));
             case 1 -> tooltip.add(new TranslatableComponent("tooltip.hexblades.ice_katana_shift_1"));

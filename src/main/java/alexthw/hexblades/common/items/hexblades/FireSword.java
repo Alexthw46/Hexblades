@@ -28,7 +28,7 @@ public class FireSword extends HexSwordItem {
     }
 
     @Override
-    protected void addShiftText(ItemStack stack, List<Component> tooltip) {
+    public void addShiftText(ItemStack stack, List<Component> tooltip) {
         switch (getAwakening(stack)){
             default-> tooltip.add(new TranslatableComponent("tooltip.hexblades.flame_sword_shift"));
             case 1 -> tooltip.add(new TranslatableComponent("tooltip.hexblades.flame_sword_shift_1"));

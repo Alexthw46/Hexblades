@@ -38,11 +38,11 @@ public class ConfigHandler {
 
 
         public final ForgeConfigSpec.ConfigValue<Integer> HammerDS1;
-        public final ForgeConfigSpec.ConfigValue<Double> HammerED1;
+        public final ForgeConfigSpec.ConfigValue<Integer> HammerED1;
         public final ForgeConfigSpec.ConfigValue<Integer> HammerMS1;
         public final ForgeConfigSpec.ConfigValue<Integer> HammerKB1;
         public final ForgeConfigSpec.ConfigValue<Integer> HammerDS2;
-        public final ForgeConfigSpec.ConfigValue<Double> HammerED2;
+        public final ForgeConfigSpec.ConfigValue<Integer> HammerED2;
         public final ForgeConfigSpec.ConfigValue<Integer> HammerMS2;
         public final ForgeConfigSpec.ConfigValue<Integer> HammerKB2;
 
@@ -162,7 +162,7 @@ public class ConfigHandler {
                     .define("HDS1 divide by", 20);
             HammerED1 = builder
                     .comment("Set the ratio of devotion -> elemental damage of the earth hammer Tier 1.")
-                    .define("HED1 fixed damage", 2.0);
+                    .define("HED1 divide by", 20);
             HammerMS1 = builder
                     .comment("Set the ratio of devotion -> mining speed of the earth hammer Tier 1.")
                     .define("HMS1 divide by", 20);
@@ -174,7 +174,7 @@ public class ConfigHandler {
                     .define("HDS2 divide by", 15);
             HammerED2 = builder
                     .comment("Set the ratio of devotion -> elemental damage of the earth hammer Tier 2.")
-                    .define("HED2 fixed damage", 2.0);
+                    .define("HED2 divide by", 20);
             HammerMS2 = builder
                     .comment("Set the ratio of devotion -> mining speed of the earth hammer Tier 2.")
                     .define("HMS2 divide by", 10);

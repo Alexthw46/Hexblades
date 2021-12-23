@@ -32,7 +32,6 @@ public class MiningSwitchPacket {
                 ItemStack IStack = player.getItemInHand(InteractionHand.MAIN_HAND);
                 if (IStack.getItem() instanceof EarthHammer hexblade) {
                     hexblade.switchMining(IStack);
-                    hexblade.recalculatePowers(IStack, player.level, player);
                 }
             }
         });
