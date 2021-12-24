@@ -5,7 +5,7 @@ license = "BSD License"
 #issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
 [[mods]] #mandatory
 modId = "hexblades"
-version = "0.0.8.5"
+version = "0.0.9"
 displayName = "Hexblades"
 # A URL to query for updates for this mod. See the JSON update specification https://mcforge.readthedocs.io/en/latest/gettingstarted/autoupdate/
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional

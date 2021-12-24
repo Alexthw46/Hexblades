@@ -157,6 +157,8 @@ dependencies {
 
     compileOnly fg.deobf("curse.maven:druidcraft-340991:3507029")//0.4.54
     compileOnly fg.deobf("curse.maven:occultism-361026:3574677") //1.23.6
+    runtimeOnly fg.deobf("curse.maven:druidcraft-340991:3507029")//0.4.54
+    runtimeOnly fg.deobf("curse.maven:occultism-361026:3574677") //1.23.6
 
     //dependencies
     implementation fg.deobf("elucent:eidolon:0.2.7")

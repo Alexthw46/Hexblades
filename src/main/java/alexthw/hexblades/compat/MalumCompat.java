@@ -1,6 +1,7 @@
 package alexthw.hexblades.compat;
 
 import alexthw.hexblades.mixin.AltarEntryMixin;
+import com.sammy.malum.common.blocks.lighting.EtherBlock;
 import com.sammy.malum.common.blocks.lighting.EtherBrazierBlock;
 import com.sammy.malum.core.init.blocks.MalumBlocks;
 import elucent.eidolon.spell.AltarEntries;
@@ -43,4 +44,7 @@ public class MalumCompat {
 
     }
 
+    public static boolean checkCrucible(Block block) {
+        return block instanceof EtherBrazierBlock || block instanceof EtherBlock;
+    }
 }

@@ -13,7 +13,7 @@ public class HexTags {
 
     public static final class Blocks {
 
-        public static final ITag.INamedTag<Block> CRUCIBLE_HOT_BLOCKS = mod("crucible_heat_source");
+        public static final ITag.INamedTag<Block> CRUCIBLE_HOT_BLOCKS = makeWrapperTag("crucible_heat_source");
 
         private static ITag.INamedTag<Block> forge(String path) {
             return BlockTags.bind(new ResourceLocation("forge", path).toString());
@@ -37,7 +37,7 @@ public class HexTags {
         }
     }
 
-    public static ITag.INamedTag<Item> makeWrapperTag(String id) {
-        return ItemTags.createOptional(HexUtils.prefix(id));
+    public static ITag.INamedTag<Block> makeWrapperTag(String id) {
+        return BlockTags.createOptional(HexUtils.prefix(id));
     }
 }
