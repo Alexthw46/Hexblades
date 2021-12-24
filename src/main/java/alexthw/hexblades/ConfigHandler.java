@@ -201,7 +201,7 @@ public class ConfigHandler {
             builder.comment("WorldGen Configs").push("Fire Temple worldgen");
 
             FT_AVG = builder.comment("Average distance apart in chunks between spawn attempts")
-                    .define("Must be more than minimum", 40);
+                    .define("Must be more than minimum", 30);
             FT_MIN = builder.comment("Minimum distance apart in chunks between spawn attempts")
                     .define("Must be less than average", 15);
 

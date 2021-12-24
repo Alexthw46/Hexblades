@@ -5,7 +5,7 @@ license = "BSD License"
 #issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
 [[mods]] #mandatory
 modId = "hexblades"
-version = "0.0.8.5"
+version = "0.1"
 displayName = "Hexblades"
 # A URL to query for updates for this mod. See the JSON update specification https://mcforge.readthedocs.io/en/latest/gettingstarted/autoupdate/
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional
@@ -13,10 +13,10 @@ displayName = "Hexblades"
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
 logoFile = "hexblades_logo.png" #optional
-credits = "Alexthw as author, elucent as maker of Eidolon"
+credits = "Alexthw as author, elucent for Eidolon"
 authors = "Alexthw"
 description = '''
-This mod adds Hexblades to Eidolon, few magic gadgets and compatibility patches with other mods.
+Eidolon add-on, based on elemental weapons that absorbs souls to become stronger and magic gadgets.
 '''
 
 [[dependencies.hexblades]] #optional
@@ -61,13 +61,13 @@ side = "BOTH"
 [[dependencies.hexblades]]
 modId = "malum"
 mandatory = false
-versionRange = "[1.16.5-0.3.0,)"
+versionRange = "[1.18.1-1.0,)"
 ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies.hexblades]]
 modId = "ars_nouveau"
 mandatory = false
-versionRange = "[1.24.0,)"
+versionRange = "[1.8.1-2.0,)"
 ordering = "AFTER"
 side = "BOTH"

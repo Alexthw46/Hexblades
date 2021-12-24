@@ -2,18 +2,20 @@ package alexthw.hexblades.world;
 
 import alexthw.hexblades.Hexblades;
 import alexthw.hexblades.registers.HexStructures;
+import alexthw.hexblades.util.WorldGenUtil;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
 import net.minecraft.world.level.levelgen.feature.structures.JigsawPlacement;
@@ -21,11 +23,15 @@ import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
 import net.minecraft.world.level.levelgen.structure.PostPlacementProcessor;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
+import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.event.world.StructureSpawnListGatherEvent;
 import org.apache.logging.log4j.Level;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Optional;
+
+import static alexthw.hexblades.util.HexUtils.prefix;
 
 public class FireTempleStructure extends StructureFeature<JigsawConfiguration> {
 
@@ -45,8 +51,8 @@ public class FireTempleStructure extends StructureFeature<JigsawConfiguration> {
     }
 
     @Override
-    public GenerationStep.Decoration step() {
-        return GenerationStep.Decoration.SURFACE_STRUCTURES;
+    public GenerationStep.@NotNull Decoration step() {
+        return GenerationStep.Decoration.STRONGHOLDS;
     }
 
     /**
@@ -56,20 +62,15 @@ public class FireTempleStructure extends StructureFeature<JigsawConfiguration> {
      * will contribute to that classification's cap. Otherwise, it may cause a runaway
      * spawning of the mob that will never stop.
      */
-    private static final List<MobSpawnSettings.SpawnerData> STRUCTURE_MONSTERS = ImmutableList.of(
-            new MobSpawnSettings.SpawnerData(EntityType.ILLUSIONER, 100, 4, 9),
-            new MobSpawnSettings.SpawnerData(EntityType.VINDICATOR, 100, 4, 9)
-    );
-    private static final List<MobSpawnSettings.SpawnerData> STRUCTURE_CREATURES = ImmutableList.of(
-            new MobSpawnSettings.SpawnerData(EntityType.SHEEP, 30, 10, 15),
-            new MobSpawnSettings.SpawnerData(EntityType.RABBIT, 100, 1, 2)
-    );
+    private static final Lazy<List<MobSpawnSettings.SpawnerData>> STRUCTURE_MONSTERS = Lazy.of(() -> ImmutableList.of(
+            new MobSpawnSettings.SpawnerData(EntityType.BLAZE, 100, 4, 9)));
+    private static final Lazy<List<MobSpawnSettings.SpawnerData>> STRUCTURE_CREATURES = Lazy.of(ImmutableList::of);
 
     // Hooked up in StructureTutorialMain. You can move this elsewhere or change it up.
     public static void setupStructureSpawns(final StructureSpawnListGatherEvent event) {
         if(event.getStructure() == HexStructures.FIRE_TEMPLE.get()) {
-            event.addEntitySpawns(MobCategory.MONSTER, STRUCTURE_MONSTERS);
-            event.addEntitySpawns(MobCategory.CREATURE, STRUCTURE_CREATURES);
+            event.addEntitySpawns(MobCategory.MONSTER, STRUCTURE_MONSTERS.get());
+            event.addEntitySpawns(MobCategory.CREATURE, STRUCTURE_CREATURES.get());
         }
     }
 
@@ -77,80 +78,69 @@ public class FireTempleStructure extends StructureFeature<JigsawConfiguration> {
         return (new ResourceLocation(Hexblades.MODID, "fire_temple")).toString();
     }
 
-    private static boolean isFeatureChunk(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
-        BlockPos blockPos = context.chunkPos().getWorldPosition();
+    protected static boolean isFeatureChunk(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
+        ChunkPos chunkPos = context.chunkPos();
 
-        // Grab height of land. Will stop at first non-air block.
-        int landHeight = context.chunkGenerator().getFirstOccupiedHeight(blockPos.getX(), blockPos.getZ(), Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor());
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
+        for (int curChunkX = chunkPos.x - 1; curChunkX <= chunkPos.x + 1; curChunkX++) {
+            for (int curChunkZ = chunkPos.z - 1; curChunkZ <= chunkPos.z + 1; curChunkZ++) {
+                mutable.set(curChunkX << 4, context.chunkGenerator().getSeaLevel() + 10, curChunkZ << 4);
+                NoiseColumn blockView = context.chunkGenerator().getBaseColumn(mutable.getX(), mutable.getZ(), context.heightAccessor());
+                int minValidSpace = 15;
+                int maxHeight = Math.min(WorldGenUtil.getMaxTerrainLimit(context.chunkGenerator()), context.chunkGenerator().getSeaLevel() + minValidSpace);
 
-        // Grabs column of blocks at given position. In overworld, this column will be made of stone, water, and air.
-        // In nether, it will be netherrack, lava, and air. End will only be endstone and air. It depends on what block
-        // the chunk generator will place for that dimension.
-        NoiseColumn columnOfBlocks = context.chunkGenerator().getBaseColumn(blockPos.getX(), blockPos.getZ(), context.heightAccessor());
+                while(mutable.getY() < maxHeight) {
+                    BlockState state = blockView.getBlock(mutable.getY());
+                    if(!state.isAir()) {
+                        return false;
+                    }
+                    mutable.move(Direction.UP);
+                }
+            }
+        }
 
-        // Combine the column of blocks with land height and you get the top block itself which you can test.
-        BlockState topBlock = columnOfBlocks.getBlock(landHeight);
-
-        // Now we test to make sure our structure is not spawning on water or other fluids.
-        // You can do height check instead too to make it spawn at high elevations.
-        return topBlock.getFluidState().isEmpty(); //landHeight > 100;
+        return true;
     }
+
 
     public static Optional<PieceGenerator<JigsawConfiguration>> createPiecesGenerator(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
         // Turns the chunk coordinates into actual coordinates we can use. (Gets center of that chunk)
-        BlockPos blockpos = context.chunkPos().getMiddleBlockPosition(0);
+        BlockPos blockpos = context.chunkPos().getMiddleBlockPosition(WorldGenUtil.getLowestLand(context.chunkGenerator(),context.chunkPos().getMiddleBlockPosition(0), context.heightAccessor(),true).getY());
 
-        /*
-         * If you are doing Nether structures, you'll probably want to spawn your structure on top of ledges.
-         * Best way to do that is to use getBaseColumn to grab a column of blocks at the structure's x/z position.
-         * Then loop through it and look for land with air above it and set blockpos's Y value to it.
-         * Make sure to set the final boolean in JigsawPlacement.addPieces to false so
-         * that the structure spawns at blockpos's y value instead of placing the structure on the Bedrock roof!
-         */
-        // NoiseColumn blockReader = context.chunkGenerator().getBaseColumn(blockpos.getX(), blockpos.getZ(), context.heightAccessor());
+        JigsawConfiguration newConfig = new JigsawConfiguration(
+                // The path to the starting Template Pool JSON file to read.
+                () -> context.registryAccess().ownedRegistryOrThrow(Registry.TEMPLATE_POOL_REGISTRY).get(prefix("fire_temple/fire_temple_start")),
+                // How many pieces outward from center can a recursive jigsaw structure spawn.
+               10
+        );
 
-        // We now can access out json template pool so lets set the context to use that json pool.
-        // Requires AccessTransformer  (see resources/META-INF/accesstransformer.cfg)
-        context.config().startPool =
-                () -> context.registryAccess().ownedRegistryOrThrow(Registry.TEMPLATE_POOL_REGISTRY)
-                        // The path to the starting Template Pool JSON file to read.
-                        //
-                        // Note, this is "structure_tutorial:run_down_house/start_pool" which means
-                        // the game will automatically look into the following path for the template pool:
-                        // "resources/data/structure_tutorial/worldgen/template_pool/run_down_house/start_pool.json"
-                        // This is why your pool files must be in "data/<modid>/worldgen/template_pool/<the path to the pool here>"
-                        // because the game automatically will check in worldgen/template_pool for the pools.
-                        .get(new ResourceLocation(Hexblades.MODID, "fire_temple/fire_temple_start"));
-
-        // How many pieces outward from center can a recursive jigsaw structure spawn.
-        // Our structure is only 1 piece outward and isn't recursive so any value of 1 or more doesn't change anything.
-        // However, I recommend you keep this a decent value like 10 so people can use datapacks to add additional pieces to your structure easily.
-        // But don't make it too large for recursive structures like villages or you'll crash server due to hundreds of pieces attempting to generate!
-        // Requires AccessTransformer  (see resources/META-INF/accesstransformer.cfg)
-        context.config().maxDepth = 10;
+        PieceGeneratorSupplier.Context<JigsawConfiguration> newContext = new PieceGeneratorSupplier.Context<>(
+                context.chunkGenerator(),
+                context.biomeSource(),
+                context.seed(),
+                context.chunkPos(),
+                newConfig,
+                context.heightAccessor(),
+                context.validBiome(),
+                context.structureManager(),
+                context.registryAccess()
+        );
 
         Optional<PieceGenerator<JigsawConfiguration>> structurePiecesGenerator =
                 JigsawPlacement.addPieces(
-                        context, // Used for JigsawPlacement to get all the proper behaviors done.
+                        newContext, // Used for JigsawPlacement to get all the proper behaviors done.
                         PoolElementStructurePiece::new, // Needed in order to create a list of jigsaw pieces when making the structure's layout.
-                        blockpos, // Position of the structure. Y value is ignored if last parameter is set to true.
+                        blockpos.below(8), // Position of the structure. Y value is ignored if last parameter is set to true.
                         false,  // Special boundary adjustments for villages. It's... hard to explain. Keep this false and make your pieces not be partially intersecting.
                         // Either not intersecting or fully contained will make children pieces spawn just fine. It's easier that way.
                         false // Place at heightmap (top land). Set this to false for structure to be place at the passed in blockpos's Y value instead.
                         // Definitely keep this false when placing structures in the nether as otherwise, heightmap placing will put the structure on the Bedrock roof.
                 );
         /*
-         * Note, you are always free to make your own JigsawPlacement class and implementation of how the structure
-         * should generate. It is tricky but extremely powerful if you are doing something that vanilla's jigsaw system cannot do.
-         *
-         * The only reason we are using JigsawConfiguration here is because in RunDownHouseStructure's createPiecesGenerator method,
-         * we are using JigsawPlacement.addPieces which requires StructurePoolFeatureConfig. However, if you create your own
-         * JigsawPlacement.addPieces, you could reduce the amount of workarounds that you need like line 150 and 130 above
-         * and give yourself more opportunities and control over your structures.
-         *
          * An example of a custom JigsawPlacement.addPieces in action can be found here (warning, it is using Mojmap mappings):
          * https://github.com/TelepathicGrunt/RepurposedStructures/blob/1.18/src/main/java/com/telepathicgrunt/repurposedstructures/world/structures/pieces/PieceLimitedJigsawManager.java
          */
+
         if(structurePiecesGenerator.isPresent()) {
             // I use to debug and quickly find out if the structure is spawning or not and where it is.
             // This is returning the coordinates of the center starting piece.

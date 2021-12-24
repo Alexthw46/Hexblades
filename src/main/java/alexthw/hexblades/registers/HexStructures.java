@@ -29,8 +29,8 @@ public class HexStructures {
                 FIRE_TEMPLE.get(), /* The instance of the structure */
                 new StructureFeatureConfiguration(COMMON.FT_AVG.get() /* average distance apart in chunks between spawn attempts */,
                         COMMON.FT_MIN.get() /* minimum distance apart in chunks between spawn attempts. MUST BE LESS THAN ABOVE VALUE*/,
-                        499602286 /* this modifies the seed of the structure so no two structures always spawn over each-other. Make this large and unique. */),
-                true);
+                        861651556 /* this modifies the seed of the structure so no two structures always spawn over each-other. Make this large and unique. */),
+                false);
 
 
         // Add more structures here and so on
