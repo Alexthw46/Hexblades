@@ -1,8 +1,8 @@
 package alexthw.hexblades.compat;
 
 import alexthw.hexblades.registers.HexTags;
-import com.github.klikli_dev.occultism.common.block.SpiritFireBlock;
 import com.github.klikli_dev.occultism.registry.OccultismBlocks;
+import com.vulp.druidcraft.blocks.SoulfireBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CampfireBlock;
@@ -34,7 +34,7 @@ public class CrucibleCompatHandler {
             return block == OccultismBlocks.SPIRIT_FIRE.get();
         }
         if (isDruidLoaded()) {
-            return block instanceof SpiritFireBlock;
+            return block instanceof SoulfireBlock;
         }
 
         return false;
