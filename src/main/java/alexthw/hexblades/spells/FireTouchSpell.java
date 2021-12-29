@@ -1,5 +1,6 @@
 package alexthw.hexblades.spells;
 
+import alexthw.hexblades.mixin.BrazierTileEntityMixin;
 import elucent.eidolon.network.IgniteEffectPacket;
 import elucent.eidolon.network.Networking;
 import elucent.eidolon.spell.Sign;
@@ -54,14 +55,11 @@ public class FireTouchSpell extends StaticSpell {
             if (braziers.size() > 0) {
 
                 BrazierTileEntity b = braziers.stream().min(Comparator.comparingDouble((e) -> e.getBlockPos().distSqr(blockPos))).get();
-                Method burn = findMethod(BrazierTileEntity.class, "startBurning");
 
-                try {
-                    burn.invoke(b);
-                    world.playSound(player, blockPos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, world.getRandom().nextFloat() * 0.4F + 0.8F);
-                } catch (IllegalAccessException | InvocationTargetException e) {
-                    e.printStackTrace();
-                }
+                ((BrazierTileEntityMixin)b).callStartBurning();
+
+                world.playSound(player, blockPos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, world.getRandom().nextFloat() * 0.4F + 0.8F);
+
             } else if (campfires.size() > 0) {
 
                 CampfireBlockEntity c = campfires.stream().min(Comparator.comparingDouble((e) -> e.getBlockPos().distSqr(blockPos))).get();

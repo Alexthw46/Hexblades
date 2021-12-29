@@ -4,10 +4,16 @@ buildscript {
         maven { url = 'https://files.minecraftforge.net/maven' }
         maven { url = 'https://maven.parchmentmc.org' }
         mavenCentral()
+        maven {
+            name "Sponge"
+            url "https://repo.spongepowered.org/repository/maven-public/"
+        }
+
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
         classpath 'org.parchmentmc:librarian:1.+'
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
 
 }
@@ -42,6 +48,8 @@ minecraft {
         client {
             workingDirectory project.file('run')
 
+            arg "-mixin.config=hexblades.mixins.json"
+
             // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
 
@@ -60,6 +68,7 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
+            arg "-mixin.config=hexblades.mixins.json"
 
             // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
@@ -142,9 +151,8 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.18.1-39.0.8'
 
     //compats
-    //compileOnly fg.deobf("vazkii.botania:Botania:1.16.5-420")
+    //compileOnly fg.deobf("vazkii.botania:Botania:${mc_version}-420")
 
-    //compileOnly fg.deobf("curse.maven:malum-484064:3374475") //0.3
     //compileOnly fg.deobf("curse.maven:ars_nouveau-401955:3527164")//1.24.0
 
     //dependencies
@@ -153,18 +161,16 @@ dependencies {
     implementation fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}") // Adds the full JEI mod as a full dependency
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curio_version}")
 
-    implementation fg.deobf("com.hollingsworth:ars_nouveau:1.18.1-2.0.0-beta7")
-    implementation fg.deobf("com.sammy:malum:1.18.1-1.0.1")
+    implementation fg.deobf("com.hollingsworth:ars_nouveau:1.18.1-2.0.0-beta10")
+    implementation fg.deobf("curse.maven:malum-484064:3580218") //malum 1.0.5
 
     //testers
-    //runtimeOnly fg.deobf("vazkii.botania:Botania:1.16.5-420")
+    //runtimeOnly fg.deobf("vazkii.botania:Botania:${mc_version}-420")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.18.1-61")
-    //runtimeOnly fg.deobf("curse.maven:malum-484064:3374475")
     //runtimeOnly fg.deobf("curse.maven:ars_nouveau-401955:3527164")
 
 }
 
-// Example for how to get properties into the manifest for reading by the runtime..
 jar {
     manifest {
         attributes([
@@ -174,7 +180,8 @@ jar {
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
                 "Implementation-Vendor"   : "alexthw",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                "MixinConfigs": "hexblades.mixins.json"
         ])
     }
 }
@@ -198,4 +205,10 @@ publishing {
             url "file:///${project.projectDir}/mcmodsrepo"
         }
     }
+}
+
+apply plugin: 'org.spongepowered.mixin'
+
+mixin {
+    add sourceSets.main, "hexblades.refmap.json"
 }

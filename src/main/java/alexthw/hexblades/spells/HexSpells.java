@@ -24,7 +24,7 @@ public class HexSpells {
         HEX_EVOLUTION = Spells.register(new HexEvolutionSpell(prefix("hex_evolution"),
                 Signs.SACRED_SIGN, Signs.WICKED_SIGN, Signs.SOUL_SIGN));
         FIRE_TOUCH = Spells.register(new FireTouchSpell(prefix("fire_touch"),
-                Signs.SACRED_SIGN, Signs.SACRED_SIGN, Signs.SACRED_SIGN));
+                Signs.FLAME_SIGN, Signs.FLAME_SIGN, Signs.FLAME_SIGN));
         HEX_SUMMON = Spells.register(new HexSummonerSpell(prefix("activate_pedestals"),
                 Signs.SACRED_SIGN, Signs.SOUL_SIGN, Signs.MIND_SIGN, Signs.SOUL_SIGN, Signs.SACRED_SIGN));
     }

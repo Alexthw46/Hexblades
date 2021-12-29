@@ -3,12 +3,13 @@ package alexthw.hexblades.codex;
 import alexthw.hexblades.Hexblades;
 import alexthw.hexblades.compat.ArmorCompatHandler;
 import alexthw.hexblades.deity.HexFacts;
+import alexthw.hexblades.mixin.CodexChaptersMixin;
 import alexthw.hexblades.registers.HexBlock;
 import alexthw.hexblades.registers.HexItem;
 import alexthw.hexblades.registers.HexRegistry;
 import alexthw.hexblades.ritual.HexRituals;
 import alexthw.hexblades.util.CompatUtil;
-//import com.sammy.malum.core.init.items.MalumItems;
+import com.sammy.malum.core.registry.item.ItemRegistry;
 import elucent.eidolon.Registry;
 import elucent.eidolon.codex.*;
 import elucent.eidolon.spell.Signs;
@@ -23,7 +24,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
-import static net.minecraftforge.fml.util.ObfuscationReflectionHelper.getPrivateValue;
 
 public class CodexHexChapters {
 
@@ -96,7 +96,7 @@ public class CodexHexChapters {
             );
 
             if (CompatUtil.isMalumLoaded()) {
-                //COMPAT = new Chapter(makeChapterKey("compats"), new TitlePage(makePageKey("compats")), new TitlePage(makePageKey("compats.malum")), new ListPage(makePageKey("altar_ether"), new ListPage.ListEntry("brazier", new ItemStack(MalumItems.BLUE_ETHER_BRAZIER.get()))));
+                COMPAT = new Chapter(makeChapterKey("compats"), new TitlePage(makePageKey("compats")), new TitlePage(makePageKey("compats.malum")), new ListPage(makePageKey("altar_ether"), new ListPage.ListEntry("brazier", new ItemStack(ItemRegistry.TAINTED_ETHER_BRAZIER.get()))));
             } else {
                 COMPAT = new Chapter(makeChapterKey("compats"), new TitlePage(makePageKey("compats")));
             }
@@ -324,11 +324,10 @@ public class CodexHexChapters {
 
     static IndexPage.IndexEntry getCompatsPage() {
         if (CompatUtil.isMalumLoaded()) {
-            //return new IndexPage.IndexEntry(COMPAT, new ItemStack(MalumItems.BLUE_ETHER.get()));
+            return new IndexPage.IndexEntry(COMPAT, new ItemStack(ItemRegistry.ETHER.get()));
         } else {
             return new IndexPage.IndexEntry(COMPAT, new ItemStack(Items.CANDLE));
         }
-        return null;
     }
 
     static Page[] getArmorPages() {
@@ -394,8 +393,9 @@ public class CodexHexChapters {
                 )
         );
 
-        CodexChapters.categories.add(HEXBLADES = new Category(Hexblades.MODID, new ItemStack(HexItem.PATRON_SOUL.get()), ColorUtil.packColor(220, 0, 30, 66), HEXBLADES_INDEX));
-        CodexChapters.categories.add(HEXBLADES_WEAPONS = new Category("hexblades_weapons", new ItemStack(HexItem.DEV_SWORD.get()), ColorUtil.packColor(220, 0, 0, 46), HEXBLADES_WINDEX));
+        List<Category> categories = ((CodexChaptersMixin)new CodexChapters()).getCategories();
+        categories.add(HEXBLADES = new Category(Hexblades.MODID, new ItemStack(HexItem.PATRON_SOUL.get()), ColorUtil.packColor(220, 0, 30, 66), HEXBLADES_INDEX));
+        categories.add(HEXBLADES_WEAPONS = new Category("hexblades_weapons", new ItemStack(HexItem.DEV_SWORD.get()), ColorUtil.packColor(220, 0, 0, 46), HEXBLADES_WINDEX));
 
     }
 

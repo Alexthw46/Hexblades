@@ -1,6 +1,7 @@
 package alexthw.hexblades.common.blocks.tile_entities;
 
 import alexthw.hexblades.compat.BotaniaCompat;
+import alexthw.hexblades.mixin.CrucibleMixin;
 import alexthw.hexblades.network.RefillEffectPacket;
 import alexthw.hexblades.registers.HexTileEntityType;
 import elucent.eidolon.Registry;
@@ -8,30 +9,21 @@ import elucent.eidolon.network.Networking;
 import elucent.eidolon.particle.Particles;
 import elucent.eidolon.tile.CrucibleTileEntity;
 import elucent.eidolon.tile.TileEntityBase;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CauldronBlock;
+import net.minecraft.world.level.block.LayeredCauldronBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static alexthw.hexblades.ConfigHandler.COMMON;
 import static alexthw.hexblades.util.CompatUtil.isBotaniaLoaded;
 import static alexthw.hexblades.util.HexUtils.getTilesWithinAABB;
-import static net.minecraft.core.cauldron.CauldronInteraction.FILL_WATER;
-import static net.minecraftforge.fml.util.ObfuscationReflectionHelper.getPrivateValue;
-import static net.minecraftforge.fml.util.ObfuscationReflectionHelper.setPrivateValue;
 
 public class EverfullUrnTileEntity extends TileEntityBase {
 
@@ -62,8 +54,11 @@ public class EverfullUrnTileEntity extends TileEntityBase {
             }
 
             for (CrucibleTileEntity fillable : crucibles) {
-                if (!fillable.hasWater) {
-                    fillable.hasWater = true;
+
+                CrucibleMixin toFill = (CrucibleMixin) fillable;
+
+                if (!toFill.isHasWater()){
+                    toFill.setHasWater(true);
                     fillable.sync();
                     Networking.sendToTracking(this.level, this.worldPosition, new RefillEffectPacket(fillable.getBlockPos(), 1));
                 }

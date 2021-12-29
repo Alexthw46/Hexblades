@@ -69,6 +69,7 @@ public class ClientEvents {
 
         EntityRenderers.register(HexEntityType.FULGOR_PROJECTILE.get(), EmptyRenderer::new);
         EntityRenderers.register(HexEntityType.MAGMA_PROJECTILE.get(), EmptyRenderer::new);
+        EntityRenderers.register(HexEntityType.HEXED_SOUL.get(), EmptyRenderer::new);
         event.registerEntityRenderer(HexEntityType.FIRE_ELEMENTAL.get(), FireElementalER::new);
 
     }

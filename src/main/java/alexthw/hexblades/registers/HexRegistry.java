@@ -30,6 +30,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class HexRegistry {
 
 
@@ -71,7 +73,11 @@ public class HexRegistry {
         HexRituals.init();
         CompatUtil.check(); //may be useless, already checked before
         if (isMalumLoaded()) {
-            MalumCompat.altar();
+            try {
+                MalumCompat.altar();
+            } catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
         }
         CodexHexChapters.init();
         PotionBrewingMixin.callAddMix(Potions.HARMING, Registry.DEATH_ESSENCE.get(), WITHER_POTION.get());

@@ -19,14 +19,14 @@ public class HexEntityType {
 
     public static RegistryObject<EntityType<FulgorProjectileEntity>> FULGOR_PROJECTILE;
     public static RegistryObject<EntityType<MagmaProjectileEntity>> MAGMA_PROJECTILE;
-    public static RegistryObject<EntityType<BaseElementalEntity>> TEST_ELEMENTAL;
+    public static RegistryObject<EntityType<HexedSoulEntity>> HEXED_SOUL;
     public static RegistryObject<EntityType<FireElementalEntity>> FIRE_ELEMENTAL;
     public static RegistryObject<EntityType<EarthElementalEntity>> EARTH_ELEMENTAL;
 
     static {
         FULGOR_PROJECTILE = registerEntity("fulgor_projectile", 0.45F, 0.2F, FulgorProjectileEntity::new, MobCategory.MISC);
         MAGMA_PROJECTILE = registerEntity("magma_projectile", 0.4F, 0.4F, MagmaProjectileEntity::new, MobCategory.MISC);
-        //TEST_ELEMENTAL = addEntity("test_elemental", 0, 0, 1.0f, 2.0f, BaseElementalEntity::new, EntityClassification.MONSTER);
+        HEXED_SOUL = registerEntity("hexed_soul",  0.4f, 0.4f, HexedSoulEntity::new, MobCategory.MISC);
         FIRE_ELEMENTAL = addEntity("fire_elemental", 16167425, 800, 1.8f, 3.6f, true, FireElementalEntity::new, MobCategory.MONSTER);
         //EARTH_ELEMENTAL = addEntity("earth_elemental", 500, 800, 1.0f, 2.8f, EarthElementalEntity::new, EntityClassification.MONSTER);
 

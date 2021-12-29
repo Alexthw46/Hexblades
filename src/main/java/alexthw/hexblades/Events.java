@@ -3,13 +3,10 @@ package alexthw.hexblades;
 import alexthw.hexblades.common.items.IHexblade;
 import alexthw.hexblades.common.items.armors.HexWArmor;
 import alexthw.hexblades.common.items.hexblades.WaterSaber;
-import alexthw.hexblades.deity.HexDeities;
 import alexthw.hexblades.network.FlameEffectPacket;
 import alexthw.hexblades.registers.HexItem;
 import alexthw.hexblades.util.HexUtils;
-import elucent.eidolon.capability.IReputation;
-import elucent.eidolon.deity.Deity;
-import elucent.eidolon.event.SpeedFactorEvent;
+import elucent.eidolon.event.StuckInBlockEvent;
 import elucent.eidolon.network.Networking;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
@@ -22,6 +19,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.*;
@@ -200,12 +198,12 @@ public class Events {
     }
 
     @SubscribeEvent
-    public void onGetSpeedFactor(SpeedFactorEvent event) {
-        if ((event.getSpeedFactor() < 1.0F) && event.getEntity() instanceof LivingEntity) {
+    public void onGetSpeedFactor(StuckInBlockEvent event) {
+        if ((event.getStuckMultiplier().length() < 1.0F) && event.getEntity() instanceof LivingEntity) {
             ItemStack stack = ((LivingEntity) event.getEntity()).getItemBySlot(EquipmentSlot.FEET);
             if ((stack.getItem() instanceof HexWArmor) && HexWArmor.getFocusId(stack) == 1) {
-                float diff = 1.0F - event.getSpeedFactor();
-                event.setSpeedFactor(1.0F - diff / 2.0F);
+                Vec3 diff = (new Vec3(1.0D, 1.0D, 1.0D)).subtract(event.getStuckMultiplier()).scale(0.5D);
+                event.setStuckMultiplier((new Vec3(1.0D, 1.0D, 1.0D)).subtract(diff));
             }
         }
 
