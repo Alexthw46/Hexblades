@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(BrazierTileEntity.class)
 public interface BrazierTileEntityMixin {
 
-    @Invoker
+    @Invoker(remap = false)
     void callStartBurning();
 }
 

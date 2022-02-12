@@ -4,7 +4,7 @@ import elucent.eidolon.spell.AltarEntry;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
-@Mixin(AltarEntry.class)
+@Mixin(value = AltarEntry.class, remap = false)
 public interface AltarEntryMixin {
 
     @Invoker
