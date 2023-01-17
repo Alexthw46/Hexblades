@@ -3,11 +3,16 @@ package alexthw.hexblades.datagen;
 import alexthw.hexblades.Hexblades;
 import alexthw.hexblades.registers.HexBlock;
 import alexthw.hexblades.registers.HexTags;
+import com.github.klikli_dev.occultism.registry.OccultismBlocks;
+import com.sammy.malum.common.blocks.lighting.EtherBlock;
+import com.sammy.malum.common.blocks.lighting.EtherBrazierBlock;
+import com.vulp.druidcraft.blocks.SoulfireBlock;
 import net.minecraft.block.*;
 import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.tags.BlockTags;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -37,11 +42,12 @@ public class HexBlockTagsProvider extends BlockTagsProvider {
         tag(WOODEN_FENCES).add(HexBlock.DARK_POLISH_PLANKS.getFence());
 
         tag(HexTags.Blocks.CRUCIBLE_HOT_BLOCKS).add(Blocks.MAGMA_BLOCK, Blocks.FIRE, Blocks.SOUL_FIRE, Blocks.LAVA);
-
+        tag(HexTags.Blocks.CRUCIBLE_HOT_BLOCKS).addOptional(OccultismBlocks.SPIRIT_FIRE.getId());
+        ForgeRegistries.BLOCKS.getValues().stream().filter((b) -> b instanceof EtherBlock || b instanceof EtherBrazierBlock || b instanceof SoulfireBlock).forEach(this::addToCrucible);
     }
 
     private void addToCrucible(Block block) {
-        tag(HexTags.Blocks.CRUCIBLE_HOT_BLOCKS).add(block);
+        tag(HexTags.Blocks.CRUCIBLE_HOT_BLOCKS).addOptional(block.getRegistryName());
     }
 
 

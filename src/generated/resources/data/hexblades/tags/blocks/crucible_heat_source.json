@@ -4,6 +4,170 @@
     "minecraft:magma_block",
     "minecraft:fire",
     "minecraft:soul_fire",
-    "minecraft:lava"
+    "minecraft:lava",
+    {
+      "id": "occultism:spirit_fire",
+      "required": false
+    },
+    {
+      "id": "druidcraft:blue_soulfire",
+      "required": false
+    },
+    {
+      "id": "druidcraft:black_soulfire",
+      "required": false
+    },
+    {
+      "id": "druidcraft:gray_soulfire",
+      "required": false
+    },
+    {
+      "id": "druidcraft:lime_soulfire",
+      "required": false
+    },
+    {
+      "id": "druidcraft:magenta_soulfire",
+      "required": false
+    },
+    {
+      "id": "druidcraft:brown_soulfire",
+      "required": false
+    },
+    {
+      "id": "druidcraft:purple_soulfire",
+      "required": false
+    },
+    {
+      "id": "druidcraft:yellow_soulfire",
+      "required": false
+    },
+    {
+      "id": "druidcraft:light_gray_soulfire",
+      "required": false
+    },
+    {
+      "id": "druidcraft:white_soulfire",
+      "required": false
+    },
+    {
+      "id": "druidcraft:light_blue_soulfire",
+      "required": false
+    },
+    {
+      "id": "druidcraft:cyan_soulfire",
+      "required": false
+    },
+    {
+      "id": "druidcraft:green_soulfire",
+      "required": false
+    },
+    {
+      "id": "druidcraft:red_soulfire",
+      "required": false
+    },
+    {
+      "id": "druidcraft:orange_soulfire",
+      "required": false
+    },
+    {
+      "id": "druidcraft:pink_soulfire",
+      "required": false
+    },
+    {
+      "id": "malum:orange_ether",
+      "required": false
+    },
+    {
+      "id": "malum:magenta_ether",
+      "required": false
+    },
+    {
+      "id": "malum:light_blue_ether",
+      "required": false
+    },
+    {
+      "id": "malum:yellow_ether",
+      "required": false
+    },
+    {
+      "id": "malum:pink_ether",
+      "required": false
+    },
+    {
+      "id": "malum:lime_ether",
+      "required": false
+    },
+    {
+      "id": "malum:cyan_ether",
+      "required": false
+    },
+    {
+      "id": "malum:purple_ether",
+      "required": false
+    },
+    {
+      "id": "malum:blue_ether",
+      "required": false
+    },
+    {
+      "id": "malum:brown_ether",
+      "required": false
+    },
+    {
+      "id": "malum:green_ether",
+      "required": false
+    },
+    {
+      "id": "malum:red_ether",
+      "required": false
+    },
+    {
+      "id": "malum:orange_ether_brazier",
+      "required": false
+    },
+    {
+      "id": "malum:magenta_ether_brazier",
+      "required": false
+    },
+    {
+      "id": "malum:light_blue_ether_brazier",
+      "required": false
+    },
+    {
+      "id": "malum:yellow_ether_brazier",
+      "required": false
+    },
+    {
+      "id": "malum:pink_ether_brazier",
+      "required": false
+    },
+    {
+      "id": "malum:lime_ether_brazier",
+      "required": false
+    },
+    {
+      "id": "malum:cyan_ether_brazier",
+      "required": false
+    },
+    {
+      "id": "malum:purple_ether_brazier",
+      "required": false
+    },
+    {
+      "id": "malum:blue_ether_brazier",
+      "required": false
+    },
+    {
+      "id": "malum:brown_ether_brazier",
+      "required": false
+    },
+    {
+      "id": "malum:green_ether_brazier",
+      "required": false
+    },
+    {
+      "id": "malum:red_ether_brazier",
+      "required": false
+    }
   ]
 }

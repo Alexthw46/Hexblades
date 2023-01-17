@@ -43,8 +43,4 @@ public class MalumCompat {
         }
 
     }
-
-    public static boolean checkCrucible(Block block) {
-        return block instanceof EtherBrazierBlock || block instanceof EtherBlock;
-    }
 }

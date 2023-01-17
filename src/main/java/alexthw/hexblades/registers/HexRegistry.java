@@ -2,7 +2,6 @@ package alexthw.hexblades.registers;
 
 import alexthw.hexblades.codex.CodexHexChapters;
 import alexthw.hexblades.common.potions.EChargedEffect;
-import alexthw.hexblades.compat.CrucibleCompatHandler;
 import alexthw.hexblades.compat.MalumCompat;
 import alexthw.hexblades.deity.HexDeities;
 import alexthw.hexblades.network.FlameEffectPacket;
@@ -15,15 +14,19 @@ import alexthw.hexblades.spells.HexSpells;
 import alexthw.hexblades.util.CompatUtil;
 import elucent.eidolon.mixin.PotionBrewingMixin;
 import elucent.eidolon.network.Networking;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.CampfireBlock;
 import net.minecraft.potion.*;
 import net.minecraftforge.fml.RegistryObject;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.function.Predicate;
 
 import static alexthw.hexblades.registers.Registry.POTIONS;
 import static alexthw.hexblades.registers.Registry.POTION_TYPES;
 import static alexthw.hexblades.util.CompatUtil.isMalumLoaded;
 import static elucent.eidolon.Registry.DEATH_ESSENCE;
+import static elucent.eidolon.tile.CrucibleTileEntity.HOT_BLOCKS;
 
 public class HexRegistry {
 
@@ -50,7 +53,10 @@ public class HexRegistry {
         TempRecipes.init();
         HexRituals.init();
         CompatUtil.check(); //may be useless, already checked before
-        CrucibleCompatHandler.start();
+        HOT_BLOCKS = new Predicate<?>[]{
+                (BlockState b) -> b.getBlock() instanceof CampfireBlock && b.getValue(CampfireBlock.LIT),
+                (BlockState b) -> b.getBlock().is(HexTags.Blocks.CRUCIBLE_HOT_BLOCKS)
+        };
         CodexHexChapters.init();
         PotionBrewingMixin.callAddMix(Potions.HARMING, DEATH_ESSENCE.get(), WITHER_POTION.get());
         if (isMalumLoaded()) {

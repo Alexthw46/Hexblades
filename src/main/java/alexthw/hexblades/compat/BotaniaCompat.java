@@ -67,7 +67,7 @@ public class BotaniaCompat {
 
     @OnlyIn(Dist.CLIENT)
     public static void renderer() {
-        GeoArmorRenderer.registerArmorRenderer(BotaniaArmor.class, new ArmorRenderer());
+        GeoArmorRenderer.registerArmorRenderer(BotaniaArmor.class, ArmorRenderer::new);
     }
 
     public static Page[] makeCodex() {

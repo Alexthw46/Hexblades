@@ -151,9 +151,9 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     //compats
-    implementation fg.deobf("vazkii.botania:Botania:1.16.5-420")
+    compileOnly fg.deobf("vazkii.botania:Botania:1.16.5-420")
     implementation fg.deobf("curse.maven:malum-484064:3374475") //0.3
-    implementation fg.deobf("curse.maven:ars_nouveau-401955:3576193")//1.24.10
+    compileOnly fg.deobf("curse.maven:ars_nouveau-401955:3576193")//1.24.10
 
     compileOnly fg.deobf("curse.maven:druidcraft-340991:3507029")//0.4.54
     compileOnly fg.deobf("curse.maven:occultism-361026:3574677") //1.23.6
@@ -161,8 +161,10 @@ dependencies {
     //runtimeOnly fg.deobf("curse.maven:occultism-361026:3574677") //1.23.6
 
     //dependencies
-    implementation fg.deobf("elucent:eidolon:0.2.7")
-    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.16.5:3.0.55')
+    //implementation fg.deobf("elucent:eidolon:0.2.7")
+    implementation fg.deobf("curse.maven:eidolon-429625:3157832")  // Shutup experimental settings
+
+    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.16.5:3.0.103')
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.3")
     implementation fg.deobf('mezz.jei:jei-1.16.5:7.7.1.136')
 

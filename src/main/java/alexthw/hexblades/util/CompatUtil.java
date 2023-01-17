@@ -26,14 +26,6 @@ public class CompatUtil {
         return loadedBotania;
     }
 
-    public static boolean isDruidLoaded() {
-        return loadedDruid;
-    }
-
-    public static boolean isOccultismLoaded() {
-        return loadedOccultism;
-    }
-
     public static boolean isArsNovLoaded() {
         return loadedArsNov;
     }

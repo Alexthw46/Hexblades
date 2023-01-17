@@ -51,7 +51,7 @@ public class ArsNouveauCompat {
 
     @OnlyIn(Dist.CLIENT)
     public static void renderer() {
-        GeoArmorRenderer.registerArmorRenderer(NouveauArmor.class, new ArmorRenderer());
+        GeoArmorRenderer.registerArmorRenderer(NouveauArmor.class, ArmorRenderer::new);
     }
 
     public static Page[] makeCodex() {

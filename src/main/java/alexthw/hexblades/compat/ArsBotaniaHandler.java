@@ -16,7 +16,7 @@ public class ArsBotaniaHandler {
 
     @OnlyIn(Dist.CLIENT)
     public static void renderer() {
-        GeoArmorRenderer.registerArmorRenderer(ArsBotaniaArmor.class, new ArmorRenderer());
+        GeoArmorRenderer.registerArmorRenderer(ArsBotaniaArmor.class, ArmorRenderer::new);
     }
 
 }

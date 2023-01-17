@@ -51,13 +51,8 @@ public class ClientEvents {
 
         if (Minecraft.getInstance().player == null) return;
 
-        if (HEXBLADE_KEYBINDING.consumeClick()) {
-            WeaponAwakenPacket pkt = new WeaponAwakenPacket();
-            Networking.sendToServer(pkt);
-        } else if (HEXDRILL_KEYBINDING.consumeClick()) {
-            MiningSwitchPacket pkt = new MiningSwitchPacket();
-            Networking.sendToServer(pkt);
-        }
+        if (HEXBLADE_KEYBINDING.consumeClick()) Networking.sendToServer(new WeaponAwakenPacket());
+        else if (HEXDRILL_KEYBINDING.consumeClick()) Networking.sendToServer(new MiningSwitchPacket());
 
     }
 
@@ -72,7 +67,7 @@ public class ClientEvents {
     @SubscribeEvent
     public static void initClientEvents(FMLClientSetupEvent event) {
 
-        GeoArmorRenderer.registerArmorRenderer(HexWArmor.class, new ArmorRenderer());
+        GeoArmorRenderer.registerArmorRenderer(HexWArmor.class, ArmorRenderer::new);
         attachRenderers();
         RenderingRegistry.registerEntityRenderingHandler(HexEntityType.FULGOR_PROJECTILE.get(), EmptyRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(HexEntityType.MAGMA_PROJECTILE.get(), EmptyRenderer::new);
